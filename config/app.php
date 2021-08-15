@@ -174,6 +174,11 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        /*
+         * Third party Service Providers
+         */
+        Spatie\Permission\PermissionServiceProvider::class,
+        Spatie\QueryBuilder\QueryBuilderServiceProvider::class,
 
     ],
 
