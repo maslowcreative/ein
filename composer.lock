@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b2886de3511a79b7831263f52bcb2476",
+    "content-hash": "d2fcd40b07454f8f000ee5bc43314067",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -61,6 +61,56 @@
                 "source": "https://github.com/asm89/stack-cors/tree/v2.0.3"
             },
             "time": "2021-03-11T06:42:03+00:00"
+        },
+        {
+            "name": "axn/laravel-laroute",
+            "version": "1.7.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/AXN-Informatique/laravel-laroute.git",
+                "reference": "b474cb3ae72c24882e31c6f09363c7a3148db804"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/AXN-Informatique/laravel-laroute/zipball/b474cb3ae72c24882e31c6f09363c7a3148db804",
+                "reference": "b474cb3ae72c24882e31c6f09363c7a3148db804",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/routing": ">=5.4",
+                "illuminate/support": ">=5.4",
+                "lord/laroute": "^2.4"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Axn\\Laroute\\ServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Axn\\Laroute\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "AXN Informatique",
+                    "email": "developpement@axn.fr"
+                }
+            ],
+            "description": "Extend aaronlord/laroute package.",
+            "homepage": "https://github.com/AXN-Informatique/laravel-laroute",
+            "support": {
+                "issues": "https://github.com/AXN-Informatique/laravel-laroute/issues",
+                "source": "https://github.com/AXN-Informatique/laravel-laroute/tree/1.7.2"
+            },
+            "time": "2020-09-22T11:22:51+00:00"
         },
         {
             "name": "brick/math",
@@ -1514,6 +1564,61 @@
                 }
             ],
             "time": "2021-01-18T20:58:21+00:00"
+        },
+        {
+            "name": "lord/laroute",
+            "version": "2.5.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/aaronlord/laroute.git",
+                "reference": "afce2a4e767c4086811077595752fd0e372248e8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/aaronlord/laroute/zipball/afce2a4e767c4086811077595752fd0e372248e8",
+                "reference": "afce2a4e767c4086811077595752fd0e372248e8",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/config": "5.0.*|5.1.*|5.2.*|5.3.*|5.4.*|5.5.*|5.6.*|5.7.*|5.8.*|^6.0|^7.0|^8.0",
+                "illuminate/console": "5.0.*|5.1.*|5.2.*|5.3.*|5.4.*|5.5.*|5.6.*|5.7.*|5.8.*|^6.0|^7.0|^8.0",
+                "illuminate/filesystem": "5.0.*|5.1.*|5.2.*|5.3.*|5.4.*|5.5.*|5.6.*|5.7.*|5.8.*|^6.0|^7.0|^8.0",
+                "illuminate/routing": "5.0.*|5.1.*|5.2.*|5.3.*|5.4.*|5.5.*|5.6.*|5.7.*|5.8.*|^6.0|^7.0|^8.0",
+                "illuminate/support": "5.0.*|5.1.*|5.2.*|5.3.*|5.4.*|5.5.*|5.6.*|5.7.*|5.8.*|^6.0|^7.0|^8.0",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "dev-master",
+                "phpunit/phpunit": "~4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Lord\\Laroute\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Aaron Lord",
+                    "email": "hello@aaronlord.is"
+                }
+            ],
+            "description": "Access Laravels URL/Route helper functions, from JavaScript.",
+            "keywords": [
+                "javascript",
+                "laravel",
+                "routes",
+                "routing"
+            ],
+            "support": {
+                "issues": "https://github.com/aaronlord/laroute/issues",
+                "source": "https://github.com/aaronlord/laroute/tree/2.5.4"
+            },
+            "time": "2021-01-05T15:35:08+00:00"
         },
         {
             "name": "monolog/monolog",
