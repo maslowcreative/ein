@@ -1,9 +1,7 @@
 <template>
   <div class="grid login-box-wrap">
     <div class="login-box">
-      <div class="login-box-logo text-center">
-        <img :src="'/images/logo.png'" width="141" height="103" alt="" />
-      </div>
+      <auth-logo></auth-logo>
       <div class="login-box-from">
         <h2 class="mb-md-5 mb-3 text-center fw-bold">Reset Password</h2>
         <div v-if="message" class="alert alert-success" role="alert">

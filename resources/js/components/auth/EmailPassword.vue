@@ -1,9 +1,7 @@
 <template>
   <div class="grid login-box-wrap">
     <div class="login-box">
-      <div class="login-box-logo text-center">
-        <img :src="'/images/logo.png'" width="141" height="103" alt="" />
-      </div>
+      <auth-logo></auth-logo>
       <div class="login-box-from">
         <h2 class="mb-md-5 mb-3 fw-bold">Forgot your password?</h2>
         <p class="mb-md-5 mb-3">
@@ -43,22 +41,28 @@
         </form>
       </div>
       <div class="text-center">
-        <a class="text-decoration-none" :href="passwordRequestUrl">Back to Login</a>
+        <a class="text-decoration-none" :href="loginUrl">Back to Login</a>
       </div>
     </div>
   </div>
 </template>
 <script>
 import Form from "vform"
+import AuthLogo from "./AuthLogo";
 export default {
-  data() {
-    return {
-      loader: false,
-      message: null,
-      form: new Form({
-        email: null,
-      }),
-    }
+    components: {AuthLogo},
+    data() {
+        return {
+          loader: false,
+          message: null,
+          loginUrl: null,
+          form: new Form({
+            email: null,
+          }),
+        }
+    },
+  mounted() {
+        this.loginUrl = this.laroute.route('login');
   },
   methods: {
     emailResetLink() {

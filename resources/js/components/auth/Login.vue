@@ -1,9 +1,7 @@
 <template>
   <div class="grid login-box-wrap">
     <div class="login-box">
-      <div class="login-box-logo text-center">
-        <img :src="'/images/logo.png'" width="141" height="103" alt="" />
-      </div>
+      <auth-logo></auth-logo>
       <div class="login-box-from">
         <h2 class="mb-md-5 mb-3 text-center fw-bold">Portal Log-in</h2>
         <form @submit.prevent="login" method="POST">
@@ -54,7 +52,7 @@
         </form>
       </div>
       <div class="text-center">
-        <a class="text-decoration-none" :href="passwordRequestUrl">Back to EIN Homepage</a>
+        <a class="text-decoration-none" :href="homeUrl">Back to EIN Homepage</a>
       </div>
     </div>
   </div>
@@ -62,10 +60,13 @@
 
 <script>
 import Form from "vform"
+import AuthLogo from "./AuthLogo";
 export default {
-  data() {
+    components: {AuthLogo},
+    data() {
     return {
       loader: false,
+      homeUrl: null,
       passwordRequestUrl: null,
       form: new Form({
         email: null,
@@ -74,6 +75,7 @@ export default {
     }
   },
   mounted() {
+    this.homeUrl = this.laroute.route("index")
     this.passwordRequestUrl = this.laroute.route("password.request")
   },
   methods: {
