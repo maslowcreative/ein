@@ -22,7 +22,7 @@
 <body>
     <div id="app">
         @if(auth()->check())
-        <nav-bar-component user="{{auth()->user()}}"></nav-bar-component>
+        <nav-bar user="{{auth()->user()}}"></nav-bar>
         @endif
 
         <main class="py-4">

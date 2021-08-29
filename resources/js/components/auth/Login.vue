@@ -10,8 +10,6 @@
                             <csrf-token></csrf-token>
                             <div class="form-group row">
                                 <label for="email" class="col-md-4 col-form-label text-md-right">E-Mail Address</label>
-
-
                                 <div class="col-md-6">
                                     <input id="email" type="email" v-model="form.email" class="form-control" name="email" required autocomplete="email" autofocus>
                                     <div v-if="form.errors.has('email')" v-html="form.errors.get('email')" />
@@ -32,6 +30,9 @@
                                     <button type="submit" class="btn btn-primary">
                                         Login
                                     </button>
+                                    <a class="btn btn-link" :href="passwordRequestUrl">
+                                        Forgot Your Password?
+                                    </a>
                                 </div>
                             </div>
                         </form>
@@ -49,6 +50,7 @@ export default {
     data() {
         return {
             loader : false,
+            passwordRequestUrl: null,
             form: new Form({
                 email: null,
                 password: null
@@ -57,8 +59,7 @@ export default {
         }
     },
     mounted() {
-        this.loginUrl = this.laroute.route('login');
-
+        this.passwordRequestUrl = this.laroute.route('password.request');
     },
     methods:{
          login() {
