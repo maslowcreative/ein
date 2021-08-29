@@ -27,15 +27,9 @@ Vue.use(VueLaroute, {
  * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
  */
 
-// const files = require.context('./', true, /\.vue$/i)
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
+const files = require.context('./', true, /\.vue$/i)
+files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-//Common
-Vue.component('csrf-token',require('./components/common/CsrfTokenComponent.vue').default);
-Vue.component('nav-bar-component',require('./components/common/NavBarComponent.vue').default);
-
-//Auth
-Vue.component('login-component',require('./components/auth/LoginComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

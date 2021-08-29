@@ -21,8 +21,9 @@
 </head>
 <body>
     <div id="app">
-        <nav-bar-component user="{{auth()->user()}}"></nav-bar-component>
-
+        @if(auth()->check())
+        <nav-bar user="{{auth()->user()}}"></nav-bar>
+        @endif
 
         <main class="py-4">
             @yield('content')
