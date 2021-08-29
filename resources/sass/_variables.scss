@@ -1,9 +1,8 @@
 // Body
-$body-bg: #f8fafc;
+$body-bg: #fff;
 
 // Typography
-$font-family-sans-serif: 'Nunito',
-sans-serif;
+$font-family-sans-serif: "Open Sans", sans-serif;
 $font-size-base: 0.9rem;
 $line-height-base: 1.6;
 
@@ -22,10 +21,14 @@ $dark: #555555;
 // $teal: #4dc0b5;
 // $cyan: #6cb2eb;
 
-
 // Options
+$font-size-base: 1rem;
 $enable-rounded: false;
-$input-btn-focus-box-shadow: 0;
-$btn-box-shadow: 0;
-// $btn-focus-box-shadow: 0;
-$btn-active-box-shadow: 0;
+$input-btn-focus-box-shadow: unset;
+$btn-active-box-shadow: unset;
+$btn-focus-box-shadow: unset;
+$btn-box-shadow: unset;
+$btn-focus-width: 0;
+
+$input-bg: #fafafa;
+$input-border-width: 0;
