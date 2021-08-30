@@ -5432,6 +5432,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ["user"],
   data: function data() {
@@ -42954,7 +42956,7 @@ var render = function() {
     [
       _c("div", { staticClass: "container" }, [
         _c("a", { staticClass: "navbar-brand", attrs: { href: _vm.baseUrl } }, [
-          _vm._v("\n      EIN\n    ")
+          _vm._v("\n            EIN\n        ")
         ]),
         _vm._v(" "),
         _vm._m(0),
@@ -42987,8 +42989,10 @@ var render = function() {
                     _c(
                       "a",
                       {
+                        staticClass: "nav-link dropdown-toggle",
                         attrs: {
                           href: "#",
+                          id: "navbarDropdown",
                           role: "button",
                           "data-bs-toggle": "dropdown",
                           "aria-expanded": "false"
@@ -42996,16 +43000,19 @@ var render = function() {
                       },
                       [
                         _vm._v(
-                          "\n            " +
+                          "\n                        " +
                             _vm._s(_vm.userData.name) +
-                            "\n          "
+                            "\n                    "
                         )
                       ]
                     ),
                     _vm._v(" "),
                     _c(
                       "div",
-                      { attrs: { "aria-labelledby": "navbarDropdown" } },
+                      {
+                        staticClass: "dropdown-menu dropdown-menu-end",
+                        attrs: { "aria-labelledby": "navbarDropdown" }
+                      },
                       [
                         _c(
                           "a",
@@ -43017,7 +43024,11 @@ var render = function() {
                                 "event.preventDefault(); document.getElementById('logout-form').submit();"
                             }
                           },
-                          [_vm._v("\n              Logout\n            ")]
+                          [
+                            _vm._v(
+                              "\n                            Logout\n                        "
+                            )
+                          ]
                         ),
                         _vm._v(" "),
                         _c(
