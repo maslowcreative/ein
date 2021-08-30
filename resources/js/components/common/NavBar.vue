@@ -29,16 +29,14 @@
 
           <li class="nav-item dropdown" v-if="userData">
             <a
-              class="nav-link dropdown-toggle"
               href="#"
-              id="navbarDropdown"
               role="button"
               data-bs-toggle="dropdown"
               aria-expanded="false"
             >
               {{ userData.name }}
             </a>
-            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+            <div aria-labelledby="navbarDropdown">
               <a
                 class="dropdown-item"
                 :href="logoutUrl"

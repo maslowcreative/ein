@@ -2303,8 +2303,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ["user"],
   data: function data() {
@@ -39266,10 +39264,8 @@ var render = function() {
                     _c(
                       "a",
                       {
-                        staticClass: "nav-link dropdown-toggle",
                         attrs: {
                           href: "#",
-                          id: "navbarDropdown",
                           role: "button",
                           "data-bs-toggle": "dropdown",
                           "aria-expanded": "false"
@@ -39286,10 +39282,7 @@ var render = function() {
                     _vm._v(" "),
                     _c(
                       "div",
-                      {
-                        staticClass: "dropdown-menu dropdown-menu-end",
-                        attrs: { "aria-labelledby": "navbarDropdown" }
-                      },
+                      { attrs: { "aria-labelledby": "navbarDropdown" } },
                       [
                         _c(
                           "a",
