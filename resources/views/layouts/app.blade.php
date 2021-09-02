@@ -27,9 +27,8 @@
 		<nav-bar user="{{auth()->user()}}"></nav-bar>
 		@endif
 
-		<main class="main">
-			@yield('content')
-		</main>
+		@yield('content')
+
 	</div>
 </body>
 

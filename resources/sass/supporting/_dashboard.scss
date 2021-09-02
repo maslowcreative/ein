@@ -1,0 +1,19 @@
+.qo-section {
+  margin-bottom: 10rem;
+}
+
+.options-grid {
+  --template: repeat(4, 1fr);
+  --gap: 90px;
+  margin-bottom: calc(-43px - 5rem);
+
+  .option-item {
+    height: 170px;
+    padding: 3rem;
+    text-align: center;
+    box-shadow: $box-sahdow;
+  }
+}
+
+// .dashboard-sections {
+// }
