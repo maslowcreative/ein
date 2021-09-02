@@ -1,15 +1,12 @@
-// Body
-$body-bg: #fff;
+// Colors
+$primary: #1dc7e1;
+$secondary: #595e6f;
+$dark: #555555;
 
 // Typography
 $font-family-sans-serif: "Open Sans", sans-serif;
 $font-size-base: 0.9rem;
 $line-height-base: 1.6;
-
-// Colors
-$primary: #1dc7e1;
-$secondary: #595e6f;
-$dark: #555555;
 
 // $indigo: #6574cd;
 // $purple: #9561e2;
@@ -32,3 +29,10 @@ $btn-focus-width: 0;
 
 $input-bg: #fafafa;
 $input-border-width: 0;
+
+$box-sahdow: 3px 0px 22px rgba(#000, 0.05);
+
+$grid-gutter-width: 2.125rem;
+
+// Body
+$body-bg: rgba($primary, 0.02);
