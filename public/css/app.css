@@ -1,5 +1,4 @@
 @import url(https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap);
-@import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css);
 @charset "UTF-8";
 /*!
  * Bootstrap v5.1.0 (https://getbootstrap.com/)
@@ -11175,6 +11174,7 @@ textarea.form-control-lg {
 .login-box-wrap {
   min-height: 100vh;
   place-content: center;
+  background-color: #fff;
 }
 .login-box-from {
   box-shadow: 3px 0px 22px 0px rgba(0, 0, 0, 0.05);
