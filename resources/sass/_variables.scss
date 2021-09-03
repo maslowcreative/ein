@@ -2,6 +2,9 @@
 $primary: #1dc7e1;
 $secondary: #595e6f;
 $dark: #555555;
+$light: #fafafa;
+
+$box-sahdow: 3px 0px 22px rgba(#000, 0.05);
 
 // Typography
 $font-family-sans-serif: "Open Sans", sans-serif;
@@ -29,10 +32,18 @@ $btn-focus-width: 0;
 
 $input-bg: #fafafa;
 $input-border-width: 0;
-
-$box-sahdow: 3px 0px 22px rgba(#000, 0.05);
+// $form-check-input-width: 1.125em;
+$form-check-input-bg: #fafafa;
+$form-check-input-border: none;
 
 $grid-gutter-width: 2.125rem;
 
+$card-spacer-y: 4.625rem;
+$card-spacer-x: 4.625rem;
+
+$table-cell-padding-y: 1.5rem;
+$table-cell-vertical-align: middle;
+
 // Body
 $body-bg: rgba($primary, 0.02);
+$body-color: #555;

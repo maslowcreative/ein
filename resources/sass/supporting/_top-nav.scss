@@ -1,6 +1,23 @@
 .navbar {
   box-shadow: $box-sahdow;
   margin-bottom: 4.375rem;
+
+  @include media-breakpoint-up(xl) {
+    padding-block: 2.5rem;
+
+    .nav-link {
+      font-size: 1.125rem;
+    }
+  }
+
+  .nav-link {
+    font-weight: bold;
+    color: #595e6f;
+
+    &:hover {
+      color: var(--bs-gray-dark);
+    }
+  }
 }
 
 .nav-logo {

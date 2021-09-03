@@ -9,7 +9,7 @@ require('./bootstrap');
 window.Vue = require('vue').default;
 
 
-//Routes
+// Routes
 import VueLaroute from 'vue-laroute';
 import routes from '../../public/js/laroute.js';
 
@@ -18,6 +18,9 @@ Vue.use(VueLaroute, {
     accessor: 'laroute', // Optional: the global variable for accessing the router
 });
 
+
+// configure Icon setting
+Vue.config.ignoredElements = [/^ion-/]
 
 /**
  * The following block of code may be used to automatically register your
