@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light bg-white">
+  <nav class="navbar navbar-expand-lg bg-white">
     <div class="container-fluid">
       <auth-logo class="nav-logo"></auth-logo>
       <button
@@ -22,7 +22,7 @@
             <a class="nav-link">My Account</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link">Bell</a>
+            <a class="nav-link"><ion-icon name="notifications"></ion-icon> </a>
           </li>
           <!-- Authentication Links -->
           <li class="nav-item" v-if="hasLogin">

@@ -1,15 +1,48 @@
 .btn {
+  white-space: nowrap;
+
   &-primary {
     color: $white;
 
-    &:hover {
+    &:hover,
+    &:active,
+    .btn-check:focus + &,
+    &:focus {
       color: $white;
       border-color: $secondary;
       background-color: $secondary;
     }
   }
+
+  &-light {
+    color: $primary;
+
+    &:hover,
+    &:active,
+    .btn-check:focus + &,
+    &:focus {
+      color: $white;
+      border-color: $secondary;
+      background-color: $secondary;
+    }
+  }
+
+  &.btn-icon {
+    display: inline-flex;
+    align-items: center;
+    line-height: 1;
+    padding-block: 0.67rem;
+  }
 }
 
+//
+.flip-h {
+  transform: scaleX(-1);
+}
+
+.flip-v {
+  transform: scaleY(-1);
+}
 //
 
 .form-control:not(.form-control-sm):not(.form-control-lg) {
@@ -33,4 +66,17 @@
 
 .card {
   box-shadow: $box-sahdow;
+  border: none;
+}
+
+.table {
+  font-size: 14px;
+
+  > :not(:last-child) > :last-child > * {
+    border-bottom-color: #e5e5e5;
+  }
+
+  th {
+    padding-bottom: 0.5rem;
+  }
 }
