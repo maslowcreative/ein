@@ -10,7 +10,7 @@
             <label for="email" class="col-form-label">E-mail Address</label>
             <div class="input-group-overlay">
               <div class="input-group-prepend-overlay">
-                <span class="input-group-text text-primary"><i class="far fa-envelope"></i></span>
+                <span class="input-group-text text-primary"><ion-icon name="mail-outline"></ion-icon></span>
               </div>
               <input
                 id="email"
@@ -30,7 +30,7 @@
             <label for="password" class="col-form-label">Password</label>
             <div class="input-group-overlay">
               <div class="input-group-prepend-overlay">
-                <span class="input-group-text text-primary"><i class="fas fa-lock-open"></i></span>
+                <span class="input-group-text text-primary"><ion-icon name="lock-open-outline"></ion-icon></span>
               </div>
               <input
                 id="password"
@@ -60,10 +60,10 @@
 
 <script>
 import Form from "vform"
-import AuthLogo from "./AuthLogo";
+import AuthLogo from "./AuthLogo"
 export default {
-    components: {AuthLogo},
-    data() {
+  components: { AuthLogo },
+  data() {
     return {
       loader: false,
       homeUrl: null,

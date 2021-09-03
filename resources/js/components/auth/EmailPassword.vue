@@ -16,7 +16,7 @@
             <!-- <label for="email" class="col-form-label">E-Mail Address</label> -->
             <div class="input-group-overlay">
               <div class="input-group-prepend-overlay">
-                <span class="input-group-text text-primary"><i class="far fa-envelope"></i></span>
+                <span class="input-group-text text-primary"><ion-icon name="mail-outline"></ion-icon></span>
               </div>
               <input
                 id="email"
@@ -48,21 +48,21 @@
 </template>
 <script>
 import Form from "vform"
-import AuthLogo from "./AuthLogo";
+import AuthLogo from "./AuthLogo"
 export default {
-    components: {AuthLogo},
-    data() {
-        return {
-          loader: false,
-          message: null,
-          loginUrl: null,
-          form: new Form({
-            email: null,
-          }),
-        }
-    },
+  components: { AuthLogo },
+  data() {
+    return {
+      loader: false,
+      message: null,
+      loginUrl: null,
+      form: new Form({
+        email: null,
+      }),
+    }
+  },
   mounted() {
-        this.loginUrl = this.laroute.route('login');
+    this.loginUrl = this.laroute.route("login")
   },
   methods: {
     emailResetLink() {
