@@ -3,31 +3,31 @@
 @section('content')
 <main class="main px-5">
   <div class="container-fluid">
-    <h1>{{ __('Dashboard') }}</h1>
+    <h1 class="h2 mb-4 fw-bold pb-2">{{ __('Dashboard') }}</h1>
     {{-- Quick Options Section --}}
-    <div class="qo-section bg-primary p-5 text-white">
-      <h4 class="fw-blod">Quick Options</h4>
+    <div class="qo-section bg-primary text-white">
+      <h4 class="fw-bold">Quick Options</h4>
       <p>Choose one of the quick options for easier navigation</p>
 
       <div class="grid options-grid">
         <div class="bg-white option-item">
           <a href="#">
-            <ion-icon name="person-add-outline"></ion-icon> Add New User
+            <ion-icon name="person-add-outline" class="option-item-icon"></ion-icon> Add New User
           </a>
         </div>
         <div class="bg-white option-item">
           <a href="#">
-            <span>
-              <ion-icon name="person-add-outline"></ion-icon>
-              <ion-icon name="cog-outline"></ion-icon>
+            <span class="admin-icon">
+              <ion-icon name="person-add-outline" class="option-item-icon"></ion-icon>
+              <ion-icon name="cog-outline" class="icon-cog"></ion-icon>
             </span> Add New Admin
           </a>
         </div>
         <div class="bg-white option-item"><a href="#">
-            <ion-icon name="push-outline"></ion-icon> Bulk Upload
+            <ion-icon name="push-outline" class="option-item-icon"></ion-icon> Bulk Upload
           </a></div>
         <div class="bg-white option-item"><a href="#">
-            <ion-icon name="push-outline" class="flip-v"></ion-icon>Bulk Download
+            <ion-icon name="push-outline" class="flip-v option-item-icon"></ion-icon>Bulk Download
           </a></div>
       </div>
     </div>
@@ -188,18 +188,18 @@
                   </tr>
                 </tbody>
               </table>
-              <div class="text-end">
+              <div class="text-end mt-5">
                 <button class="btn btn-primary">Download Selected</button>
                 <button class="btn btn-light">Upload Selected</button>
               </div>
-              <div class="mt-4">
+              <div class="mt-5">
                 <nav aria-label="Page navigation">
                   <ul class="pagination justify-content-center">
-                    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
                     <li class="page-item"><a class="page-link" href="#">1</a></li>
                     <li class="page-item"><a class="page-link" href="#">2</a></li>
                     <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                    <li class="page-item"><a class="page-link" href="#">...</a></li>
+                    <li class="page-item"><a class="page-link" href="#">100</a></li>
                   </ul>
                 </nav>
               </div>
@@ -230,30 +230,20 @@
             <table class="table">
               <thead>
                 <tr>
-                  <th scope="col"></th>
-                  <th scope="col">Claim Number</th>
-                  <th scope="col">Status</th>
-                  <th scope="col">Details</th>
+                  <th scope="col">User</th>
+                  <th scope="col">Plan</th>
                   <th scope="col">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <td>
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" value="" id="defaultCheck3">
+                    <div class="fw-bold">
+                      Users Name
+                      <span class="d-block text-primary fw-normal">Participant</span>
                     </div>
                   </td>
-                  <td>
-                    <div>
-                      Claim #12131
-                      <span>Provider’s Name</span>
-                    </div>
-                  </td>
-                  <td>
-                    Claim Status
-                  </td>
-                  <td><button class="btn btn-light">View more</button></td>
+                  <td><button class="btn btn-light btn-sm">Edit Plan</button></td>
                   <td>
                     <div class="d-flex flex-nowrap justify-content-around">
                       <button class="btn btn-link p-0">

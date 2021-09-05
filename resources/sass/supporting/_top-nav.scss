@@ -5,6 +5,10 @@
   @include media-breakpoint-up(xl) {
     padding-block: 2.5rem;
 
+    .nav-item {
+      margin-left: 3rem;
+    }
+
     .nav-link {
       font-size: 1.125rem;
     }
@@ -12,7 +16,7 @@
 
   .nav-link {
     font-weight: bold;
-    color: #595e6f;
+    color: var(--bs-secondary);
 
     &:hover {
       color: var(--bs-gray-dark);
@@ -24,5 +28,23 @@
   img {
     max-height: 65px;
     width: auto;
+  }
+}
+
+.notification-icon {
+  font-size: 1.75rem;
+  color: rgba(89, 94, 111, 0.3);
+  position: relative;
+
+  .notification-alrt {
+    color: $primary;
+    font-size: 0.5rem;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  .nav-link &:hover {
+    color: var(--bs-secondary);
   }
 }

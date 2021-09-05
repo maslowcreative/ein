@@ -14,7 +14,7 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
           <li class="nav-item">
             <a class="nav-link">Dashboard</a>
           </li>
@@ -22,7 +22,12 @@
             <a class="nav-link">My Account</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link"><ion-icon name="notifications"></ion-icon> </a>
+            <a class="nav-link">
+              <span class="notification-icon">
+                <ion-icon name="notifications" class="notification-icon"></ion-icon>
+                <ion-icon name="ellipse" class="notification-alrt"></ion-icon>
+              </span>
+            </a>
           </li>
           <!-- Authentication Links -->
           <li class="nav-item" v-if="hasLogin">
@@ -31,14 +36,17 @@
 
           <li class="nav-item dropdown" v-if="userData">
             <a
-              class="nav-link dropdown-toggle"
+              class="nav-link"
               href="#"
               id="navbarDropdown"
               role="button"
               data-bs-toggle="dropdown"
               aria-expanded="false"
             >
-              {{ userData.name }}
+              <!-- {{ userData.name }} -->
+              <div class="avatar">
+                <img :src="'/images/avatar.png'" width="50" height="50" alt="" />
+              </div>
             </a>
             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
               <a
