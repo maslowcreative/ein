@@ -57,6 +57,12 @@
 }
 
 //
+
+.dropdown-menu {
+  box-shadow: $box-shadow;
+}
+
+//
 .grid {
   display: grid;
   gap: var(--gap, 32px);
@@ -65,7 +71,7 @@
 }
 
 .card {
-  box-shadow: $box-sahdow;
+  box-shadow: $box-shadow;
   border: none;
 }
 
@@ -78,5 +84,15 @@
 
   th {
     padding-bottom: 0.5rem;
+  }
+}
+
+//
+
+.card-right-btns {
+  @extend .d-flex, .align-items-center;
+
+  > * + * {
+    margin-left: 1.5rem;
   }
 }

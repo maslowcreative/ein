@@ -627,8 +627,8 @@ progress {
 .container-md,
 .container-sm {
   width: 100%;
-  padding-right: var(--bs-gutter-x, 1.0625rem);
-  padding-left: var(--bs-gutter-x, 1.0625rem);
+  padding-right: var(--bs-gutter-x, 0.75rem);
+  padding-left: var(--bs-gutter-x, 0.75rem);
   margin-right: auto;
   margin-left: auto;
 }
@@ -659,7 +659,7 @@ progress {
   }
 }
 .row {
-  --bs-gutter-x: 2.125rem;
+  --bs-gutter-x: 1.5rem;
   --bs-gutter-y: 0;
   display: flex;
   flex-wrap: wrap;
@@ -3525,7 +3525,7 @@ textarea.form-control-lg {
   list-style: none;
   background-color: #fff;
   background-clip: padding-box;
-  border: 1px solid rgba(0, 0, 0, 0.15);
+  border: 0 solid rgba(0, 0, 0, 0.15);
 }
 .dropdown-menu[data-bs-popper] {
   top: 100%;
@@ -4530,7 +4530,7 @@ textarea.form-control-lg {
 }
 
 .card-group > .card {
-  margin-bottom: 1.0625rem;
+  margin-bottom: 0.75rem;
 }
 @media (min-width: 576px) {
   .card-group {
@@ -5197,7 +5197,7 @@ textarea.form-control-lg {
   background-color: rgba(255, 255, 255, 0.85);
   background-clip: padding-box;
   border: 1px solid rgba(0, 0, 0, 0.1);
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  box-shadow: 3px 0px 22px rgba(0, 0, 0, 0.05);
 }
 .toast.showing {
   opacity: 0;
@@ -5214,7 +5214,7 @@ textarea.form-control-lg {
   pointer-events: none;
 }
 .toast-container > :not(:last-child) {
-  margin-bottom: 1.0625rem;
+  margin-bottom: 0.75rem;
 }
 
 .toast-header {
@@ -6440,7 +6440,7 @@ textarea.form-control-lg {
   display: table-cell !important;
 }
 
-.d-flex {
+.d-flex, .card-right-btns {
   display: flex !important;
 }
 
@@ -6453,7 +6453,7 @@ textarea.form-control-lg {
 }
 
 .shadow {
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+  box-shadow: 3px 0px 22px rgba(0, 0, 0, 0.05) !important;
 }
 
 .shadow-sm {
@@ -6812,7 +6812,7 @@ textarea.form-control-lg {
   align-items: flex-end !important;
 }
 
-.align-items-center {
+.align-items-center, .card-right-btns {
   align-items: center !important;
 }
 
@@ -11034,6 +11034,10 @@ textarea.form-control-lg {
   color: #dc3545;
 }
 
+.dropdown-menu {
+  box-shadow: 3px 0px 22px rgba(0, 0, 0, 0.05);
+}
+
 .grid {
   display: grid;
   gap: var(--gap, 32px);
@@ -11055,6 +11059,10 @@ textarea.form-control-lg {
 }
 .table th {
   padding-bottom: 0.5rem;
+}
+
+.card-right-btns > * + * {
+  margin-left: 1.5rem;
 }
 
 .navbar {
@@ -11119,11 +11127,13 @@ textarea.form-control-lg {
   box-shadow: 3px 0px 22px rgba(0, 0, 0, 0.05);
 }
 
-.option-item a {
+.option-item {
+  background-color: var(--bs-white);
   font-size: 1.125rem;
   font-weight: bold;
   text-decoration: none;
   color: var(--bs-dark);
+  transition: all 0.3s ease-out;
 }
 .option-item .option-item-icon {
   font-size: 3.125rem;
@@ -11131,14 +11141,76 @@ textarea.form-control-lg {
   margin: 0 auto 1.5rem;
   line-height: 1;
   color: var(--bs-primary);
+  transition: all 0.3s ease-out;
+}
+.option-item:hover {
+  background-color: var(--bs-dark);
+  color: var(--bs-white);
+}
+.option-item:hover .option-item-icon {
+  color: var(--bs-white);
+}
+.option-item:hover .admin-icon .icon-cog {
+  color: var(--bs-white);
+  background-color: var(--bs-dark);
 }
 .option-item .admin-icon {
   position: relative;
 }
 .option-item .admin-icon .icon-cog {
   position: absolute;
-  right: 0;
-  top: 0;
+  left: 5px;
+  top: 22px;
+  background-color: var(--bs-white);
+  border-radius: 50%;
+  font-size: 22px;
+  color: var(--bs-primary);
+  transition: all 0.3s ease-out;
+}
+
+@media (min-width: 1400px) {
+  .addUserPopup {
+    padding: 3.5rem 4.5rem;
+  }
+}
+.addUserPopup .addUser {
+  padding: 3rem 0 0;
+}
+.addUserPopup .stepList {
+  list-style: none;
+  padding: 0;
+}
+.addUserPopup .stepList li + li {
+  margin-top: 3.125rem;
+}
+.addUserPopup .stepList li a {
+  text-decoration: none;
+}
+.addUserPopup .stepList li a:hover {
+  color: inherit;
+  text-decoration: none;
+}
+.addUserPopup .stepList li a:hover .step-number {
+  background-color: var(--bs-primary);
+  color: #fff;
+}
+.addUserPopup .stepList li a .step-text {
+  color: var(--bs-gray-500);
+}
+.addUserPopup .stepList li a h6, .addUserPopup .stepList li a .h6 {
+  color: var(--bs-dark);
+}
+.addUserPopup .stepList li a .step-number {
+  width: 55px;
+  height: 55px;
+  display: inline-flex;
+  background-color: var(--bs-light);
+  color: var(--bs-primary);
+  justify-content: center;
+  align-items: center;
+  font-size: 1.125rem;
+  font-weight: 500;
+  margin-right: 1.25rem;
 }
 
 .input-group-overlay {
@@ -11220,7 +11292,7 @@ textarea.form-control-lg {
   background-color: #fff;
 }
 .login-box-from {
-  box-shadow: 3px 0px 22px 0px rgba(0, 0, 0, 0.05);
+  box-shadow: 3px 0px 22px rgba(0, 0, 0, 0.05);
   padding: 2.5rem;
   margin-block: 2.5rem;
 }
