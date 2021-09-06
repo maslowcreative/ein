@@ -2160,7 +2160,7 @@ progress {
 .col-form-label-lg {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
-  font-size: 1.25rem;
+  font-size: 1.125rem;
 }
 
 .col-form-label-sm {
@@ -2344,7 +2344,7 @@ progress {
 .form-control-lg {
   min-height: calc(1.6em + 1rem);
   padding: 0.5rem 1rem;
-  font-size: 1.25rem;
+  font-size: 1.125rem;
 }
 .form-control-lg::-webkit-file-upload-button {
   padding: 0.5rem 1rem;
@@ -2444,7 +2444,7 @@ textarea.form-control-lg {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
   padding-left: 1rem;
-  font-size: 1.25rem;
+  font-size: 1.125rem;
 }
 
 .form-check {
@@ -2754,7 +2754,7 @@ textarea.form-control-lg {
 .input-group-lg > .input-group-text,
 .input-group-lg > .btn {
   padding: 0.5rem 1rem;
-  font-size: 1.25rem;
+  font-size: 1.125rem;
 }
 
 .input-group-sm > .form-control,
@@ -3441,7 +3441,7 @@ textarea.form-control-lg {
 
 .btn-lg, .btn-group-lg > .btn {
   padding: 0.5rem 1rem;
-  font-size: 1.25rem;
+  font-size: 1.125rem;
   border-radius: 0;
 }
 
@@ -10995,7 +10995,7 @@ textarea.form-control-lg {
 .btn-primary {
   color: #fff;
 }
-.btn-primary:hover, .btn-primary:active, .btn-check:focus + .btn-primary, .btn-primary:focus {
+.btn-primary:hover, .btn-primary:active, .btn-check:focus + .btn-primary, .btn-check:checked + .btn-primary, .btn-check:active + .btn-primary, .btn-primary:focus {
   color: #fff;
   border-color: #595e6f;
   background-color: #595e6f;
@@ -11003,7 +11003,7 @@ textarea.form-control-lg {
 .btn-light {
   color: #1dc7e1;
 }
-.btn-light:hover, .btn-light:active, .btn-check:focus + .btn-light, .btn-light:focus {
+.btn-light:hover, .btn-light:active, .btn-check:focus + .btn-light, .btn-check:checked + .btn-light, .btn-check:active + .btn-light, .btn-light:focus {
   color: #fff;
   border-color: #595e6f;
   background-color: #595e6f;
@@ -11168,6 +11168,20 @@ textarea.form-control-lg {
   transition: all 0.3s ease-out;
 }
 
+@media (min-width: 1200px) {
+  .modal-xxl {
+    max-width: 1260px;
+  }
+}
+
+.mw420 {
+  max-width: 420px;
+}
+
+.mw290 {
+  max-width: 290px;
+}
+
 @media (min-width: 1400px) {
   .addUserPopup {
     padding: 3.5rem 4.5rem;
@@ -11175,6 +11189,13 @@ textarea.form-control-lg {
 }
 .addUserPopup .addUser {
   padding: 3rem 0 0;
+}
+.addUserPopup .userType {
+  gap: 30px;
+}
+.addUserPopup .userType .btn-lg, .addUserPopup .userType .btn-group-lg > .btn {
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
 }
 .addUserPopup .stepList {
   list-style: none;
@@ -11211,6 +11232,31 @@ textarea.form-control-lg {
   font-size: 1.125rem;
   font-weight: 500;
   margin-right: 1.25rem;
+}
+.addUserPopup .step2 .row {
+  --bs-gutter-x: 50px;
+}
+.addUserPopup .step2 .form-label {
+  font-weight: bold;
+}
+
+.participant-card + .participant-card {
+  margin-top: 0.5rem;
+}
+
+.participant-name h6, .participant-name .h6 {
+  font-size: 14px;
+  margin-bottom: 0;
+}
+.participant-name span {
+  font-size: 10px;
+}
+
+.participant-remove {
+  font-size: 1rem;
+}
+.participant-remove:hover {
+  color: var(--bs-danger);
 }
 
 .input-group-overlay {
@@ -11278,7 +11324,7 @@ textarea.form-control-lg {
 .input-group-lg > .input-group-prepend-overlay > .input-group-text,
 .input-group-lg > .input-group-append-overlay > .input-group-text {
   padding: 0.5rem 1rem;
-  font-size: 1.25rem;
+  font-size: 1.125rem;
 }
 
 .login-box {

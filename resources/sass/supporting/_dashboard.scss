@@ -70,6 +70,21 @@
 }
 
 // Add new User popup
+
+.modal-xxl {
+  @include media-breakpoint-up(xl) {
+    max-width: 1260px;
+  }
+}
+
+.mw420 {
+  max-width: 420px;
+}
+
+.mw290 {
+  max-width: 290px;
+}
+
 .addUserPopup {
   @include media-breakpoint-up(xxl) {
     padding: 3.5rem 4.5rem;
@@ -77,6 +92,15 @@
 
   .addUser {
     padding: 3rem 0 0;
+  }
+
+  .userType {
+    gap: 30px;
+
+    .btn-lg {
+      padding-top: 1.25rem;
+      padding-bottom: 1.25rem;
+    }
   }
 
   .stepList {
@@ -125,4 +149,40 @@
       }
     }
   }
+
+  .step2 {
+    .row {
+      --bs-gutter-x: 50px;
+    }
+
+    .form-label {
+      font-weight: bold;
+    }
+  }
 }
+
+.participant-card {
+  & + & {
+    margin-top: 0.5rem;
+  }
+}
+
+.participant-name {
+  h6 {
+    font-size: 14px;
+    margin-bottom: 0;
+  }
+  span {
+    font-size: 10px;
+  }
+}
+
+.participant-remove {
+  font-size: 1rem;
+
+  &:hover {
+    color: var(--bs-danger);
+  }
+}
+
+// .emailRequest {}
