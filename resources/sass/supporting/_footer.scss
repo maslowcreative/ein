@@ -1,9 +1,7 @@
 .site-footer {
-  --bs-body-font-size: 1.125rem;
-
   background-color: $white;
   box-shadow: $box-shadow;
-  margin-top: 4.5rem;
+  margin-top: 2.5rem;
 
   a {
     font-weight: bold;
@@ -13,5 +11,11 @@
     &:hover {
       color: var(--bs-primary);
     }
+  }
+
+  @include media-breakpoint-up(md) {
+    --bs-body-font-size: 1.125rem;
+
+    margin-top: 4.5rem;
   }
 }

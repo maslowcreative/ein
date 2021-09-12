@@ -72,6 +72,18 @@
   min-height: 3.25rem;
 }
 
+.form-switch .form-check-input {
+  width: 4.375em;
+  height: 2.125em;
+  border-radius: 50px;
+  box-shadow: $box-shadow;
+  background-color: var(--bs-gray-300);
+
+  &:checked {
+    background-color: var(--bs-primary);
+  }
+}
+
 .invalid-msg {
   width: 100%;
   margin-top: 0.25rem;
@@ -100,6 +112,21 @@
 .card {
   box-shadow: $box-shadow;
   border: none;
+
+  .card-body {
+    @include media-breakpoint-up(xxl) {
+      padding: 4.625rem;
+    }
+  }
+}
+
+.table-x-scroll {
+  overflow-x: auto;
+  margin-top: 2rem;
+
+  @include media-breakpoint-up(xxl) {
+    margin-top: 3.75rem;
+  }
 }
 
 .table {
@@ -130,11 +157,3 @@
 }
 
 //
-
-.form-switch {
-  .form-check-input {
-    width: 4.375em;
-    height: 2.125em;
-    border-radius: 50px;
-  }
-}

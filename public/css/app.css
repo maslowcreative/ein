@@ -4467,7 +4467,7 @@ textarea.form-control-lg {
 
 .card-body {
   flex: 1 1 auto;
-  padding: 4.625rem 4.625rem;
+  padding: 1.875rem 1.875rem;
 }
 
 .card-title {
@@ -4484,24 +4484,24 @@ textarea.form-control-lg {
 }
 
 .card-link + .card-link {
-  margin-left: 4.625rem;
+  margin-left: 1.875rem;
 }
 
 .card-header {
-  padding: 2.3125rem 4.625rem;
+  padding: 0.9375rem 1.875rem;
   margin-bottom: 0;
   background-color: rgba(0, 0, 0, 0.03);
   border-bottom: 1px solid rgba(0, 0, 0, 0.125);
 }
 .card-footer {
-  padding: 2.3125rem 4.625rem;
+  padding: 0.9375rem 1.875rem;
   background-color: rgba(0, 0, 0, 0.03);
   border-top: 1px solid rgba(0, 0, 0, 0.125);
 }
 .card-header-tabs {
-  margin-right: -2.3125rem;
-  margin-bottom: -2.3125rem;
-  margin-left: -2.3125rem;
+  margin-right: -0.9375rem;
+  margin-bottom: -0.9375rem;
+  margin-left: -0.9375rem;
   border-bottom: 0;
 }
 .card-header-tabs .nav-link.active {
@@ -4510,8 +4510,8 @@ textarea.form-control-lg {
 }
 
 .card-header-pills {
-  margin-right: -2.3125rem;
-  margin-left: -2.3125rem;
+  margin-right: -0.9375rem;
+  margin-left: -0.9375rem;
 }
 
 .card-img-overlay {
@@ -10990,10 +10990,9 @@ textarea.form-control-lg {
   }
 }
 .site-footer {
-  --bs-body-font-size: 1.125rem;
   background-color: #fff;
   box-shadow: 3px 0px 22px rgba(0, 0, 0, 0.05);
-  margin-top: 4.5rem;
+  margin-top: 2.5rem;
 }
 .site-footer a {
   font-weight: bold;
@@ -11002,6 +11001,12 @@ textarea.form-control-lg {
 }
 .site-footer a:hover {
   color: var(--bs-primary);
+}
+@media (min-width: 768px) {
+  .site-footer {
+    --bs-body-font-size: 1.125rem;
+    margin-top: 4.5rem;
+  }
 }
 
 .btn {
@@ -11056,6 +11061,17 @@ textarea.form-control-lg {
   min-height: 3.25rem;
 }
 
+.form-switch .form-check-input {
+  width: 4.375em;
+  height: 2.125em;
+  border-radius: 50px;
+  box-shadow: 3px 0px 22px rgba(0, 0, 0, 0.05);
+  background-color: var(--bs-gray-300);
+}
+.form-switch .form-check-input:checked {
+  background-color: var(--bs-primary);
+}
+
 .invalid-msg {
   width: 100%;
   margin-top: 0.25rem;
@@ -11083,6 +11099,21 @@ textarea.form-control-lg {
   box-shadow: 3px 0px 22px rgba(0, 0, 0, 0.05);
   border: none;
 }
+@media (min-width: 1400px) {
+  .card .card-body {
+    padding: 4.625rem;
+  }
+}
+
+.table-x-scroll {
+  overflow-x: auto;
+  margin-top: 2rem;
+}
+@media (min-width: 1400px) {
+  .table-x-scroll {
+    margin-top: 3.75rem;
+  }
+}
 
 .table {
   font-size: 14px;
@@ -11102,26 +11133,9 @@ textarea.form-control-lg {
   margin-left: 1.5rem;
 }
 
-.form-switch .form-check-input {
-  width: 4.375em;
-  height: 2.125em;
-  border-radius: 50px;
-}
-
 .navbar {
   box-shadow: 3px 0px 22px rgba(0, 0, 0, 0.05);
-  margin-bottom: 4.375rem;
-}
-@media (min-width: 1200px) {
-  .navbar {
-    padding-block: 2.5rem;
-  }
-  .navbar .nav-item {
-    margin-left: 3rem;
-  }
-  .navbar .nav-link {
-    font-size: 1.125rem;
-  }
+  margin-bottom: 2.375rem;
 }
 .navbar .nav-link {
   font-weight: bold;
@@ -11129,6 +11143,18 @@ textarea.form-control-lg {
 }
 .navbar .nav-link:hover {
   color: var(--bs-gray-dark);
+}
+@media (min-width: 1200px) {
+  .navbar {
+    padding: 2.5rem 0;
+    margin-bottom: 4.375rem;
+  }
+  .navbar .nav-item {
+    margin-left: 3rem;
+  }
+  .navbar .nav-link {
+    font-size: 1.125rem;
+  }
 }
 
 .nav-logo img {
@@ -11154,8 +11180,15 @@ textarea.form-control-lg {
 
 .qo-section {
   margin-bottom: 10rem;
-  padding: 4.5rem;
+  padding: 2.5rem;
   padding-bottom: 10rem;
+}
+@media (min-width: 1400px) {
+  .qo-section {
+    margin-bottom: 10rem;
+    padding: 4.5rem;
+    padding-bottom: 10rem;
+  }
 }
 
 .options-grid {
@@ -11164,15 +11197,15 @@ textarea.form-control-lg {
   margin-bottom: calc(-43px - 13rem);
   margin-top: 3rem;
 }
-@media (min-width: 1400px) {
-  .options-grid {
-    --gap: 90px;
-  }
-}
 .options-grid .option-item {
   padding: 3rem 1rem;
   text-align: center;
   box-shadow: 3px 0px 22px rgba(0, 0, 0, 0.05);
+}
+@media (min-width: 1400px) {
+  .options-grid {
+    --gap: 90px;
+  }
 }
 
 .option-item {
@@ -11204,18 +11237,21 @@ textarea.form-control-lg {
 }
 .option-item .admin-icon {
   position: relative;
+  display: inline-flex;
 }
 .option-item .admin-icon .icon-cog {
   position: absolute;
-  left: 5px;
-  top: 22px;
+  right: -10%;
+  top: 44%;
   background-color: var(--bs-white);
   border-radius: 50%;
-  font-size: 22px;
+  font-size: 44%;
   color: var(--bs-primary);
   transition: all 0.3s ease-out;
 }
-
+.modal-xxl {
+  max-width: 100%;
+}
 @media (min-width: 1200px) {
   .modal-xxl {
     max-width: 1260px;
