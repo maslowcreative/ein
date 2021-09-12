@@ -10989,6 +10989,21 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+.site-footer {
+  --bs-body-font-size: 1.125rem;
+  background-color: #fff;
+  box-shadow: 3px 0px 22px rgba(0, 0, 0, 0.05);
+  margin-top: 4.5rem;
+}
+.site-footer a {
+  font-weight: bold;
+  text-decoration: none;
+  color: var(--bs-body-color);
+}
+.site-footer a:hover {
+  color: var(--bs-primary);
+}
+
 .btn {
   white-space: nowrap;
 }
@@ -11004,9 +11019,9 @@ textarea.form-control-lg {
   color: #1dc7e1;
 }
 .btn-light:hover, .btn-light:active, .btn-check:focus + .btn-light, .btn-check:checked + .btn-light, .btn-check:active + .btn-light, .btn-light:focus {
-  color: #fff;
-  border-color: #595e6f;
-  background-color: #595e6f;
+  color: var(--bs-white);
+  border-color: var(--bs-secondary);
+  background-color: var(--bs-secondary);
 }
 .btn.btn-icon {
   display: inline-flex;
@@ -11023,6 +11038,20 @@ textarea.form-control-lg {
   transform: scaleY(-1);
 }
 
+.fs-sm {
+  --bs-body-font-size: 0.75rem;
+  font-size: var(--bs-body-font-size);
+}
+
+.fs-lg {
+  --bs-body-font-size: 1.25rem;
+  font-size: var(--bs-body-font-size);
+}
+.fs-lg.btn,
+.fs-lg .btn {
+  font-size: var(--bs-body-font-size);
+}
+
 .form-control:not(.form-control-sm):not(.form-control-lg) {
   min-height: 3.25rem;
 }
@@ -11032,6 +11061,10 @@ textarea.form-control-lg {
   margin-top: 0.25rem;
   font-size: 0.875em;
   color: #dc3545;
+}
+
+.badge-alrt {
+  padding: 0.3125rem;
 }
 
 .dropdown-menu {
@@ -11060,9 +11093,19 @@ textarea.form-control-lg {
 .table th {
   padding-bottom: 0.5rem;
 }
+.table th:not(.not-center),
+.table td:not(.not-center) {
+  text-align: center;
+}
 
 .card-right-btns > * + * {
   margin-left: 1.5rem;
+}
+
+.form-switch .form-check-input {
+  width: 4.375em;
+  height: 2.125em;
+  border-radius: 50px;
 }
 
 .navbar {
@@ -11117,12 +11160,17 @@ textarea.form-control-lg {
 
 .options-grid {
   --template: repeat(4, 1fr);
-  --gap: 90px;
+  --gap: 30px;
   margin-bottom: calc(-43px - 13rem);
   margin-top: 3rem;
 }
+@media (min-width: 1400px) {
+  .options-grid {
+    --gap: 90px;
+  }
+}
 .options-grid .option-item {
-  padding: 3rem;
+  padding: 3rem 1rem;
   text-align: center;
   box-shadow: 3px 0px 22px rgba(0, 0, 0, 0.05);
 }
@@ -11194,6 +11242,7 @@ textarea.form-control-lg {
   gap: 30px;
 }
 .addUserPopup .userType .btn-lg, .addUserPopup .userType .btn-group-lg > .btn {
+  --bs-secondary: #1dc7e1;
   padding-top: 1.25rem;
   padding-bottom: 1.25rem;
 }

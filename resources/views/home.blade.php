@@ -10,11 +10,11 @@
       <p>Choose one of the quick options for easier navigation</p>
 
       <div class="grid options-grid">
-        <a href="#" class="option-item">
+        <a href="#" class="option-item" data-bs-toggle="modal" data-bs-target="#exampleModal">
           <ion-icon name="person-add-outline" class="option-item-icon"></ion-icon>
           Add New User
         </a>
-        <a href="#" class="option-item" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        <a href="#" class="option-item">
           <span class="admin-icon">
             <ion-icon name="person-add-outline" class="option-item-icon"></ion-icon>
             <ion-icon name="cog-outline" class="icon-cog"></ion-icon>
@@ -42,19 +42,43 @@
                 <small class="text-primary">9999 Invoices/Claims</small>
               </div>
               <div class="card-right-btns">
-                <button class="btn btn-primary">All Claims</button>
+                <button class="btn btn-primary">
+                  All Claims
+                </button>
+                <button class="btn btn-light position-relative">
+                  Pending Approval
+                  <span
+                    class="position-absolute top-0 start-100 translate-middle badge badge-alrt border border-light rounded-circle bg-primary"><span
+                      class="visually-hidden">unread messages</span></span>
+                </button>
                 <div class="dropdown">
-                  <button class="btn btn-light" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
-                    aria-expanded="false">Pending Approval</button>
-                  <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
-                    <li><a class="dropdown-item" href="#">Action</a></li>
-                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                  <button class="btn btn-light btn-icon" type="button" id="filterDropdown1" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    <ion-icon name="funnel-outline"></ion-icon>
+                  </button>
+                  <div class="dropdown-menu dropdown-menu-end fs-sm" aria-labelledby="filterDropdown1">
+                    <div class="py-2 px-3">
+                      <div class="mb-3">
+                        <label class="form-label">Claim Status</label>
+                        <select class="form-select form-select-sm">
+                          <option selected>All</option>
+                          <option value="1">One</option>
+                          <option value="2">Two</option>
+                          <option value="3">Three</option>
+                        </select>
+                      </div>
+                      <div class="">
+                        <label class="form-label">Claim Status</label>
+                        <select class="form-select form-select-sm">
+                          <option selected>All</option>
+                          <option value="1">One</option>
+                          <option value="2">Two</option>
+                          <option value="3">Three</option>
+                        </select>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <button class="btn btn-light btn-icon">
-                  <ion-icon name="funnel-outline"></ion-icon>
-                </button>
               </div>
             </div>
             <div>
@@ -62,7 +86,7 @@
                 <thead>
                   <tr>
                     <th scope="col"></th>
-                    <th scope="col">Claim Number</th>
+                    <th scope="col" class="not-center">Claim Number</th>
                     <th scope="col">Status</th>
                     <th scope="col">Details</th>
                     <th scope="col">Actions</th>
@@ -73,7 +97,7 @@
                     <td>
                       <input class="form-check-input" type="checkbox" value="" aria-label="...">
                     </td>
-                    <td>
+                    <td class="not-center">
                       <div class="fw-bold">
                         Claim #12131
                         <span class="d-block text-primary fw-normal">Provider’s Name</span>
@@ -84,11 +108,11 @@
                     </td>
                     <td><button class="btn btn-light btn-sm">View more</button></td>
                     <td>
-                      <div class="d-flex flex-nowrap justify-content-around">
-                        <button class="btn btn-link p-0">
+                      <div class="d-inline-flex flex-nowrap align-items-center justify-content-around btn-group fs-lg">
+                        <button class="btn btn-link p-0 mx-1">
                           <ion-icon name="push-outline" class="flip-v"></ion-icon>
                         </button>
-                        <button class="btn btn-link p-0">
+                        <button class="btn btn-link p-0 mx-1">
                           <ion-icon name="document-attach-outline"></ion-icon>
                         </button>
                       </div>
@@ -98,7 +122,7 @@
                     <td>
                       <input class="form-check-input" type="checkbox" value="" aria-label="...">
                     </td>
-                    <td>
+                    <td class="not-center">
                       <div class="fw-bold">
                         Claim #12131
                         <span class="d-block text-primary fw-normal">Provider’s Name</span>
@@ -109,11 +133,11 @@
                     </td>
                     <td><button class="btn btn-light btn-sm">View more</button></td>
                     <td>
-                      <div class="d-flex flex-nowrap justify-content-around">
-                        <button class="btn btn-link p-0">
+                      <div class="d-inline-flex flex-nowrap align-items-center justify-content-around btn-group fs-lg">
+                        <button class="btn btn-link p-0 mx-1">
                           <ion-icon name="push-outline" class="flip-v"></ion-icon>
                         </button>
-                        <button class="btn btn-link p-0">
+                        <button class="btn btn-link p-0 mx-1">
                           <ion-icon name="document-attach-outline"></ion-icon>
                         </button>
                       </div>
@@ -123,7 +147,7 @@
                     <td>
                       <input class="form-check-input" type="checkbox" value="" aria-label="...">
                     </td>
-                    <td>
+                    <td class="not-center">
                       <div class="fw-bold">
                         Claim #12131
                         <span class="d-block text-primary fw-normal">Provider’s Name</span>
@@ -134,11 +158,11 @@
                     </td>
                     <td><button class="btn btn-light btn-sm">View more</button></td>
                     <td>
-                      <div class="d-flex flex-nowrap justify-content-around">
-                        <button class="btn btn-link p-0">
+                      <div class="d-inline-flex flex-nowrap align-items-center justify-content-around btn-group fs-lg">
+                        <button class="btn btn-link p-0 mx-1">
                           <ion-icon name="push-outline" class="flip-v"></ion-icon>
                         </button>
-                        <button class="btn btn-link p-0">
+                        <button class="btn btn-link p-0 mx-1">
                           <ion-icon name="document-attach-outline"></ion-icon>
                         </button>
                       </div>
@@ -148,7 +172,7 @@
                     <td>
                       <input class="form-check-input" type="checkbox" value="" aria-label="...">
                     </td>
-                    <td>
+                    <td class="not-center">
                       <div class="fw-bold">
                         Claim #12131
                         <span class="d-block text-primary fw-normal">Provider’s Name</span>
@@ -159,11 +183,11 @@
                     </td>
                     <td><button class="btn btn-light btn-sm">View more</button></td>
                     <td>
-                      <div class="d-flex flex-nowrap justify-content-around">
-                        <button class="btn btn-link p-0">
+                      <div class="d-inline-flex flex-nowrap align-items-center justify-content-around btn-group fs-lg">
+                        <button class="btn btn-link p-0 mx-1">
                           <ion-icon name="push-outline" class="flip-v"></ion-icon>
                         </button>
-                        <button class="btn btn-link p-0">
+                        <button class="btn btn-link p-0 mx-1">
                           <ion-icon name="document-attach-outline"></ion-icon>
                         </button>
                       </div>
@@ -173,7 +197,7 @@
                     <td>
                       <input class="form-check-input" type="checkbox" value="" aria-label="...">
                     </td>
-                    <td>
+                    <td class="not-center">
                       <div class="fw-bold">
                         Claim #12131
                         <span class="d-block text-primary fw-normal">Provider’s Name</span>
@@ -184,11 +208,11 @@
                     </td>
                     <td><button class="btn btn-light btn-sm">View more</button></td>
                     <td>
-                      <div class="d-flex flex-nowrap justify-content-around">
-                        <button class="btn btn-link p-0">
+                      <div class="d-inline-flex flex-nowrap align-items-center justify-content-around btn-group fs-lg">
+                        <button class="btn btn-link p-0 mx-1">
                           <ion-icon name="push-outline" class="flip-v"></ion-icon>
                         </button>
-                        <button class="btn btn-link p-0">
+                        <button class="btn btn-link p-0 mx-1">
                           <ion-icon name="document-attach-outline"></ion-icon>
                         </button>
                       </div>
@@ -196,9 +220,9 @@
                   </tr>
                 </tbody>
               </table>
-              <div class="text-end mt-5">
-                <button class="btn btn-primary">Download Selected</button>
-                <button class="btn btn-light">Upload Selected</button>
+              <div class="mt-5 card-right-btns justify-content-end">
+                <button class="btn btn-light">Download Selected</button>
+                <button class="btn btn-primary">Upload Selected</button>
               </div>
               <div class="mt-5">
                 <nav aria-label="Page navigation">
@@ -227,37 +251,78 @@
                 <button class="btn btn-primary btn-icon">
                   <ion-icon name="add-outline"></ion-icon> Add New User
                 </button>
-                <button class="btn btn-light btn-icon">
-                  <ion-icon name="funnel-outline"></ion-icon>
-                </button>
-                <button class="btn btn-light btn-icon">
-                  <ion-icon name="search-outline"></ion-icon>
-                </button>
+                <div class="dropdown">
+                  <button class="btn btn-light btn-icon" type="button" id="userSearchDropdown" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    <ion-icon name="search-outline"></ion-icon>
+                  </button>
+                  <div class="dropdown-menu dropdown-menu-end fs-sm" aria-labelledby="userSearchDropdown">
+                    <div class="py-2 px-3">
+                      <div class="">
+                        <label class="form-label">Search for a User</label>
+                        <input type="text" class="form-control form-control-sm" placeholder="Enter Users Name">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="dropdown">
+                  <button class="btn btn-light btn-icon" type="button" id="filterDropdown2" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    <ion-icon name="funnel-outline"></ion-icon>
+                  </button>
+                  <div class="dropdown-menu dropdown-menu-end fs-sm" aria-labelledby="filterDropdown2">
+                    <div class="py-2 px-3">
+                      <div class="mb-3">
+                        <label class="form-label">Claim Status</label>
+                        <select class="form-select form-select-sm">
+                          <option selected>All</option>
+                          <option value="1">One</option>
+                          <option value="2">Two</option>
+                          <option value="3">Three</option>
+                        </select>
+                      </div>
+                      <div class="">
+                        <label class="form-label">Claim Status</label>
+                        <select class="form-select form-select-sm">
+                          <option selected>All</option>
+                          <option value="1">One</option>
+                          <option value="2">Two</option>
+                          <option value="3">Three</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
             <table class="table">
               <thead>
                 <tr>
-                  <th scope="col">User</th>
+                  <th scope="col" class="not-center">User</th>
                   <th scope="col">Plan</th>
                   <th scope="col">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td>
-                    <div class="fw-bold">
-                      Users Name
-                      <span class="d-block text-primary fw-normal">Participant</span>
+                  <td class="not-center">
+                    <div class="d-flex">
+                      <div class="me-4">
+                        <img :src="'/images/avatar.png'" width="50" height="50" alt="" />
+                      </div>
+                      <div class="fw-bold">
+                        Users Name
+                        <span class="d-block text-primary fw-normal">Participant</span>
+                      </div>
                     </div>
                   </td>
                   <td><button class="btn btn-light btn-sm">Edit Plan</button></td>
                   <td>
-                    <div class="d-flex flex-nowrap justify-content-around">
-                      <button class="btn btn-link p-0">
+                    <div class="d-inline-flex flex-nowrap align-items-center justify-content-around btn-group fs-lg">
+                      <button class="btn btn-link p-0 mx-1">
                         <ion-icon name="create-outline"></ion-icon>
                       </button>
-                      <button class="btn btn-link p-0">
+                      <button class="btn btn-link p-0 mx-1">
                         <ion-icon name="trash-outline"></ion-icon>
                       </button>
                     </div>
@@ -265,6 +330,17 @@
                 </tr>
               </tbody>
             </table>
+            <div class="mt-5">
+              <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-center">
+                  <li class="page-item"><a class="page-link" href="#">1</a></li>
+                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                  <li class="page-item"><a class="page-link" href="#">...</a></li>
+                  <li class="page-item"><a class="page-link" href="#">100</a></li>
+                </ul>
+              </nav>
+            </div>
           </div>
         </div>
         <div class="card">
@@ -276,12 +352,62 @@
               </div>
               <div class="card-right-btns">
                 <button class="btn btn-primary btn-icon">
-                  <ion-icon name="add-outline"></ion-icon> Sub-Admins
+                  <ion-icon name="add-outline"></ion-icon> Add New Admin
                 </button>
                 <button class="btn btn-light btn-icon">
                   <ion-icon name="search-outline"></ion-icon>
                 </button>
               </div>
+            </div>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col" class="not-center">Sub-Admin</th>
+                  <th scope="col">Enable/Disable Admin</th>
+                  <th scope="col">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="not-center">
+                    <div class="d-flex">
+                      <div class="me-4">
+                        <img :src="'/images/avatar.png'" width="50" height="50" alt="" />
+                      </div>
+                      <div class="fw-bold">
+                        Sub-admin Name
+                        <span class="d-block text-primary fw-normal">Participant</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="d-inline-block">
+                      <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                        <label class="form-check-label" for="flexSwitchCheckDefault"></label>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="d-inline-flex flex-nowrap align-items-center justify-content-around btn-group fs-lg">
+                      <button class="btn btn-link p-0 fs-16 mx-1">
+                        <ion-icon name="options-outline"></ion-icon>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="mt-5">
+              <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-center">
+                  <li class="page-item"><a class="page-link" href="#">1</a></li>
+                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                  <li class="page-item"><a class="page-link" href="#">...</a></li>
+                  <li class="page-item"><a class="page-link" href="#">100</a></li>
+                </ul>
+              </nav>
             </div>
           </div>
         </div>
@@ -346,7 +472,7 @@
             </div>
             <div class="col-md-7">
               {{-- Step 1 --}}
-              <div class="step1 mw420 mx-auto d-none">
+              <div class="step1 mw420 mx-auto">
                 <h6 class="mb-5">Choose your User Type</h6>
                 <div class="d-grid userType">
                   <div>
@@ -364,7 +490,7 @@
                 </div>
               </div>
               {{-- Step 2 --}}
-              <div class="step2 d-none">
+              <div class="step2">
                 <div class="row">
                   <div class="col-md-6">
                     <div class="mb-4">
@@ -415,7 +541,7 @@
                 </div>
               </div>
               {{-- Step 3 --}}
-              <div class="step3 mw290 mx-auto d-none">
+              <div class="step3 mw290 mx-auto">
                 <div class="mb-3">
                   <label for="homeAddress" class="form-label fw-bold">Home Address</label>
                   <textarea name="" id="" cols="30" rows="2" class="form-control" id="homeAddress" placeholder="Home Address 13, 
@@ -431,7 +557,7 @@
                 </div>
               </div>
               {{-- Step 4 --}}
-              <div class="step4 mw290 mx-auto d-none">
+              <div class="step4 mw290 mx-auto">
                 <div>
                   <div class="mb-3">
                     <label for="abnNumber" class="form-label fw-bold">ABN</label>

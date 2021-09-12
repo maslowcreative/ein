@@ -1,18 +1,26 @@
 .qo-section {
+  // @include media-breakpoint-up(xxl) {
+  //   --gap: 90px;
+  // }
+
   margin-bottom: 10rem;
   padding: 4.5rem;
   padding-bottom: 10rem;
 }
 
 .options-grid {
+  @include media-breakpoint-up(xxl) {
+    --gap: 90px;
+  }
+
   --template: repeat(4, 1fr);
-  --gap: 90px;
+  --gap: 30px;
 
   margin-bottom: calc(-43px - 13rem);
   margin-top: 3rem;
 
   .option-item {
-    padding: 3rem;
+    padding: 3rem 1rem;
     text-align: center;
     box-shadow: $box-shadow;
   }
@@ -98,6 +106,8 @@
     gap: 30px;
 
     .btn-lg {
+      --bs-secondary: #{$primary};
+
       padding-top: 1.25rem;
       padding-bottom: 1.25rem;
     }
