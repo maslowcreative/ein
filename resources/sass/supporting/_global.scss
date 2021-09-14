@@ -25,9 +25,9 @@
     .btn-check:checked + &,
     .btn-check:active + &,
     &:focus {
-      color: $white;
-      border-color: $secondary;
-      background-color: $secondary;
+      color: var(--bs-white);
+      border-color: var(--bs-secondary);
+      background-color: var(--bs-secondary);
     }
   }
 
@@ -49,8 +49,39 @@
 }
 //
 
+.fs-sm {
+  --bs-body-font-size: 0.75rem;
+
+  font-size: var(--bs-body-font-size);
+}
+
+.fs-lg {
+  --bs-body-font-size: 1.25rem;
+
+  font-size: var(--bs-body-font-size);
+
+  &.btn,
+  .btn {
+    font-size: var(--bs-body-font-size);
+  }
+}
+
+//
+
 .form-control:not(.form-control-sm):not(.form-control-lg) {
   min-height: 3.25rem;
+}
+
+.form-switch .form-check-input {
+  width: 4.375em;
+  height: 2.125em;
+  border-radius: 50px;
+  box-shadow: $box-shadow;
+  background-color: var(--bs-gray-300);
+
+  &:checked {
+    background-color: var(--bs-primary);
+  }
 }
 
 .invalid-msg {
@@ -58,6 +89,10 @@
   margin-top: 0.25rem;
   font-size: 0.875em;
   color: $danger;
+}
+
+.badge-alrt {
+  padding: 0.3125rem;
 }
 
 //
@@ -77,6 +112,21 @@
 .card {
   box-shadow: $box-shadow;
   border: none;
+
+  .card-body {
+    @include media-breakpoint-up(xxl) {
+      padding: 4.625rem;
+    }
+  }
+}
+
+.table-x-scroll {
+  overflow-x: auto;
+  margin-top: 2rem;
+
+  @include media-breakpoint-up(xxl) {
+    margin-top: 3.75rem;
+  }
 }
 
 .table {
@@ -89,6 +139,11 @@
   th {
     padding-bottom: 0.5rem;
   }
+
+  th:not(.not-center),
+  td:not(.not-center) {
+    text-align: center;
+  }
 }
 
 //
@@ -100,3 +155,5 @@
     margin-left: 1.5rem;
   }
 }
+
+//

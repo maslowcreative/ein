@@ -36,7 +36,7 @@
 
           <li class="nav-item dropdown" v-if="userData">
             <a
-              class="nav-link"
+              class="nav-link pe-0"
               href="#"
               id="navbarDropdown"
               role="button"

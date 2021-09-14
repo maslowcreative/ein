@@ -1,20 +1,30 @@
 .qo-section {
   margin-bottom: 10rem;
-  padding: 4.5rem;
+  padding: 2.5rem;
   padding-bottom: 10rem;
+
+  @include media-breakpoint-up(xxl) {
+    margin-bottom: 10rem;
+    padding: 4.5rem;
+    padding-bottom: 10rem;
+  }
 }
 
 .options-grid {
   --template: repeat(4, 1fr);
-  --gap: 90px;
+  --gap: 30px;
 
   margin-bottom: calc(-43px - 13rem);
   margin-top: 3rem;
 
   .option-item {
-    padding: 3rem;
+    padding: 3rem 1rem;
     text-align: center;
     box-shadow: $box-shadow;
+  }
+
+  @include media-breakpoint-up(xxl) {
+    --gap: 90px;
   }
 }
 
@@ -55,23 +65,29 @@
 
   .admin-icon {
     position: relative;
+    display: inline-flex;
 
     .icon-cog {
       position: absolute;
-      left: 5px;
-      top: 22px;
+      right: -10%;
+      top: 44%;
       background-color: var(--bs-white);
       border-radius: 50%;
-      font-size: 22px;
+      font-size: 44%;
       color: var(--bs-primary);
       transition: all 0.3s ease-out;
     }
+  }
+
+  @include media-breakpoint-up(md) {
   }
 }
 
 // Add new User popup
 
 .modal-xxl {
+  max-width: 100%;
+
   @include media-breakpoint-up(xl) {
     max-width: 1260px;
   }
@@ -98,6 +114,8 @@
     gap: 30px;
 
     .btn-lg {
+      --bs-secondary: #{$primary};
+
       padding-top: 1.25rem;
       padding-bottom: 1.25rem;
     }
