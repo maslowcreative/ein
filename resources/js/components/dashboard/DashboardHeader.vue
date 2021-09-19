@@ -6,16 +6,17 @@
             <p>Choose one of the quick options for easier navigation</p>
 
             <div class="grid options-grid">
-                <a href="#" class="option-item">
+                <a href="#" class="option-item" data-bs-toggle="modal" data-bs-target="#userModal">
                     <ion-icon name="person-add-outline" class="option-item-icon"></ion-icon>
                     Add New User
-
                 </a>
-                <a href="#" class="option-item" data-bs-toggle="modal" data-bs-target="#exampleModal">
-              <span class="admin-icon">
-                <ion-icon name="person-add-outline" class="option-item-icon"></ion-icon>
-                <ion-icon name="cog-outline" class="icon-cog"></ion-icon>
-              </span>
+                <a href="#" class="option-item" data-bs-toggle="modal" data-bs-target="#adminModal">
+          <span class="option-item-icon">
+            <span class="admin-icon">
+              <ion-icon name="person-add-outline" class=""></ion-icon>
+              <ion-icon name="cog-outline" class="icon-cog"></ion-icon>
+            </span>
+          </span>
                     Add New Admin
                 </a>
                 <a href="#" class="option-item">
