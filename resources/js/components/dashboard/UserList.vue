@@ -104,11 +104,14 @@
                 </nav>
             </div>
         </div>
+        <plan-popup></plan-popup>
     </div>
 </template>
 
 <script>
+import PlanPopup from "../popups/PlanPopup";
 export default {
+    components: {PlanPopup},
     data() {
         return {
             loading: false,
