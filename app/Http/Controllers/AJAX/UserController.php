@@ -12,6 +12,7 @@ use Carbon\Carbon;
 use F9Web\ApiResponseHelpers;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
@@ -46,25 +47,36 @@ class UserController extends Controller
         $user = $this->create($request->all());
 
         $role = Role::findOrFail($request->role_id);
-        $user->assignRole($role->name);
 
         //Provider Role:
-        if(Role::ROLE_PROVIDER == $role->id){
+        if(Role::ROLE_PROVIDER == $role->id) {
           $provider = $user->provider()->create($request->provider);
           if($request->provider['participants'] ?? false )
              $provider->participants()->attach($request->provider['participants'],['created_at' => now(),'updated_at'=> now()]);
         }
         //Participant Role:
-        if(Role::ROLE_PARTICIPANT == $role->id){
+        if(Role::ROLE_PARTICIPANT == $role->id) {
           $participant = $user->participant()->create($request->participant);
           if($request->participant['plan'] ?? false)
-            $participant->plans()->create($request->participant['plan']);
+            $plan = $participant->plans()->create($request->participant['plan']);
         }
         //Representative Role:
-        if(Role::ROLE_REPRESENTATIVE == $role->id){
+        if(Role::ROLE_REPRESENTATIVE == $role->id) {
           $representative = $user->representative()->create();
-          if($request->representative['participants'] ?? false)
-              Participant::whereIn('user_id',$request->representative['participants'])->update(['representative_id' => $representative->id]);
+
+          if($request->representative['participants'] ?? false){
+              foreach ($request->representative['participants'] as $participant)
+              {
+                Participant::find($participant['participants_id'])
+                           ->fill(['representative_id' => $representative->id,'relationship'=>$participant['relationship']])
+                           ->save();
+              }
+          }
+        }
+
+        //Representative Admin:
+        if(Role::ROLE_ADMIN == $role->id) {
+            $admin = $user->admin()->create();
         }
 
         //Send Password Email:
@@ -83,7 +95,6 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
         return $this->respondCreated();
     }
 

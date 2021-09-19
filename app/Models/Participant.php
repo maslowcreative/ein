@@ -17,7 +17,9 @@ class Participant extends Model
      * @var array
      */
     protected $fillable = [
+        'user_id',
         'representative_id',
+        'relationship',
         'unique_identifier',
         'dob',
     ];
