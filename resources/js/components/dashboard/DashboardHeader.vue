@@ -1,0 +1,45 @@
+<template>
+    <div>
+        <h1 class="h2 mb-4 fw-bold pb-2">Dashboard</h1>
+        <div class="qo-section bg-primary text-white">
+            <h4 class="fw-bold">Quick Options</h4>
+            <p>Choose one of the quick options for easier navigation</p>
+
+            <div class="grid options-grid">
+                <a href="#" class="option-item">
+                    <ion-icon name="person-add-outline" class="option-item-icon"></ion-icon>
+                    Add New User
+
+                </a>
+                <a href="#" class="option-item" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              <span class="admin-icon">
+                <ion-icon name="person-add-outline" class="option-item-icon"></ion-icon>
+                <ion-icon name="cog-outline" class="icon-cog"></ion-icon>
+              </span>
+                    Add New Admin
+                </a>
+                <a href="#" class="option-item">
+                    <ion-icon name="push-outline" class="option-item-icon"></ion-icon>
+                    Bulk Upload
+                </a>
+                <a href="#" class="option-item">
+                    <ion-icon name="push-outline" class="flip-v option-item-icon"></ion-icon>
+                    Bulk Download
+                </a>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+export default {
+    data() {
+        return {
+
+        }
+    },
+    mounted() {
+
+    }
+}
+</script>

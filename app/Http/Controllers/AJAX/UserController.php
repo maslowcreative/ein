@@ -32,6 +32,11 @@ class UserController extends Controller
      */
     public function index()
     {
+        $users = User::getUsers()
+                     ->whereNotInRoles(['admin'])
+                     ->paginate();
+        return $users;
+        return $this->respondWithSuccess($users);
     }
 
     /**
@@ -45,8 +50,9 @@ class UserController extends Controller
         DB::beginTransaction();
 
         $user = $this->create($request->all());
-
         $role = Role::findOrFail($request->role_id);
+        $user->assignRole($role->name);
+
 
         //Provider Role:
         if(Role::ROLE_PROVIDER == $role->id) {
@@ -80,8 +86,8 @@ class UserController extends Controller
         }
 
         //Send Password Email:
-        if(Role::ROLE_PARTICIPANT != $role->id)
-            event(new Registered($user));
+//        if(Role::ROLE_PARTICIPANT != $role->id)
+//            event(new Registered($user));
 
         DB::commit();
         return $this->respondCreated();

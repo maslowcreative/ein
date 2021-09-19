@@ -46,6 +46,34 @@
     {
         "uri": "home",
         "name": "home"
+    },
+    {
+        "uri": "ajax\/users",
+        "name": "ajax.users.index"
+    },
+    {
+        "uri": "ajax\/users\/create",
+        "name": "ajax."
+    },
+    {
+        "uri": "ajax\/users",
+        "name": "ajax.users.store"
+    },
+    {
+        "uri": "ajax\/users\/{user}",
+        "name": "ajax.users.show"
+    },
+    {
+        "uri": "ajax\/users\/{user}\/edit",
+        "name": "ajax.users.edit"
+    },
+    {
+        "uri": "ajax\/users\/{user}",
+        "name": "ajax.users.update"
+    },
+    {
+        "uri": "ajax\/users\/{user}",
+        "name": "ajax.users.destroy"
     }
 ],
             prefix: '',

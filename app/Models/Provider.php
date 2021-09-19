@@ -25,9 +25,9 @@ class Provider extends Model
      * Accessors
      */
 
-    public function getIdAttribute()
+    public function getRoleAttribute()
     {
-        return $this->user_id;
+        return $this->roles()->first();
     }
 
     /**
