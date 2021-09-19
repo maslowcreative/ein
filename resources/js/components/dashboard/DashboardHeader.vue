@@ -29,7 +29,7 @@
                 </a>
             </div>
         </div>
-        <create-user-popup></create-user-popup>
+        <create-user-new-popup></create-user-new-popup>
         <create-admin-popup></create-admin-popup>
     </div>
 </template>
@@ -37,6 +37,7 @@
 <script>
 import CreateAdminPopup from "../popups/CreateAdminPopup";
 import CreateUserPopup from "../popups/CreateUserPopup";
+
 export default {
     components: {CreateUserPopup, CreateAdminPopup},
     data() {

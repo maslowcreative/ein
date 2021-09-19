@@ -49,16 +49,16 @@
             </div>
         </div>
     </div>
-    <script>
-        export default {
-            data() {
-                return {
-
-                }
-            },
-            mounted() {
-
-            }
-        }
-    </script>
 </template>
+<script>
+export default {
+    data() {
+        return {
+
+        }
+    },
+    mounted() {
+
+    }
+}
+</script>
