@@ -64,7 +64,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr v-for="user in users">
+                    <tr v-for="user in items.data">
                         <td class="not-center">
                             <div class="d-flex">
                                 <div class="me-4">
@@ -93,15 +93,12 @@
                 </table>
             </div>
             <div class="mt-4 mt-md-5">
-                <nav aria-label="Page navigation">
-                    <ul class="pagination justify-content-center">
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#">...</a></li>
-                        <li class="page-item"><a class="page-link" href="#">100</a></li>
-                    </ul>
-                </nav>
+                <advanced-laravel-vue-paginate
+                    :data="items"
+                    previousText="<<"
+                    nextText=">>"
+                    @paginateTo="getUsersList"
+                />
             </div>
         </div>
         <plan-popup></plan-popup>
@@ -109,25 +106,28 @@
 </template>
 
 <script>
+import AdvancedLaravelVuePaginate from 'advanced-laravel-vue-paginate';
+import 'advanced-laravel-vue-paginate/dist/advanced-laravel-vue-paginate.css'
 import PlanPopup from "../popups/PlanPopup";
+
 export default {
-    components: {PlanPopup},
+    components: {AdvancedLaravelVuePaginate,PlanPopup},
     data() {
         return {
             loading: false,
-            users : null,
+            items : {},
         }
     },
     mounted() {
         this.getUsersList();
     },
     methods: {
-        getUsersList() {
+        getUsersList(page = 1) {
             this.loading = true;
-            let route = this.laroute.route("ajax.users.index");
+            let route = this.laroute.route("ajax.users.index",{page: page});
             axios.get(route)
                 .then(res => {
-                    this.users = res.data.data;
+                    this.items = res.data;
                 })
                 .catch(error => {
                     console.log(error)

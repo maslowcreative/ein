@@ -29,6 +29,7 @@
         "vue-template-compiler": "^2.6.12"
     },
     "dependencies": {
+        "advanced-laravel-vue-paginate": "^0.3.0",
         "vform": "^2.1.1",
         "vue-form-wizard": "^0.8.4",
         "vue-laroute": "^0.2.0"

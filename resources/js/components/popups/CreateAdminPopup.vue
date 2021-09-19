@@ -9,78 +9,84 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-4">
-                                <label for="fullName" class="form-label">Full Name</label>
-                                <input type="text" class="form-control" id="fullName" placeholder="Admin Name">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-4">
-                                <label for="emailAddress" class="form-label">E-mail Address</label>
-                                <input type="email" class="form-control" id="emailAddress" placeholder="adminsemail@ein.net.au">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-4">
-                                <label for="enterPassword" class="form-label">Enter Password</label>
-                                <input type="password" class="form-control" id="enterPassword" placeholder="*********************">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-4">
-                                <label for="enterPassword2" class="form-label">Confirm Password</label>
-                                <input type="password" class="form-control" id="enterPassword2" placeholder="*********************">
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="d-flex justify-content-between align-items-center mb-4">
-                                <label class="fw-bold">Edit Provider Profiles</label>
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" id="editOption1" checked>
-                                    <label class="form-check-label" for="editOption1"></label>
+                        <form @submit.prevent="createAdmin" method="POST">
+                            <div class="col-md-6">
+                                <div class="mb-4">
+                                    <label for="fullName" class="form-label">Full Name</label>
+                                    <input type="text" v-model="form.name" class="form-control" id="fullName" placeholder="Admin Name">
+                                    <div class="invalid-msg" v-if="form.errors.has('name')" v-html="form.errors.get('name')" />
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="d-flex justify-content-between align-items-center mb-4">
-                                <label class="fw-bold">Edit Participants Profiles</label>
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" id="editOption2" checked>
-                                    <label class="form-check-label" for="editOption2"></label>
+                            <div class="col-md-6">
+                                <div class="mb-4">
+                                    <label for="emailAddress" class="form-label">E-mail Address</label>
+                                    <input type="email"  v-model="form.email" class="form-control" id="emailAddress" placeholder="adminsemail@ein.net.au">
+                                    <div class="invalid-msg" v-if="form.errors.has('email')" v-html="form.errors.get('email')" />
+                                </div>
+
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-4">
+                                    <label for="enterPassword" class="form-label">Enter Password</label>
+                                    <input type="password" class="form-control" v-model="form.password" id="enterPassword" placeholder="*********************">
+                                    <div class="invalid-msg" v-if="form.errors.has('password')" v-html="form.errors.get('password')" />
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="d-flex justify-content-between align-items-center mb-4">
-                                <label class="fw-bold">Edit Representatives Profiles</label>
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" id="editOption3" checked>
-                                    <label class="form-check-label" for="editOption3"></label>
+                            <div class="col-md-6">
+                                <div class="mb-4">
+                                    <label for="enterPassword2" class="form-label">Confirm Password</label>
+                                    <input type="password" class="form-control" id="enterPassword2" placeholder="*********************">
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="d-flex justify-content-between align-items-center mb-4">
-                                <label class="fw-bold">Approving Claims</label>
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" id="editOption4" checked>
-                                    <label class="form-check-label" for="editOption4"></label>
+                            <div class="col-md-12">
+                                <div class="d-flex justify-content-between align-items-center mb-4">
+                                    <label class="fw-bold">Edit Provider Profiles</label>
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="editOption1" checked>
+                                        <label class="form-check-label" for="editOption1"></label>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="d-flex justify-content-between align-items-center mb-4">
-                                <label class="fw-bold">Export / Import Documents</label>
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" id="editOption5" checked>
-                                    <label class="form-check-label" for="editOption5"></label>
+                            <div class="col-md-12">
+                                <div class="d-flex justify-content-between align-items-center mb-4">
+                                    <label class="fw-bold">Edit Participants Profiles</label>
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="editOption2" checked>
+                                        <label class="form-check-label" for="editOption2"></label>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="mw290 mx-auto px-4 mt-3">
-                            <button class="btn btn-primary btn-lg w-100 py-3">Create Sub-admin</button>
-                        </div>
+                            <div class="col-md-12">
+                                <div class="d-flex justify-content-between align-items-center mb-4">
+                                    <label class="fw-bold">Edit Representatives Profiles</label>
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="editOption3" checked>
+                                        <label class="form-check-label" for="editOption3"></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="d-flex justify-content-between align-items-center mb-4">
+                                    <label class="fw-bold">Approving Claims</label>
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="editOption4" checked>
+                                        <label class="form-check-label" for="editOption4"></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="d-flex justify-content-between align-items-center mb-4">
+                                    <label class="fw-bold">Export / Import Documents</label>
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="editOption5" checked>
+                                        <label class="form-check-label" for="editOption5"></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mw290 mx-auto px-4 mt-3">
+                                <button class="btn btn-primary btn-lg w-100 py-3">Create Sub-admin</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -89,14 +95,41 @@
 </template>
 
 <script>
+
+import Form from "vform";
 export default {
     data() {
         return {
-
+            loader: false,
+            form: new Form({
+                name: null,
+                email: null,
+                password: null,
+                role_id: 1,
+                permissions : {}
+            })
         }
     },
     mounted() {
 
+    },
+    methods:{
+        createAdmin()
+        {
+            this.loader = true;
+            let route = this.laroute.route("ajax.users.store")
+            this.form
+                .post(route)
+                .then(res => {
+                    if ((res.status = 201)) {
+
+                    }
+                })
+                .catch(error => {})
+                .finally(()=>{
+                    this.loader = false;
+                })
+        }
     }
 }
 </script>

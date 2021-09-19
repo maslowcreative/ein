@@ -34,9 +34,8 @@ class UserController extends Controller
     {
         $users = User::getUsers()
                      ->whereNotInRoles(['admin'])
-                     ->paginate();
+                     ->paginate(5);
         return $users;
-        return $this->respondWithSuccess($users);
     }
 
     /**

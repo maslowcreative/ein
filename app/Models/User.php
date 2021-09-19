@@ -73,6 +73,13 @@ class User extends Authenticatable
              });
     }
 
+    public function scopewhereInRoles($query, $roles = [])
+    {
+        return $query->whereHas('roles',function ($query) use ($roles){
+            $query->whereIn('name',$roles);
+        });
+    }
+
     /**
      * Relationships
      */
