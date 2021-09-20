@@ -13,9 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::resource('users','UserController');
+Route::apiResource('users','UserController');
 Route::get('users/create','UserController@store');
-
+Route::apiResource('admins','AdminController');
 
 
 

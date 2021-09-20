@@ -25,15 +25,15 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
+                    <tr v-for="admin in items.data">
                         <td class="not-center">
                             <div class="d-flex">
                                 <div class="me-4">
                                     <img :src="'/images/avatar.png'" width="50" height="50" alt="" />
                                 </div>
                                 <div class="fw-bold">
-                                    Sub-admin Name
-                                    <span class="d-block text-primary fw-normal">Participant</span>
+                                    {{admin.name}}
+                                    <span class="d-block text-primary fw-normal">{{admin.roles[0].name}}</span>
                                 </div>
                             </div>
                         </td>
@@ -57,29 +57,47 @@
                 </table>
             </div>
             <div class="mt-4 mt-md-5">
-                <nav aria-label="Page navigation">
-                    <ul class="pagination justify-content-center">
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#">...</a></li>
-                        <li class="page-item"><a class="page-link" href="#">100</a></li>
-                    </ul>
-                </nav>
+                <advanced-laravel-vue-paginate
+                    :data="items"
+                    previousText="<<"
+                    nextText=">>"
+                    @paginateTo="getAdminList"
+                />
             </div>
         </div>
     </div>
 </template>
 
 <script>
+
+import AdvancedLaravelVuePaginate from 'advanced-laravel-vue-paginate';
+import 'advanced-laravel-vue-paginate/dist/advanced-laravel-vue-paginate.css'
+
 export default {
+    components:{AdvancedLaravelVuePaginate},
     data() {
         return {
-
+            loader: false,
+            items: {},
         }
     },
     mounted() {
+        this.getAdminList();
+    },
+    methods:{
+        getAdminList(page=1){
+            this.loader = true;
+            let route = this.laroute.route('ajax.admins.index',{page: page});
 
+            axios.get(route)
+                 .then(res => {
+                    this.items = res.data;
+                 })
+                .catch(error => {
+                    console.log(error)
+                })
+                .finally(() => this.loading = false);
+        }
     }
 }
 </script>
