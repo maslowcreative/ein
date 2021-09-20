@@ -13,14 +13,14 @@
                             <div class="col-md-6">
                                 <div class="mb-4">
                                     <label for="fullName" class="form-label">Full Name</label>
-                                    <input type="text" v-model="form.name" class="form-control" id="fullName" placeholder="Admin Name">
+                                    <input type="text" v-model="form.name" class="form-control" id="fullName" placeholder="admin name">
                                     <div class="invalid-msg" v-if="form.errors.has('name')" v-html="form.errors.get('name')" />
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-4">
                                     <label for="emailAddress" class="form-label">E-mail Address</label>
-                                    <input type="email"  v-model="form.email" class="form-control" id="emailAddress" placeholder="adminsemail@ein.net.au">
+                                    <input type="email"  v-model="form.email" class="form-control" id="emailAddress" placeholder="admin email">
                                     <div class="invalid-msg" v-if="form.errors.has('email')" v-html="form.errors.get('email')" />
                                 </div>
 
@@ -84,7 +84,11 @@
                                 </div>
                             </div>
                             <div class="mw290 mx-auto px-4 mt-3">
-                                <button class="btn btn-primary btn-lg w-100 py-3">Create Sub-admin</button>
+                                <button v-if="!loader" class="btn btn-primary btn-lg w-100 py-3">Create Sub-admin</button>
+                                <button v-else class="btn btn-primary btn-lg w-100 py-3" type="button" disabled>
+                                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                    Loading...
+                                </button>
                             </div>
                         </form>
                     </div>
@@ -122,13 +126,24 @@ export default {
                 .post(route)
                 .then(res => {
                     if ((res.status = 201)) {
-
+                        
+                        this.resetForm();
                     }
                 })
                 .catch(error => {})
                 .finally(()=>{
                     this.loader = false;
                 })
+        },
+        resetForm()
+        {
+            this.form = new Form({
+                                    name: null,
+                                    email: null,
+                                    password: null,
+                                    role_id: 1,
+                                    permissions : {}
+                                });
         }
     }
 }

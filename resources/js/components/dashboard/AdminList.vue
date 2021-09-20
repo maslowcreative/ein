@@ -4,10 +4,10 @@
             <div class="d-flex justify-content-between">
                 <div>
                     <h5>Sub-Admins</h5>
-                    <small class="text-primary">99999 Sub-admins</small>
+                    <small class="text-primary">{{items.total}} Sub-admins</small>
                 </div>
                 <div class="card-right-btns">
-                    <button class="btn btn-primary btn-icon">
+                    <button class="btn btn-primary btn-icon" data-bs-toggle="modal" data-bs-target="#adminModal">
                         <ion-icon name="add-outline"></ion-icon> Add New Admin
                     </button>
                     <button class="btn btn-light btn-icon">
