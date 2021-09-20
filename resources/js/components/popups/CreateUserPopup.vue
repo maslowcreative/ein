@@ -56,11 +56,11 @@
                         </div>
                         <div class="col-md-7">
                             <!-- Step 1-->
-                            <div class="step1 mw420 mx-auto">
+                            <div class="step1 mw420 mx-auto"  v-show="step === 1">
                                 <h6 class="mb-5">Choose your User Type</h6>
                                 <div class="d-grid userType">
                                     <div>
-                                        <input type="radio" name="user-type" class="btn-check" id="btn-check-1" autocomplete="off">
+                                        <input type="radio" name="user-type" class="btn-check" checked id="btn-check-1" autocomplete="off">
                                         <label class="btn btn-light d-block btn-lg" for="btn-check-1">Provider</label>
                                     </div>
                                     <div>
@@ -74,7 +74,7 @@
                                 </div>
                             </div>
                             <!-- Step 2-->
-                            <div class="step2 d-none">
+                            <div class="step2" v-show="step === 2">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="mb-4">
@@ -125,10 +125,10 @@
                                 </div>
                             </div>
                             <!-- Step 3-->
-                            <div class="step3 mw290 mx-auto d-none">
+                            <div class="step3 mw290 mx-auto" v-show="step === 3">
                                 <div class="mb-3">
                                     <label for="homeAddress" class="form-label fw-bold">Home Address</label>
-                                    <textarea name="" id="" cols="30" rows="2" class="form-control" id="homeAddress"
+                                    <textarea  cols="30" rows="2" class="form-control" id="homeAddress"
                                               placeholder="Home Address 13, 10000 State, Country."></textarea>
                                 </div>
                                 <div class="mb-3">
@@ -141,7 +141,7 @@
                                 </div>
                             </div>
                             <!-- Step 4-->
-                            <div class="step4 mw290 mx-auto d-none">
+                            <div class="step4 mw290 mx-auto" v-show="step === 4">
                                 <div>
                                     <div class="mb-3">
                                         <label for="abnNumber" class="form-label fw-bold">ABN</label>
@@ -155,7 +155,7 @@
                                 </div>
                             </div>
                             <!-- Step 5-->
-                            <div class="step5 mw420 mx-auto d-none">
+                            <div class="step5 mw420 mx-auto" v-show="step === 5">
                                 <div class="form-check emailRequest">
                                     <input class="form-check-input" type="checkbox" value="" id="emailRequest">
                                     <label class="form-check-label" for="emailRequest">
@@ -164,7 +164,7 @@
                                 </div>
                             </div>
                             <div class="mw290 mx-auto px-4">
-                                <button class="btn btn-primary btn-lg w-100 py-3">Next</button>
+                                <button class="btn btn-primary btn-lg w-100 py-3" @click.prevent="next()">Next</button>
                             </div>
                         </div>
                     </div>
@@ -178,11 +178,18 @@
 export default {
     data() {
         return {
-
+            step:1,
         }
     },
     mounted() {
-
+    },
+    methods:{
+        prev() {
+            this.step--;
+        },
+        next() {
+            this.step++;
+        }
     }
 }
 </script>
