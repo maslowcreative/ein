@@ -46,6 +46,50 @@
     {
         "uri": "home",
         "name": "home"
+    },
+    {
+        "uri": "ajax\/users",
+        "name": "ajax.users.index"
+    },
+    {
+        "uri": "ajax\/users",
+        "name": "ajax.users.store"
+    },
+    {
+        "uri": "ajax\/users\/{user}",
+        "name": "ajax.users.show"
+    },
+    {
+        "uri": "ajax\/users\/{user}",
+        "name": "ajax.users.update"
+    },
+    {
+        "uri": "ajax\/users\/{user}",
+        "name": "ajax.users.destroy"
+    },
+    {
+        "uri": "ajax\/users\/create",
+        "name": "ajax."
+    },
+    {
+        "uri": "ajax\/admins",
+        "name": "ajax.admins.index"
+    },
+    {
+        "uri": "ajax\/admins",
+        "name": "ajax.admins.store"
+    },
+    {
+        "uri": "ajax\/admins\/{admin}",
+        "name": "ajax.admins.show"
+    },
+    {
+        "uri": "ajax\/admins\/{admin}",
+        "name": "ajax.admins.update"
+    },
+    {
+        "uri": "ajax\/admins\/{admin}",
+        "name": "ajax.admins.destroy"
     }
 ],
             prefix: '',
