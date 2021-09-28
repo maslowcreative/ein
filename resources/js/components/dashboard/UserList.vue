@@ -7,7 +7,7 @@
                     <small class="text-primary">9999 Active Users</small>
                 </div>
                 <div class="card-right-btns">
-                    <button class="btn btn-primary btn-icon">
+                    <button class="btn btn-primary btn-icon" data-bs-toggle="modal" data-bs-target="#userModal">
                         <ion-icon name="add-outline"></ion-icon> Add New User
                     </button>
                     <div class="dropdown">

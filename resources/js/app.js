@@ -18,7 +18,13 @@ Vue.use(VueLaroute, {
     accessor: 'laroute', // Optional: the global variable for accessing the router
 });
 
-
+// import plugin
+import VueToastr from "vue-toastr";
+// use plugin
+Vue.use(VueToastr, {
+    defaultTimeout: 2000,
+    defaultPosition: "toast-top-right",
+});
 // configure Icon setting
 Vue.config.ignoredElements = [/^ion-/]
 
