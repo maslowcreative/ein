@@ -109,13 +109,12 @@ export default {
                 name: null,
                 email: null,
                 password: null,
-                role_id: 1,
+                role_id: null,
                 permissions : {}
             })
         }
     },
     mounted() {
-
     },
     methods:{
         createAdmin()
@@ -127,6 +126,7 @@ export default {
                 .then(res => {
                     if ((res.status = 201)) {
                         this.resetForm();
+                        this.$root.$emit('ein-admin:added');
                         this.$toastr.s("Success","Account created!");
                     }
                 })

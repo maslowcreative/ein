@@ -40,7 +40,7 @@
                         <td>
                             <div class="d-inline-block">
                                 <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                                    <input class="form-check-input" type="checkbox" checked id="flexSwitchCheckDefault">
                                     <label class="form-check-label" for="flexSwitchCheckDefault"></label>
                                 </div>
                             </div>
@@ -82,13 +82,20 @@ export default {
         }
     },
     mounted() {
+
+        //Called first time.
         this.getAdminList();
+
+        //Called Whenever admin is added.
+        this.$root.$on('ein-admin:added', () => {
+            this.getAdminList();
+        });
+
     },
     methods:{
         getAdminList(page=1){
             this.loader = true;
             let route = this.laroute.route('ajax.admins.index',{page: page});
-
             axios.get(route)
                  .then(res => {
                     this.items = res.data;
