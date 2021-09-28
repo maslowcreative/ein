@@ -68,7 +68,7 @@
             <div class="col-md-7">
               <!-- Step 1 Provider-->
               <div class="step1 mw420 mx-auto" v-show="step === 1">
-                <h6 class="mb-3 mb-md-5">Choose your User Type {{form.role_id}}</h6>
+                <h6 class="mb-3 mb-md-5">Choose your User Type </h6>
                 <div class="d-grid userType">
                   <div>
                     <input
@@ -94,6 +94,58 @@
                   </div>
                 </div>
               </div>
+
+               <!-- Step 2 Provider-->
+                <!-- <div class="step2" v-show="step === 2">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="mb-4">
+                        <label for="fullName" class="form-label">Full Name</label>
+                        <input type="text" class="form-control" id="fullName" placeholder="The Name of the Provider" />
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="mb-4">
+                        <label for="fullName2" class="form-label">Full Name</label>
+                        <input type="text" class="form-control" id="fullName2" placeholder="The Name of the Provider" />
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="mb-4">
+                        <label for="linkAParticipant" class="form-label">Link a Participant</label>
+                        <input type="text" class="form-control" id="linkAParticipant" placeholder="Participant’s Name" />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="bg-light d-flex align-items-center p-3 participant-card">
+                        <div class="me-3"><img src="/images/avatar.png" width="40" alt="" /></div>
+                        <div class="participant-name">
+                          <h6>Users Name</h6>
+                          <span class="text-primary">Participant</span>
+                        </div>
+                        <div class="ms-auto">
+                          <button class="btn btn-link p-0 participant-remove">
+                            <ion-icon name="remove-circle-outline"></ion-icon>
+                          </button>
+                        </div>
+                      </div>
+                      <div class="bg-light d-flex align-items-center p-3 participant-card">
+                        <div class="me-3"><img src="/images/avatar.png" width="40" alt="" /></div>
+                        <div class="participant-name">
+                          <h6>Users Name</h6>
+                          <span class="text-primary">Participant</span>
+                        </div>
+                        <div class="ms-auto">
+                          <button class="btn btn-link p-0 participant-remove">
+                            <ion-icon name="remove-circle-outline"></ion-icon>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div> -->
 
               <!-- Step 2 Participant-->
               <div class="step2" v-show="step === 2">
