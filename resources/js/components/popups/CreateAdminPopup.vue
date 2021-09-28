@@ -115,7 +115,6 @@ export default {
         }
     },
     mounted() {
-
     },
     methods:{
         createAdmin()
@@ -127,6 +126,7 @@ export default {
                 .then(res => {
                     if ((res.status = 201)) {
                         this.resetForm();
+                        this.$root.$emit('ein-admin:added');
                         this.$toastr.s("Success","Account created!");
                     }
                 })
