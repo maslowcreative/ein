@@ -109,7 +109,7 @@ export default {
                 name: null,
                 email: null,
                 password: null,
-                role_id: 1,
+                role_id: null,
                 permissions : {}
             })
         }

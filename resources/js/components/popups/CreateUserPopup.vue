@@ -13,12 +13,13 @@
           <h4 class="modal-title" id="userModalTitle">Create a new user</h4>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body addUser">
+        <form @submit.prevent="createUser" method="POST">
+            <div class="modal-body addUser">
           <div class="row">
             <div class="col-md-5">
               <ul class="stepList mb-5 mb-md-0">
                 <li>
-                  <a class="title d-inline-flex align-items-center" href="#">
+                  <a class="title d-inline-flex align-items-center" href="#" v-on:click="current(1)">
                     <div class="step-number">1</div>
                     <div class="step-text">
                       <h6>Choose User Type</h6>
@@ -27,7 +28,7 @@
                   </a>
                 </li>
                 <li>
-                  <a class="title d-inline-flex align-items-center" href="#">
+                  <a class="title d-inline-flex align-items-center" href="#"  v-on:click="current(2)">
                     <div class="step-number">2</div>
                     <div class="step-text">
                       <h6>Personal Information</h6>
@@ -36,7 +37,7 @@
                   </a>
                 </li>
                 <li>
-                  <a class="title d-inline-flex align-items-center" href="#">
+                  <a class="title d-inline-flex align-items-center" href="#"  v-on:click="current(3)">
                     <div class="step-number">3</div>
                     <div class="step-text">
                       <h6>Contact Information</h6>
@@ -67,7 +68,7 @@
             <div class="col-md-7">
               <!-- Step 1 Provider-->
               <div class="step1 mw420 mx-auto" v-show="step === 1">
-                <h6 class="mb-3 mb-md-5">Choose your User Type</h6>
+                <h6 class="mb-3 mb-md-5">Choose your User Type {{form.role_id}}</h6>
                 <div class="d-grid userType">
                   <div>
                     <input
@@ -76,71 +77,23 @@
                       class="btn-check"
                       checked
                       id="btn-check-1"
+                      checked
+                      v-model="form.role_id"
+                      value="2"
                       autocomplete="off"
                     />
                     <label class="btn btn-light d-block btn-lg" for="btn-check-1">Provider</label>
                   </div>
                   <div>
-                    <input type="radio" name="user-type" class="btn-check" id="btn-check-2" autocomplete="off" />
+                    <input type="radio" name="user-type" class="btn-check" id="btn-check-2" v-model="form.role_id" value="4" autocomplete="off" />
                     <label class="btn btn-light d-block btn-lg" for="btn-check-2">Participant</label>
                   </div>
                   <div>
-                    <input type="radio" name="user-type" class="btn-check" id="btn-check-3" autocomplete="off" />
+                    <input type="radio" name="user-type" class="btn-check" id="btn-check-3" v-model="form.role_id" value="3" autocomplete="off" />
                     <label class="btn btn-light d-block btn-lg" for="btn-check-3">Representative</label>
                   </div>
                 </div>
               </div>
-              <!-- Step 2 Provider-->
-              <!-- <div class="step2" v-show="step === 2">
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="mb-4">
-                      <label for="fullName" class="form-label">Full Name</label>
-                      <input type="text" class="form-control" id="fullName" placeholder="The Name of the Provider" />
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="mb-4">
-                      <label for="fullName2" class="form-label">Full Name</label>
-                      <input type="text" class="form-control" id="fullName2" placeholder="The Name of the Provider" />
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="mb-4">
-                      <label for="linkAParticipant" class="form-label">Link a Participant</label>
-                      <input type="text" class="form-control" id="linkAParticipant" placeholder="Participant’s Name" />
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="bg-light d-flex align-items-center p-3 participant-card">
-                      <div class="me-3"><img src="/images/avatar.png" width="40" alt="" /></div>
-                      <div class="participant-name">
-                        <h6>Users Name</h6>
-                        <span class="text-primary">Participant</span>
-                      </div>
-                      <div class="ms-auto">
-                        <button class="btn btn-link p-0 participant-remove">
-                          <ion-icon name="remove-circle-outline"></ion-icon>
-                        </button>
-                      </div>
-                    </div>
-                    <div class="bg-light d-flex align-items-center p-3 participant-card">
-                      <div class="me-3"><img src="/images/avatar.png" width="40" alt="" /></div>
-                      <div class="participant-name">
-                        <h6>Users Name</h6>
-                        <span class="text-primary">Participant</span>
-                      </div>
-                      <div class="ms-auto">
-                        <button class="btn btn-link p-0 participant-remove">
-                          <ion-icon name="remove-circle-outline"></ion-icon>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div> -->
 
               <!-- Step 2 Participant-->
               <div class="step2" v-show="step === 2">
@@ -148,7 +101,7 @@
                   <div class="col-md-6">
                     <div class="mb-4">
                       <label for="fullName" class="form-label">Full Name</label>
-                      <input type="text" class="form-control" id="fullName" placeholder="The Name of the Provider" />
+                      <input type="text" class="form-control" v-model="form.name" id="fullName" placeholder="The Name of the Provider" />
                     </div>
                   </div>
                   <div class="col-md-6">
@@ -327,26 +280,58 @@
             </div>
           </div>
         </div>
+        </form>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import Form from "vform";
 export default {
   data() {
     return {
-      step: 1,
+        step: 1,
+        form: new Form({
+            role_id: null,
+            name: null,
+            email: null,
+            password: null,
+            phone : null,
+            address: null,
+        })
     }
   },
-  mounted() {},
+  mounted() {
+  },
+  watch:{
+      'form.role_id': function (val, old) {
+          if(val != old) {
+
+              this.form = new Form({
+                  role_id: val,
+                  name: null,
+                  email: null,
+                  password: null,
+                  phone : null,
+                  address: null,
+              });
+          }
+      }
+  },
   methods: {
+    current(value){
+     this.step = value;
+    },
     prev() {
       this.step--
     },
     next() {
       this.step++
     },
+    createUser() {
+
+    }
   },
 }
 </script>
