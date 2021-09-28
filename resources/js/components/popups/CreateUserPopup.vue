@@ -101,7 +101,7 @@
                   <div class="col-md-6">
                     <div class="mb-4">
                       <label for="fullName" class="form-label">Full Name</label>
-                      <input type="text" class="form-control" v-model="form.name" id="fullName" placeholder="The Name of the Provider" />
+                      <input type="text" class="form-control" v-model="form.name"    id="fullName" placeholder="The Name of the Provider" />
                     </div>
                   </div>
                   <div class="col-md-6">
