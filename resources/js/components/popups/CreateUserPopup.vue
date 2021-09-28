@@ -18,11 +18,11 @@
           <div class="row">
             <div class="col-md-5">
               <ul class="stepList mb-5 mb-md-0">
-                <li>
+                <li class="active">
                   <a class="title d-inline-flex align-items-center" href="#" v-on:click="current(1)">
                     <div class="step-number">1</div>
                     <div class="step-text">
-                      <h6>Choose User Type</h6>
+                      <h6>Choose User Type <span v-if="step === 1"><b>(Active)</b></span></h6>
                       Provider, Participant or Representative
                     </div>
                   </a>
@@ -31,7 +31,7 @@
                   <a class="title d-inline-flex align-items-center" href="#"  v-on:click="current(2)">
                     <div class="step-number">2</div>
                     <div class="step-text">
-                      <h6>Personal Information</h6>
+                      <h6>Personal Information <span v-if="step === 2"><b>(Active)</b></span></h6>
                       Enter your user’s personal information
                     </div>
                   </a>
@@ -40,7 +40,7 @@
                   <a class="title d-inline-flex align-items-center" href="#"  v-on:click="current(3)">
                     <div class="step-number">3</div>
                     <div class="step-text">
-                      <h6>Contact Information</h6>
+                      <h6>Contact Information <span v-if="step === 3"><b>(Active)</b></span></h6>
                       Enter User’s Contact information
                     </div>
                   </a>
@@ -49,7 +49,7 @@
                   <a class="title d-inline-flex align-items-center" href="#">
                     <div class="step-number">4</div>
                     <div class="step-text">
-                      <h6>NDIS Information</h6>
+                      <h6>NDIS Information <span v-if="step === 4"><b>(Active)</b></span></h6>
                       Provide information related to NDIS
                     </div>
                   </a>
@@ -58,7 +58,7 @@
                   <a class="title d-inline-flex align-items-center" href="#">
                     <div class="step-number">5</div>
                     <div class="step-text">
-                      <h6>Login Information</h6>
+                      <h6>Login Information <span v-if="step === 5"><b>(Active)</b></span></h6>
                       Set-up a password for your new user
                     </div>
                   </a>
@@ -96,18 +96,18 @@
               </div>
 
                <!-- Step 2 Provider-->
-                <!-- <div class="step2" v-show="step === 2">
+                 <div class="step2" v-show="step === 2 && form.role_id == 2">
                   <div class="row">
                     <div class="col-md-6">
                       <div class="mb-4">
-                        <label for="fullName" class="form-label">Full Name</label>
-                        <input type="text" class="form-control" id="fullName" placeholder="The Name of the Provider" />
+                        <label class="form-label">Full Name</label>
+                        <input type="text" class="form-control" v-model="form.name"  placeholder="The Name of the Provider" />
                       </div>
                     </div>
                     <div class="col-md-6">
                       <div class="mb-4">
-                        <label for="fullName2" class="form-label">Full Name</label>
-                        <input type="text" class="form-control" id="fullName2" placeholder="The Name of the Provider" />
+                        <label  class="form-label">Full Name</label>
+                        <input type="text" class="form-control"  placeholder="The Name of the Provider" />
                       </div>
                     </div>
                     <div class="col-md-6">
@@ -145,21 +145,21 @@
                       </div>
                     </div>
                   </div>
-                </div> -->
+                </div>
 
               <!-- Step 2 Participant-->
-              <div class="step2" v-show="step === 2">
+              <div class="step2" v-show="step === 2 && form.role_id == 4">
                 <div class="row">
                   <div class="col-md-6">
                     <div class="mb-4">
-                      <label for="fullName" class="form-label">Full Name</label>
-                      <input type="text" class="form-control" v-model="form.name"    id="fullName" placeholder="The Name of the Provider" />
+                      <label  class="form-label">Full Name</label>
+                      <input type="text" class="form-control" v-model="form.name" placeholder="The Name of the Provider" />
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="mb-4">
-                      <label for="dob" class="form-label">Date of Birth</label>
-                      <input type="text" class="form-control" id="dob" placeholder="01/01/1999" />
+                      <label class="form-label">Date of Birth</label>
+                      <input type="text" class="form-control"  placeholder="01/01/1999" />
                     </div>
                   </div>
                   <div class="col-md-6">
@@ -211,24 +211,27 @@
                     rows="2"
                     class="form-control"
                     id="homeAddress"
+                    v-model="form.address"
                     placeholder="Home Address 13, 10000 State, Country."
                   ></textarea>
                 </div>
                 <div class="mb-3">
-                  <label for="emailAddress" class="form-label fw-bold">E-mail Address</label>
-                  <input type="text" class="form-control" id="emailAddress" placeholder="providersemail@gmail.com" />
+                  <label class="form-label fw-bold">E-mail Address</label>
+                  <input type="text" class="form-control" v-model="form.email" placeholder="providersemail@gmail.com" />
                 </div>
                 <div class="mb-3">
                   <label for="phoneNumber" class="form-label fw-bold">Phone Number</label>
-                  <input type="tel" class="form-control" id="phoneNumber" placeholder="0000000000" />
+                  <input type="tel" class="form-control" id="phoneNumber" v-model="form.phone" placeholder="0000000000" />
                 </div>
               </div>
+
+
               <!-- Step 4 Provider-->
-              <!-- <div class="step4 mw290 mx-auto" v-show="step === 4">
+               <div class="step4 mw290 mx-auto" v-show="step === 4 && form.role_id == 2">
                 <div>
                   <div class="mb-3">
                     <label for="abnNumber" class="form-label fw-bold">ABN</label>
-                    <input type="tel" class="form-control" id="abnNumber" placeholder="00000000000000000000" />
+                    <input type="text" class="form-control" id="abnNumber" v-model="form.provider.abn"  placeholder="00000000000000000000" />
                   </div>
                   <div class="mb-3">
                     <label for="specificItemNumbers" class="form-label fw-bold">Specific Item Numbers</label>
@@ -243,10 +246,10 @@
                     ></textarea>
                   </div>
                 </div>
-              </div> -->
+              </div>
 
               <!-- Step 4 Participant-->
-              <div class="step4 mx-auto" v-show="step === 4">
+              <div class="step4 mx-auto" v-show="step === 4 && form.role_id == 4">
                 <div class="row">
                   <div class="col-md-6">
                     <div class="mb-4">
@@ -268,8 +271,8 @@
                   </div>
                   <div class="col-md-6">
                     <div class="mb-4">
-                      <label for="dob" class="form-label">Date of Birth</label>
-                      <input type="text" class="form-control" id="dob" placeholder="01/01/1999" />
+                      <label  class="form-label">Date of Birth</label>
+                      <input type="text" class="form-control"  placeholder="01/01/1999" />
                     </div>
                   </div>
                   <div class="col-md-6">
@@ -308,11 +311,10 @@
                   </label>
                 </div>
                 <div class="my-4">
-                  <label for="enterPassword" class="form-label">Enter Password</label>
+                  <label  class="form-label">Enter Password</label>
                   <input
                     type="password"
                     class="form-control"
-                    id="enterPassword"
                     placeholder="****************************"
                   />
                 </div>
@@ -329,6 +331,9 @@
               <div class="mw290 mx-auto px-4 mt-4 mt-md-5">
                 <button class="btn btn-primary btn-lg w-100 py-3" @click.prevent="next()">Next</button>
               </div>
+              <div class="mw290 mx-auto px-4 mt-4 mt-md-5">
+                <button type="submit" class="btn btn-primary btn-lg w-100 py-3">Submit</button>
+              </div>
             </div>
           </div>
         </div>
@@ -343,6 +348,10 @@ import Form from "vform";
 export default {
   data() {
     return {
+        loader : false,
+        stepsMap: {
+            2:5,
+        },
         step: 1,
         form: new Form({
             role_id: null,
@@ -351,6 +360,10 @@ export default {
             password: null,
             phone : null,
             address: null,
+            provider:{
+                abn: null,
+                business_name: null,
+            }
         })
     }
   },
@@ -367,6 +380,10 @@ export default {
                   password: null,
                   phone : null,
                   address: null,
+                  provider:{
+                      abn: null,
+                      business_name: null,
+                  }
               });
           }
       }
@@ -382,6 +399,22 @@ export default {
       this.step++
     },
     createUser() {
+        this.loader = true;
+        let route = this.laroute.route("ajax.users.store")
+        this.form
+            .post(route)
+            .then(res => {
+                if ((res.status = 201)) {
+                    this.resetForm();
+                        this.$toastr.s("Success","Account created!");
+                }
+            })
+            .catch(error => {
+                this.$toastr.e("Error","Some thing went wrong.");
+            })
+            .finally(()=>{
+                this.loader = false;
+            })
 
     }
   },

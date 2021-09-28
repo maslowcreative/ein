@@ -12,9 +12,9 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::get('users/store','UserController@store');
 Route::apiResource('users','UserController');
-Route::get('users/create','UserController@store');
+
 Route::apiResource('admins','AdminController');
 
 
