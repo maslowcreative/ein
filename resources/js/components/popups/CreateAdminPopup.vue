@@ -109,7 +109,7 @@
               </div>
             </div>
           </form>
-          <div class="step-final d-flex justify-content-center align-items-center flex-column">
+          <div class="step-final d-flex justify-content-center align-items-center flex-column d-none">
             <ion-icon name="checkmark-circle-outline" class="final-icon"></ion-icon>
             <h4>New Sub-Admin Created!</h4>
             <div class="mw290 mx-auto px-4 w-100">
@@ -132,7 +132,7 @@ export default {
         name: null,
         email: null,
         password: null,
-        role_id: null,
+        role_id: 1,
         permissions: {},
       }),
     }

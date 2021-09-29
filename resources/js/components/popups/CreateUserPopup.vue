@@ -464,7 +464,7 @@
                 </div>
 
                 <div
-                  class="step-6 step-final mw290 mx-auto px-4 text-center d-flex justify-content-center align-items-center flex-column"
+                  class="step-6 step-final mw290 mx-auto px-4 text-center d-flex justify-content-center align-items-center flex-column d-none"
                   v-show="step === 6"
                 >
                   <ion-icon name="checkmark-circle-outline" class="final-icon"></ion-icon>
