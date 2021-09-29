@@ -109,8 +109,13 @@ class User extends Authenticatable
             ->with(['roles'])
             ->allowedFilters([
                 AllowedFilter::exact('id', 'id'),
+                AllowedFilter::partial('name', 'name'),
                 AllowedFilter::exact('email', 'email'),
-                AllowedFilter::exact('phone', 'phone')
+                AllowedFilter::exact('phone', 'phone'),
+                AllowedFilter::callback('roles', function (Builder $query, $roles) {
+                    $query->whereInRoles($roles);
+                }),
+
             ]);
     }
 

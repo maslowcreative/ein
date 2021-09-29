@@ -1,28 +1,57 @@
 <template>
-  <div class="card mb-4">
-    <div class="card-body">
-      <div class="d-flex justify-content-between">
-        <div>
-          <h5>Users</h5>
-          <small class="text-primary">9999 Active Users</small>
-        </div>
-        <div class="card-right-btns">
-          <button class="btn btn-primary btn-icon"><ion-icon name="add-outline"></ion-icon> Add New User</button>
-          <div class="dropdown">
-            <button
-              class="btn btn-light btn-icon"
-              type="button"
-              id="userSearchDropdown"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              <ion-icon name="search-outline"></ion-icon>
-            </button>
-            <div class="dropdown-menu dropdown-menu-end fs-sm" aria-labelledby="userSearchDropdown">
-              <div class="py-2 px-3">
-                <div class="">
-                  <label class="form-label">Search for a User</label>
-                  <input type="text" class="form-control form-control-sm" placeholder="Enter Users Name" />
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="d-flex justify-content-between">
+                <div>
+                    <h5>Users</h5>
+                    <small class="text-primary">9999 Active Users</small>
+                </div>
+                <div class="card-right-btns">
+                    <button class="btn btn-primary btn-icon" data-bs-toggle="modal" data-bs-target="#userModal">
+                        <ion-icon name="add-outline"></ion-icon> Add New User
+                    </button>
+                    <div class="dropdown">
+                        <button class="btn btn-light btn-icon" type="button" id="userSearchDropdown" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                            <ion-icon name="search-outline"></ion-icon>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-end fs-sm" aria-labelledby="userSearchDropdown">
+                            <div class="py-2 px-3">
+                                <div class="">
+                                    <label class="form-label">Search for a User</label>
+                                    <input type="text" class="form-control form-control-sm" placeholder="Enter Users Name">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dropdown">
+                        <button class="btn btn-light btn-icon" type="button" id="filterDropdown2" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                            <ion-icon name="funnel-outline"></ion-icon>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-end fs-sm" aria-labelledby="filterDropdown2">
+                            <div class="py-2 px-3">
+                                <div class="mb-3">
+                                    <label class="form-label">Claim Status</label>
+                                    <select class="form-select form-select-sm">
+                                        <option selected>All</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </div>
+                                <div class="">
+                                    <label class="form-label">Claim Status</label>
+                                    <select class="form-select form-select-sm">
+                                        <option selected>All</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
               </div>
             </div>
