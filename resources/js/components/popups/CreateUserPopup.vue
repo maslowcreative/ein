@@ -66,7 +66,7 @@
               </ul>
             </div>
             <div class="col-md-7">
-              <!-- Step 1 Provider-->
+              <!-- Step 1 Common-->
               <div class="step1 mw420 mx-auto" v-show="step === 1">
                 <h6 class="mb-3 mb-md-5">Choose your User Type </h6>
                 <div class="d-grid userType">
@@ -77,7 +77,6 @@
                       class="btn-check"
                       checked
                       id="btn-check-1"
-                      checked
                       v-model="form.role_id"
                       value="2"
                       autocomplete="off"
@@ -92,16 +91,18 @@
                     <input type="radio" name="user-type" class="btn-check" id="btn-check-3" v-model="form.role_id" value="3" autocomplete="off" />
                     <label class="btn btn-light d-block btn-lg" for="btn-check-3">Representative</label>
                   </div>
+                    <div class="invalid-msg" v-if="form.errors.has('role_id')" v-html="form.errors.get('role_id')" />
                 </div>
               </div>
 
-               <!-- Step 2 Provider-->
-                 <div class="step2" v-show="step === 2 && form.role_id == 2">
+              <!-- Step 2 Provider-->
+              <div class="step2" v-show="step === 2 && form.role_id == 2">
                   <div class="row">
                     <div class="col-md-6">
                       <div class="mb-4">
                         <label class="form-label">Full Name</label>
                         <input type="text" class="form-control" v-model="form.name"  placeholder="The Name of the Provider" />
+                        <div class="invalid-msg" v-if="form.errors.has('name')" v-html="form.errors.get('name')" />
                       </div>
                     </div>
                     <div class="col-md-6">
@@ -116,7 +117,32 @@
                         <input type="text" class="form-control" id="linkAParticipant" placeholder="Participant’s Name" />
                       </div>
                     </div>
+                      <div class="col-md-6">
+                          <label class="typo__label">Simple select / dropdown</label>
+
+
+
+                          <multiselect
+                              v-model="value"
+                              :options="options"
+                              :multiple="true"
+                              :close-on-select="false"
+                              :clear-on-select="false"
+                              :preserve-search="true"
+                              :show-labels="true"
+                              placeholder="Select Participants" label="name" track-by="name" :preselect-first="true">
+                              <template slot="option" slot-scope="props"> <b> {{ props.option.name }} </b>
+                              </template>
+                              <template slot="selection" slot-scope="{ values, search, isOpen }"> <span class="multiselect__single" v-if="values.length &amp;&amp; !isOpen">{{ values.length }} options selected</span></template>
+                              <template slot="option" slot-scope="{ values, search, isOpen }"> </template>
+                          </multiselect>
+
+                      </div>
+
+
                   </div>
+
+
                   <div class="row">
                     <div class="col-md-6">
                       <div class="bg-light d-flex align-items-center p-3 participant-card">
@@ -146,7 +172,6 @@
                     </div>
                   </div>
                 </div>
-
               <!-- Step 2 Participant-->
               <div class="step2" v-show="step === 2 && form.role_id == 4">
                 <div class="row">
@@ -202,6 +227,7 @@
                   </div>
                 </div>
               </div>
+
               <!-- Step 3 Provider-->
               <div class="step3 mw290 mx-auto" v-show="step === 3">
                 <div class="mb-3">
@@ -225,9 +251,8 @@
                 </div>
               </div>
 
-
               <!-- Step 4 Provider-->
-               <div class="step4 mw290 mx-auto" v-show="step === 4 && form.role_id == 2">
+              <div class="step4 mw290 mx-auto" v-show="step === 4 && form.role_id == 2">
                 <div>
                   <div class="mb-3">
                     <label for="abnNumber" class="form-label fw-bold">ABN</label>
@@ -328,6 +353,8 @@
                   />
                 </div>
               </div>
+
+
               <div class="mw290 mx-auto px-4 mt-4 mt-md-5">
                 <button class="btn btn-primary btn-lg w-100 py-3" @click.prevent="next()">Next</button>
               </div>
@@ -342,19 +369,32 @@
     </div>
   </div>
 </template>
+import 'vue-select/dist/vue-select.css';
 
 <script>
 import Form from "vform";
+import Multiselect from 'vue-multiselect';
 export default {
+  components: { Multiselect },
   data() {
     return {
+        value: [],
+        options: [
+            { name: 'Vue.js', language: 'JavaScript' },
+            { name: 'Adonis', language: 'JavaScript' },
+            { name: 'Rails', language: 'Ruby' },
+            { name: 'Sinatra', language: 'Ruby' },
+            { name: 'Laravel', language: 'PHP' },
+            { name: 'Phoenix', language: 'Elixir' }
+        ],
+
         loader : false,
         stepsMap: {
             2:5,
         },
         step: 1,
         form: new Form({
-            role_id: null,
+            role_id: 2,
             name: null,
             email: null,
             password: null,
@@ -368,6 +408,7 @@ export default {
     }
   },
   mounted() {
+      this.asyncFind();
   },
   watch:{
       'form.role_id': function (val, old) {
@@ -414,9 +455,30 @@ export default {
             })
             .finally(()=>{
                 this.loader = false;
-            })
+            });
+    },
+    asyncFind (query) {
+          this.isLoading = true
+          let route = this.laroute.route("ajax.users.index",{filter:{
+                  name:'provider'
+              }});
+          axios.get(route)
+              .then(res => {
+                  if ((res.status = 201)) {
 
-    }
+                  }
+              })
+              .catch(error => {
+                  this.$toastr.e("Error","Some thing went wrong.");
+              })
+              .finally(()=>{
+                  this.loader = false;
+              });
+
+    },
   },
 }
 </script>
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
+
+
