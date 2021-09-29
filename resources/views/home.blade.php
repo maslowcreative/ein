@@ -18,9 +18,9 @@
 @endsection
 <script>
   import AdminList from "../js/components/dashboard/AdminList";
-    import DashboardHeader from "../js/components/dashboard/DashboardHeader";
-    import InvoiceClaimsList from "../js/components/dashboard/InvoiceClaimsList";
-    export default {
-        components: {InvoiceClaimsList, DashboardHeader, AdminList}
-    }
+  import DashboardHeader from "../js/components/dashboard/DashboardHeader";
+  import InvoiceClaimsList from "../js/components/dashboard/InvoiceClaimsList";
+  export default {
+      components: {InvoiceClaimsList, DashboardHeader, AdminList}
+  }
 </script>
