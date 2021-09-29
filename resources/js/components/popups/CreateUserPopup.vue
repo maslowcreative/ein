@@ -18,56 +18,81 @@
             <div class="row">
               <div class="col-md-5">
                 <ul class="stepList mb-5 mb-md-0">
-                  <li class="active">
-                    <a class="title d-inline-flex align-items-center" href="#" v-on:click="current(1)">
+                  <li>
+                    <a
+                      class="title d-inline-flex align-items-center"
+                      href="#"
+                      v-on:click="current(1)"
+                      v-bind:class="step === 1 ? 'active' : ''"
+                    >
                       <div class="step-number">1</div>
                       <div class="step-text">
                         <h6>
-                          Choose User Type <span v-if="step === 1"><b>(Active)</b></span>
+                          Choose User Type
                         </h6>
                         Provider, Participant or Representative
                       </div>
                     </a>
                   </li>
                   <li>
-                    <a class="title d-inline-flex align-items-center" href="#" v-on:click="current(2)">
+                    <a
+                      class="title d-inline-flex align-items-center"
+                      href="#"
+                      v-on:click="current(2)"
+                      v-bind:class="step === 2 ? 'active' : ''"
+                    >
                       <div class="step-number">2</div>
                       <div class="step-text">
                         <h6>
-                          Personal Information <span v-if="step === 2"><b>(Active)</b></span>
+                          Personal Information
                         </h6>
                         Enter your user’s personal information
                       </div>
                     </a>
                   </li>
                   <li>
-                    <a class="title d-inline-flex align-items-center" href="#" v-on:click="current(3)">
+                    <a
+                      class="title d-inline-flex align-items-center"
+                      href="#"
+                      v-on:click="current(3)"
+                      v-bind:class="step === 3 ? 'active' : ''"
+                    >
                       <div class="step-number">3</div>
                       <div class="step-text">
                         <h6>
-                          Contact Information <span v-if="step === 3"><b>(Active)</b></span>
+                          Contact Information
                         </h6>
                         Enter User’s Contact information
                       </div>
                     </a>
                   </li>
                   <li>
-                    <a class="title d-inline-flex align-items-center" href="#">
+                    <a
+                      class="title d-inline-flex align-items-center"
+                      href="#"
+                      v-on:click="current(4)"
+                      v-bind:class="step === 4 ? 'active' : ''"
+                    >
                       <div class="step-number">4</div>
                       <div class="step-text">
                         <h6>
-                          NDIS Information <span v-if="step === 4"><b>(Active)</b></span>
+                          NDIS Information
                         </h6>
                         Provide information related to NDIS
                       </div>
                     </a>
                   </li>
                   <li>
-                    <a class="title d-inline-flex align-items-center" href="#">
+                    <a
+                      class="title d-inline-flex align-items-center"
+                      href="#"
+                      v-on:click="current(5)"
+                      v-bind:class="step === 5 ? 'active' : ''"
+                    >
                       <div class="step-number">5</div>
                       <div class="step-text">
                         <h6>
-                          Login Information <span v-if="step === 5"><b>(Active)</b></span>
+                          Login Information
                         </h6>
                         Set-up a password for your new user
                       </div>
@@ -151,10 +176,38 @@
                           id="linkAParticipant"
                           placeholder="Participant’s Name"
                         />
+
+                        <div class="mt-2">
+                          <div class="bg-light d-flex align-items-center p-3 participant-card">
+                            <div class="me-3"><img src="/images/avatar.png" width="40" alt="" /></div>
+                            <div class="participant-name">
+                              <h6>Users Name</h6>
+                              <span class="text-primary">Participant</span>
+                            </div>
+                            <div class="ms-auto">
+                              <button class="btn btn-link p-0 participant-remove">
+                                <ion-icon name="remove-circle-outline"></ion-icon>
+                              </button>
+                            </div>
+                          </div>
+                          <div class="bg-light d-flex align-items-center p-3 participant-card">
+                            <div class="me-3"><img src="/images/avatar.png" width="40" alt="" /></div>
+                            <div class="participant-name">
+                              <h6>Users Name</h6>
+                              <span class="text-primary">Participant</span>
+                            </div>
+                            <div class="ms-auto">
+                              <button class="btn btn-link p-0 participant-remove">
+                                <ion-icon name="remove-circle-outline"></ion-icon>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                    <div class="col-md-6">
-                      <label class="typo__label">Simple select / dropdown</label>
+                  </div>
+                  <!-- <div class="col-md-6">
+                      <label for="linkAParticipant" class="form-label">Link a Participant</label>
 
                       <multiselect
                         v-model="value"
@@ -163,7 +216,7 @@
                         :close-on-select="false"
                         :clear-on-select="false"
                         :preserve-search="true"
-                        :show-labels="true"
+                        :show-labels="false"
                         placeholder="Select Participants"
                         label="name"
                         track-by="name"
@@ -172,45 +225,35 @@
                         <template slot="option" slot-scope="props">
                           <b> {{ props.option.name }} </b>
                         </template>
-                        <template slot="selection" slot-scope="{ values, search, isOpen }">
+                        <template slot="selection" slot-scope="{ values, isOpen }" class="form-control">
                           <span class="multiselect__single" v-if="values.length &amp;&amp; !isOpen"
                             >{{ values.length }} options selected</span
                           ></template
                         >
                         <template slot="option" slot-scope="{ values, search, isOpen }"> </template>
+                        <template slot="option" slot-scope="props">
+                          <div class="bg-light d-flex align-items-center p-3 participant-card">
+                            <div class="me-3"><img src="/images/avatar.png" width="40" alt="" /></div>
+                            <div class="participant-name">
+                              <h6>Users Name</h6>
+                              <span class="text-primary">Participant</span>
+                            </div>
+                            <div class="ms-auto">
+                              <button class="btn btn-link p-0 participant-remove">
+                                <ion-icon
+                                  name="remove-circle-outline"
+                                  role="img"
+                                  class="md hydrated"
+                                  aria-label="remove circle outline"
+                                ></ion-icon>
+                              </button>
+                            </div>
+                          </div>
+                        </template>
                       </multiselect>
-                    </div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="bg-light d-flex align-items-center p-3 participant-card">
-                        <div class="me-3"><img src="/images/avatar.png" width="40" alt="" /></div>
-                        <div class="participant-name">
-                          <h6>Users Name</h6>
-                          <span class="text-primary">Participant</span>
-                        </div>
-                        <div class="ms-auto">
-                          <button class="btn btn-link p-0 participant-remove">
-                            <ion-icon name="remove-circle-outline"></ion-icon>
-                          </button>
-                        </div>
-                      </div>
-                      <div class="bg-light d-flex align-items-center p-3 participant-card">
-                        <div class="me-3"><img src="/images/avatar.png" width="40" alt="" /></div>
-                        <div class="participant-name">
-                          <h6>Users Name</h6>
-                          <span class="text-primary">Participant</span>
-                        </div>
-                        <div class="ms-auto">
-                          <button class="btn btn-link p-0 participant-remove">
-                            <ion-icon name="remove-circle-outline"></ion-icon>
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                    </div> -->
                 </div>
+
                 <!-- Step 2 Participant-->
                 <div class="step2" v-show="step === 2 && form.role_id == 4">
                   <div class="row">
@@ -278,7 +321,7 @@
 
                 <!-- Step 3 Provider-->
                 <div class="step3 mw290 mx-auto" v-show="step === 3">
-                  <div class="mb-3">
+                  <div class="mb-4">
                     <label for="homeAddress" class="form-label fw-bold">Home Address</label>
                     <textarea
                       cols="30"
@@ -289,7 +332,7 @@
                       placeholder="Home Address 13, 10000 State, Country."
                     ></textarea>
                   </div>
-                  <div class="mb-3">
+                  <div class="mb-4">
                     <label class="form-label fw-bold">E-mail Address</label>
                     <input
                       type="text"
@@ -298,7 +341,7 @@
                       placeholder="providersemail@gmail.com"
                     />
                   </div>
-                  <div class="mb-3">
+                  <div class="mb-4">
                     <label for="phoneNumber" class="form-label fw-bold">Phone Number</label>
                     <input
                       type="tel"
@@ -313,7 +356,7 @@
                 <!-- Step 4 Provider-->
                 <div class="step4 mw290 mx-auto" v-show="step === 4 && form.role_id == 2">
                   <div>
-                    <div class="mb-3">
+                    <div class="mb-4">
                       <label for="abnNumber" class="form-label fw-bold">ABN</label>
                       <input
                         type="text"
@@ -323,7 +366,7 @@
                         placeholder="00000000000000000000"
                       />
                     </div>
-                    <div class="mb-3">
+                    <div class="mb-4">
                       <label for="specificItemNumbers" class="form-label fw-bold">Specific Item Numbers</label>
                       <textarea
                         name=""
@@ -416,10 +459,17 @@
                 </div>
 
                 <div class="mw290 mx-auto px-4 mt-4 mt-md-5">
-                  <button class="btn btn-primary btn-lg w-100 py-3" @click.prevent="next()">Next</button>
-                </div>
-                <div class="mw290 mx-auto px-4 mt-4 mt-md-5">
+                  <button class="btn btn-primary btn-lg w-100 py-3 mb-3" @click.prevent="next()">Next</button>
                   <button type="submit" class="btn btn-primary btn-lg w-100 py-3">Submit</button>
+                </div>
+
+                <div
+                  class="step-6 step-final mw290 mx-auto px-4 text-center d-flex justify-content-center align-items-center flex-column"
+                  v-show="step === 6"
+                >
+                  <ion-icon name="checkmark-circle-outline" class="final-icon"></ion-icon>
+                  <h4>New User Created!</h4>
+                  <button class="btn btn-primary btn-lg w-100 py-3">Back to Dashboard</button>
                 </div>
               </div>
             </div>

@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-<main class="main px-xl-5">
-  <div class="container-fluid">
+<main class="main">
+  <div class="container-xxl">
     <dashboard-header></dashboard-header>
     <div class="row">
       <div class="col-xl-6">

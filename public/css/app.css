@@ -654,9 +654,9 @@ progress {
     max-width: 1140px;
   }
 }
-@media (min-width: 1400px) {
+@media (min-width: 1500px) {
   .container-xxl, .container-xl, .container-lg, .container-md, .container-sm, .container {
-    max-width: 1320px;
+    max-width: 1520px;
   }
 }
 .row {
@@ -1737,7 +1737,7 @@ progress {
     --bs-gutter-y: 3rem;
   }
 }
-@media (min-width: 1400px) {
+@media (min-width: 1500px) {
   .col-xxl {
     flex: 1 0 0%;
   }
@@ -2140,7 +2140,7 @@ progress {
     -webkit-overflow-scrolling: touch;
   }
 }
-@media (max-width: 1399.98px) {
+@media (max-width: 1499.98px) {
   .table-responsive-xxl {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
@@ -3618,7 +3618,7 @@ textarea.form-control-lg {
     left: auto;
   }
 }
-@media (min-width: 1400px) {
+@media (min-width: 1500px) {
   .dropdown-menu-xxl-start {
     --bs-position: start;
   }
@@ -4262,7 +4262,7 @@ textarea.form-control-lg {
     overflow-y: visible;
   }
 }
-@media (min-width: 1400px) {
+@media (min-width: 1500px) {
   .navbar-expand-xxl {
     flex-wrap: nowrap;
     justify-content: flex-start;
@@ -5022,7 +5022,7 @@ textarea.form-control-lg {
     border-left-width: 1px;
   }
 }
-@media (min-width: 1400px) {
+@media (min-width: 1500px) {
   .list-group-horizontal-xxl {
     flex-direction: row;
   }
@@ -5456,7 +5456,7 @@ textarea.form-control-lg {
     overflow-y: auto;
   }
 }
-@media (max-width: 1399.98px) {
+@media (max-width: 1499.98px) {
   .modal-fullscreen-xxl-down {
     width: 100vw;
     max-width: none;
@@ -6282,7 +6282,7 @@ textarea.form-control-lg {
     z-index: 1020;
   }
 }
-@media (min-width: 1400px) {
+@media (min-width: 1500px) {
   .sticky-xxl-top {
     position: sticky;
     top: 0;
@@ -10281,7 +10281,7 @@ textarea.form-control-lg {
     text-align: center !important;
   }
 }
-@media (min-width: 1400px) {
+@media (min-width: 1500px) {
   .float-xxl-start {
     float: left !important;
   }
@@ -11009,6 +11009,9 @@ textarea.form-control-lg {
     margin-top: 4.5rem;
   }
 }
+.site-footer .container-fluid, .site-footer .container-sm, .site-footer .container-md, .site-footer .container-lg, .site-footer .container-xl, .site-footer .container-xxl {
+  max-width: 1670px;
+}
 
 .btn {
   white-space: nowrap;
@@ -11100,7 +11103,7 @@ textarea.form-control-lg {
   box-shadow: 3px 0px 22px rgba(0, 0, 0, 0.05);
   border: none;
 }
-@media (min-width: 1400px) {
+@media (min-width: 1500px) {
   .card .card-body {
     padding: 4.625rem;
   }
@@ -11110,7 +11113,7 @@ textarea.form-control-lg {
   overflow-x: auto;
   margin-top: 2rem;
 }
-@media (min-width: 1400px) {
+@media (min-width: 1500px) {
   .table-x-scroll {
     margin-top: 3.75rem;
   }
@@ -11132,6 +11135,21 @@ textarea.form-control-lg {
 
 .card-right-btns > * + * {
   margin-left: 1.5rem;
+}
+
+.main .multiselect__tags {
+  border: none;
+  background-color: #fafafa;
+  min-height: 3.25rem;
+  border-radius: 0;
+}
+.main .multiselect__single {
+  background: none;
+  padding: 0;
+  margin: 0;
+}
+.main .multiselect__option {
+  padding: 0;
 }
 
 .navbar {
@@ -11156,6 +11174,9 @@ textarea.form-control-lg {
   .navbar .nav-link {
     font-size: 1.125rem;
   }
+}
+.navbar .container-fluid, .navbar .container-sm, .navbar .container-md, .navbar .container-lg, .navbar .container-xl, .navbar .container-xxl {
+  max-width: 1670px;
 }
 
 .nav-logo img {
@@ -11184,7 +11205,7 @@ textarea.form-control-lg {
   padding: 2.5rem;
   padding-bottom: 10rem;
 }
-@media (min-width: 1400px) {
+@media (min-width: 1500px) {
   .qo-section {
     margin-bottom: 10rem;
     padding: 4.5rem;
@@ -11203,7 +11224,7 @@ textarea.form-control-lg {
   text-align: center;
   box-shadow: 3px 0px 22px rgba(0, 0, 0, 0.05);
 }
-@media (min-width: 1400px) {
+@media (min-width: 1500px) {
   .options-grid {
     --gap: 90px;
   }
@@ -11270,10 +11291,13 @@ textarea.form-control-lg {
 .addUserPopup {
   padding: 2rem 3rem;
 }
-@media (min-width: 1400px) {
+@media (min-width: 1500px) {
   .addUserPopup {
     padding: 3.5rem 4.5rem;
   }
+}
+.addUserPopup .row {
+  --bs-gutter-x: 2.25rem;
 }
 .addUserPopup .addUser {
   padding: 3rem 0 0;
@@ -11306,11 +11330,11 @@ textarea.form-control-lg {
 .addUserPopup .stepList li a {
   text-decoration: none;
 }
-.addUserPopup .stepList li a:hover {
+.addUserPopup .stepList li a.active, .addUserPopup .stepList li a:hover {
   color: inherit;
   text-decoration: none;
 }
-.addUserPopup .stepList li a:hover .step-number {
+.addUserPopup .stepList li a.active .step-number, .addUserPopup .stepList li a:hover .step-number {
   background-color: var(--bs-primary);
   color: #fff;
 }
@@ -11335,8 +11359,19 @@ textarea.form-control-lg {
 .addUserPopup .step2 .row {
   --bs-gutter-x: 50px;
 }
-.addUserPopup .step2 .form-label {
+.addUserPopup .form-label {
   font-weight: bold;
+}
+.addUserPopup .step-final {
+  min-height: 100%;
+}
+.addUserPopup .step-final h4, .addUserPopup .step-final .h4 {
+  margin: 2.5rem 0;
+}
+.addUserPopup .step-final .final-icon {
+  --ionicon-stroke-width: 1.125rem;
+  font-size: 6.5rem;
+  color: var(--bs-primary);
 }
 
 .participant-card + .participant-card {
