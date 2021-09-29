@@ -65,40 +65,6 @@
         </div>
       </div>
 
-      <div class="dropdown">
-        <button
-          class="btn btn-light btn-icon"
-          type="button"
-          id="filterDropdown2"
-          data-bs-toggle="dropdown"
-          aria-expanded="false"
-        >
-          <ion-icon name="funnel-outline"></ion-icon>
-        </button>
-        <div class="dropdown-menu dropdown-menu-end fs-sm" aria-labelledby="filterDropdown2">
-          <div class="py-2 px-3">
-            <div class="mb-3">
-              <label class="form-label">Claim Status</label>
-              <select class="form-select form-select-sm">
-                <option selected>All</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-              </select>
-            </div>
-            <div class="">
-              <label class="form-label">Claim Status</label>
-              <select class="form-select form-select-sm">
-                <option selected>All</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-              </select>
-            </div>
-          </div>
-        </div>
-      </div>
-
       <div class="table-x-scroll">
         <table class="table">
           <thead>
