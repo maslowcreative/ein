@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-<main class="main px-xl-5">
-  <div class="container-fluid">
+<main class="main">
+  <div class="container-xxl">
     <dashboard-header></dashboard-header>
     <div class="row">
       <div class="col-xl-6">
@@ -16,11 +16,3 @@
   </div>
 </main>
 @endsection
-<script>
-  import AdminList from "../js/components/dashboard/AdminList";
-    import DashboardHeader from "../js/components/dashboard/DashboardHeader";
-    import InvoiceClaimsList from "../js/components/dashboard/InvoiceClaimsList";
-    export default {
-        components: {InvoiceClaimsList, DashboardHeader, AdminList}
-    }
-</script>
