@@ -161,13 +161,7 @@
                         <div class="invalid-msg" v-if="form.errors.has('name')" v-html="form.errors.get('name')" />
                       </div>
                     </div>
-                    <div class="col-md-6">
-                      <div class="mb-4">
-                        <label class="form-label">Full Name</label>
-                        <input type="text" class="form-control" placeholder="The Name of the Provider" />
-                      </div>
-                    </div>
-                    <div class="col-md-6">
+                   <div class="col-md-6">
                       <div class="mb-4">
                         <label for="linkAParticipant" class="form-label">Link a Participant</label>
                         <input
@@ -460,7 +454,7 @@
 
                 <div class="mw290 mx-auto px-4 mt-4 mt-md-5">
                   <button class="btn btn-primary btn-lg w-100 py-3 mb-3" @click.prevent="next()">Next</button>
-                  <button type="submit" class="btn btn-primary btn-lg w-100 py-3">Submit</button>
+<!--                  <button type="submit" class="btn btn-primary btn-lg w-100 py-3">Submit</button>-->
                 </div>
 
                 <div
