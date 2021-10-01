@@ -161,13 +161,7 @@
                         <div class="invalid-msg" v-if="form.errors.has('name')" v-html="form.errors.get('name')" />
                       </div>
                     </div>
-                    <div class="col-md-6">
-                      <div class="mb-4">
-                        <label class="form-label">Full Name</label>
-                        <input type="text" class="form-control" placeholder="The Name of the Provider" />
-                      </div>
-                    </div>
-                    <div class="col-md-6">
+                   <div class="col-md-6">
                       <div class="mb-4">
                         <label for="linkAParticipant" class="form-label">Link a Participant</label>
                         <input
