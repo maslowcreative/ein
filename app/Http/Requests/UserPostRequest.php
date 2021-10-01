@@ -27,7 +27,7 @@ class UserPostRequest extends FormRequest
         return [
             'name' => 'required|string',
             'email' => 'required|email|unique:users',
-            'password' => 'sometimes|string',
+            'password' => 'sometimes|nullable|string',
             'phone' => 'sometimes|string',
             'address' => 'sometimes|string',
             'role_id' => 'required|exists:roles,id',
@@ -35,7 +35,7 @@ class UserPostRequest extends FormRequest
             //Role is provider
             'provider' => 'exclude_unless:role_id,'.Role::ROLE_PROVIDER.'|required|array',
             'provider.abn' => 'required|string|unique:providers,abn',
-            'provider.business_name' => 'required|string',
+            //'provider.business_name' => 'required|string',
 
             'provider.participants' => 'sometimes|array',
             'provider.participants.*' => 'integer|exists:participants,user_id',

@@ -100,6 +100,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
+        dd('check');
         return $this->respondCreated();
     }
 
