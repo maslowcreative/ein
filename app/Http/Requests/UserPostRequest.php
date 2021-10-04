@@ -28,8 +28,8 @@ class UserPostRequest extends FormRequest
             'name' => 'required|string',
             'email' => 'required|email|unique:users',
             'password' => 'sometimes|nullable|string',
-            'phone' => 'sometimes|string',
-            'address' => 'sometimes|string',
+            'phone' => 'sometimes|string|nullable',
+            'address' => 'sometimes|string|nullable',
             'role_id' => 'required|exists:roles,id',
 
             //Role is provider
@@ -47,7 +47,7 @@ class UserPostRequest extends FormRequest
             'participant' => 'exclude_unless:role_id,'.Role::ROLE_PARTICIPANT.'|required|array',
             'participant.representative_id' => 'sometimes|exists:representatives,user_id',
             'participant.relationship' => 'required_with:participant.representative_id|string',
-            'participant.unique_identifier' => 'required|string|unique:participants,unique_identifier',
+            'participant.ndis_number' => 'required|string|unique:participants,ndis_number',
             'participant.dob' => 'required|string',
             'participant.providers' => 'sometimes|array',
             'participant.providers.*' => 'integer',
