@@ -34,7 +34,7 @@ class UserPostRequest extends FormRequest
 
             //Role is provider
             'provider' => 'exclude_unless:role_id,'.Role::ROLE_PROVIDER.'|required|array',
-            'provider.abn' => 'required|string|unique:providers,abn',
+            'provider.abn' => 'required|digits:11|unique:providers,abn',
             //'provider.business_name' => 'required|string',
 
             'provider.participants' => 'sometimes|array',
@@ -62,8 +62,7 @@ class UserPostRequest extends FormRequest
             'representative' => 'exclude_unless:role_id,'.Role::ROLE_REPRESENTATIVE.'|sometimes|array',
             'representative.participants' => 'sometimes|array',
             'representative.participants.*.participants_id' => 'integer|exists:participants,user_id',
-            'representative.participants.*.relationship' => 'string',
-
+            'representative.participants.*.relationship' => 'string|required_with:representative.participants.*.participants_id',
         ];
     }
 
@@ -79,3 +78,4 @@ class UserPostRequest extends FormRequest
         ];
     }
 }
+

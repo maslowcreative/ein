@@ -208,52 +208,6 @@
                       </div>
                     </div>
                   </div>
-                  <!-- <div class="col-md-6">
-                      <label for="linkAParticipant" class="form-label">Link a Participant</label>
-
-                      <multiselect
-                        v-model="value"
-                        :options="options"
-                        :multiple="true"
-                        :close-on-select="false"
-                        :clear-on-select="false"
-                        :preserve-search="true"
-                        :show-labels="false"
-                        placeholder="Select Participants"
-                        label="name"
-                        track-by="name"
-                        :preselect-first="true"
-                      >
-                        <template slot="option" slot-scope="props">
-                          <b> {{ props.option.name }} </b>
-                        </template>
-                        <template slot="selection" slot-scope="{ values, isOpen }" class="form-control">
-                          <span class="multiselect__single" v-if="values.length &amp;&amp; !isOpen"
-                            >{{ values.length }} options selected</span
-                          ></template
-                        >
-                        <template slot="option" slot-scope="{ values, search, isOpen }"> </template>
-                        <template slot="option" slot-scope="props">
-                          <div class="bg-light d-flex align-items-center p-3 participant-card">
-                            <div class="me-3"><img src="/images/avatar.png" width="40" alt="" /></div>
-                            <div class="participant-name">
-                              <h6>Users Name</h6>
-                              <span class="text-primary">Participant</span>
-                            </div>
-                            <div class="ms-auto">
-                              <button class="btn btn-link p-0 participant-remove">
-                                <ion-icon
-                                  name="remove-circle-outline"
-                                  role="img"
-                                  class="md hydrated"
-                                  aria-label="remove circle outline"
-                                ></ion-icon>
-                              </button>
-                            </div>
-                          </div>
-                        </template>
-                      </multiselect>
-                    </div> -->
                 </div>
 
                 <!-- Step 2 Participant-->
@@ -379,7 +333,25 @@
                                       type="text"
                                       class="form-control"
                                       placeholder="Participant’s Name"
+                                      v-model="participantSerachName"
                                   />
+                                  <ul v-if="participantSerachResult.length > 0">
+                                      <li v-for="participant in participantSerachResult" :key="participant.id" v-text="participant.name" v-on:click="selectItem(participant.id,'participant')"></li>
+                                  </ul>
+                                  <div class="mt-2">
+                                      <div class="bg-light d-flex align-items-center p-3 participant-card" v-for="participant in participantSelected">
+                                          <div class="me-3"><img src="/images/avatar.png" width="40" alt="" /></div>
+                                          <div class="participant-name">
+                                              <h6>{{participant.name}}</h6>
+                                              <span class="text-primary">Participant</span>
+                                          </div>
+                                          <div class="ms-auto">
+                                              <button class="btn btn-link p-0 participant-remove" v-on:click="removeItem(participant.id,'participant')">
+                                                  <ion-icon name="remove-circle-outline"></ion-icon>
+                                              </button>
+                                          </div>
+                                      </div>
+                                  </div>
                               </div>
                           </div>
                       </div>
@@ -637,7 +609,18 @@ export default {
               charges_types:null,
             }
           }
-        })
+        });
+        this.participantSerachName = null;
+        this.participantSerachResult = [];
+        this.participantSelected = [];
+
+        this.providerSerachName = null;
+        this.providerSerachResult = [];
+        this.providerSelected = [];
+
+        this.representativeSerachName = null;
+        this.representativeSerachResult = [];
+        this.representativeSelected = null;
       }
     },
     step(val,old) {
@@ -722,7 +705,6 @@ export default {
       }else if($role === "representative"){
 
           let representative = this.representativeSerachResult.filter(representative => representative.id == id);
-
           this.representativeSelected = representative[0];
           this.form.participant.representative_id = this.representativeSelected.id;
           this.representativeSerachName = null;
