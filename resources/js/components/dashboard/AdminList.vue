@@ -57,6 +57,20 @@
         </table>
       </div>
       <div class="mt-4 mt-md-5">
+        <nav aria-label="Page navigation">
+          <ul class="pagination justify-content-center">
+            <li class="page-item"><a href="#" class="page-link">1</a></li>
+            <li class="page-item"><a href="#" class="page-link">2</a></li>
+            <li class="page-item"><a href="#" class="page-link">3</a></li>
+            <li class="page-item"><a href="#" class="page-link">...</a></li>
+            <li class="page-item"><a href="#" class="page-link">100</a></li>
+          </ul>
+        </nav>
+        <nav aria-label="Page navigation">
+          <ul class="pagination justify-content-center">
+            <!-- <li v-for="post in laravelData.data" :key="post.id">{{ post.title }}</li> -->
+          </ul>
+        </nav>
         <advanced-laravel-vue-paginate :data="items" previousText="<<" nextText=">>" @paginateTo="getAdminList" />
       </div>
     </div>
