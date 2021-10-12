@@ -112,6 +112,9 @@ class User extends Authenticatable
                 AllowedFilter::partial('name', 'name'),
                 AllowedFilter::exact('email', 'email'),
                 AllowedFilter::exact('phone', 'phone'),
+                AllowedFilter::callback('not_in',function (Builder $query,$ids){
+                    $query->whereNotIn('id',$ids);
+                }),
                 AllowedFilter::callback('roles', function (Builder $query, $roles) {
                     $query->whereInRoles($roles);
                 }),

@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 Route::get('users/store','UserController@store');
 Route::apiResource('users','UserController');
-
+Route::apiResource('services','ServiceController');
 Route::apiResource('admins','AdminController');
 
 
