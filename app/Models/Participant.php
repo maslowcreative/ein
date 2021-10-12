@@ -20,7 +20,7 @@ class Participant extends Model
         'user_id',
         'representative_id',
         'relationship',
-        'unique_identifier',
+        'ndis_number',
         'dob',
     ];
 
