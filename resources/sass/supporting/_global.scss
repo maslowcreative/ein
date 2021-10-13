@@ -157,6 +157,81 @@
 }
 
 //
+
+.scroll-y {
+  --box-height: 100%;
+  --border-radius: 4px;
+
+  max-height: var(--box-height);
+  position: relative;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar,
+  &::-moz-scrollbar {
+    width: 8px;
+    background-color: rgba(#000, 0.1);
+    border-radius: var(--border-radius);
+    outline: none;
+  }
+
+  &::-webkit-scrollbar-track,
+  &::-moz-scrollbar-track {
+    border-radius: var(--border-radius);
+  }
+
+  &::-webkit-scrollbar-thumb,
+  &::-moz-scrollbar-thumb {
+    background-color: darkgrey;
+    border-radius: var(--border-radius);
+  }
+}
+
+.scroll-x {
+  --box-width: 100%;
+  --border-radius: 4px;
+
+  max-width: var(--box-width);
+  position: relative;
+  overflow-x: auto;
+
+  &::-webkit-scrollbar,
+  &::-moz-scrollbar {
+    width: 8px;
+    background-color: rgba(#000, 0.1);
+    border-radius: var(--border-radius);
+    outline: none;
+  }
+
+  &::-webkit-scrollbar-track,
+  &::-moz-scrollbar-track {
+    border-radius: var(--border-radius);
+  }
+
+  &::-webkit-scrollbar-thumb,
+  &::-moz-scrollbar-thumb {
+    background-color: darkgrey;
+    border-radius: var(--border-radius);
+  }
+}
+
+//
+
+.dropdownWrap {
+  position: relative;
+
+  .dropdownSec {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    margin-top: 0.5rem;
+    background-color: #fff;
+    z-index: 10;
+  }
+}
+
+//
+
 .main {
   .multiselect {
     &__tags {

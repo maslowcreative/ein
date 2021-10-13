@@ -11137,6 +11137,61 @@ textarea.form-control-lg {
   margin-left: 1.5rem;
 }
 
+.scroll-y {
+  --box-height: 100%;
+  --border-radius: 4px;
+  max-height: var(--box-height);
+  position: relative;
+  overflow-y: auto;
+}
+.scroll-y::-webkit-scrollbar, .scroll-y::-moz-scrollbar {
+  width: 8px;
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: var(--border-radius);
+  outline: none;
+}
+.scroll-y::-webkit-scrollbar-track, .scroll-y::-moz-scrollbar-track {
+  border-radius: var(--border-radius);
+}
+.scroll-y::-webkit-scrollbar-thumb, .scroll-y::-moz-scrollbar-thumb {
+  background-color: darkgrey;
+  border-radius: var(--border-radius);
+}
+
+.scroll-x {
+  --box-width: 100%;
+  --border-radius: 4px;
+  max-width: var(--box-width);
+  position: relative;
+  overflow-x: auto;
+}
+.scroll-x::-webkit-scrollbar, .scroll-x::-moz-scrollbar {
+  width: 8px;
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: var(--border-radius);
+  outline: none;
+}
+.scroll-x::-webkit-scrollbar-track, .scroll-x::-moz-scrollbar-track {
+  border-radius: var(--border-radius);
+}
+.scroll-x::-webkit-scrollbar-thumb, .scroll-x::-moz-scrollbar-thumb {
+  background-color: darkgrey;
+  border-radius: var(--border-radius);
+}
+
+.dropdownWrap {
+  position: relative;
+}
+.dropdownWrap .dropdownSec {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  margin-top: 0.5rem;
+  background-color: #fff;
+  z-index: 10;
+}
+
 .main .multiselect__tags {
   border: none;
   background-color: #fafafa;

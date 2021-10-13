@@ -21,13 +21,35 @@
           <li class="nav-item">
             <a class="nav-link">My Account</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link">
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link"
+              href="#"
+              id="notificationDropdown"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
               <span class="notification-icon">
                 <ion-icon name="notifications" class="notification-icon"></ion-icon>
                 <ion-icon name="ellipse" class="notification-alrt"></ion-icon>
               </span>
             </a>
+            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationDropdown">
+              <h6 class="mx-3 my-2">Notifications</h6>
+              <a class="dropdown-item">
+                <strong>Participant’s</strong> membership<br />
+                ends in 30 days.
+              </a>
+              <a class="dropdown-item">
+                <strong>Participant’s</strong> membership<br />
+                ends in 30 days.
+              </a>
+              <a class="dropdown-item">
+                <strong>Participant’s</strong> membership<br />
+                ends in 30 days.
+              </a>
+            </div>
           </li>
           <!-- Authentication Links -->
           <li class="nav-item" v-if="hasLogin">
