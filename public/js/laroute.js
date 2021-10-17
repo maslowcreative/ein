@@ -48,6 +48,14 @@
         "name": "home"
     },
     {
+        "uri": "my-account",
+        "name": "my.account"
+    },
+    {
+        "uri": "ajax\/users\/store",
+        "name": "ajax."
+    },
+    {
         "uri": "ajax\/users",
         "name": "ajax.users.index"
     },
@@ -68,8 +76,24 @@
         "name": "ajax.users.destroy"
     },
     {
-        "uri": "ajax\/users\/create",
-        "name": "ajax."
+        "uri": "ajax\/services",
+        "name": "ajax.services.index"
+    },
+    {
+        "uri": "ajax\/services",
+        "name": "ajax.services.store"
+    },
+    {
+        "uri": "ajax\/services\/{service}",
+        "name": "ajax.services.show"
+    },
+    {
+        "uri": "ajax\/services\/{service}",
+        "name": "ajax.services.update"
+    },
+    {
+        "uri": "ajax\/services\/{service}",
+        "name": "ajax.services.destroy"
     },
     {
         "uri": "ajax\/admins",

@@ -101,6 +101,7 @@
                   </button>
                   <button class="btn btn-link p-0 mx-1">
                     <ion-icon name="trash-outline"></ion-icon>
+
                   </button>
                 </div>
               </td>

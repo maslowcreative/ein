@@ -16,10 +16,10 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
           <li class="nav-item">
-            <a class="nav-link">Dashboard</a>
+            <a class="nav-link"  :href="baseUrl">Dashboard</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link">My Account</a>
+            <a class="nav-link" :href="myAccountUrl">My Account</a>
           </li>
           <li class="nav-item dropdown">
             <a
@@ -98,8 +98,10 @@ export default {
       baseUrl: null,
       loginUrl: null,
       logoutUrl: null,
+      myAccountUrl: null,
       hasLogin: null,
       userData: null,
+
     }
   },
   mounted() {
@@ -112,6 +114,7 @@ export default {
     this.baseUrl = this.laroute.route("index")
     this.loginUrl = this.laroute.route("login")
     this.logoutUrl = this.laroute.route("logout")
+    this.myAccountUrl = this.laroute.route("my.account");
     this.hasLogin = window.location.pathname == this.loginUrl ? true : false
   },
 }
