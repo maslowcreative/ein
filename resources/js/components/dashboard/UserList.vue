@@ -107,7 +107,13 @@
         </table>
       </div>
       <div class="mt-4 mt-md-5">
-        <advanced-laravel-vue-paginate :data="items" previousText="<<" nextText=">>" @paginateTo="getUsersList" />
+        <advanced-laravel-vue-paginate
+          :data="items"
+          @paginateTo="getUsersList"
+          :showNextPrev="false"
+          useStyle="bootstrap"
+          listClass="pagination"
+        />
       </div>
       <plan-popup></plan-popup>
     </div>
