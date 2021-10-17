@@ -11226,6 +11226,24 @@ body::-webkit-scrollbar-thumb {
   margin-right: 0.5rem;
 }
 
+.loader-wrap {
+  position: relative;
+}
+.loader-wrap .loader-bg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-content: center;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+.loader-wrap .spinner-loder {
+  width: 3rem;
+  height: 3rem;
+}
+
 .navbar {
   box-shadow: 3px 0px 22px rgba(0, 0, 0, 0.05);
   margin-bottom: 2.375rem;
