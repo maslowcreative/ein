@@ -11038,6 +11038,9 @@ textarea.form-control-lg {
   line-height: 1;
   padding-block: 0.67rem;
 }
+.btn.hover-danger:hover, .btn.hover-danger:active, .btn-check:focus + .btn.hover-danger, .btn-check:checked + .btn.hover-danger, .btn-check:active + .btn.hover-danger, .btn.hover-danger:focus {
+  color: var(--bs-danger);
+}
 
 .flip-h {
   transform: scaleX(-1);
@@ -11113,11 +11116,6 @@ textarea.form-control-lg {
   overflow-x: auto;
   margin-top: 2rem;
 }
-@media (min-width: 1500px) {
-  .table-x-scroll {
-    margin-top: 3.75rem;
-  }
-}
 
 .table {
   font-size: 14px;
@@ -11137,26 +11135,12 @@ textarea.form-control-lg {
   margin-left: 1.5rem;
 }
 
-body::-webkit-scrollbar {
-  width: 1em;
-}
-
-body::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-}
-
-body::-webkit-scrollbar-thumb {
-  background-color: darkgrey;
-  outline: 1px solid slategrey;
-}
-
 .scroll-y {
   --box-height: 100%;
   --border-radius: 4px;
   max-height: var(--box-height);
   position: relative;
   overflow-y: auto;
-  scrollbar-color: #0a4c95 #c2d2e4;
 }
 .scroll-y::-webkit-scrollbar {
   width: 0.25rem;
