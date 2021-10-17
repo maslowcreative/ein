@@ -118,7 +118,7 @@
         </div>
 
         <!-- Loader -->
-        <div class="loader-bg">
+        <div  v-if="this.loading" class="loader-bg">
           <div class="spinner-grow text-primary spinner-loder" role="status">
             <span class="visually-hidden">Loading...</span>
           </div>
