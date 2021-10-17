@@ -68,7 +68,7 @@
         </nav>
         <nav aria-label="Page navigation">
           <ul class="pagination justify-content-center">
-            <!-- <li v-for="post in laravelData.data" :key="post.id">{{ post.title }}</li> -->
+<!--             <li v-for="post in laravelData.data" :key="post.id">{{ post.title }}</li> -->
           </ul>
         </nav>
         <advanced-laravel-vue-paginate :data="items" previousText="<<" nextText=">>" @paginateTo="getAdminList" />

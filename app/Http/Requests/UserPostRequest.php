@@ -45,8 +45,7 @@ class UserPostRequest extends FormRequest
 
             //Role is participant
             'participant' => 'exclude_unless:role_id,'.Role::ROLE_PARTICIPANT.'|required|array',
-            'participant.representative_id' => 'sometimes|exists:representatives,user_id',
-            'participant.relationship' => 'required_with:participant.representative_id|string',
+            'participant.representative_id' => 'sometimes|nullable|exists:representatives,user_id',
             'participant.ndis_number' => 'required|string|unique:participants,ndis_number',
             'participant.dob' => 'required|string',
             'participant.providers' => 'sometimes|array',
@@ -60,9 +59,7 @@ class UserPostRequest extends FormRequest
 
             //Role is representative
             'representative' => 'exclude_unless:role_id,'.Role::ROLE_REPRESENTATIVE.'|sometimes|array',
-            'representative.participants' => 'sometimes|array',
-            'representative.participants.*.participants_id' => 'integer|exists:participants,user_id',
-            'representative.participants.*.relationship' => 'string|required_with:representative.participants.*.participants_id',
+            'representative.participants.*' => 'integer|exists:participants,user_id',
         ];
     }
 

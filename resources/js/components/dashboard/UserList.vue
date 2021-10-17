@@ -24,7 +24,7 @@
               <div class="py-2 px-3">
                 <div class="">
                   <label class="form-label">Search for a User</label>
-                  <input type="text" class="form-control form-control-sm" placeholder="Enter Users Name" />
+                  <input type="text"  class="form-control form-control-sm" v-model="filters.name" placeholder="Enter Users Name" />
                 </div>
               </div>
             </div>
@@ -40,25 +40,27 @@
               <ion-icon name="funnel-outline"></ion-icon>
             </button>
             <div class="dropdown-menu dropdown-menu-end fs-sm" aria-labelledby="filterDropdown2">
-              <div class="py-2 px-3">
+               <div class="py-2 px-3">
+                    <label class="form-label">Account Type</label>
+                    <select class="form-select form-select-sm" v-model="filters.role">
+                        <option selected value="all">All</option>
+                        <option value="provider" >Provider</option>
+                        <option value="participant">Participant</option>
+                        <option value="representative">Representative</option>
+
+                    </select>
+               </div>
+               <div class="py-2 px-3">
                 <div class="mb-3">
-                  <label class="form-label">Claim Status</label>
-                  <select class="form-select form-select-sm">
-                    <option selected>All</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
+                  <label class="form-label">Plan Status</label>
+                  <select class="form-select form-select-sm" v-model="filters.plan_status" >
+                    <option selected value="all">All</option>
+                    <option value="1">Active</option>
+                    <option value="2">Inactive</option>
+                    <option value="3">New Expiry</option>
                   </select>
                 </div>
-                <div class="">
-                  <label class="form-label">Claim Status</label>
-                  <select class="form-select form-select-sm">
-                    <option selected>All</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                  </select>
-                </div>
+
               </div>
             </div>
           </div>
@@ -88,7 +90,7 @@
                 </div>
               </td>
               <td>
-                <button class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#editPlanModal">
+                <button v-if="user.roles[0].name == 'participant'" class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#editPlanModal">
                   Edit Plan
                 </button>
               </td>
@@ -130,17 +132,44 @@ export default {
   data() {
     return {
       loading: false,
+      filters:{
+          name: null,
+          role: 'all',
+          plan_status: 'all',
+      },
       items: {},
     }
+  },
+  watch: {
+      "filters.name": function (val, old){
+          this.getUsersList(1);
+      },
+      "filters.role": function (val, old){
+          this.getUsersList(1);
+      },
+      // "filters.plan_status": function (val, old){
+      //     this.getUsersList(1);
+      // }
   },
   mounted() {
     this.getUsersList()
   },
   methods: {
     getUsersList(page = 1) {
-      this.loading = true
-      let route = this.laroute.route("ajax.users.index", { page: page })
-      axios
+        this.loading = true
+        let data = { page:page };
+        if (this.filters.name) {
+            data["filter[name]"] = this.filters.name;
+        }
+        if (this.filters.role && this.filters.role != 'all') {
+            data["filter[roles][0]"] = this.filters.role;
+        }
+        // if (this.filters.plan_status) {
+        //     data["filter[plan_status][0]"] = this.filters.plan_status;
+        // }
+
+        let route = this.laroute.route("ajax.users.index", data);
+        axios
         .get(route)
         .then(res => {
           this.items = res.data
@@ -148,7 +177,7 @@ export default {
         .catch(error => {
           console.log(error)
         })
-        .finally(() => (this.loading = false))
+        .finally(() => (this.loading = false));
     },
   },
 }

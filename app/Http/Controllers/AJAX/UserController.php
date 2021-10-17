@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use function PHPUnit\Framework\isEmpty;
 
 class UserController extends Controller
 {
@@ -52,7 +53,6 @@ class UserController extends Controller
         $role = Role::findOrFail($request->role_id);
         $user->assignRole($role->name);
 
-
         //Provider Role:
         if(Role::ROLE_PROVIDER == $role->id) {
           $provider = $user->provider()->create($request->provider);
@@ -69,11 +69,11 @@ class UserController extends Controller
         if(Role::ROLE_REPRESENTATIVE == $role->id) {
           $representative = $user->representative()->create();
 
-          if($request->representative['participants'] ?? false){
-              foreach ($request->representative['participants'] as $participant)
+          if(ifEmptyReturnNull($request->representative['participants'])){
+              foreach ($request->representative['participants'] as $participantsIdd)
               {
-                Participant::find($participant['participants_id'])
-                           ->fill(['representative_id' => $representative->id,'relationship'=>$participant['relationship']])
+                Participant::find($participantsIdd)
+                           ->fill(['representative_id' => $representative->id])
                            ->save();
               }
           }

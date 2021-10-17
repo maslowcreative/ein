@@ -15,7 +15,6 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        //
         return Service::getServices()
                         ->select('support_item_number','support_item_name','reg_group_number','reg_group_name','support_category_number','support_category_name')
                         ->get();

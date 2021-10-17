@@ -297,12 +297,7 @@
                                 <span class="text-primary">Representative</span>
                               </div>
                               <div class="ms-auto">
-                                <!-- <select v-model="form.participant.relationship">
-                                  <option disabled value="">Please select one</option>
-                                  <option value="father">Father</option>
-                                  <option value="mother">Mother</option>
-                                  <option value="other">Other</option>
-                                </select> -->
+
                                 <button
                                   class="btn btn-link p-0 participant-remove"
                                   v-on:click="removeItem(representative.id, 'representative')"
@@ -325,12 +320,6 @@
                               <span class="text-primary">Representative</span>
                             </div>
                             <div class="ms-auto">
-                              <!-- <select v-model="form.participant.relationship">
-                                <option disabled value="">Please select one</option>
-                                <option value="father">Father</option>
-                                <option value="mother">Mother</option>
-                                <option value="other">Other</option>
-                              </select> -->
                               <button
                                 class="btn btn-link p-0 participant-remove"
                                 v-on:click="removeItem(representativeSelected.id, 'representative')"
@@ -339,11 +328,7 @@
                               </button>
                             </div>
                           </div>
-                          <div
-                            class="invalid-msg"
-                            v-if="form.errors.has('participant.relationship')"
-                            v-html="form.errors.get('participant.relationship')"
-                          />
+
                           <div
                             class="invalid-msg"
                             v-if="form.errors.has('participant.representative_id')"
@@ -416,7 +401,7 @@
                   </div>
                 </div>
 
-                <!-- Step 2 Participant-->
+                <!-- Step 2 Representative-->
                 <div class="step2" v-show="step === 2 && form.role_id == 3">
                   <div class="row">
                     <div class="col-md-6">
@@ -723,7 +708,6 @@ export default {
           dob: null,
           ndis_number: null,
           representative_id: null,
-          relationship: null,
           providers: [],
           plan: {
             start_date: null,
@@ -732,6 +716,9 @@ export default {
             charges_types: null,
           },
         },
+        representative:{
+            participants:[]
+        }
       }),
       participantSerachName: null,
       participantSerachResult: [],
@@ -766,7 +753,6 @@ export default {
             dob: null,
             ndis_number: null,
             representative_id: null,
-            relationship: null,
             providers: [],
             plan: {
               start_date: null,
@@ -775,7 +761,10 @@ export default {
               charges_types: null,
             },
           },
-        })
+          representative:{
+            participants:[]
+          }
+        });
         this.participantSerachName = null
         this.participantSerachResult = []
         this.participantSelected = []
@@ -857,7 +846,15 @@ export default {
           }
         })
         this.participantSelected.push(participant[0])
-        this.form.provider.participants.push(id)
+
+        if(this.form.role_id == 2){
+          this.form.provider.participants.push(id)
+        }
+
+        if(this.form.role_id == 3){
+            this.form.representative.participants.push(id)
+        }
+
       } else if ($role === "provider") {
         let provider = this.providerSerachResult.filter(provider => provider.id == id)
         this.providerSerachResult = this.providerSerachResult.filter(function(item) {
@@ -882,12 +879,22 @@ export default {
             return item
           }
         })
+       if(this.form.role_id == 2){
+           this.form.provider.participants = this.form.provider.participants.filter(function(item) {
+               if (item != id) {
+                   return item
+               }
+           });
+       }
 
-        this.form.provider.participants = this.form.provider.participants.filter(function(item) {
-          if (item != id) {
-            return item
-          }
-        })
+       if(this.form.role_id == 3){
+          this.form.representative.participants = this.form.representative.participants.filter(function(item) {
+               if (item != id) {
+                   return item
+               }
+           });
+       }
+
       } else if ($role === "provider") {
         this.providerSelected = this.providerSelected.filter(function(item) {
           if (item.id != id) {
@@ -902,7 +909,6 @@ export default {
       } else if ($role === "representative") {
         this.representativeSelected = null
         this.form.participant.representative_id = null
-        this.form.participant.relationship = null
       }
     },
     asyncFind(query, role = "") {
