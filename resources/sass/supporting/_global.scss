@@ -79,7 +79,8 @@
 
 //
 
-.form-control:not(.form-control-sm):not(.form-control-lg) {
+.form-control:not(.form-control-sm):not(.form-control-lg),
+.form-select:not(.form-select-sm):not(.form-select-lg) {
   min-height: 3.25rem;
 }
 
@@ -169,13 +170,11 @@
 
 //
 
-.scroll-y {
-  --box-height: 100%;
+.scroll-y,
+.scroll-x {
   --border-radius: 4px;
 
-  max-height: var(--box-height);
   position: relative;
-  overflow-y: auto;
   // scrollbar-color: #0a4c95 #c2d2e4;
 
   &::-webkit-scrollbar {
@@ -196,31 +195,17 @@
 }
 
 .scroll-x {
+  --box-height: 100%;
+
+  max-height: var(--box-height);
+  overflow-y: auto;
+}
+
+.scroll-x {
   --box-width: 100%;
-  --border-radius: 4px;
 
   max-width: var(--box-width);
-  position: relative;
   overflow-x: auto;
-
-  &::-webkit-scrollbar,
-  &::-moz-scrollbar {
-    width: 8px;
-    background-color: rgba(#000, 0.1);
-    border-radius: var(--border-radius);
-    outline: none;
-  }
-
-  &::-webkit-scrollbar-track,
-  &::-moz-scrollbar-track {
-    border-radius: var(--border-radius);
-  }
-
-  &::-webkit-scrollbar-thumb,
-  &::-moz-scrollbar-thumb {
-    background-color: darkgrey;
-    border-radius: var(--border-radius);
-  }
 }
 
 //

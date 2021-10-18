@@ -13,7 +13,7 @@
                 <small class="text-primary">9999 Submitted Invoices/Claims </small>
               </div>
               <div class="card-right-btns">
-                <button class="btn btn-primary">
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#invoicePopup">
                   + New Invoice
                 </button>
                 <div class="dropdown">
@@ -73,7 +73,8 @@
                         <button class="btn btn-link p-0 mx-1">
                           <ion-icon name="push-outline" class="flip-v"></ion-icon>
                         </button>
-                        <button class="btn btn-link p-0 mx-1 d-flex">
+                        <button class="btn btn-link p-0 mx-1 d-flex" data-bs-toggle="modal"
+                          data-bs-target="#claimPopup">
                           <ion-icon name="cash-outline"></ion-icon>
                         </button>
                       </div>
@@ -94,6 +95,155 @@
                 </ul>
               </nav>
             </div>
+
+            {{-- Claim Popup --}}
+            <div class="modal" id="claimPopup" tabindex="-1" aria-labelledby="claimPopupTitle" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content addUserPopup">
+                  <div class="modal-header">
+                    <h4 class="modal-title" id="claimPopupTitle">Claim #1231231</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body addUser">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="mb-3">
+                          <label class="form-label">Amount Invoiced</label>
+                          <input type="text" class="form-control" placeholder="" value="$500">
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="mb-3">
+                          <label class="text-primary form-label">Amount Paid</label>
+                          <input type="text" class="form-control text-primary" placeholder="" value="$500">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {{-- Popup End --}}
+
+            {{-- New Invoice Popup --}}
+            <div class="modal" id="invoicePopup" tabindex="-1" aria-labelledby="invoicePopupTitle" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content addUserPopup invoicePopup">
+                  <div class="modal-header">
+                    <h4 class="modal-title" id="invoicePopupTitle">Submit New Invoice</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body invoicePopupBody">
+                    <div class="v-steps d-flex justify-content-between border-bottom">
+                      <div class="step-wrap">
+                        <a class="step" href="javascript:void(0)">
+                          <div class="step-number">1</div>
+                          <div class="step-text">
+                            <h6>
+                              Invoice Details
+                            </h6>
+                          </div>
+                        </a>
+                      </div>
+                      <div class="step-wrap">
+                        <a class="step" href="javascript:void(0)">
+                          <div class="step-number">2</div>
+                          <div class="step-text">
+                            <h6>
+                              Service Cost
+                            </h6>
+                          </div>
+                        </a>
+                      </div>
+                      <div class="step-wrap">
+                        <a class="step" href="javascript:void(0)">
+                          <div class="step-number">3</div>
+                          <div class="step-text">
+                            <h6>
+                              Upload Invoice
+                            </h6>
+                          </div>
+                        </a>
+                      </div>
+                    </div>
+                    <div class="step1">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="mb-4">
+                            <label class="form-label">Start Date</label>
+                            <input type="date" class="form-control" placeholder="DD/MM/YYYY">
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="mb-4">
+                            <label class="form-label">End Date</label>
+                            <input type="date" class="form-control" placeholder="" value="DD/MM/YYYY">
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="mb-4">
+                            <label class="form-label">Invoice Number</label>
+                            <input type="text" class="form-control" placeholder="000000000000000">
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="mb-4">
+                            <label class="form-label">Link a Participant</label>
+                            <input type="text" class="form-control" placeholder="Participant Name">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="step2">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="mb-4">
+                            <label class="form-label">Item Number</label>
+                            <select class="form-select">
+                              <option value="">Choose Item Number</option>
+                              <option value="">Choose Item Number</option>
+                              <option value="">Choose Item Number</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="mb-4">
+                            <label class="form-label">Claim Type</label>
+                            <select class="form-select">
+                              <option value="">Choose Claim Type</option>
+                              <option value="">Choose Claim Type</option>
+                              <option value="">Choose Claim Type</option>
+                            </select>
+                          </div>
+                        </div>
+
+                      </div>
+                      <div>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="mb-4">
+                              <label class="form-label">Invoice Number</label>
+                              <input type="text" class="form-control" placeholder="000000000000000">
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="mb-4">
+                              <label class="form-label">Link a Participant</label>
+                              <input type="text" class="form-control" placeholder="Participant Name">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="">
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {{-- Popup End --}}
+
           </div>
         </div>
       </div>
