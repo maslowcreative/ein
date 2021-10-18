@@ -321,7 +321,7 @@
                           <span class="d-block text-primary fw-normal">Participant</span>
                         </div>
                         <div class="ms-3 d-inline-flex align-items-center">
-                          <a href="#" class="text-dark h5" type="button" data-bs-toggle="collapse"
+                          <a href="#" class="d-flex text-secondary h5 mb-0" data-bs-toggle="collapse"
                             data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                             <ion-icon name="chevron-down-outline"></ion-icon>
                           </a>
