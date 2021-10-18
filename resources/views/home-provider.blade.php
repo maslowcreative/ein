@@ -320,15 +320,21 @@
                           Users Name
                           <span class="d-block text-primary fw-normal">Participant</span>
                         </div>
+                        <div class="ms-3 d-inline-flex align-items-center">
+                          <a href="#" class="text-dark h5" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                            <ion-icon name="chevron-down-outline"></ion-icon>
+                          </a>
+                        </div>
                       </div>
-                      <div>
-                        <div class="d-flex">
+                      <div class="collapse" id="collapseExample">
+                        <div class="d-flex pt-3 ps-4">
                           <div class="me-4">
-                            <img src="/images/avatar.png" width="50" height="50" alt="" />
+                            <img src="/images/avatar.png" width="40" height="40" alt="" />
                           </div>
                           <div class="fw-bold">
                             Users Name
-                            <span class="d-block text-primary fw-normal">Participant</span>
+                            <span class="d-block text-primary fw-normal">Representative</span>
                           </div>
                         </div>
                       </div>
