@@ -211,8 +211,22 @@
 //
 
 .invoicePopup {
+  padding: 2rem 3rem;
+
+  @include media-breakpoint-up(xxl) {
+    padding: 3.5rem 4.5rem;
+  }
+
+  .row:not(.g-3) {
+    --bs-gutter-x: 2.25rem;
+  }
+
   .invoicePopupBody {
     padding: 3rem 0 0;
+  }
+
+  .form-label {
+    font-weight: bold;
   }
 
   .v-steps {
@@ -259,6 +273,8 @@
     }
   }
 }
+
+//
 
 .participant-card {
   & + & {

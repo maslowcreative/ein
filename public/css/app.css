@@ -11475,8 +11475,22 @@ textarea.form-control-lg {
   color: var(--bs-primary);
 }
 
+.invoicePopup {
+  padding: 2rem 3rem;
+}
+@media (min-width: 1500px) {
+  .invoicePopup {
+    padding: 3.5rem 4.5rem;
+  }
+}
+.invoicePopup .row:not(.g-3) {
+  --bs-gutter-x: 2.25rem;
+}
 .invoicePopup .invoicePopupBody {
   padding: 3rem 0 0;
+}
+.invoicePopup .form-label {
+  font-weight: bold;
 }
 .invoicePopup .v-steps {
   padding-bottom: 2rem;

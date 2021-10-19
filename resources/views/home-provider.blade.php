@@ -128,7 +128,7 @@
             {{-- New Invoice Popup --}}
             <div class="modal" id="invoicePopup" tabindex="-1" aria-labelledby="invoicePopupTitle" aria-hidden="true">
               <div class="modal-dialog modal-dialog-centered modal-lg">
-                <div class="modal-content addUserPopup invoicePopup">
+                <div class="modal-content invoicePopup">
                   <div class="modal-header">
                     <h4 class="modal-title" id="invoicePopupTitle">Submit New Invoice</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -216,27 +216,68 @@
                             </select>
                           </div>
                         </div>
-
                       </div>
                       <div>
                         <div class="row">
                           <div class="col-md-6">
-                            <div class="mb-4">
-                              <label class="form-label">Invoice Number</label>
-                              <input type="text" class="form-control" placeholder="000000000000000">
+                            <div class="row g-3">
+                              <div class="col-8">
+                                <div class="mb-4">
+                                  <label class="form-label">Service Length (1h = 1)</label>
+                                  <input type="text" class="form-control" placeholder="Enter Amount">
+                                </div>
+                              </div>
+                              <div class="col-4">
+                                <div class="mb-4">
+                                  <label class="form-label">Cost</label>
+                                  <input type="text" class="form-control" placeholder="$">
+                                </div>
+                              </div>
                             </div>
                           </div>
                           <div class="col-md-6">
-                            <div class="mb-4">
-                              <label class="form-label">Link a Participant</label>
-                              <input type="text" class="form-control" placeholder="Participant Name">
+                            <div class="row g-3">
+                              <div class="col-8">
+                                <div class="mb-4">
+                                  <label class="form-label">Tax Rate</label>
+                                  <select class="form-select">
+                                    <option value="">GST Free</option>
+                                    <option value="">GST Free</option>
+                                    <option value="">GST Free</option>
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="col-4">
+                                <div class="mb-4">
+                                  <label class="form-label">Total</label>
+                                  <input type="text" class="form-control" placeholder="$">
+                                </div>
+                              </div>
                             </div>
                           </div>
                         </div>
+                        <div class="text-end">
+                          <button type="button" class="btn btn-primary btn-sm">Remove Service</button>
+                        </div>
                       </div>
-                      <div class="">
-
+                      <div class="pt-4 mt-4 border-top">
+                        <button class="btn btn-light btn-lg w-100 py-3">+ Add New Service</button>
                       </div>
+                    </div>
+                    <div class="step3">
+                      <div class="mb-4">
+                        <label class="form-label">Upload Invoice</label>
+                        <div class="input-group">
+                          <input type="text" class="form-control" placeholder="Invoice file name"
+                            aria-label="Invoice file name" aria-describedby="fileBtn">
+                          <button class="btn btn-light fw-bold" type="button" id="fileBtn">View File</button>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="mw290 mx-auto px-4 mt-4 mt-md-5">
+                      <button class="btn btn-primary btn-lg w-100 py-3 mb-3">
+                        Next
+                      </button>
                     </div>
                   </div>
                 </div>
