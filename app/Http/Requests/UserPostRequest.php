@@ -27,7 +27,7 @@ class UserPostRequest extends FormRequest
         return [
             'name' => 'required|string',
             'email' => 'required|email|unique:users',
-            'password' => 'sometimes|nullable|string',
+            'password' => 'sometimes|nullable|string|confirmed',
             'phone' => 'sometimes|string|nullable',
             'address' => 'sometimes|string|nullable',
             'role_id' => 'required|exists:roles,id',

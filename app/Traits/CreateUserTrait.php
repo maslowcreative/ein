@@ -26,6 +26,7 @@ trait CreateUserTrait
             'phone' => $data['phone'] ?? null,
             'address' => $data['address'] ?? null,
             'password' => Hash::make($data['password'] ),
+            'status' => User::STATUS_ACTIVE
         ]);
         $user->orgianl_password = $data['password'];
 

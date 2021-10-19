@@ -16,6 +16,9 @@ class User extends Authenticatable
 {
     use HasFactory,HasRoles,Notifiable;
 
+    const STATUS_ACTIVE = 1;
+    const STATUS_INACTIVE = 0;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -27,6 +30,7 @@ class User extends Authenticatable
         'password',
         'phone',
         'address',
+        'status'
     ];
 
     /**

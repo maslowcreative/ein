@@ -4,7 +4,7 @@
       <div class="d-flex justify-content-between">
         <div>
           <h5>Users</h5>
-          <small class="text-primary">9999 Active Users</small>
+          <small class="text-primary">{{ items.total }} Active Users</small>
         </div>
         <div class="card-right-btns">
           <button class="btn btn-primary btn-icon" data-bs-toggle="modal" data-bs-target="#userModal">
@@ -116,7 +116,6 @@
             </tbody>
           </table>
         </div>
-
         <!-- Loader -->
         <div  v-if="this.loading" class="loader-bg">
           <div class="spinner-grow text-primary spinner-loder" role="status">
@@ -175,12 +174,16 @@ export default {
     getUsersList(page = 1) {
       this.loading = true
       let data = { page: page }
+      //Filtering Admin Role.
+      data["filter[not_in][0]"] = 1;
+
       if (this.filters.name) {
         data["filter[name]"] = this.filters.name
       }
       if (this.filters.role && this.filters.role != "all") {
         data["filter[roles][0]"] = this.filters.role
       }
+
       // if (this.filters.plan_status) {
       //     data["filter[plan_status][0]"] = this.filters.plan_status;
       // }
