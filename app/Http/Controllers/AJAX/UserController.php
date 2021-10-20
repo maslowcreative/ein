@@ -58,6 +58,9 @@ class UserController extends Controller
           $provider = $user->provider()->create($request->provider);
           if($request->provider['participants'] ?? false )
              $provider->participants()->attach($request->provider['participants'],['created_at' => now(),'updated_at'=> now()]);
+          if($request->provider['items'] ?? false )
+             $provider->items()->sync($request->provider['items']);
+
         }
         //Participant Role:
         if(Role::ROLE_PARTICIPANT == $role->id) {

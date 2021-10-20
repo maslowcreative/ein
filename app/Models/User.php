@@ -19,6 +19,17 @@ class User extends Authenticatable
     const STATUS_ACTIVE = 1;
     const STATUS_INACTIVE = 0;
 
+    const STATES = [
+      'ACT',
+      'NSW',
+      'NT',
+      'QLD',
+      'SA',
+      'TAS',
+      'VIC',
+      'WA',
+    ];
+
     /**
      * The attributes that are mass assignable.
      *

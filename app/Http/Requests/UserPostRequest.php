@@ -3,7 +3,9 @@
 namespace App\Http\Requests;
 
 use App\Models\Role;
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UserPostRequest extends FormRequest
 {
@@ -30,6 +32,7 @@ class UserPostRequest extends FormRequest
             'password' => 'sometimes|nullable|string|confirmed',
             'phone' => 'sometimes|string|nullable',
             'address' => 'sometimes|string|nullable',
+            'state' => ['exclude_unless:role_id,'.Role::ROLE_PARTICIPANT,'required',Rule::in(User::STATES)],
             'role_id' => 'required|exists:roles,id',
 
             //Role is provider
@@ -41,7 +44,7 @@ class UserPostRequest extends FormRequest
             'provider.participants.*' => 'integer|exists:participants,user_id',
 
             'provider.items' => 'sometimes|array',
-            'provider.itmes.*' => 'integer',
+            'provider.items.*' => 'exists:services,support_item_number',
 
             //Role is participant
             'participant' => 'exclude_unless:role_id,'.Role::ROLE_PARTICIPANT.'|required|array',

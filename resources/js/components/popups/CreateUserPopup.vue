@@ -472,6 +472,21 @@
                     ></textarea>
                     <div class="invalid-msg" v-if="form.errors.has('address')" v-html="form.errors.get('address')" />
                   </div>
+                  <div class="mb-4" v-if="form.role_id == 4">
+                        <label for="state" class="form-label fw-bold">State</label>
+                        <select class="form-control" id="state" v-model="form.state">
+                            <option value="">Select a state</option>
+                            <option value="ACT">Australian Capital Territory</option>
+                            <option value="NSW">New South Wales</option>
+                            <option value="NT">Northern Territory</option>
+                            <option value="QLD">Queensland</option>
+                            <option value="SA">South Australia</option>
+                            <option value="TAS">Tasmania</option>
+                            <option value="VIC">Victoria</option>
+                            <option value="WA">Western Australia</option>
+                        </select>
+                        <div class="invalid-msg" v-if="form.errors.has('state')" v-html="form.errors.get('state')" />
+                    </div>
                   <div class="mb-4">
                     <label class="form-label fw-bold">E-mail Address</label>
                     <input
@@ -514,16 +529,56 @@
                       />
                     </div>
                     <div class="mb-4">
-                      <label for="specificItemNumbers" class="form-label fw-bold">Specific Item Numbers</label>
-                      <textarea
-                        name=""
-                        id=""
-                        cols="30"
-                        rows="2"
-                        class="form-control"
-                        id="specificItemNumbers"
-                        placeholder="000000000000, 000000 0000000000, 0000000"
-                      ></textarea>
+                      <label  class="form-label fw-bold">Specific Item Numbers</label>
+<!--                      <textarea-->
+<!--                        name=""-->
+<!--                        id=""-->
+<!--                        cols="30"-->
+<!--                        rows="2"-->
+<!--                        class="form-control"-->
+<!--                        id="specificItemNumbers"-->
+<!--                        placeholder="000000000000, 000000 0000000000, 0000000"-->
+<!--                      ></textarea>-->
+                        <multiselect
+                            v-model="servicesItemsSelected"
+                            placeholder="Search or add item"
+                            label="support_item_number" track-by="support_item_number"
+                            :options="servicesItemsResult"
+                            :multiple="true"
+                            :taggable="true"
+                            :searchable="true"
+                            :loading="loader"
+                            :internal-search="false"
+                            :clear-on-select="false"
+                            :close-on-select="false"
+                            :options-limit="50" :limit="15"
+                            @search-change="asyncFindItemNumber"
+                            >
+
+                        </multiselect>
+
+<!--                        <multiselect-->
+<!--                            v-model="servicesItemsSelected"-->
+<!--                            id="ajax"-->
+<!--                            label="support_item_number"-->
+<!--                            track-by="support_item_number"-->
+<!--                            placeholder="Type to search"-->
+<!--                            open-direction="bottom"-->
+<!--                            :options="servicesItemsResult"-->
+<!--                            :multiple="true"-->
+<!--                            :searchable="true"-->
+<!--                            :loading="loader"-->
+<!--                            :internal-search="false"-->
+<!--                            :clear-on-select="false"-->
+<!--                            :close-on-select="false"-->
+<!--                            :options-limit="300" :limit="3"-->
+<!--                            :max-height="600" :show-no-results="false" :hide-selected="true" @search-change="asyncFindItemNumber">-->
+<!--                            <template slot="tag" slot-scope="{ option, remove }"><span class="custom__tag"><span>{{ option.support_item_number }}</span><span class="custom__remove" @click="remove(option)">❌</span></span></template>-->
+<!--                            <template slot="clear" slot-scope="props">-->
+<!--                                <div class="multiselect__clear" v-if="form.provider.items.length" @mousedown.prevent.stop="clearAllItems(props.search)"></div>-->
+<!--                            </template><span slot="noResult">Oops! No elements found. Consider changing the search query.</span>-->
+<!--                        </multiselect>-->
+
                     </div>
                   </div>
                 </div>
@@ -679,7 +734,7 @@ import 'vue-select/dist/vue-select.css';
 
 <script>
 import Form from "vform"
-import Multiselect from "vue-multiselect"
+import Multiselect from 'vue-multiselect'
 export default {
   components: { Multiselect },
   data() {
@@ -699,10 +754,12 @@ export default {
         password: null,
         phone: null,
         address: null,
+        state: "",
         provider: {
           abn: null,
           business_name: null,
           participants: [],
+          items:[],
         },
         participant: {
           dob: null,
@@ -731,6 +788,10 @@ export default {
       representativeSerachName: null,
       representativeSerachResult: [],
       representativeSelected: null,
+
+
+      servicesItemsResult: [],
+      servicesItemsSelected: [],
     }
   },
   mounted() {},
@@ -744,10 +805,12 @@ export default {
           password: null,
           phone: null,
           address: null,
+          state: "",
           provider: {
             abn: null,
             business_name: null,
             participants: [],
+            items:[]
           },
           participant: {
             dob: null,
@@ -806,6 +869,11 @@ export default {
         this.representativeSerachResult = []
       }
     },
+    servicesItemsSelected(val,old) {
+        this.form.provider.items =  this.servicesItemsSelected.map(function(item){
+            return item.support_item_number;
+        });
+    }
   },
   methods: {
     current(value) {
@@ -912,7 +980,7 @@ export default {
       }
     },
     asyncFind(query, role = "") {
-      this.isLoading = true
+      this.loader = true;
       let data = {
         "filter[name]": query,
         "filter[roles][0]": role,
@@ -953,6 +1021,26 @@ export default {
           this.loader = false
         })
     },
+
+    asyncFindItemNumber(query) {
+        this.servicesItemsResult = [];
+        let data = {
+            "filter[item_number]": query,
+        }
+        let route = this.laroute.route("ajax.services.index", data)
+        axios
+            .get(route)
+            .then(res => {
+                this.servicesItemsResult = res.data.data;
+            })
+            .catch(error => {
+                this.$toastr.e("Error", "Some thing went wrong.")
+            })
+            .finally(() => {
+                this.loader = false
+            });
+    },
+
   },
 }
 </script>

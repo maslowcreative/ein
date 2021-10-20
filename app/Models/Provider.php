@@ -37,4 +37,12 @@ class Provider extends Model
     {
         return $this->belongsToMany(Participant::class,'provider_participant','provider_id','participant_id');
     }
+
+    public function items()
+    {
+        return $this->belongsToMany(Service::class, 'provider_items', 'provider_id', 'item_number');
+    }
+
+
+
 }

@@ -11,7 +11,7 @@ use Spatie\QueryBuilder\QueryBuilder;
 class Service extends Model
 {
     use HasFactory;
-    protected $primaryKey = "item_number";
+    protected $primaryKey = "support_item_number";
 
     /**
      * Relationships
@@ -20,7 +20,7 @@ class Service extends Model
     {
         return QueryBuilder::for(Service::class)
                 ->allowedFilters([
-                    AllowedFilter::partial('item_number','item_number')
+                    AllowedFilter::partial('item_number','support_item_number')
                 ]);
     }
 }
