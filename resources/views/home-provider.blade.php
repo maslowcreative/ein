@@ -325,13 +325,23 @@
                           <div class="col-md-6 col-xl-12">
                             <div class="mb-4">
                               <label class="form-label">Provider</label>
-                              <input type="text" class="form-control" placeholder="">
+                              <div class="bg-light d-flex align-items-center p-3 participant-card">
+                                <div class="me-3"><img src="/images/avatar.png" width="40" alt=""></div>
+                                <div class="participant-name">
+                                  <h6>Users Name</h6> <span class="text-primary">Provider</span>
+                                </div>
+                              </div>
                             </div>
                           </div>
                           <div class="col-md-6 col-xl-12">
                             <div class="mb-4">
                               <label class="form-label">Participant</label>
-                              <input type="text" class="form-control" placeholder="">
+                              <div class="bg-light d-flex align-items-center p-3 participant-card">
+                                <div class="me-3"><img src="/images/avatar.png" width="40" alt=""></div>
+                                <div class="participant-name">
+                                  <h6>Users Name</h6> <span class="text-primary">Participant</span>
+                                </div>
+                              </div>
                             </div>
                           </div>
                         </div>
