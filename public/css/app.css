@@ -11064,6 +11064,10 @@ textarea.form-control-lg {
   font-size: var(--bs-body-font-size);
 }
 
+.badge {
+  font-weight: 600;
+}
+
 .form-control:not(.form-control-sm):not(.form-control-lg),
 .form-select:not(.form-select-sm):not(.form-select-lg) {
   min-height: 3.25rem;
@@ -11397,7 +11401,7 @@ textarea.form-control-lg {
     padding: 3.5rem 4.5rem;
   }
 }
-.addUserPopup .row {
+.addUserPopup .row:not(.g-3) {
   --bs-gutter-x: 2.25rem;
 }
 .addUserPopup .addUser {
@@ -11545,6 +11549,16 @@ textarea.form-control-lg {
 }
 .participant-remove:hover {
   color: var(--bs-danger);
+}
+
+@media (min-width: 768px) {
+  #claimDetailPopup .modal-dialog {
+    max-width: 1500px;
+  }
+}
+
+.cost-div + .cost-div {
+  border-top: 1px solid #dee2e6;
 }
 
 .input-group-overlay {

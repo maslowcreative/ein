@@ -67,7 +67,8 @@
                     <td>
                       Claim Status
                     </td>
-                    <td><button class="btn btn-light btn-sm">View more</button></td>
+                    <td><button class="btn btn-light btn-sm" data-bs-toggle="modal"
+                        data-bs-target="#claimDetailPopup">View more</button></td>
                     <td>
                       <div class="d-inline-flex flex-nowrap align-items-center justify-content-around btn-group fs-lg">
                         <button class="btn btn-link p-0 mx-1">
@@ -267,10 +268,20 @@
                     <div class="step3">
                       <div class="mb-4">
                         <label class="form-label">Upload Invoice</label>
-                        <div class="input-group">
-                          <input type="text" class="form-control" placeholder="Invoice file name"
-                            aria-label="Invoice file name" aria-describedby="fileBtn">
-                          <button class="btn btn-light fw-bold" type="button" id="fileBtn">View File</button>
+                        <div class="input-group-overlay">
+                          <div class="input-group-prepend-overlay">
+                            <span class="input-group-text text-primary">
+                              <ion-icon name="document-attach-outline"></ion-icon>
+                            </span>
+                          </div>
+                          <input type="text" placeholder="Invoice file name" aria-label="Invoice file name"
+                            aria-describedby="fileBtn" class="form-control prepended-form-control">
+                          <div class="input-group-append-overlay">
+                            <span class="input-group-text text-primary">
+                              <button type="button" id="fileBtn" class="btn btn-text p-0 fw-bold text-primary">View
+                                File</button>
+                            </span>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -278,6 +289,191 @@
                       <button class="btn btn-primary btn-lg w-100 py-3 mb-3">
                         Next
                       </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {{-- Popup End --}}
+
+            {{-- Claim Details Popup --}}
+            <div class="modal" id="claimDetailPopup" tabindex="-1" aria-labelledby="claimDetailPopupTitle"
+              aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content addUserPopup">
+                  <div class="modal-header">
+                    <h4 class="modal-title" id="claimDetailPopupTitle">Claim #1231231</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body addUser">
+                    <div class="row">
+                      <div class="col-xl-3">
+                        <h5 class="border-bottom pb-3 mb-3">Invoice Details</h5>
+                        <div class="row">
+                          <div class="col-md-6 col-xl-12">
+                            <div class="mb-4">
+                              <label class="form-label">Start Date</label>
+                              <input type="date" class="form-control" placeholder="01/01/2021">
+                            </div>
+                          </div>
+                          <div class="col-md-6 col-xl-12">
+                            <div class="mb-4">
+                              <label class="form-label">End Date</label>
+                              <input type="date" class="form-control" placeholder="01/01/2021">
+                            </div>
+                          </div>
+                          <div class="col-md-6 col-xl-12">
+                            <div class="mb-4">
+                              <label class="form-label">Provider</label>
+                              <input type="text" class="form-control" placeholder="">
+                            </div>
+                          </div>
+                          <div class="col-md-6 col-xl-12">
+                            <div class="mb-4">
+                              <label class="form-label">Participant</label>
+                              <input type="text" class="form-control" placeholder="">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-xl-6">
+                        <h5 class="border-bottom pb-3 mb-3">Service Cost</h5>
+                        <div class="cost-div">
+                          <div class="my-4">
+                            <span class="badge bg-primary py-2 px-4">Service #1</span>
+                          </div>
+                          <div class="row">
+                            <div class="col-md-4">
+                              <div class="mb-4">
+                                <label class="form-label">Claim Type</label>
+                                <input type="text" class="form-control" placeholder="Standard">
+                              </div>
+                            </div>
+                            <div class="col-md-4">
+                              <div class="mb-4">
+                                <label class="form-label">Item Number</label>
+                                <input type="text" class="form-control" placeholder="134134134134">
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-md-6">
+                              <div class="row g-3">
+                                <div class="col-sm-8">
+                                  <div class="mb-4">
+                                    <label class="form-label">Service Length (1h = 1)</label>
+                                    <input type="text" class="form-control" placeholder="0.5">
+                                  </div>
+                                </div>
+                                <div class="col-sm-4">
+                                  <div class="mb-4">
+                                    <label class="form-label">Cost</label>
+                                    <input type="text" class="form-control" placeholder="$100">
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="row g-3">
+                                <div class="col-sm-8">
+                                  <div class="mb-4">
+                                    <label class="form-label">Tax Rate</label>
+                                    <input type="text" class="form-control" placeholder="GST Free">
+                                  </div>
+                                </div>
+                                <div class="col-sm-4">
+                                  <div class="mb-4">
+                                    <label class="form-label">Total</label>
+                                    <input type="text" class="form-control" placeholder="$100">
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="cost-div">
+                          <div class="my-4">
+                            <span class="badge bg-primary py-2 px-4">Service #1</span>
+                          </div>
+                          <div class="row">
+                            <div class="col-md-4">
+                              <div class="mb-4">
+                                <label class="form-label">Claim Type</label>
+                                <input type="text" class="form-control" placeholder="Standard">
+                              </div>
+                            </div>
+                            <div class="col-md-4">
+                              <div class="mb-4">
+                                <label class="form-label">Item Number</label>
+                                <input type="text" class="form-control" placeholder="134134134134">
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-md-6">
+                              <div class="row g-3">
+                                <div class="col-sm-8">
+                                  <div class="mb-4">
+                                    <label class="form-label">Service Length (1h = 1)</label>
+                                    <input type="text" class="form-control" placeholder="0.5">
+                                  </div>
+                                </div>
+                                <div class="col-sm-4">
+                                  <div class="mb-4">
+                                    <label class="form-label">Cost</label>
+                                    <input type="text" class="form-control" placeholder="$100">
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="row g-3">
+                                <div class="col-sm-8">
+                                  <div class="mb-4">
+                                    <label class="form-label">Tax Rate</label>
+                                    <input type="text" class="form-control" placeholder="GST Free">
+                                  </div>
+                                </div>
+                                <div class="col-sm-4">
+                                  <div class="mb-4">
+                                    <label class="form-label">Total</label>
+                                    <input type="text" class="form-control" placeholder="$100">
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-xl-3">
+                        <h5 class="border-bottom pb-3 mb-3">Invoice</h5>
+                        <div class="mb-4 mb-md-5">
+                          <label class="form-label">Upload Invoice</label>
+                          <div class="input-group-overlay">
+                            <div class="input-group-prepend-overlay">
+                              <span class="input-group-text text-primary">
+                                <ion-icon name="document-attach-outline"></ion-icon>
+                              </span>
+                            </div>
+                            <input type="text" placeholder="Invoice file name" aria-label="Invoice file name"
+                              aria-describedby="fileBtn" class="form-control prepended-form-control">
+                            <div class="input-group-append-overlay">
+                              <span class="input-group-text text-primary">
+                                <button type="button" id="fileBtn" class="btn btn-text p-0 fw-bold text-primary">View
+                                  File</button>
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                        <h5 class="border-bottom pb-3 mb-3">Cancellation Reason</h5>
+                        <div class="mb-4">
+                          <input type="text" class="form-control" placeholder="Cancellation Reason">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="text-center mt-3 mt-md-5">
+                      <button class="btn btn-light btn-lg py-md-3 px-md-5 mx-2">Reject Claim</button>
+                      <button class="btn btn-primary btn-lg py-md-3 px-md-5 mx-2">Accept Claim</button>
                     </div>
                   </div>
                 </div>

@@ -108,7 +108,7 @@
     padding: 3.5rem 4.5rem;
   }
 
-  .row {
+  .row:not(.g-3) {
     --bs-gutter-x: 2.25rem;
   }
 
@@ -301,3 +301,17 @@
 }
 
 // .emailRequest {}
+
+//
+
+#claimDetailPopup {
+  @include media-breakpoint-up(md) {
+    .modal-dialog {
+      max-width: 1500px;
+    }
+  }
+}
+
+.cost-div + .cost-div {
+  border-top: 1px solid $border-color;
+}
