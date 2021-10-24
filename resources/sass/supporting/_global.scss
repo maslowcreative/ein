@@ -85,6 +85,12 @@
 
 //
 
+.form-label {
+  font-weight: bold;
+}
+
+//
+
 .form-control:not(.form-control-sm):not(.form-control-lg),
 .form-select:not(.form-select-sm):not(.form-select-lg) {
   min-height: 3.25rem;

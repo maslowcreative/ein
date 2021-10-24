@@ -11068,6 +11068,10 @@ textarea.form-control-lg {
   font-weight: 600;
 }
 
+.form-label {
+  font-weight: bold;
+}
+
 .form-control:not(.form-control-sm):not(.form-control-lg),
 .form-select:not(.form-select-sm):not(.form-select-lg) {
   min-height: 3.25rem;
@@ -11649,4 +11653,59 @@ textarea.form-control-lg {
     padding: 5rem;
     margin-block: 5rem;
   }
+}
+
+.my-account-page .input-group-overlay .btn {
+  font-size: 1.125rem;
+}
+@media (min-width: 1200px) {
+  .my-account-page .row {
+    --bs-gutter-x: 90px;
+  }
+  .my-account-page .plan-card .row {
+    --bs-gutter-x: 250px;
+  }
+}
+
+.profile-img-wrap {
+  max-width: 210px;
+  width: 100%;
+  position: relative;
+}
+.profile-img-wrap .profile-img {
+  background-color: var(--bs-primary);
+  padding-top: 100%;
+  position: relative;
+}
+.profile-img-wrap .profile-img img {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.profile-img-wrap .profile-btns {
+  position: absolute;
+  top: 50%;
+  display: grid;
+  gap: 16px;
+  right: 0;
+  transform: translate(50%, -50%);
+}
+.profile-img-wrap .profile-btns .btn {
+  font-size: 1.125rem;
+  box-shadow: 3px 0px 22px rgba(0, 0, 0, 0.05);
+  display: inline-flex;
+  padding: 0.75rem;
+}
+.profile-img-wrap .profile-btns .btn-light:not(:hover) {
+  background-color: #fff;
+  border-color: #fff;
+}
+
+.profile-hint {
+  color: #595e6f80;
+  font-size: 10px;
 }
