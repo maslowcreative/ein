@@ -13,6 +13,7 @@ use F9Web\ApiResponseHelpers;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use function PHPUnit\Framework\isEmpty;
@@ -34,8 +35,14 @@ class UserController extends Controller
     public function index()
     {
         $users = User::getUsers()
-                     ->whereNotInRoles(['admin'])
-                     ->paginate(5);
+                     ->whereNotInRoles(['admin']);
+
+        if(Auth::user()->hasRole('provider')) {
+            $participantsIds = Auth::user()->provider->participants()->pluck('participant_id');
+            $users = $users->whereIn('id',$participantsIds)->with('participant.representative');
+        }
+
+        $users = $users->paginate(5);
         return $users;
     }
 
@@ -65,6 +72,11 @@ class UserController extends Controller
         //Participant Role:
         if(Role::ROLE_PARTICIPANT == $role->id) {
           $participant = $user->participant()->create($request->participant);
+
+          if(ifEmptyReturnNull($request->participant['providers'])) {
+              $participant->providers()->attach($request->participant['providers'],['created_at' => now(),'updated_at'=> now()]);
+          }
+
           if($request->participant['plan'] ?? false)
             $plan = $participant->plans()->create($request->participant['plan']);
         }

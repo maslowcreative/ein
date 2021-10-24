@@ -76,6 +76,30 @@
         "name": "ajax.users.destroy"
     },
     {
+        "uri": "ajax\/providers\/remove-participants",
+        "name": "ajax.providers.remove.participants"
+    },
+    {
+        "uri": "ajax\/providers",
+        "name": "ajax.providers.index"
+    },
+    {
+        "uri": "ajax\/providers",
+        "name": "ajax.providers.store"
+    },
+    {
+        "uri": "ajax\/providers\/{provider}",
+        "name": "ajax.providers.show"
+    },
+    {
+        "uri": "ajax\/providers\/{provider}",
+        "name": "ajax.providers.update"
+    },
+    {
+        "uri": "ajax\/providers\/{provider}",
+        "name": "ajax.providers.destroy"
+    },
+    {
         "uri": "ajax\/services",
         "name": "ajax.services.index"
     },

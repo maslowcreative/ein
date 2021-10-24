@@ -28,4 +28,12 @@ class Representative extends Model
     {
         return $this->hasMany(Participant::class,'representative_id');
     }
+
+    /**
+     * Get the user
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class,'user_id');
+    }
 }

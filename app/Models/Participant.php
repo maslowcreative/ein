@@ -41,4 +41,14 @@ class Participant extends Model
         return $this->hasMany(Plan::class,'participant_id');
     }
 
+    public function representative() {
+
+        return $this->belongsTo(User::class,'representative_id');
+    }
+
+    public function providers() {
+        return $this->belongsToMany(Provider::class,'provider_participant','participant_id','provider_id');
+
+    }
+
 }

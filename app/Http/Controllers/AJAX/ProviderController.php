@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\AJAX;
 
 use App\Http\Controllers\Controller;
+use F9Web\ApiResponseHelpers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProviderController extends Controller
 {
+    use ApiResponseHelpers;
     /**
      * Display a listing of the resource.
      *
@@ -50,5 +53,12 @@ class ProviderController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function removeParticipant(Request $request) {
+
+        $provider = \auth()->user()->provider;
+        $provider->participants()->detach([$request->participant_id]);
+        return $this->respondWithSuccess();
     }
 }
