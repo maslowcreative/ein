@@ -100,6 +100,30 @@
         "name": "ajax.providers.destroy"
     },
     {
+        "uri": "ajax\/claims\/store",
+        "name": "ajax."
+    },
+    {
+        "uri": "ajax\/claims",
+        "name": "ajax.claims.index"
+    },
+    {
+        "uri": "ajax\/claims",
+        "name": "ajax.claims.store"
+    },
+    {
+        "uri": "ajax\/claims\/{claim}",
+        "name": "ajax.claims.show"
+    },
+    {
+        "uri": "ajax\/claims\/{claim}",
+        "name": "ajax.claims.update"
+    },
+    {
+        "uri": "ajax\/claims\/{claim}",
+        "name": "ajax.claims.destroy"
+    },
+    {
         "uri": "ajax\/services",
         "name": "ajax.services.index"
     },

@@ -17,7 +17,10 @@ Route::apiResource('users','UserController');
 
 Route::post('providers/remove-participants','ProviderController@removeParticipant')
       ->name('providers.remove.participants');
+
 Route::apiResource('providers','ProviderController');
+Route::get('claims/store','ClaimController@store');
+Route::apiResource('claims','ClaimController');
 
 Route::apiResource('services','ServiceController');
 Route::apiResource('admins','AdminController');

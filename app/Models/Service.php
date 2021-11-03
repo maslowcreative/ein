@@ -11,7 +11,9 @@ use Spatie\QueryBuilder\QueryBuilder;
 class Service extends Model
 {
     use HasFactory;
+    protected $table = 'services';
     protected $primaryKey = "support_item_number";
+    public $incrementing = false;
 
     /**
      * Relationships
