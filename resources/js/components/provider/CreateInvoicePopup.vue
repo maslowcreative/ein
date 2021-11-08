@@ -4,7 +4,7 @@
             <div class="modal-content invoicePopup">
                 <div class="modal-header">
                     <h4 class="modal-title" id="invoicePopupTitle">Submit New Invoice</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" v-on:click="closePopup()"></button>
                 </div>
                 <div class="modal-body invoicePopupBody">
                     <div class="v-steps d-flex justify-content-between border-bottom">
@@ -252,7 +252,7 @@
                                 </div>
                             </div>
                             <div class="pt-4 mt-4 border-top">
-                                <button class="btn btn-light btn-lg w-100 py-3" v-on:click="addService()">+ Add New Service</button>
+                                <button type="button" class="btn btn-light btn-lg w-100 py-3" v-on:click="addService()">+ Add New Service</button>
                             </div>
                         </div>
                         <div class="step3" v-show="step === 3">
@@ -338,7 +338,12 @@ export default {
       }
   },
   mounted() {
-    this.resetForm();
+      this.resetForm();
+      VueEvents.$on('ein-provider:participant-selected-to-invoice', (participant) => {
+          this.participantSelected = participant;
+          this.form.participant_id = participant.id;
+          console.log('participant',participant);
+      });
   },
   methods: {
       current(value) {
@@ -368,6 +373,10 @@ export default {
           }
       },
       resetForm(){
+          this.loader = false;
+          this.step= 1;
+          this.lastStep= false;
+
           this.form = new Form({
               'start_date': null,
               'end_date': null,
@@ -376,13 +385,17 @@ export default {
               'service': [
                   {
                       'item_number': null,
-                      'claim_type': "",
+                      'claim_type': null,
                       'hours' : null,
                       'unit_price': null,
                       'gst_code': 'P2',
                   }
               ]
           });
+          this.participantSerachName= null;
+          this.participantSerachResult= [];
+          this.participantSelected= null;
+          this.servicesItemsResult= [];
       },
       createClaim() {
           this.loader = true;
@@ -396,7 +409,7 @@ export default {
                   }
               })
               .catch(error => {
-                  //this.$toastr.e("Error", "Some thing went wrong.")
+                  this.$toastr.e("Error", "Some thing went wrong.")
               })
               .finally(() => {
                   this.loader = false
@@ -417,6 +430,7 @@ export default {
                   this.participantSerachResult = res.data.data;
               })
               .catch(error => {
+                  this.$toastr.e("Error", "Some thing went wrong.")
                   console.log(error)
               })
               .finally(() => (this.loader = false))
@@ -463,6 +477,10 @@ export default {
                   this.loader = false
               });
       },
+      closePopup() {
+          this.resetForm();
+          $("#invoicePopup").modal('hide');
+      }
   }
 }
 </script>

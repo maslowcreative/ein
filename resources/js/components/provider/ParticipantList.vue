@@ -108,7 +108,7 @@
                             </td>
 
                             <td>
-                                <button class="btn btn-primary btn-sm">New Invoice</button>
+                                <button class="btn btn-primary btn-sm" v-on:click="openCreateInvoiceModal(user)">New Invoice</button>
                             </td>
                             <td>
                                 <div class="d-inline-flex flex-nowrap align-items-center justify-content-around btn-group fs-lg">
@@ -159,6 +159,7 @@ export default {
                 plan_status: "all",
             },
             items: {},
+            participantProp:null
         }
     },
     watch: {
@@ -208,7 +209,12 @@ export default {
                     this.$toastr.e("Error", "Some thing went wrong.");
                 })
                 .finally(() => (this.loading = false));
+        },
+        openCreateInvoiceModal(participant) {
+            VueEvents.$emit('ein-provider:participant-selected-to-invoice',participant)
+            $("#invoicePopup").modal('show');
         }
+
     },
 }
 </script>

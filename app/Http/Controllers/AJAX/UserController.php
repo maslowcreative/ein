@@ -42,6 +42,19 @@ class UserController extends Controller
             $users = $users->whereIn('id',$participantsIds)->with('participant.representative');
         }
 
+        if(Auth::user()->hasRole('representative')) {
+
+            if(\request()->filter['roles'][0] == 'participant'){
+                $participantIds = Auth::user()->representative->participants()->pluck('user_id');
+                $users = $users->whereIn('id',$participantIds)->with('participant');
+            }
+            elseif (\request()->filter['roles'][0] == 'provider') {
+                $providerIds = Auth::user()->representative->providers()->pluck('provider_id');
+                $users = $users->whereIn('id',$providerIds);
+            }
+
+        }
+
         $users = $users->paginate(5);
         return $users;
     }

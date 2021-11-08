@@ -5,6 +5,7 @@ namespace App\Http\Controllers\AJAX;
 use App\Http\Controllers\Controller;
 use App\Models\Service;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ServiceController extends Controller
 {
@@ -15,9 +16,14 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        return Service::getServices()
-                        ->select('support_item_number','support_item_name','reg_group_number','reg_group_name','support_category_number','support_category_name')
-                        ->paginate(100);
+        $items =  Service::getServices()
+                        ->select('support_item_number','support_item_name','reg_group_number','reg_group_name','support_category_number','support_category_name');
+
+//        if(Auth::user()->hasRole('provider')) {
+//            $items = $items->whereIn('support_item_number',Auth::user()->provider->items()->pluck('item_number'));
+//        }
+
+        return $items->paginate(100);
     }
 
     /**

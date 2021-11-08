@@ -2,8 +2,11 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class Claim extends Model
 {
@@ -74,6 +77,19 @@ class Claim extends Model
     */
     public function items() {
         return $this->hasMany(ClaimLineItem::class,'claim_id');
+    }
+
+    public function provider() {
+        return $this->belongsTo(Provider::class,'provider_id');
+    }
+
+    public function participant() {
+        return $this->belongsTo(Participant::class,'participant_id');
+    }
+
+    public static function getClaims() {
+        return QueryBuilder::for(self::class)
+                            ->with(['provider.user','participant.user','items']);
     }
 
 }

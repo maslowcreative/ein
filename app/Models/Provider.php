@@ -41,4 +41,12 @@ class Provider extends Model
     public function claims() {
         return $this->hasMany(Claim::class,'provider_id');
     }
+
+    public function user() {
+        return $this->belongsTo(User::class,'user_id');
+    }
+
+    public function items() {
+        return $this->hasMany(ProviderItems::class,'provider_id');
+    }
 }

@@ -4,10 +4,12 @@ namespace App\Http\Controllers\AJAX;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ClaimPostRequest;
+use App\Models\Claim;
 use App\Models\Participant;
 use App\Models\Provider;
 use F9Web\ApiResponseHelpers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class ClaimController extends Controller
@@ -20,7 +22,17 @@ class ClaimController extends Controller
      */
     public function index()
     {
-        //
+        $claims = Claim::getClaims();
+
+        if(Auth::user()->hasRole('provider')) {
+            $claims->where('provider_id',Auth::user()->id);
+        }
+
+        if(Auth::user()->hasRole('representative')) {
+            $claims->whereIn('participant_id',Auth::user()->representative->participants()->pluck('user_id'));
+        }
+
+        return  $claims->paginate(5);
     }
 
     /**
@@ -40,7 +52,7 @@ class ClaimController extends Controller
 
         DB::beginTransaction();
         $claim = $provider->claims()->create(
-            array_merge($request->all(),['ndis_number' => $participant->ndis_number])
+            array_merge($request->all(),['ndis_number' => $participant->ndis_number, 'provider_abn' => $provider->abn])
         );
         foreach ($request->service as $item) {
             $claim->items()->create($item);
