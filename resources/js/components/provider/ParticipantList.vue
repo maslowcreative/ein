@@ -43,22 +43,12 @@
                         </button>
                         <div class="dropdown-menu dropdown-menu-end fs-sm" aria-labelledby="filterDropdown2">
                             <div class="py-2 px-3">
-                                <label class="form-label">Account Type</label>
-                                <select class="form-select form-select-sm" v-model="filters.role">
-                                    <option selected value="all">All</option>
-                                    <option value="provider">Provider</option>
-                                    <option value="participant">Participant</option>
-                                    <option value="representative">Representative</option>
-                                </select>
-                            </div>
-                            <div class="py-2 px-3">
                                 <div class="mb-3">
                                     <label class="form-label">Plan Status</label>
                                     <select class="form-select form-select-sm" v-model="filters.plan_status">
                                         <option selected value="all">All</option>
                                         <option value="1">Active</option>
-                                        <option value="2">Inactive</option>
-                                        <option value="3">New Expiry</option>
+                                        <option value="0">Inactive</option>
                                     </select>
                                 </div>
                             </div>
@@ -155,7 +145,6 @@ export default {
             loading: false,
             filters: {
                 name: null,
-                role: "all",
                 plan_status: "all",
             },
             items: {},
@@ -166,7 +155,7 @@ export default {
         "filters.name": function(val, old) {
             this.getUsersList(1)
         },
-        "filters.role": function(val, old) {
+        "filters.plan_status": function(val, old) {
             this.getUsersList(1)
         },
     },
@@ -183,6 +172,10 @@ export default {
 
             if (this.filters.name) {
                 data["filter[name]"] = this.filters.name
+            }
+
+            if (this.filters.plan_status && this.filters.plan_status != "all") {
+                data["filter[plan_status]"] = this.filters.plan_status
             }
 
             let route = this.laroute.route("ajax.users.index", data)
@@ -214,7 +207,6 @@ export default {
             VueEvents.$emit('ein-provider:participant-selected-to-invoice',participant)
             $("#invoicePopup").modal('show');
         }
-
 
     },
 }

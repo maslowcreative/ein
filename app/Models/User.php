@@ -119,6 +119,11 @@ class User extends Authenticatable
         return $this->hasOne(Admin::class,'user_id');
     }
 
+    public function plans()
+    {
+        return $this->hasMany(Plan::class,'participant_id');
+    }
+
     public static function getUsers()
     {
         return QueryBuilder::for(User::class)
@@ -134,6 +139,11 @@ class User extends Authenticatable
                 AllowedFilter::callback('roles', function (Builder $query, $roles) {
                     $query->whereInRoles($roles);
                 }),
+                AllowedFilter::callback('plan_status', function (Builder $query, $plan_status) {
+                    $query->whereHas('plans', function (Builder $query) use ($plan_status){
+                        $query->where('status',$plan_status);
+                    });
+                })
 
             ]);
     }

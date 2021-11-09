@@ -108,6 +108,10 @@
         "name": "ajax."
     },
     {
+        "uri": "ajax\/claims\/{claim}\/representative-action",
+        "name": "ajax.claims.representative.action"
+    },
+    {
         "uri": "ajax\/claims",
         "name": "ajax.claims.index"
     },

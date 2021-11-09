@@ -134,7 +134,15 @@
                                     </div>
                                 </div>
                             </div>
+                            <h5 v-if="role == 'representative'" class="border-bottom pb-3 mb-3">Rejection Reason</h5>
+                            <div v-if="role == 'representative'" class="mb-4">
+                                <input type="text" class="form-control" placeholder="Rejection Reason">
+                            </div>
                         </div>
+                    </div>
+                    <div v-if="role == 'representative'"  class="text-center mt-3 mt-md-5">
+                        <button class="btn btn-light btn-lg py-md-3 px-md-5 mx-2">Reject Claim</button>
+                        <button class="btn btn-primary btn-lg py-md-3 px-md-5 mx-2">Accept Claim</button>
                     </div>
                 </div>
             </div>
@@ -146,12 +154,17 @@
 import CreateInvoicePopup from "./CreateInvoicePopup";
 export default {
     components: {CreateInvoicePopup},
-    props: ['claim'],
+    props: ['role','claim'],
     data() {
     return {
         //claimData: this.claim
     }
   },
   mounted() {},
+  methods:{
+        claimRepresentativeAction(status) {
+
+        }
+  }
 }
 </script>

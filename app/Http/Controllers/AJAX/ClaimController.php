@@ -12,6 +12,7 @@ use F9Web\ApiResponseHelpers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 
 class ClaimController extends Controller
 {
@@ -75,6 +76,24 @@ class ClaimController extends Controller
         DB::commit();
         return $this->respondCreated();
 
+    }
+
+    public function approvedByRepresentative(Request $request,Claim $claim) {
+
+        if(!Auth::user()->hasRole('representative')) {
+            return $this->respondForbidden();
+        }
+
+        if($claim->status != Claim::STATUS_APPROVAL_PENDING ){
+            return $this->respondForbidden();
+        }
+
+        $request->validate(['status'=> 'required',Rule::in([Claim::STATUS_APPROVED_BY_REPRESENTATIVE,Claim::STATUS_DENIED_BY_REPRESENTATIVE])]);
+
+        $claim->status = $request->status;
+        $claim->save();
+
+        return $this->respondWithSuccess();
     }
 
     /**

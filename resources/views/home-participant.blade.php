@@ -601,36 +601,17 @@
           <div class="card-body">
             <div class="d-flex justify-content-between">
               <div>
-                <h5>Linked Participants</h5>
-                <small class="text-primary">9999 Participants</small>
+                <h5>Your Representative</h5>
               </div>
             </div>
             <div class="table-x-scroll">
-              <div class="d-flex border-top pt-4">
-                <div class="me-4">
-                  <img src="/images/avatar.png" width="50" height="50" alt="" />
-                </div>
-                <div class="fw-bold">
-                  Users Name
-                  <span class="d-block text-primary fw-normal">Participant</span>
-                </div>
-              </div>
-              <div class="d-flex border-top pt-4 mt-4">
-                <div class="me-4">
-                  <img src="/images/avatar.png" width="50" height="50" alt="" />
-                </div>
-                <div class="fw-bold">
-                  Users Name
-                  <span class="d-block text-primary fw-normal">Participant</span>
-                </div>
-              </div>
               <div class="d-flex border-top py-4 mt-4 border-bottom">
                 <div class="me-4">
                   <img src="/images/avatar.png" width="50" height="50" alt="" />
                 </div>
                 <div class="fw-bold">
                   Users Name
-                  <span class="d-block text-primary fw-normal">Participant</span>
+                  <span class="d-block text-primary fw-normal">Representative</span>
                 </div>
               </div>
             </div>

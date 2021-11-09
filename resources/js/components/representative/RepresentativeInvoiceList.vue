@@ -16,20 +16,23 @@
                             <div class="py-2 px-3">
                                 <div class="mb-3">
                                     <label class="form-label">Claim Status</label>
-                                    <select class="form-select form-select-sm">
-                                        <option selected>All</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
+                                    <select class="form-select form-select-sm" v-model="filters.claim_status">
+                                        <option  value="all">All</option>
+                                        <option value="0">Pending Approval</option>
+                                        <option value="1">Approved by Represetntative</option>
+                                        <option value="2">Denied by Represetntative</option>
+                                        <option value="3">Pending Reconcilation</option>
+                                        <option value="4">Reconciled</option>
                                     </select>
                                 </div>
                                 <div class="">
                                     <label class="form-label">Claim Status</label>
-                                    <select class="form-select form-select-sm">
-                                        <option selected>All</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
+                                    <select class="form-select form-select-sm" v-model="filters.claim_type">
+                                        <option  value="all">All</option>
+                                        <option value="CANC">Cancellation Charges</option>
+                                        <option value="REPW">Report Writing Charges</option>
+                                        <option value="TRAN">Travel Charges</option>
+                                        <option value="NF2F">Non-Face to Face Services</option>
                                     </select>
                                 </div>
                             </div>
@@ -57,17 +60,16 @@
                                 </div>
                             </td>
                             <td>
-                                Claim Status
+                                {{claim.state}}
                             </td>
                             <td><button class="btn btn-light btn-sm" v-on:click="openViewInvoiceModal(claim)">View more</button></td>
     <!--                        <td><button class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#claimDetailPopup">View more</button></td>-->
                             <td>
                                 <div class="d-inline-flex flex-nowrap align-items-center justify-content-around btn-group fs-lg">
-                                    <button class="btn btn-link p-0 mx-1">
+                                    <a v-if="claim.invoice_path" class="btn btn-link p-0 mx-1" :href="claim.invoice_url">
                                         <ion-icon name="push-outline" class="flip-v"></ion-icon>
-                                    </button>
-                                    <button class="btn btn-link p-0 mx-1 d-flex" data-bs-toggle="modal"
-                                            data-bs-target="#claimPopup">
+                                    </a>
+                                    <button class="btn btn-link p-0 mx-1 d-flex" v-on:click="openClaimModal(claim)">
                                         <ion-icon name="cash-outline"></ion-icon>
                                     </button>
                                 </div>
@@ -92,9 +94,8 @@
                     listClass="pagination"
                 />
             </div>
-
-<!--            <view-invoice-popup ></view-invoice-popup>-->
-            <provider-claim-detail-popup v-bind:claim="claim"></provider-claim-detail-popup>
+            <view-invoice-popup v-bind:claim="claim" ></view-invoice-popup>
+            <provider-claim-detail-popup v-bind:claim="claim" role="representative"></provider-claim-detail-popup>
         </div>
     </div>
 </template>
@@ -104,9 +105,10 @@
 
 import AdvancedLaravelVuePaginate from "advanced-laravel-vue-paginate";
 import "advanced-laravel-vue-paginate/dist/advanced-laravel-vue-paginate.css";
+import ViewInvoicePopup from "../provider/ViewInvoicePopup";
 export default {
-    components: {AdvancedLaravelVuePaginate},
-    data() {
+    components: {ViewInvoicePopup, AdvancedLaravelVuePaginate},
+    data()  {
     return {
         loader: false,
         items:{},
@@ -134,15 +136,32 @@ export default {
             },
             items: [],
         },
+        filters: {
+            claim_status: "all",
+            claim_type: "all",
+        },
     }
   },
   mounted() {
     this.getProviderClaimsList();
   },
+  watch: {
+        "filters.claim_status": function(val, old) {
+            this.getProviderClaimsList(1)
+        },
+        "filters.claim_type": function(val, old) {
+            this.getProviderClaimsList(1)
+        },
+  },
   methods: {
       getProviderClaimsList(page = 1) {
           this.loader = true;
           let data = { page: page };
+
+          if (this.filters.claim_status && this.filters.claim_status != "all") {
+              data["filter[claim_status]"] = this.filters.claim_status
+          }
+
           let route = this.laroute.route("ajax.claims.store",data)
           axios
               .get(route)
@@ -157,6 +176,24 @@ export default {
       openViewInvoiceModal(claim) {
           this.claim = claim;
           $("#claimDetailPopup").modal('show');
+      },
+      openClaimModal(claim) {
+          let paid = 0;
+          let total = 0;
+          claim.paid = claim.items.reduce(function (paid,item) {
+              if(item.status == 1){
+                  return paid + parseFloat(item.hours * item.unit_price);
+              }else {
+                  return paid + 0;
+              }
+          },0);
+
+          claim.total = claim.items.reduce(function (total,item) {
+              return total + parseFloat(item.hours * item.unit_price);
+          },0);
+
+          this.claim = claim;
+          $("#claimPopup").modal('show');
       }
   }
 }

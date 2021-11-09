@@ -20,6 +20,7 @@ Route::post('providers/remove-participants','ProviderController@removeParticipan
 
 Route::apiResource('providers','ProviderController');
 Route::get('claims/store','ClaimController@store');
+Route::post('claims/{claim}/representative-action','ClaimController@approvedByRepresentative')->name('claims.representative.action');
 Route::apiResource('claims','ClaimController');
 
 Route::apiResource('services','ServiceController');
