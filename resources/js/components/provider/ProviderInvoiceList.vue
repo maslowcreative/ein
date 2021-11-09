@@ -143,6 +143,10 @@ export default {
   },
   mounted() {
     this.getProviderClaimsList();
+    //Called Whenever claim is created.
+    this.$root.$on("ein-claim:created", () => {
+      this.getProviderClaimsList();
+    });
   },
   methods: {
       getProviderClaimsList(page = 1) {

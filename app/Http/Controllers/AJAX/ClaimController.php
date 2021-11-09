@@ -20,6 +20,11 @@ class ClaimController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware('claim.service.clean')->only('store');
+    }
+
     public function index()
     {
         $claims = Claim::getClaims();
@@ -41,6 +46,7 @@ class ClaimController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+//    public function store()
     public function store(ClaimPostRequest $request)
     {
         $provider = optional(\auth()->user())->provider;
@@ -51,8 +57,15 @@ class ClaimController extends Controller
         $participant = Participant::find($request->participant_id);
 
         DB::beginTransaction();
+
+        $path = $request->file('file')->store('claims');
         $claim = $provider->claims()->create(
-            array_merge($request->all(),['ndis_number' => $participant->ndis_number, 'provider_abn' => $provider->abn])
+            array_merge($request->all(),[
+                'ndis_number' => $participant->ndis_number,
+                'provider_abn' => $provider->abn ,
+                'status' => Claim::STATUS_APPROVAL_PENDING,
+                'invoice_path' => $path
+            ])
         );
         foreach ($request->service as $item) {
             $claim->items()->create($item);

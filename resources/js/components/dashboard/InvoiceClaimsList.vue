@@ -64,120 +64,20 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
+            <tr v-for="claim in items.data">
               <td>
                 <input class="form-check-input" type="checkbox" value="" aria-label="..." />
               </td>
               <td class="not-center">
                 <div class="fw-bold">
-                  Claim #12131
-                  <span class="d-block text-primary fw-normal">Provider’s Name</span>
+                  Claim #{{claim.claim_reference}}
+                  <span class="d-block text-primary fw-normal">{{claim.participant.user.name}}</span>
                 </div>
               </td>
               <td>
                 Claim Status
               </td>
-              <td><button class="btn btn-light btn-sm">View more</button></td>
-              <td>
-                <div class="d-inline-flex flex-nowrap align-items-center justify-content-around btn-group fs-lg">
-                  <button class="btn btn-link p-0 mx-1">
-                    <ion-icon name="push-outline" class="flip-v"></ion-icon>
-                  </button>
-                  <button class="btn btn-link p-0 mx-1">
-                    <ion-icon name="document-attach-outline"></ion-icon>
-                  </button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <input class="form-check-input" type="checkbox" value="" aria-label="..." />
-              </td>
-              <td class="not-center">
-                <div class="fw-bold">
-                  Claim #12131
-                  <span class="d-block text-primary fw-normal">Provider’s Name</span>
-                </div>
-              </td>
-              <td>
-                Claim Status
-              </td>
-              <td><button class="btn btn-light btn-sm">View more</button></td>
-              <td>
-                <div class="d-inline-flex flex-nowrap align-items-center justify-content-around btn-group fs-lg">
-                  <button class="btn btn-link p-0 mx-1">
-                    <ion-icon name="push-outline" class="flip-v"></ion-icon>
-                  </button>
-                  <button class="btn btn-link p-0 mx-1">
-                    <ion-icon name="document-attach-outline"></ion-icon>
-                  </button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <input class="form-check-input" type="checkbox" value="" aria-label="..." />
-              </td>
-              <td class="not-center">
-                <div class="fw-bold">
-                  Claim #12131
-                  <span class="d-block text-primary fw-normal">Provider’s Name</span>
-                </div>
-              </td>
-              <td>
-                Claim Status
-              </td>
-              <td><button class="btn btn-light btn-sm">View more</button></td>
-              <td>
-                <div class="d-inline-flex flex-nowrap align-items-center justify-content-around btn-group fs-lg">
-                  <button class="btn btn-link p-0 mx-1">
-                    <ion-icon name="push-outline" class="flip-v"></ion-icon>
-                  </button>
-                  <button class="btn btn-link p-0 mx-1">
-                    <ion-icon name="document-attach-outline"></ion-icon>
-                  </button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <input class="form-check-input" type="checkbox" value="" aria-label="..." />
-              </td>
-              <td class="not-center">
-                <div class="fw-bold">
-                  Claim #12131
-                  <span class="d-block text-primary fw-normal">Provider’s Name</span>
-                </div>
-              </td>
-              <td>
-                Claim Status
-              </td>
-              <td><button class="btn btn-light btn-sm">View more</button></td>
-              <td>
-                <div class="d-inline-flex flex-nowrap align-items-center justify-content-around btn-group fs-lg">
-                  <button class="btn btn-link p-0 mx-1">
-                    <ion-icon name="push-outline" class="flip-v"></ion-icon>
-                  </button>
-                  <button class="btn btn-link p-0 mx-1">
-                    <ion-icon name="document-attach-outline"></ion-icon>
-                  </button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <input class="form-check-input" type="checkbox" value="" aria-label="..." />
-              </td>
-              <td class="not-center">
-                <div class="fw-bold">
-                  Claim #12131
-                  <span class="d-block text-primary fw-normal">Provider’s Name</span>
-                </div>
-              </td>
-              <td>
-                Claim Status
-              </td>
-              <td><button class="btn btn-light btn-sm">View more</button></td>
+              <td><button class="btn btn-light btn-sm" v-on:click="openViewInvoiceModal(claim)">View more</button></td>
               <td>
                 <div class="d-inline-flex flex-nowrap align-items-center justify-content-around btn-group fs-lg">
                   <button class="btn btn-link p-0 mx-1">
@@ -197,25 +97,73 @@
         <button class="btn btn-primary">Upload Selected</button>
       </div>
       <div class="mt-4 mt-md-5">
-        <nav aria-label="Page navigation">
-          <ul class="pagination justify-content-center">
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item"><a class="page-link" href="#">...</a></li>
-            <li class="page-item"><a class="page-link" href="#">100</a></li>
-          </ul>
-        </nav>
+          <advanced-laravel-vue-paginate
+              :data="items"
+              @paginateTo="getProviderClaimsList"
+              :showNextPrev="false"
+              useStyle="bootstrap"
+              listClass="pagination"
+          />
       </div>
     </div>
+    <provider-claim-detail-popup v-bind:claim="claim"></provider-claim-detail-popup>
   </div>
 </template>
 
 <script>
 export default {
   data() {
-    return {}
+    return {
+        loader: false,
+        items:{},
+        claim: {
+            id: null,
+            claim_reference: null,
+            ndis_number:null,
+            authorised_by: null,
+            participant_approved: null,
+            provider_abn: null,
+            start_date: null,
+            end_date: null,
+            provider:{
+                id: null,
+                abn:null,
+                user:{
+                    name:null
+                }
+            },
+            participant:{
+                id:null,
+                user:{
+                    name:null
+                }
+            },
+            items: [],
+        },
+    }
   },
-  mounted() {},
+  mounted() {
+      this.getProviderClaimsList();
+  },
+  methods:{
+      getProviderClaimsList(page = 1) {
+          this.loader = true;
+          let data = { page: page };
+          let route = this.laroute.route("ajax.claims.store",data)
+          axios
+              .get(route)
+              .then(res => {
+                  this.items = res.data
+              })
+              .catch(error => {
+                  console.log(error)
+              })
+              .finally(() => (this.loader = false))
+      },
+      openViewInvoiceModal(claim) {
+          this.claim = claim;
+          $("#claimDetailPopup").modal('show');
+      }
+  }
 }
 </script>

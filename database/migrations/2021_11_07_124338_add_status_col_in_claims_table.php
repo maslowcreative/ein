@@ -14,7 +14,7 @@ class AddStatusColInClaimsTable extends Migration
     public function up()
     {
         Schema::table('claims', function (Blueprint $table) {
-            //
+            $table->unsignedInteger('status')->after('provider_abn');
         });
     }
 
@@ -26,7 +26,7 @@ class AddStatusColInClaimsTable extends Migration
     public function down()
     {
         Schema::table('claims', function (Blueprint $table) {
-            //
+            $table->dropColumn('status');
         });
     }
 }

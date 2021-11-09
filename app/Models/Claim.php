@@ -10,8 +10,6 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class Claim extends Model
 {
-    use HasFactory;
-
     /**
      * The attributes that are mass assignable.
      *
@@ -20,17 +18,22 @@ class Claim extends Model
     protected $fillable = [
         'provider_id',
         'participant_id',
+        'claim_reference',
+        'invoice_path',
         'ndis_number',
         'start_date',
         'end_date',
-        'claim_reference',
-        'approved_by',
+        'authorised_by',
         'participant_approved',
-        'claim_type',
-        'cancellation_reason',
+        'representative_approved',
+        'admin_approved',
         'provider_abn',
+        'status',
+        //Mutator
         'invoice_number'
     ];
+
+    use HasFactory;
 
     //Claim type of the service provided
     const CLAIM_TYPE_CANC = 'CANC';
@@ -65,6 +68,16 @@ class Claim extends Model
         self::CANCELLATION_REASON_NSDT => 'No show due to unavailability of transport.',
         self::CANCELLATION_REASON_NSDO => 'Other.',
     ];
+
+    //Claim Status
+    const STATUS_APPROVAL_PENDING = 0;
+    const STATUS_APPROVED_BY_REPRESENTATIVE = 1;
+    const STATUS_DENIED_BY_REPRESENTATIVE = 2;
+    const STATUS_RECONCILATION_PENDING = 3;
+    const STATUS_RECONCILATION_PASSED = 4;
+    const STATUS_RECONCILATION_FAILED = 5;
+
+
 
     public function setInvoiceNumberAttribute($value) {
         $this->attributes['claim_reference'] = $value;

@@ -48,7 +48,7 @@
                             </a>
                         </div>
                     </div>
-                    <form @submit.prevent="createClaim" method="POST">
+                    <form @submit.prevent="createClaim" method="POST"  enctype="multipart/form-data">
                         <div class="step1" v-show="step === 1">
                             <div class="row">
                                 <div class="col-md-6">
@@ -259,9 +259,9 @@
                             <div class="mb-4">
                                 <label class="form-label">Upload Invoice</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Invoice file name"
+                                    <input type="file" v-on:change="onFileChange" class="form-control" placeholder="Invoice file name"
                                            aria-label="Invoice file name" aria-describedby="fileBtn">
-                                    <button class="btn btn-light fw-bold" type="button" id="fileBtn">View File</button>
+                                    <div class="invalid-msg" v-if="form.errors.has('file')" v-html="form.errors.get('file')" />
                                 </div>
                             </div>
                         </div>
@@ -304,6 +304,7 @@ export default {
             'end_date': null,
             'invoice_number': null,
             'participant_id': null,
+            'file': {},
             'service': [
                 {
                     'item_number': null,
@@ -382,6 +383,7 @@ export default {
               'end_date': null,
               'invoice_number': null,
               'participant_id': null,
+              'file': null,
               'service': [
                   {
                       'item_number': null,
@@ -403,9 +405,11 @@ export default {
           this.form
               .post(route)
               .then(res => {
+                  console.log('res',res);
                   if ((res.status = 201)) {
-                      this.resetForm();
-                      this.$toastr.s("Success", "Claim created!")
+                      this.$root.$emit("ein-claim:created");
+                      this.$toastr.s("Success", "Claim created!");
+                      this.closePopup();
                   }
               })
               .catch(error => {
@@ -480,7 +484,15 @@ export default {
       closePopup() {
           this.resetForm();
           $("#invoicePopup").modal('hide');
-      }
+      },
+
+      onFileChange(e) {
+          var files = e.target.files || e.dataTransfer.files;
+          if (!files.length)
+              return;
+          this.form.file = files[0];
+      },
+
   }
 }
 </script>
