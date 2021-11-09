@@ -72,8 +72,7 @@
                                     <a v-if="claim.invoice_path" class="btn btn-link p-0 mx-1" :href="claim.invoice_url">
                                         <ion-icon name="push-outline" class="flip-v"></ion-icon>
                                     </a>
-                                    <button class="btn btn-link p-0 mx-1 d-flex" data-bs-toggle="modal"
-                                            data-bs-target="#claimPopup">
+                                    <button class="btn btn-link p-0 mx-1 d-flex"  v-on:click="openClaimModal(claim)">
                                         <ion-icon name="cash-outline"></ion-icon>
                                     </button>
                                 </div>
@@ -99,7 +98,7 @@
                 />
             </div>
 
-            <view-invoice-popup ></view-invoice-popup>
+            <view-invoice-popup v-bind:claim="claim"></view-invoice-popup>
             <provider-claim-detail-popup v-bind:claim="claim"></provider-claim-detail-popup>
             <create-invoice-popup></create-invoice-popup>
         </div>
@@ -127,6 +126,8 @@ export default {
             provider_abn: null,
             start_date: null,
             end_date: null,
+            total:null,
+            paid:null,
             provider:{
                 id: null,
                 abn:null,
@@ -173,10 +174,6 @@ export default {
               data["filter[claim_status]"] = this.filters.claim_status
           }
 
-          // if (this.filters.claim_type && this.filters.claim_type != "all") {
-          //     data["filter[claim_type]"] = this.filters.claim_type
-          // }
-
           let route = this.laroute.route("ajax.claims.store",data)
           axios
               .get(route)
@@ -191,6 +188,24 @@ export default {
       openViewInvoiceModal(claim) {
           this.claim = claim;
           $("#claimDetailPopup").modal('show');
+      },
+      openClaimModal(claim) {
+          let paid = 0;
+          let total = 0;
+          claim.paid = claim.items.reduce(function (paid,item) {
+              if(item.status == 1){
+                  return paid + parseFloat(item.hours * item.unit_price);
+              }else {
+                  return paid + 0;
+              }
+          },0);
+
+          claim.total = claim.items.reduce(function (total,item) {
+              return total + parseFloat(item.hours * item.unit_price);
+          },0);
+
+          this.claim = claim;
+          $("#claimPopup").modal('show');
       }
   }
 }

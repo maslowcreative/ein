@@ -5,6 +5,7 @@ namespace App\Http\Controllers\AJAX;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ClaimPostRequest;
 use App\Models\Claim;
+use App\Models\ClaimLineItem;
 use App\Models\Participant;
 use App\Models\Provider;
 use F9Web\ApiResponseHelpers;
@@ -68,6 +69,7 @@ class ClaimController extends Controller
             ])
         );
         foreach ($request->service as $item) {
+            $item = array_merge($item,['status' => ClaimLineItem::STATUS_PENDING]);
             $claim->items()->create($item);
         }
         DB::commit();

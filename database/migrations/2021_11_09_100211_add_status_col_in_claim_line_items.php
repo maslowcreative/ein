@@ -14,7 +14,7 @@ class AddStatusColInClaimLineItems extends Migration
     public function up()
     {
         Schema::table('claim_line_items', function (Blueprint $table) {
-            //
+            $table->unsignedInteger('status')->after('cancellation_reason');
         });
     }
 
@@ -26,7 +26,7 @@ class AddStatusColInClaimLineItems extends Migration
     public function down()
     {
         Schema::table('claim_line_items', function (Blueprint $table) {
-            //
+            $table->dropColumn('status');
         });
     }
 }

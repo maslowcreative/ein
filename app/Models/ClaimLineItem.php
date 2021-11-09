@@ -23,9 +23,11 @@ class ClaimLineItem extends Model
         'unit_price',
         'gst_code',
         'claim_type',
-        'cancellation_reason'
+        'cancellation_reason',
+        'status',
     ];
 
+    const STATUS_PENDING = 0;
 
     public function setItemNumberAttribute($value) {
         $this->attributes['support_item_number'] = $value;

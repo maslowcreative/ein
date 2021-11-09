@@ -215,6 +215,7 @@ export default {
             $("#invoicePopup").modal('show');
         }
 
+
     },
 }
 </script>
