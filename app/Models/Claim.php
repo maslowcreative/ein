@@ -10,6 +10,7 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class Claim extends Model
 {
+    use HasFactory;
     /**
      * The attributes that are mass assignable.
      *
@@ -32,8 +33,11 @@ class Claim extends Model
         //Mutator
         'invoice_number'
     ];
+    protected $appends = [
+      'invoice_url',
+      'state'
+    ];
 
-    use HasFactory;
 
     //Claim type of the service provided
     const CLAIM_TYPE_CANC = 'CANC';
@@ -77,10 +81,28 @@ class Claim extends Model
     const STATUS_RECONCILATION_PASSED = 4;
     const STATUS_RECONCILATION_FAILED = 5;
 
+    const STATS = [
+        self::STATUS_APPROVAL_PENDING => 'Pending Approval',
+        self::STATUS_APPROVED_BY_REPRESENTATIVE => 'Approved by Represetntative',
+        self::STATUS_DENIED_BY_REPRESENTATIVE => 'Denied by Represetntative',
+        self::STATUS_RECONCILATION_PENDING => 'Pending Reconcilation',
+        self::STATUS_RECONCILATION_PASSED => 'Reconciled',
+        self::STATUS_RECONCILATION_FAILED => 'reconcilation failed',
+
+    ];
+
 
 
     public function setInvoiceNumberAttribute($value) {
         $this->attributes['claim_reference'] = $value;
+    }
+
+    public function getInvoiceUrlAttribute() {
+        return route('claim.invoice.download',['claim'=> $this->id ]);
+    }
+
+    public function getStateAttribute() {
+        return self::STATS[$this->status];
     }
 
     /*
@@ -102,7 +124,10 @@ class Claim extends Model
 
     public static function getClaims() {
         return QueryBuilder::for(self::class)
-                            ->with(['provider.user','participant.user','items']);
+                            ->with(['provider.user','participant.user','items'])
+                            ->allowedFilters([
+                                AllowedFilter::exact('claim_status', 'status'),
+                            ]);
     }
 
 }

@@ -19,20 +19,23 @@
                             <div class="py-2 px-3">
                                 <div class="mb-3">
                                     <label class="form-label">Claim Status</label>
-                                    <select class="form-select form-select-sm">
-                                        <option selected>All</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
+                                    <select class="form-select form-select-sm" v-model="filters.claim_status">
+                                        <option  value="all">All</option>
+                                        <option value="0">Pending Approval</option>
+                                        <option value="1">Approved by Represetntative</option>
+                                        <option value="2">Denied by Represetntative</option>
+                                        <option value="3">Pending Reconcilation</option>
+                                        <option value="4">Reconciled</option>
                                     </select>
                                 </div>
                                 <div class="">
                                     <label class="form-label">Claim Status</label>
-                                    <select class="form-select form-select-sm">
-                                        <option selected>All</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
+                                    <select class="form-select form-select-sm" v-model="filters.claim_type">
+                                        <option  value="all">All</option>
+                                        <option value="CANC">Cancellation Charges</option>
+                                        <option value="REPW">Report Writing Charges</option>
+                                        <option value="TRAN">Travel Charges</option>
+                                        <option value="NF2F">Non-Face to Face Services</option>
                                     </select>
                                 </div>
                             </div>
@@ -60,15 +63,15 @@
                                 </div>
                             </td>
                             <td>
-                                Claim Status
+                                {{claim.state}}
                             </td>
                             <td><button class="btn btn-light btn-sm" v-on:click="openViewInvoiceModal(claim)">View more</button></td>
     <!--                        <td><button class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#claimDetailPopup">View more</button></td>-->
                             <td>
                                 <div class="d-inline-flex flex-nowrap align-items-center justify-content-around btn-group fs-lg">
-                                    <button class="btn btn-link p-0 mx-1">
+                                    <a v-if="claim.invoice_path" class="btn btn-link p-0 mx-1" :href="claim.invoice_url">
                                         <ion-icon name="push-outline" class="flip-v"></ion-icon>
-                                    </button>
+                                    </a>
                                     <button class="btn btn-link p-0 mx-1 d-flex" data-bs-toggle="modal"
                                             data-bs-target="#claimPopup">
                                         <ion-icon name="cash-outline"></ion-icon>
@@ -139,7 +142,19 @@ export default {
             },
             items: [],
         },
+        filters: {
+            claim_status: "all",
+            claim_type: "all",
+        },
     }
+  },
+  watch: {
+        "filters.claim_status": function(val, old) {
+            this.getProviderClaimsList(1)
+        },
+        "filters.claim_type": function(val, old) {
+            this.getProviderClaimsList(1)
+        },
   },
   mounted() {
     this.getProviderClaimsList();
@@ -152,6 +167,16 @@ export default {
       getProviderClaimsList(page = 1) {
           this.loader = true;
           let data = { page: page };
+
+
+          if (this.filters.claim_status && this.filters.claim_status != "all") {
+              data["filter[claim_status]"] = this.filters.claim_status
+          }
+
+          // if (this.filters.claim_type && this.filters.claim_type != "all") {
+          //     data["filter[claim_type]"] = this.filters.claim_type
+          // }
+
           let route = this.laroute.route("ajax.claims.store",data)
           axios
               .get(route)

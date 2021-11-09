@@ -52,6 +52,10 @@
         "name": "my.account"
     },
     {
+        "uri": "calim\/{claim}\/invoice\/download",
+        "name": "claim.invoice.download"
+    },
+    {
         "uri": "ajax\/users\/store",
         "name": "ajax."
     },

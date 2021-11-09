@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Claim;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class HomeController extends Controller
 {
@@ -50,5 +52,9 @@ class HomeController extends Controller
     public function myAccount()
     {
         return view('my-account');
+    }
+
+    public function claimInvoiceDownload(Claim $claim){
+        return Storage::download($claim->invoice_path);
     }
 }

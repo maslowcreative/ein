@@ -124,12 +124,12 @@
                                 <ion-icon name="document-attach-outline"></ion-icon>
                               </span>
                                     </div>
-                                    <input type="text" placeholder="Invoice file name" aria-label="Invoice file name"
+                                    <input disabled type="text" placeholder="Invoice file" value="Invoice file"  aria-label="Invoice file"
                                            aria-describedby="fileBtn" class="form-control prepended-form-control">
                                     <div class="input-group-append-overlay">
-                              <span class="input-group-text text-primary">
-                                <button type="button" id="fileBtn" class="btn btn-text p-0 fw-bold text-primary">View
-                                  File</button>
+                              <span class="input-group-text text-primary" v-if="claim.invoice_path">
+                                <a type="button" id="fileBtn" :href="claim.invoice_url" class="btn btn-text p-0 fw-bold text-primary">View
+                                  File</a>
                               </span>
                                     </div>
                                 </div>
