@@ -91,6 +91,7 @@ class ClaimController extends Controller
         $request->validate(['status'=> 'required',Rule::in([Claim::STATUS_APPROVED_BY_REPRESENTATIVE,Claim::STATUS_DENIED_BY_REPRESENTATIVE])]);
 
         $claim->status = $request->status;
+        $claim->rejection_reason = $request->reason;
         $claim->save();
 
         return $this->respondWithSuccess();

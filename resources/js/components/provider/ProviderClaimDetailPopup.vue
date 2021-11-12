@@ -136,13 +136,18 @@
                             </div>
                             <h5 v-if="role == 'representative'" class="border-bottom pb-3 mb-3">Rejection Reason</h5>
                             <div v-if="role == 'representative'" class="mb-4">
-                                <input type="text" class="form-control" placeholder="Rejection Reason">
+                                <input v-if="claim.status == 0"  v-model="reason" type="text" class="form-control" placeholder="Rejection Reason">
+                                <input v-else disabled v-model="claim.rejection_reason" type="text" class="form-control" placeholder="Rejection Reason">
                             </div>
                         </div>
                     </div>
-                    <div v-if="role == 'representative'"  class="text-center mt-3 mt-md-5">
-                        <button class="btn btn-light btn-lg py-md-3 px-md-5 mx-2">Reject Claim</button>
-                        <button class="btn btn-primary btn-lg py-md-3 px-md-5 mx-2">Accept Claim</button>
+                    <div v-if="role == 'representative' && claim.status == 0"  class="text-center mt-3 mt-md-5">
+                        <button v-if="!loader"  class="btn btn-light btn-lg py-md-3 px-md-5 mx-2" v-on:click="claimRepresentativeAction(claim.id,2)">Reject Claim</button>
+                        <button v-if="!loader" class="btn btn-primary btn-lg py-md-3 px-md-5 mx-2" v-on:click="claimRepresentativeAction(claim.id,1)">Accept Claim</button>
+                        <button v-if="loader" class="btn btn-light btn-lg py-md-3 px-md-5 mx-2" disabled="" >
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            Loading...
+                        </button>
                     </div>
                 </div>
             </div>
@@ -157,14 +162,32 @@ export default {
     props: ['role','claim'],
     data() {
     return {
-        //claimData: this.claim
+        loader : false,
+        reason : null,
     }
   },
   mounted() {},
   methods:{
-        claimRepresentativeAction(status) {
+    claimRepresentativeAction(claimId ,status) {
+        this.loader = true;
+        let route = this.laroute.route("ajax.claims.representative.action",{'claim': claimId });
+        axios
+            .post(route,{'status': status,'reason': this.reason})
+            .then(res => {
+                this.$root.$emit("ein-claim:action");
+                this.$toastr.s("Success", "Claim updated!");
+                $("#claimDetailPopup").modal('hide');
+            })
+            .catch(error => {
+                console.log('err',error);
+                this.$toastr.e("Error", "Some thing went wrong.")
+            })
+            .finally(() => {
+                this.loader = false
+            });
 
-        }
+
+    }
   }
 }
 </script>

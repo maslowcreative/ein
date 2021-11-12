@@ -144,6 +144,10 @@ export default {
   },
   mounted() {
     this.getProviderClaimsList();
+      //Called Whenever claim is created.
+    this.$root.$on("ein-claim:action", () => {
+       this.getProviderClaimsList();
+    });
   },
   watch: {
         "filters.claim_status": function(val, old) {

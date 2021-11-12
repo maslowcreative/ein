@@ -30,6 +30,7 @@ class Claim extends Model
         'admin_approved',
         'provider_abn',
         'status',
+        'rejection_reason',
         //Mutator
         'invoice_number'
     ];
