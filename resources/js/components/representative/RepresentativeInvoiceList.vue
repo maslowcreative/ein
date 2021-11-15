@@ -52,24 +52,24 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr v-for="claim in items.data">
+                        <tr v-for="item in items.data">
                             <td class="not-center">
                                 <div class="fw-bold">
-                                    Claim #{{claim.claim_reference}}
-                                    <span class="d-block text-primary fw-normal">{{claim.participant.user.name}}</span>
+                                    Claim #{{item.claim_reference}}
+                                    <span class="d-block text-primary fw-normal">{{item.claim.participant.user.name}}</span>
                                 </div>
                             </td>
                             <td>
-                                {{claim.state}}
+                                {{item.state}}
                             </td>
-                            <td><button class="btn btn-light btn-sm" v-on:click="openViewInvoiceModal(claim)">View more</button></td>
+                            <td><button class="btn btn-light btn-sm" v-on:click="openViewInvoiceModal(item.claim,item)">View more</button></td>
     <!--                        <td><button class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#claimDetailPopup">View more</button></td>-->
                             <td>
                                 <div class="d-inline-flex flex-nowrap align-items-center justify-content-around btn-group fs-lg">
-                                    <a v-if="claim.invoice_path" class="btn btn-link p-0 mx-1" :href="claim.invoice_url">
+                                    <a v-if="item.claim.invoice_path" class="btn btn-link p-0 mx-1" :href="item.claim.invoice_url">
                                         <ion-icon name="push-outline" class="flip-v"></ion-icon>
                                     </a>
-                                    <button class="btn btn-link p-0 mx-1 d-flex" v-on:click="openClaimModal(claim)">
+                                    <button class="btn btn-link p-0 mx-1 d-flex" v-on:click="openClaimModal(item.claim,item)">
                                         <ion-icon name="cash-outline"></ion-icon>
                                     </button>
                                 </div>
@@ -166,7 +166,11 @@ export default {
               data["filter[claim_status]"] = this.filters.claim_status
           }
 
-          let route = this.laroute.route("ajax.claims.store",data)
+          if (this.filters.claim_type && this.filters.claim_type != "all") {
+              data["filter[claim_type]"] = this.filters.claim_type
+          }
+
+          let route = this.laroute.route("ajax.claims.list",data)
           axios
               .get(route)
               .then(res => {
@@ -177,28 +181,20 @@ export default {
               })
               .finally(() => (this.loader = false))
       },
-      openViewInvoiceModal(claim) {
+      openViewInvoiceModal(claim,item) {
           this.claim = claim;
+          this.claim.items = [item];
           $("#claimDetailPopup").modal('show');
       },
-      openClaimModal(claim) {
-          let paid = 0;
-          let total = 0;
-          claim.paid = claim.items.reduce(function (paid,item) {
-              if(item.status == 1){
-                  return paid + parseFloat(item.hours * item.unit_price);
-              }else {
-                  return paid + 0;
-              }
-          },0);
-
-          claim.total = claim.items.reduce(function (total,item) {
-              return total + parseFloat(item.hours * item.unit_price);
-          },0);
-
+      openClaimModal(claim,item) {
           this.claim = claim;
+          this.claim.items = [item];
+          this.claim.claim_reference = item.claim_reference;
+          this.claim.paid = '$' + (item.amount_paid ? item.amount_paid : 0);
+          this.claim.total = '$' + item.amount_claimed;
           $("#claimPopup").modal('show');
       }
+
   }
 }
 </script>

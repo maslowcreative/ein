@@ -4,7 +4,7 @@
         <div class="modal-dialog modal-dialog-centered" >
             <div class="modal-content addUserPopup">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="claimDetailPopupTitle">Claim #{{claim.claim_reference}}</h4>
+                    <h4 class="modal-title" id="claimDetailPopupTitle">Claim #{{claim.items[0] ? claim.items[0].claim_reference : ''}}</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body addUser">
@@ -134,16 +134,16 @@
                                     </div>
                                 </div>
                             </div>
-                            <h5 v-if="role == 'representative'" class="border-bottom pb-3 mb-3">Rejection Reason</h5>
-                            <div v-if="role == 'representative'" class="mb-4">
-                                <input v-if="claim.status == 0"  v-model="reason" type="text" class="form-control" placeholder="Rejection Reason">
-                                <input v-else disabled v-model="claim.rejection_reason" type="text" class="form-control" placeholder="Rejection Reason">
-                            </div>
+<!--                            <h5 v-if="role == 'representative'" class="border-bottom pb-3 mb-3">Rejection Reason</h5>-->
+<!--                            <div v-if="role == 'representative'" class="mb-4">-->
+<!--                                <input v-if="claim.items[0].status == 0"  v-model="reason" type="text" class="form-control" placeholder="Rejection Reason">-->
+<!--                                <input v-else disabled v-model="claim.rejection_reason" type="text" class="form-control" placeholder="Rejection Reason">-->
+<!--                            </div>-->
                         </div>
                     </div>
-                    <div v-if="role == 'representative' && claim.status == 0"  class="text-center mt-3 mt-md-5">
-                        <button v-if="!loader"  class="btn btn-light btn-lg py-md-3 px-md-5 mx-2" v-on:click="claimRepresentativeAction(claim.id,2)">Reject Claim</button>
-                        <button v-if="!loader" class="btn btn-primary btn-lg py-md-3 px-md-5 mx-2" v-on:click="claimRepresentativeAction(claim.id,1)">Accept Claim</button>
+                    <div v-if="role == 'representative' && (claim.items[0] ? claim.items[0].status : -1) == 0"  class="text-center mt-3 mt-md-5">
+                        <button v-if="!loader"  class="btn btn-light btn-lg py-md-3 px-md-5 mx-2" v-on:click="claimRepresentativeAction((claim.items[0] ? claim.items[0].id : 0),2)">Reject Claim</button>
+                        <button v-if="!loader" class="btn btn-primary btn-lg py-md-3 px-md-5 mx-2" v-on:click="claimRepresentativeAction((claim.items[0] ? claim.items[0].id : 0),1)">Accept Claim</button>
                         <button v-if="loader" class="btn btn-light btn-lg py-md-3 px-md-5 mx-2" disabled="" >
                             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                             Loading...

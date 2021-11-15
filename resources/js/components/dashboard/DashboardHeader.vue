@@ -85,7 +85,7 @@
             <h3 class="downloadPopupTitle">Download Approved Claims</h3>
 
             <div class="mw290 mx-auto px-4 mt-5 mb-4">
-              <button class="btn btn-primary btn-lg w-100 py-3">Download File</button>
+              <a :href="laroute.route('ajax.claims.bulk.upload.file')" class="btn btn-primary btn-lg w-100 py-3">Download File</a>
             </div>
           </div>
         </div>

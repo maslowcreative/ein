@@ -175,7 +175,7 @@
                                     <div class="col-md-6">
                                         <div class="mb-4">
                                             <label class="form-label">Claim Type</label>
-                                            <select class="form-select" v-model="service.claim_type">
+                                            <select class="form-select" v-model="service.claim_type"  v-on:change="processCANC(service)">
                                                 <option value="">Standard Service Charges</option>
                                                 <option value="CANC">Cancellation Charges</option>
                                                 <option value="REPW">Report Writing Charges</option>
@@ -186,6 +186,21 @@
                                                 class="invalid-msg"
                                                 v-if="form.errors.has('service.'+index+'.claim_type')"
                                                 v-html="form.errors.get('service.'+index+'.claim_type')"
+                                            />
+                                        </div>
+
+                                        <div v-if="service.claim_type == 'CANC'" class="mb-4">
+                                            <label class="form-label">Cancellation Reason</label>
+                                            <select class="form-select" v-model="service.cancellation_reason">
+                                                <option value="NSDH">No show due to health reason.</option>
+                                                <option value="NSDF">No show due to family issues.</option>
+                                                <option value="NSDT">No show due to unavailability of transport.</option>
+                                                <option value="NSDO">Other.</option>
+                                            </select>
+                                            <div
+                                                class="invalid-msg"
+                                                v-if="form.errors.has('service.'+index+'.cancellation_reason')"
+                                                v-html="form.errors.get('service.'+index+'.cancellation_reason')"
                                             />
                                         </div>
 
@@ -308,10 +323,11 @@ export default {
             'service': [
                 {
                     'item_number': null,
-                    'claim_type': null,
+                    'claim_type': '',
                     'hours' : null,
                     'unit_price': null,
                     'gst_code': 'P2',
+                    'cancellation_reason': null,
                 }
             ]
         }),
@@ -387,10 +403,11 @@ export default {
               'service': [
                   {
                       'item_number': null,
-                      'claim_type': null,
+                      'claim_type': '',
                       'hours' : null,
                       'unit_price': null,
                       'gst_code': 'P2',
+                      'cancellation_reason': null,
                   }
               ]
           });
@@ -447,6 +464,7 @@ export default {
                   'hours' : null,
                   'unit_price': null,
                   'gst_code': null,
+                  'cancellation_reason': null,
               }
           );
       },
@@ -492,6 +510,11 @@ export default {
               return;
           this.form.file = files[0];
       },
+      processCANC(service) {
+          if(service.claim_type != 'CANC') {
+             service.cancellation_reason = null;
+          }
+      }
 
   }
 }

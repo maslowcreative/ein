@@ -12,13 +12,13 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label">Amount Invoiced</label>
-                                <input type="text" disabled class="form-control" placeholder="" :value="'$'+claim.total">
+                                <input type="text" disabled class="form-control" placeholder="" :value="claim.total">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="text-primary form-label">Amount Paid</label>
-                                <input type="text" disabled class="form-control text-primary" placeholder="" :value="'$'+claim.paid">
+                                <input type="text" disabled class="form-control text-primary" placeholder="" :value="claim.paid">
                             </div>
                         </div>
                     </div>

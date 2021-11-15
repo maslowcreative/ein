@@ -4,9 +4,10 @@
       <div class="d-flex justify-content-between">
         <div>
           <h5>Invoices/Claims</h5>
-          <small class="text-primary">9999 Invoices/Claims</small>
+          <small class="text-primary">{{items.total}} Invoices/Claims</small>
         </div>
         <div class="card-right-btns">
+          <button class="btn" v-bind:class="[filters.claim_status == 'all' ?  'btn-primary' : 'btn-light']"
           <button class="btn" v-bind:class="[filters.claim_status == 'all' ?  'btn-primary' : 'btn-light']"
             v-on:click="setFilter('all')"
           >
@@ -71,23 +72,23 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="claim in items.data">
+            <tr v-for="item in items.data">
               <td>
-                <input class="form-check-input" type="checkbox" value="" aria-label="..." />
+                <input :disabled="item.status != 1" :checked="isChecked(item.id)" v-on:click="checkboxChanged($event,item.id)" class="form-check-input" type="checkbox"  aria-label="..." />
               </td>
               <td class="not-center">
                 <div class="fw-bold">
-                  Claim #{{claim.claim_reference}}
-                  <span class="d-block text-primary fw-normal">{{claim.participant.user.name}}</span>
+                  Claim #{{item.claim_reference}}
+                  <span class="d-block text-primary fw-normal">{{item.claim.participant.user.name}}</span>
                 </div>
               </td>
               <td>
-                  {{claim.state}}
+                  {{item.state}}
               </td>
-              <td><button class="btn btn-light btn-sm" v-on:click="openViewInvoiceModal(claim)">View more</button></td>
+              <td><button class="btn btn-light btn-sm" v-on:click="openViewInvoiceModal(item.claim,item)">View more</button></td>
               <td>
                 <div class="d-inline-flex flex-nowrap align-items-center justify-content-around btn-group fs-lg">
-                  <a v-if="claim.invoice_path" class="btn btn-link p-0 mx-1" :href="claim.invoice_url">
+                  <a v-if="item.claim.invoice_path" class="btn btn-link p-0 mx-1" :href="item.claim.invoice_url">
                       <ion-icon name="push-outline" class="flip-v"></ion-icon>
                   </a>
                   <button class="btn btn-link p-0 mx-1">
@@ -100,7 +101,8 @@
         </table>
       </div>
       <div class="mt-4 mt-md-5 card-right-btns justify-content-end">
-        <button class="btn btn-light">Download Selected</button>
+<!--        <a class="btn btn-light" :href="laroute.route('ajax.claims.bulk.upload.file')" >Download Selected</a>-->
+        <button class="btn btn-light" v-on:click="bulkUploadFile" >Download Selected</button>
         <button class="btn btn-primary">Upload Selected</button>
       </div>
       <div class="mt-4 mt-md-5">
@@ -151,6 +153,7 @@ export default {
             claim_status: "all",
             claim_type: "all",
         },
+        selectedClaims: []
     }
   },
   mounted() {
@@ -169,11 +172,16 @@ export default {
           this.loader = true;
 
           let data = { page: page };
+
           if (this.filters.claim_status && this.filters.claim_status != "all") {
               data["filter[claim_status]"] = this.filters.claim_status
           }
 
-          let route = this.laroute.route("ajax.claims.store",data)
+          if (this.filters.claim_type && this.filters.claim_type != "all") {
+              data["filter[claim_type]"] = this.filters.claim_type
+          }
+
+          let route = this.laroute.route("ajax.claims.list",data)
           axios
               .get(route)
               .then(res => {
@@ -184,12 +192,47 @@ export default {
               })
               .finally(() => (this.loader = false))
       },
-      openViewInvoiceModal(claim) {
+      openViewInvoiceModal(claim,item) {
           this.claim = claim;
+          this.claim.items = [item];
           $("#claimDetailPopup").modal('show');
       },
       setFilter(value) {
           this.filters.claim_status = value;
+      },
+      bulkUploadFile() {
+
+          if(this.selectedClaims.length == 0){
+              this.$toastr.e("Error", "No claim selected.");
+              return false;
+          }
+
+          let route = this.laroute.route("ajax.claims.bulk.upload.file",{claims:this.selectedClaims});
+          axios
+              .post(route)
+              .then(res => {
+                  console.log();
+                  const blob = new Blob([res.data], { type: "text/csv" });
+                  const link = document.createElement("a");
+                  link.href = URL.createObjectURL(blob);
+                  link.download = res.headers['content-disposition'].split(';')[1].split('"')[1];
+                  link.click();
+                  URL.revokeObjectURL(link.href);
+              })
+              .catch(error => {
+                  console.log(error)
+              })
+              .finally(() => ( [] ))
+      },
+      checkboxChanged(event,claimId) {
+        if(event.target.checked) {
+            this.selectedClaims.push(claimId);
+        }else {
+            this.selectedClaims.pop(claimId);
+        }
+      },
+      isChecked(claimId) {
+          return this.selectedClaims.includes(claimId);
       }
   }
 }

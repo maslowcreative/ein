@@ -112,6 +112,14 @@
         "name": "ajax.claims.representative.action"
     },
     {
+        "uri": "ajax\/claims\/bulk-upload-file",
+        "name": "ajax.claims.bulk.upload.file"
+    },
+    {
+        "uri": "ajax\/claims\/list",
+        "name": "ajax.claims.list"
+    },
+    {
         "uri": "ajax\/claims",
         "name": "ajax.claims.index"
     },
