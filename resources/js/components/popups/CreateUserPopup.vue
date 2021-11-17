@@ -11,7 +11,7 @@
       <div class="modal-content addUserPopup">
         <div class="modal-header">
           <h4 class="modal-title" id="userModalTitle">Create a new user</h4>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <button type="button" class="btn-close"  v-on:click="closePopup()"></button>
         </div>
         <form @submit.prevent="createUser" method="POST">
           <div class="modal-body addUser">
@@ -179,45 +179,69 @@
                     </div>
                     <div class="col-md-6">
                       <div class="mb-4">
-                        <label for="linkAParticipant" class="form-label">Link a Participant</label>
-                        <input
-                          type="text"
-                          class="form-control"
-                          id="linkAParticipant"
-                          placeholder="Participant’s Name"
-                          v-model="participantSerachName"
-                        />
-                        <ul v-if="participantSerachResult.length > 0">
-                          <li
-                            v-for="participant in participantSerachResult"
-                            :key="participant.id"
-                            v-text="participant.name"
-                            v-on:click="selectItem(participant.id, 'participant')"
-                          ></li>
-                        </ul>
+                            <div class="dropdownWrap">
+                                <label for="linkAParticipant" class="form-label">Link a Participant</label>
+                                <input
+                                    type="text"
+                                    autocomplete="off"
+                                    class="form-control"
+                                    id="linkAParticipant"
+                                    placeholder="Participant’s Name"
+                                    v-model="participantSerachName"
+                                />
+                                <div
+                                    class="dropdownSec scroll-y"
+                                    style="--box-height:154px"
+                                    v-if="participantSerachResult.length > 0"
+                                >
+                                    <div
+                                        v-for="participant in participantSerachResult"
+                                        :key="participant.id"
+                                        v-on:click="selectItem(participant.id, 'participant')"
+                                        class="bg-light d-flex align-items-center p-3 participant-card"
+                                    >
+                                        <div class="me-3"><img src="/images/avatar.png" width="40" alt="" /></div>
+                                        <div class="participant-name">
+                                            <h6>{{ participant.name }}</h6>
+                                            <span class="text-primary">Participant</span>
+                                        </div>
+                                        <div class="ms-auto">
+                                            <button
+                                                class="btn btn-link p-0 participant-remove"
+                                                type="button"
+                                                v-on:click="removeItem(participant.id, 'participant')"
+                                            >
+                                                <ion-icon name="remove-circle-outline"></ion-icon>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-                        <div class="mt-2">
-                          <div
-                            class="bg-light d-flex align-items-center p-3 participant-card"
-                            v-for="participant in participantSelected"
-                          >
-                            <div class="me-3"><img src="/images/avatar.png" width="40" alt="" /></div>
-                            <div class="participant-name">
-                              <h6>{{ participant.name }}</h6>
-                              <span class="text-primary">Participant</span>
+                            <div class="mt-2 scroll-y" style="--box-height:154px">
+                                <div
+                                    class="bg-light d-flex align-items-center p-3 participant-card"
+                                    v-for="participant in participantSelected"
+                                >
+                                    <div class="me-3"><img src="/images/avatar.png" width="40" alt="" /></div>
+                                    <div class="participant-name">
+                                        <h6>{{ participant.name }}</h6>
+                                        <span class="text-primary">Participant</span>
+                                    </div>
+                                    <div class="ms-auto">
+                                        <button
+                                            class="btn btn-link p-0 participant-remove"
+                                            type="button"
+                                            v-on:click="removeItem(participant.id, 'participant')"
+                                        >
+                                            <ion-icon name="remove-circle-outline"></ion-icon>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="ms-auto">
-                              <button
-                                class="btn btn-link p-0 participant-remove"
-                                v-on:click="removeItem(participant.id, 'participant')"
-                              >
-                                <ion-icon name="remove-circle-outline"></ion-icon>
-                              </button>
-                            </div>
-                          </div>
                         </div>
-                      </div>
                     </div>
+
                   </div>
                 </div>
 
@@ -240,7 +264,7 @@
                       <div class="mb-4">
                         <label class="form-label">Date of Birth</label>
                         <input
-                          type="text"
+                          type="date"
                           v-model="form.participant.dob"
                           class="form-control"
                           placeholder="01/01/1999"
@@ -276,6 +300,7 @@
                           <input
                             type="text"
                             class="form-control"
+                            autocomplete="off"
                             id="linkARepresentative"
                             placeholder="Representative’s Name"
                             v-model="representativeSerachName"
@@ -300,6 +325,7 @@
 
                                 <button
                                   class="btn btn-link p-0 participant-remove"
+                                  type="button"
                                   v-on:click="removeItem(representative.id, 'representative')"
                                 >
                                   <ion-icon name="remove-circle-outline"></ion-icon>
@@ -322,6 +348,7 @@
                             <div class="ms-auto">
                               <button
                                 class="btn btn-link p-0 participant-remove"
+                                type="button"
                                 v-on:click="removeItem(representativeSelected.id, 'representative')"
                               >
                                 <ion-icon name="remove-circle-outline"></ion-icon>
@@ -344,6 +371,7 @@
                           <input
                             type="text"
                             class="form-control"
+                            autocomplete="off"
                             id="linkAProvider"
                             placeholder="Provider’s Name"
                             v-model="providerSerachName"
@@ -367,6 +395,7 @@
                               <div class="ms-auto">
                                 <button
                                   class="btn btn-link p-0 participant-remove"
+                                  type="button"
                                   v-on:click="removeItem(provider.id, 'provider')"
                                 >
                                   <ion-icon name="remove-circle-outline"></ion-icon>
@@ -389,6 +418,7 @@
                             <div class="ms-auto">
                               <button
                                 class="btn btn-link p-0 participant-remove"
+                                type="button"
                                 v-on:click="removeItem(provider.id, 'provider')"
                               >
                                 <ion-icon name="remove-circle-outline"></ion-icon>
@@ -418,42 +448,67 @@
                     </div>
                     <div class="col-md-6">
                       <div class="mb-4">
-                        <label for="linkAParticipant" class="form-label">Link a Participant</label>
-                        <input
-                          type="text"
-                          class="form-control"
-                          placeholder="Participant’s Name"
-                          v-model="participantSerachName"
-                        />
-                        <ul v-if="participantSerachResult.length > 0">
-                          <li
-                            v-for="participant in participantSerachResult"
-                            :key="participant.id"
-                            v-text="participant.name"
-                            v-on:click="selectItem(participant.id, 'participant')"
-                          ></li>
-                        </ul>
-                        <div class="mt-2">
-                          <div
-                            class="bg-light d-flex align-items-center p-3 participant-card"
-                            v-for="participant in participantSelected"
-                          >
-                            <div class="me-3"><img src="/images/avatar.png" width="40" alt="" /></div>
-                            <div class="participant-name">
-                              <h6>{{ participant.name }}</h6>
-                              <span class="text-primary">Participant</span>
+                            <div class="dropdownWrap">
+                                <label for="linkAParticipant2" class="form-label">Link a Participant</label>
+                                <input
+                                    type="text"
+                                    autocomplete="off"
+                                    class="form-control"
+                                    id="linkAParticipant2"
+                                    placeholder="Participant’s Name"
+                                    v-model="participantSerachName"
+                                />
+                                <div
+                                    class="dropdownSec scroll-y"
+                                    style="--box-height:154px"
+                                    v-if="participantSerachResult.length > 0"
+                                >
+                                    <div
+                                        v-for="participant in participantSerachResult"
+                                        :key="participant.id"
+                                        v-on:click="selectItem(participant.id, 'participant')"
+                                        class="bg-light d-flex align-items-center p-3 participant-card"
+                                    >
+                                        <div class="me-3"><img src="/images/avatar.png" width="40" alt="" /></div>
+                                        <div class="participant-name">
+                                            <h6>{{ participant.name }}</h6>
+                                            <span class="text-primary">Participant</span>
+                                        </div>
+                                        <div class="ms-auto">
+                                            <button
+                                                class="btn btn-link p-0 participant-remove"
+                                                type="button"
+                                                v-on:click="removeItem(participant.id, 'participant')"
+                                            >
+                                                <ion-icon name="remove-circle-outline"></ion-icon>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="ms-auto">
-                              <button
-                                class="btn btn-link p-0 participant-remove"
-                                v-on:click="removeItem(participant.id, 'participant')"
-                              >
-                                <ion-icon name="remove-circle-outline"></ion-icon>
-                              </button>
+
+                            <div class="mt-2 scroll-y" style="--box-height:154px">
+                                <div
+                                    class="bg-light d-flex align-items-center p-3 participant-card"
+                                    v-for="participant in participantSelected"
+                                >
+                                    <div class="me-3"><img src="/images/avatar.png" width="40" alt="" /></div>
+                                    <div class="participant-name">
+                                        <h6>{{ participant.name }}</h6>
+                                        <span class="text-primary">Participant</span>
+                                    </div>
+                                    <div class="ms-auto">
+                                        <button
+                                            class="btn btn-link p-0 participant-remove"
+                                            type="button"
+                                            v-on:click="removeItem(participant.id, 'participant')"
+                                        >
+                                            <ion-icon name="remove-circle-outline"></ion-icon>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
-                          </div>
                         </div>
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -625,7 +680,7 @@
                       <div class="mb-4">
                         <label for="planStartDate" class="form-label">Plan Start Date</label>
                         <input
-                          type="text"
+                          type="date"
                           class="form-control"
                           id="planStartDate"
                           v-model="form.participant.plan.start_date"
@@ -642,7 +697,7 @@
                       <div class="mb-4">
                         <label for="planEndDate" class="form-label">Plan End Date</label>
                         <input
-                          type="text"
+                          type="date"
                           class="form-control"
                           id="planEndDate"
                           v-model="form.participant.plan.end_date"
@@ -894,7 +949,7 @@ export default {
         .post(route)
         .then(res => {
           if (res.status == 201) {
-            this.step = 0
+            this.resetForm(0);
             this.$toastr.s("Success", "Account created!")
           }
         })
@@ -1040,6 +1095,63 @@ export default {
                 this.loader = false
             });
     },
+    closePopup() {
+      $("#userModal").modal('hide');
+      this.resetForm();
+   },
+   resetForm(step = null) {
+       this.loader = false;
+       if(step !=null) {
+           this.step = step;
+       }  else {
+           this.step = 1;
+       }
+
+       this.lastStep = false;
+       this.form =  new Form({
+           role_id: 2,
+           name: null,
+           email: null,
+           password: null,
+           phone: null,
+           address: null,
+           state: "",
+           provider: {
+               abn: null,
+               business_name: null,
+               participants: [],
+               items:[],
+           },
+           participant: {
+               dob: null,
+               ndis_number: null,
+               representative_id: null,
+               providers: [],
+               plan: {
+                   start_date: null,
+                   end_date: null,
+                   budget: null,
+                   charges_types: null,
+               },
+           },
+           representative:{
+               participants:[]
+           }
+       });
+       this.participantSerachName = null;
+       this.participantSerachResult = [];
+       this.participantSelected = [];
+       this.providerSerachName = null;
+       this.providerSerachResult =[];
+       this.providerSelected = [];
+       this.representativeSerachName = null;
+       this.representativeSerachResult = [];
+       this.representativeSelected = null;
+       this.servicesItemsResult = [];
+       this.servicesItemsSelected = [];
+   }
+
+
 
   },
 }

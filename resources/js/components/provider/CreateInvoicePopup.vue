@@ -54,7 +54,7 @@
                                 <div class="col-md-6">
                                     <div class="mb-4">
                                         <label class="form-label">Start Date</label>
-                                        <input type="date" v-model="form.start_date" class="form-control" placeholder="DD/MM/YYYY">
+                                        <input type="date" placeholder="DD/MM/YYYY" v-model="form.start_date" class="form-control" >
                                         <div class="invalid-msg" v-if="form.errors.has('start_date')" v-html="form.errors.get('start_date')" />
                                     </div>
                                 </div>
