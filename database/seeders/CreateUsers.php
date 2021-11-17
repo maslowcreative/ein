@@ -24,7 +24,8 @@ class CreateUsers extends Seeder
                 "id" => self::ADMIN_ID,
                 "name" => "Admin",
                 "email" => "admin@ein.net.au",
-                "password" => Hash::make("demo123$")
+                "password" => Hash::make("demo123$"),
+                "status" => User::STATUS_ACTIVE
             ]
         ];
         User::upsert($admin,['id'],['name','email','password']);

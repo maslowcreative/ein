@@ -52,7 +52,8 @@
               <div class="col-md-6">
                 <div class="mb-4">
                   <label for="enterPassword2" class="form-label">Confirm Password</label>
-                  <input type="password" class="form-control" id="enterPassword2" placeholder="*********************" />
+                  <input type="password" v-model="form.password_confirmation" class="form-control" id="enterPassword2" placeholder="*********************" />
+                  <div class="invalid-msg" v-if="form.errors.has('password_confirmation')" v-html="form.errors.get('password_confirmation')" />
                 </div>
               </div>
               <div class="col-md-12">
@@ -132,6 +133,7 @@ export default {
         name: null,
         email: null,
         password: null,
+        password_confirmation: null,
         role_id: 1,
         permissions: {},
       }),

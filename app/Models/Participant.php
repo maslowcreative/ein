@@ -20,7 +20,7 @@ class Participant extends Model
         'user_id',
         'representative_id',
         'relationship',
-        'unique_identifier',
+        'ndis_number',
         'dob',
     ];
 
@@ -39,6 +39,21 @@ class Participant extends Model
     public function plans()
     {
         return $this->hasMany(Plan::class,'participant_id');
+    }
+
+    public function representative()
+    {
+        return $this->belongsTo(User::class,'representative_id');
+    }
+
+    public function providers()
+    {
+        return $this->belongsToMany(Provider::class,'provider_participant','participant_id','provider_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class,'user_id');
     }
 
 }

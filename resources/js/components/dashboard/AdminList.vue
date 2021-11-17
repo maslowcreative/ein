@@ -10,12 +10,34 @@
           <button class="btn btn-primary btn-icon" data-bs-toggle="modal" data-bs-target="#adminModal">
             <ion-icon name="add-outline"></ion-icon> Add New Admin
           </button>
-          <button class="btn btn-light btn-icon">
-            <ion-icon name="search-outline"></ion-icon>
-          </button>
+            <div class="dropdown">
+                <button
+                    class="btn btn-light btn-icon"
+                    type="button"
+                    id="adminSearchDropdown"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                >
+                    <ion-icon name="search-outline"></ion-icon>
+                </button>
+                <div class="dropdown-menu dropdown-menu-end fs-sm" aria-labelledby="adminSearchDropdown">
+                    <div class="py-2 px-3">
+                        <div class="">
+                            <label class="form-label">Search for a Admin</label>
+                            <input
+                                type="text"
+                                class="form-control form-control-sm"
+                                v-model="filters.name"
+                                placeholder="Enter Admin Name"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
       </div>
-      <div class="table-x-scroll">
+      <div class="loader-wrap">
+        <div class="table-x-scroll">
         <table class="table">
           <thead>
             <tr>
@@ -56,16 +78,30 @@
           </tbody>
         </table>
       </div>
-      <div class="mt-4 mt-md-5">
-        <advanced-laravel-vue-paginate :data="items" previousText="<<" nextText=">>" @paginateTo="getAdminList" />
+        <!-- Loader -->
+        <div  v-if="this.loader" class="loader-bg">
+          <div class="spinner-grow text-primary spinner-loder" role="status">
+              <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
       </div>
+      <div class="mt-4 mt-md-5">
+            <advanced-laravel-vue-paginate
+                :data="items"
+                @paginateTo="getAdminList"
+                :showNextPrev="false"
+                useStyle="bootstrap"
+                listClass="pagination"
+            />
+        </div>
     </div>
   </div>
 </template>
 
 <script>
-import AdvancedLaravelVuePaginate from "advanced-laravel-vue-paginate"
-import "advanced-laravel-vue-paginate/dist/advanced-laravel-vue-paginate.css"
+
+import AdvancedLaravelVuePaginate from "advanced-laravel-vue-paginate";
+import "advanced-laravel-vue-paginate/dist/advanced-laravel-vue-paginate.css";
 
 export default {
   components: { AdvancedLaravelVuePaginate },
@@ -73,21 +109,37 @@ export default {
     return {
       loader: false,
       items: {},
+      filters: {
+        name: null,
+      },
     }
   },
+  watch: {
+      "filters.name": function (val, old) {
+          this.getAdminList(1)
+      },
+  } ,
   mounted() {
     //Called first time.
     this.getAdminList()
 
     //Called Whenever admin is added.
     this.$root.$on("ein-admin:added", () => {
-      this.getAdminList()
+      this.getAdminList();
     })
   },
   methods: {
     getAdminList(page = 1) {
       this.loader = true
-      let route = this.laroute.route("ajax.admins.index", { page: page })
+      let data = { page: page }
+      //Filtering Admin Role.
+      data["filter[not_in][0]"] = 2;
+      data["filter[not_in][0]"] = 3;
+      data["filter[not_in][0]"] = 4;
+      if (this.filters.name) {
+        data["filter[name]"] = this.filters.name;
+      }
+      let route = this.laroute.route("ajax.admins.index", data)
       axios
         .get(route)
         .then(res => {
@@ -96,7 +148,7 @@ export default {
         .catch(error => {
           console.log(error)
         })
-        .finally(() => (this.loading = false))
+        .finally(() => (this.loader = false))
     },
   },
 }

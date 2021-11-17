@@ -48,6 +48,18 @@
         "name": "home"
     },
     {
+        "uri": "my-account",
+        "name": "my.account"
+    },
+    {
+        "uri": "calim\/{claim}\/invoice\/download",
+        "name": "claim.invoice.download"
+    },
+    {
+        "uri": "ajax\/users\/store",
+        "name": "ajax."
+    },
+    {
         "uri": "ajax\/users",
         "name": "ajax.users.index"
     },
@@ -68,8 +80,84 @@
         "name": "ajax.users.destroy"
     },
     {
-        "uri": "ajax\/users\/create",
+        "uri": "ajax\/providers\/remove-participants",
+        "name": "ajax.providers.remove.participants"
+    },
+    {
+        "uri": "ajax\/providers",
+        "name": "ajax.providers.index"
+    },
+    {
+        "uri": "ajax\/providers",
+        "name": "ajax.providers.store"
+    },
+    {
+        "uri": "ajax\/providers\/{provider}",
+        "name": "ajax.providers.show"
+    },
+    {
+        "uri": "ajax\/providers\/{provider}",
+        "name": "ajax.providers.update"
+    },
+    {
+        "uri": "ajax\/providers\/{provider}",
+        "name": "ajax.providers.destroy"
+    },
+    {
+        "uri": "ajax\/claims\/store",
         "name": "ajax."
+    },
+    {
+        "uri": "ajax\/claims\/{claim}\/representative-action",
+        "name": "ajax.claims.representative.action"
+    },
+    {
+        "uri": "ajax\/claims\/bulk-upload-file",
+        "name": "ajax.claims.bulk.upload.file"
+    },
+    {
+        "uri": "ajax\/claims\/list",
+        "name": "ajax.claims.list"
+    },
+    {
+        "uri": "ajax\/claims",
+        "name": "ajax.claims.index"
+    },
+    {
+        "uri": "ajax\/claims",
+        "name": "ajax.claims.store"
+    },
+    {
+        "uri": "ajax\/claims\/{claim}",
+        "name": "ajax.claims.show"
+    },
+    {
+        "uri": "ajax\/claims\/{claim}",
+        "name": "ajax.claims.update"
+    },
+    {
+        "uri": "ajax\/claims\/{claim}",
+        "name": "ajax.claims.destroy"
+    },
+    {
+        "uri": "ajax\/services",
+        "name": "ajax.services.index"
+    },
+    {
+        "uri": "ajax\/services",
+        "name": "ajax.services.store"
+    },
+    {
+        "uri": "ajax\/services\/{service}",
+        "name": "ajax.services.show"
+    },
+    {
+        "uri": "ajax\/services\/{service}",
+        "name": "ajax.services.update"
+    },
+    {
+        "uri": "ajax\/services\/{service}",
+        "name": "ajax.services.destroy"
     },
     {
         "uri": "ajax\/admins",

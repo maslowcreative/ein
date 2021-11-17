@@ -53,3 +53,45 @@
     color: var(--bs-secondary);
   }
 }
+
+.notification-dropdown {
+  font-size: 0.85rem;
+  padding: 1.25rem 1rem;
+
+  .dropdown-item {
+    position: relative;
+    padding-top: 0.75rem;
+    margin-top: 0.5rem;
+    transition: all 0.3s ease-out;
+
+    strong {
+      font-weight: 600;
+    }
+
+    &.new {
+      &:before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 1.25rem;
+        width: 0.375rem;
+        height: 0.375rem;
+        border-radius: 50%;
+        background-color: var(--bs-primary);
+      }
+    }
+
+    & + .dropdown-item {
+      border-top: 0.2px solid #e5e5e5;
+    }
+
+    &:hover,
+    &:focus,
+    &.active,
+    &:active {
+      color: var(--bs-body-color);
+      background-color: transparent;
+      transform: translateX(0.625rem);
+    }
+  }
+}

@@ -3,7 +3,9 @@
 namespace App\Http\Requests;
 
 use App\Models\Role;
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UserPostRequest extends FormRequest
 {
@@ -27,27 +29,27 @@ class UserPostRequest extends FormRequest
         return [
             'name' => 'required|string',
             'email' => 'required|email|unique:users',
-            'password' => 'sometimes|nullable|string',
-            'phone' => 'sometimes|string',
-            'address' => 'sometimes|string',
+            'password' => 'sometimes|nullable|string|confirmed',
+            'phone' => 'sometimes|string|nullable',
+            'address' => 'sometimes|string|nullable',
+            'state' => ['exclude_unless:role_id,'.Role::ROLE_PARTICIPANT,'required',Rule::in(User::STATES)],
             'role_id' => 'required|exists:roles,id',
 
             //Role is provider
             'provider' => 'exclude_unless:role_id,'.Role::ROLE_PROVIDER.'|required|array',
-            'provider.abn' => 'required|string|unique:providers,abn',
+            'provider.abn' => 'required|digits:11|unique:providers,abn',
             //'provider.business_name' => 'required|string',
 
             'provider.participants' => 'sometimes|array',
             'provider.participants.*' => 'integer|exists:participants,user_id',
 
             'provider.items' => 'sometimes|array',
-            'provider.itmes.*' => 'integer',
+            'provider.items.*' => 'exists:services,support_item_number',
 
             //Role is participant
             'participant' => 'exclude_unless:role_id,'.Role::ROLE_PARTICIPANT.'|required|array',
-            'participant.representative_id' => 'sometimes|exists:representatives,user_id',
-            'participant.relationship' => 'required_with:participant.representative_id|string',
-            'participant.unique_identifier' => 'required|string|unique:participants,unique_identifier',
+            'participant.representative_id' => 'sometimes|nullable|exists:representatives,user_id',
+            'participant.ndis_number' => 'required|string|unique:participants,ndis_number',
             'participant.dob' => 'required|string',
             'participant.providers' => 'sometimes|array',
             'participant.providers.*' => 'integer',
@@ -60,10 +62,7 @@ class UserPostRequest extends FormRequest
 
             //Role is representative
             'representative' => 'exclude_unless:role_id,'.Role::ROLE_REPRESENTATIVE.'|sometimes|array',
-            'representative.participants' => 'sometimes|array',
-            'representative.participants.*.participants_id' => 'integer|exists:participants,user_id',
-            'representative.participants.*.relationship' => 'string',
-
+            'representative.participants.*' => 'integer|exists:participants,user_id',
         ];
     }
 
@@ -79,3 +78,4 @@ class UserPostRequest extends FormRequest
         ];
     }
 }
+

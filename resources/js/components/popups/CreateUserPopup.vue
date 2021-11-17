@@ -11,7 +11,7 @@
       <div class="modal-content addUserPopup">
         <div class="modal-header">
           <h4 class="modal-title" id="userModalTitle">Create a new user</h4>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <button type="button" class="btn-close"  v-on:click="closePopup()"></button>
         </div>
         <form @submit.prevent="createUser" method="POST">
           <div class="modal-body addUser">
@@ -21,7 +21,7 @@
                   <li>
                     <a
                       class="title d-inline-flex align-items-center"
-                      href="#"
+                      href="javascript:void(0)"
                       v-on:click="current(1)"
                       v-bind:class="step === 1 ? 'active' : ''"
                     >
@@ -37,7 +37,7 @@
                   <li>
                     <a
                       class="title d-inline-flex align-items-center"
-                      href="#"
+                      href="javascript:void(0)"
                       v-on:click="current(2)"
                       v-bind:class="step === 2 ? 'active' : ''"
                     >
@@ -53,7 +53,7 @@
                   <li>
                     <a
                       class="title d-inline-flex align-items-center"
-                      href="#"
+                      href="javascript:void(0)"
                       v-on:click="current(3)"
                       v-bind:class="step === 3 ? 'active' : ''"
                     >
@@ -66,10 +66,10 @@
                       </div>
                     </a>
                   </li>
-                  <li>
+                  <li v-if="form.role_id != 3">
                     <a
                       class="title d-inline-flex align-items-center"
-                      href="#"
+                      href="javascript:void(0)"
                       v-on:click="current(4)"
                       v-bind:class="step === 4 ? 'active' : ''"
                     >
@@ -82,14 +82,30 @@
                       </div>
                     </a>
                   </li>
-                  <li>
+                  <li v-if="form.role_id != 3">
                     <a
                       class="title d-inline-flex align-items-center"
-                      href="#"
+                      href="javascript:void(0)"
                       v-on:click="current(5)"
                       v-bind:class="step === 5 ? 'active' : ''"
                     >
                       <div class="step-number">5</div>
+                      <div class="step-text">
+                        <h6>
+                          Login Information
+                        </h6>
+                        Set-up a password for your new user
+                      </div>
+                    </a>
+                  </li>
+                  <li v-if="form.role_id == 3">
+                    <a
+                      class="title d-inline-flex align-items-center"
+                      href="javascript:void(0)"
+                      v-on:click="current(4)"
+                      v-bind:class="step === 4 ? 'active' : ''"
+                    >
+                      <div class="step-number">4</div>
                       <div class="step-text">
                         <h6>
                           Login Information
@@ -161,91 +177,72 @@
                         <div class="invalid-msg" v-if="form.errors.has('name')" v-html="form.errors.get('name')" />
                       </div>
                     </div>
-                   <div class="col-md-6">
+                    <div class="col-md-6">
                       <div class="mb-4">
-                        <label for="linkAParticipant" class="form-label">Link a Participant</label>
-                        <input
-                          type="text"
-                          class="form-control"
-                          id="linkAParticipant"
-                          placeholder="Participant’s Name"
-                        />
+                            <div class="dropdownWrap">
+                                <label for="linkAParticipant" class="form-label">Link a Participant</label>
+                                <input
+                                    type="text"
+                                    autocomplete="off"
+                                    class="form-control"
+                                    id="linkAParticipant"
+                                    placeholder="Participant’s Name"
+                                    v-model="participantSerachName"
+                                />
+                                <div
+                                    class="dropdownSec scroll-y"
+                                    style="--box-height:154px"
+                                    v-if="participantSerachResult.length > 0"
+                                >
+                                    <div
+                                        v-for="participant in participantSerachResult"
+                                        :key="participant.id"
+                                        v-on:click="selectItem(participant.id, 'participant')"
+                                        class="bg-light d-flex align-items-center p-3 participant-card"
+                                    >
+                                        <div class="me-3"><img src="/images/avatar.png" width="40" alt="" /></div>
+                                        <div class="participant-name">
+                                            <h6>{{ participant.name }}</h6>
+                                            <span class="text-primary">Participant</span>
+                                        </div>
+                                        <div class="ms-auto">
+                                            <button
+                                                class="btn btn-link p-0 participant-remove"
+                                                type="button"
+                                                v-on:click="removeItem(participant.id, 'participant')"
+                                            >
+                                                <ion-icon name="remove-circle-outline"></ion-icon>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-                        <div class="mt-2">
-                          <div class="bg-light d-flex align-items-center p-3 participant-card">
-                            <div class="me-3"><img src="/images/avatar.png" width="40" alt="" /></div>
-                            <div class="participant-name">
-                              <h6>Users Name</h6>
-                              <span class="text-primary">Participant</span>
+                            <div class="mt-2 scroll-y" style="--box-height:154px">
+                                <div
+                                    class="bg-light d-flex align-items-center p-3 participant-card"
+                                    v-for="participant in participantSelected"
+                                >
+                                    <div class="me-3"><img src="/images/avatar.png" width="40" alt="" /></div>
+                                    <div class="participant-name">
+                                        <h6>{{ participant.name }}</h6>
+                                        <span class="text-primary">Participant</span>
+                                    </div>
+                                    <div class="ms-auto">
+                                        <button
+                                            class="btn btn-link p-0 participant-remove"
+                                            type="button"
+                                            v-on:click="removeItem(participant.id, 'participant')"
+                                        >
+                                            <ion-icon name="remove-circle-outline"></ion-icon>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="ms-auto">
-                              <button class="btn btn-link p-0 participant-remove">
-                                <ion-icon name="remove-circle-outline"></ion-icon>
-                              </button>
-                            </div>
-                          </div>
-                          <div class="bg-light d-flex align-items-center p-3 participant-card">
-                            <div class="me-3"><img src="/images/avatar.png" width="40" alt="" /></div>
-                            <div class="participant-name">
-                              <h6>Users Name</h6>
-                              <span class="text-primary">Participant</span>
-                            </div>
-                            <div class="ms-auto">
-                              <button class="btn btn-link p-0 participant-remove">
-                                <ion-icon name="remove-circle-outline"></ion-icon>
-                              </button>
-                            </div>
-                          </div>
                         </div>
-                      </div>
                     </div>
-                  </div>
-                  <!-- <div class="col-md-6">
-                      <label for="linkAParticipant" class="form-label">Link a Participant</label>
 
-                      <multiselect
-                        v-model="value"
-                        :options="options"
-                        :multiple="true"
-                        :close-on-select="false"
-                        :clear-on-select="false"
-                        :preserve-search="true"
-                        :show-labels="false"
-                        placeholder="Select Participants"
-                        label="name"
-                        track-by="name"
-                        :preselect-first="true"
-                      >
-                        <template slot="option" slot-scope="props">
-                          <b> {{ props.option.name }} </b>
-                        </template>
-                        <template slot="selection" slot-scope="{ values, isOpen }" class="form-control">
-                          <span class="multiselect__single" v-if="values.length &amp;&amp; !isOpen"
-                            >{{ values.length }} options selected</span
-                          ></template
-                        >
-                        <template slot="option" slot-scope="{ values, search, isOpen }"> </template>
-                        <template slot="option" slot-scope="props">
-                          <div class="bg-light d-flex align-items-center p-3 participant-card">
-                            <div class="me-3"><img src="/images/avatar.png" width="40" alt="" /></div>
-                            <div class="participant-name">
-                              <h6>Users Name</h6>
-                              <span class="text-primary">Participant</span>
-                            </div>
-                            <div class="ms-auto">
-                              <button class="btn btn-link p-0 participant-remove">
-                                <ion-icon
-                                  name="remove-circle-outline"
-                                  role="img"
-                                  class="md hydrated"
-                                  aria-label="remove circle outline"
-                                ></ion-icon>
-                              </button>
-                            </div>
-                          </div>
-                        </template>
-                      </multiselect>
-                    </div> -->
+                  </div>
                 </div>
 
                 <!-- Step 2 Participant-->
@@ -258,57 +255,260 @@
                           type="text"
                           class="form-control"
                           v-model="form.name"
-                          placeholder="The Name of the Provider"
+                          placeholder="The Name of the Participant"
                         />
+                        <div class="invalid-msg" v-if="form.errors.has('name')" v-html="form.errors.get('name')" />
                       </div>
                     </div>
                     <div class="col-md-6">
                       <div class="mb-4">
                         <label class="form-label">Date of Birth</label>
-                        <input type="text" class="form-control" placeholder="01/01/1999" />
+                        <input
+                          type="date"
+                          v-model="form.participant.dob"
+                          class="form-control"
+                          placeholder="01/01/1999"
+                        />
+                        <div
+                          class="invalid-msg"
+                          v-if="form.errors.has('participant.dob')"
+                          v-html="form.errors.get('participant.dob')"
+                        />
                       </div>
                     </div>
                     <div class="col-md-6">
                       <div class="mb-4">
-                        <label for="uniqueIdentifier" class="form-label">Unique Identifier</label>
-                        <input type="tel" class="form-control" id="uniqueIdentifier" placeholder="16515656115615656" />
+                        <label for="ndisNumber" class="form-label">NDIS Number</label>
+                        <input
+                          type="tel"
+                          class="form-control"
+                          v-model="form.participant.ndis_number"
+                          id="ndisNumber"
+                          placeholder="16515656115615656"
+                        />
+                        <div
+                          class="invalid-msg"
+                          v-if="form.errors.has('participant.ndis_number')"
+                          v-html="form.errors.get('participant.ndis_number')"
+                        />
                       </div>
                     </div>
                     <div class="col-md-6">
                       <div class="mb-4">
-                        <label for="representative" class="form-label">Link a Representative</label>
-                        <div class="input-group-overlay">
-                          <div class="input-group-prepend-overlay">
-                            <span class="input-group-text text-primary"
-                              ><ion-icon name="search-outline"></ion-icon
-                            ></span>
-                          </div>
+                        <div class="dropdownWrap">
+                          <label for="linkAParticipant" class="form-label">Link a Representative</label>
                           <input
                             type="text"
-                            class="form-control prepended-form-control"
-                            id="representative"
-                            placeholder="Representatives Name"
+                            class="form-control"
+                            autocomplete="off"
+                            id="linkARepresentative"
+                            placeholder="Representative’s Name"
+                            v-model="representativeSerachName"
+                          />
+                          <div
+                            v-if="representativeSerachResult.length > 0"
+                            class="dropdownSec scroll-y"
+                            style="--box-height:154px"
+                          >
+                            <div
+                              class="bg-light d-flex align-items-center p-3 participant-card"
+                              v-for="representative in representativeSerachResult"
+                              :key="representative.id"
+                              v-on:click="selectItem(representative.id, 'representative')"
+                            >
+                              <div class="me-3"><img src="/images/avatar.png" width="40" alt="" /></div>
+                              <div class="participant-name">
+                                <h6>{{ representative.name }}</h6>
+                                <span class="text-primary">Representative</span>
+                              </div>
+                              <div class="ms-auto">
+
+                                <button
+                                  class="btn btn-link p-0 participant-remove"
+                                  type="button"
+                                  v-on:click="removeItem(representative.id, 'representative')"
+                                >
+                                  <ion-icon name="remove-circle-outline"></ion-icon>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="mt-2">
+                          <div
+                            class="bg-light d-flex align-items-center p-3 participant-card"
+                            v-if="representativeSelected"
+                          >
+                            <div class="me-3"><img src="/images/avatar.png" width="40" alt="" /></div>
+                            <div class="participant-name">
+                              <h6>{{ representativeSelected.name }}</h6>
+                              <span class="text-primary">Representative</span>
+                            </div>
+                            <div class="ms-auto">
+                              <button
+                                class="btn btn-link p-0 participant-remove"
+                                type="button"
+                                v-on:click="removeItem(representativeSelected.id, 'representative')"
+                              >
+                                <ion-icon name="remove-circle-outline"></ion-icon>
+                              </button>
+                            </div>
+                          </div>
+
+                          <div
+                            class="invalid-msg"
+                            v-if="form.errors.has('participant.representative_id')"
+                            v-html="form.errors.get('participant.representative_id')"
                           />
                         </div>
                       </div>
                     </div>
                     <div class="col-md-6">
                       <div class="mb-4">
-                        <label for="providerName" class="form-label">Link a Provider</label>
-                        <div class="input-group-overlay">
-                          <div class="input-group-prepend-overlay">
-                            <span class="input-group-text text-primary"
-                              ><ion-icon name="search-outline"></ion-icon
-                            ></span>
-                          </div>
+                        <div class="dropdownWrap">
+                          <label for="linkAProvider" class="form-label">Link a Provider</label>
                           <input
                             type="text"
-                            class="form-control prepended-form-control"
-                            id="providerName"
-                            placeholder="Provider Name"
+                            class="form-control"
+                            autocomplete="off"
+                            id="linkAProvider"
+                            placeholder="Provider’s Name"
+                            v-model="providerSerachName"
                           />
+                          <div
+                            class="dropdownSec scroll-y"
+                            style="--box-height:154px"
+                            v-if="providerSerachResult.length > 0"
+                          >
+                            <div
+                              v-for="provider in providerSerachResult"
+                              :key="provider.id"
+                              v-on:click="selectItem(provider.id, 'provider')"
+                              class="bg-light d-flex align-items-center p-3 participant-card"
+                            >
+                              <div class="me-3"><img src="/images/avatar.png" width="40" alt="" /></div>
+                              <div class="participant-name">
+                                <h6>{{ provider.name }}</h6>
+                                <span class="text-primary">Provider</span>
+                              </div>
+                              <div class="ms-auto">
+                                <button
+                                  class="btn btn-link p-0 participant-remove"
+                                  type="button"
+                                  v-on:click="removeItem(provider.id, 'provider')"
+                                >
+                                  <ion-icon name="remove-circle-outline"></ion-icon>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="mt-2 scroll-y" style="--box-height:154px">
+                          <div
+                            class="bg-light d-flex align-items-center p-3 participant-card"
+                            v-for="provider in providerSelected"
+                          >
+                            <div class="me-3"><img src="/images/avatar.png" width="40" alt="" /></div>
+                            <div class="participant-name">
+                              <h6>{{ provider.name }}</h6>
+                              <span class="text-primary">Provider</span>
+                            </div>
+                            <div class="ms-auto">
+                              <button
+                                class="btn btn-link p-0 participant-remove"
+                                type="button"
+                                v-on:click="removeItem(provider.id, 'provider')"
+                              >
+                                <ion-icon name="remove-circle-outline"></ion-icon>
+                              </button>
+                            </div>
+                          </div>
                         </div>
                       </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Step 2 Representative-->
+                <div class="step2" v-show="step === 2 && form.role_id == 3">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="mb-4">
+                        <label class="form-label">Full Name</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          v-model="form.name"
+                          placeholder="The Name of the Representative"
+                        />
+                        <div class="invalid-msg" v-if="form.errors.has('name')" v-html="form.errors.get('name')" />
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="mb-4">
+                            <div class="dropdownWrap">
+                                <label for="linkAParticipant2" class="form-label">Link a Participant</label>
+                                <input
+                                    type="text"
+                                    autocomplete="off"
+                                    class="form-control"
+                                    id="linkAParticipant2"
+                                    placeholder="Participant’s Name"
+                                    v-model="participantSerachName"
+                                />
+                                <div
+                                    class="dropdownSec scroll-y"
+                                    style="--box-height:154px"
+                                    v-if="participantSerachResult.length > 0"
+                                >
+                                    <div
+                                        v-for="participant in participantSerachResult"
+                                        :key="participant.id"
+                                        v-on:click="selectItem(participant.id, 'participant')"
+                                        class="bg-light d-flex align-items-center p-3 participant-card"
+                                    >
+                                        <div class="me-3"><img src="/images/avatar.png" width="40" alt="" /></div>
+                                        <div class="participant-name">
+                                            <h6>{{ participant.name }}</h6>
+                                            <span class="text-primary">Participant</span>
+                                        </div>
+                                        <div class="ms-auto">
+                                            <button
+                                                class="btn btn-link p-0 participant-remove"
+                                                type="button"
+                                                v-on:click="removeItem(participant.id, 'participant')"
+                                            >
+                                                <ion-icon name="remove-circle-outline"></ion-icon>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mt-2 scroll-y" style="--box-height:154px">
+                                <div
+                                    class="bg-light d-flex align-items-center p-3 participant-card"
+                                    v-for="participant in participantSelected"
+                                >
+                                    <div class="me-3"><img src="/images/avatar.png" width="40" alt="" /></div>
+                                    <div class="participant-name">
+                                        <h6>{{ participant.name }}</h6>
+                                        <span class="text-primary">Participant</span>
+                                    </div>
+                                    <div class="ms-auto">
+                                        <button
+                                            class="btn btn-link p-0 participant-remove"
+                                            type="button"
+                                            v-on:click="removeItem(participant.id, 'participant')"
+                                        >
+                                            <ion-icon name="remove-circle-outline"></ion-icon>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                   </div>
                 </div>
@@ -325,7 +525,23 @@
                       v-model="form.address"
                       placeholder="Home Address 13, 10000 State, Country."
                     ></textarea>
+                    <div class="invalid-msg" v-if="form.errors.has('address')" v-html="form.errors.get('address')" />
                   </div>
+                  <div class="mb-4" v-if="form.role_id == 4">
+                        <label for="state" class="form-label fw-bold">State</label>
+                        <select class="form-control" id="state" v-model="form.state">
+                            <option value="">Select a state</option>
+                            <option value="ACT">Australian Capital Territory</option>
+                            <option value="NSW">New South Wales</option>
+                            <option value="NT">Northern Territory</option>
+                            <option value="QLD">Queensland</option>
+                            <option value="SA">South Australia</option>
+                            <option value="TAS">Tasmania</option>
+                            <option value="VIC">Victoria</option>
+                            <option value="WA">Western Australia</option>
+                        </select>
+                        <div class="invalid-msg" v-if="form.errors.has('state')" v-html="form.errors.get('state')" />
+                    </div>
                   <div class="mb-4">
                     <label class="form-label fw-bold">E-mail Address</label>
                     <input
@@ -334,6 +550,7 @@
                       v-model="form.email"
                       placeholder="providersemail@gmail.com"
                     />
+                    <div class="invalid-msg" v-if="form.errors.has('email')" v-html="form.errors.get('email')" />
                   </div>
                   <div class="mb-4">
                     <label for="phoneNumber" class="form-label fw-bold">Phone Number</label>
@@ -344,6 +561,7 @@
                       v-model="form.phone"
                       placeholder="0000000000"
                     />
+                    <div class="invalid-msg" v-if="form.errors.has('phone')" v-html="form.errors.get('phone')" />
                   </div>
                 </div>
 
@@ -359,24 +577,69 @@
                         v-model="form.provider.abn"
                         placeholder="00000000000000000000"
                       />
+                      <div
+                        class="invalid-msg"
+                        v-if="form.errors.has('provider.abn')"
+                        v-html="form.errors.get('provider.abn')"
+                      />
                     </div>
                     <div class="mb-4">
-                      <label for="specificItemNumbers" class="form-label fw-bold">Specific Item Numbers</label>
-                      <textarea
-                        name=""
-                        id=""
-                        cols="30"
-                        rows="2"
-                        class="form-control"
-                        id="specificItemNumbers"
-                        placeholder="000000000000, 000000 0000000000, 0000000"
-                      ></textarea>
+                      <label  class="form-label fw-bold">Specific Item Numbers</label>
+<!--                      <textarea-->
+<!--                        name=""-->
+<!--                        id=""-->
+<!--                        cols="30"-->
+<!--                        rows="2"-->
+<!--                        class="form-control"-->
+<!--                        id="specificItemNumbers"-->
+<!--                        placeholder="000000000000, 000000 0000000000, 0000000"-->
+<!--                      ></textarea>-->
+                        <multiselect
+                            v-model="servicesItemsSelected"
+                            placeholder="Search or add item"
+                            label="support_item_number" track-by="support_item_number"
+                            :options="servicesItemsResult"
+                            :multiple="true"
+                            :taggable="true"
+                            :searchable="true"
+                            :loading="loader"
+                            :internal-search="false"
+                            :clear-on-select="false"
+                            :close-on-select="false"
+                            :options-limit="50" :limit="15"
+                            @search-change="asyncFindItemNumber"
+                            >
+
+                        </multiselect>
+
+<!--                        <multiselect-->
+<!--                            v-model="servicesItemsSelected"-->
+<!--                            id="ajax"-->
+<!--                            label="support_item_number"-->
+<!--                            track-by="support_item_number"-->
+<!--                            placeholder="Type to search"-->
+<!--                            open-direction="bottom"-->
+<!--                            :options="servicesItemsResult"-->
+<!--                            :multiple="true"-->
+<!--                            :searchable="true"-->
+<!--                            :loading="loader"-->
+<!--                            :internal-search="false"-->
+<!--                            :clear-on-select="false"-->
+<!--                            :close-on-select="false"-->
+<!--                            :options-limit="300" :limit="3"-->
+<!--                            :max-height="600" :show-no-results="false" :hide-selected="true" @search-change="asyncFindItemNumber">-->
+<!--                            <template slot="tag" slot-scope="{ option, remove }"><span class="custom__tag"><span>{{ option.support_item_number }}</span><span class="custom__remove" @click="remove(option)">❌</span></span></template>-->
+<!--                            <template slot="clear" slot-scope="props">-->
+<!--                                <div class="multiselect__clear" v-if="form.provider.items.length" @mousedown.prevent.stop="clearAllItems(props.search)"></div>-->
+<!--                            </template><span slot="noResult">Oops! No elements found. Consider changing the search query.</span>-->
+<!--                        </multiselect>-->
+
                     </div>
                   </div>
                 </div>
 
                 <!-- Step 4 Participant-->
-                <div class="step4 mx-auto" v-show="step === 4 && form.role_id == 4">
+                <div class="step4 mx-auto" v-show="step === 4 && form.role_id == 4" v-if="form.role_id != 3">
                   <div class="row">
                     <div class="col-md-6">
                       <div class="mb-4">
@@ -398,39 +661,77 @@
                     </div>
                     <div class="col-md-6">
                       <div class="mb-4">
-                        <label class="form-label">Date of Birth</label>
-                        <input type="text" class="form-control" placeholder="01/01/1999" />
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="mb-4">
                         <label for="typesofCharges" class="form-label">Types of Charges</label>
-                        <input type="text" class="form-control" id="typesofCharges" placeholder="REPW, TRAN" />
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="typesofCharges"
+                          v-model="form.participant.plan.charges_types"
+                          placeholder="REPW, TRAN"
+                        />
+                        <div
+                          class="invalid-msg"
+                          v-if="form.errors.has('participant.plan.charges_types')"
+                          v-html="form.errors.get('participant.plan.charges_types')"
+                        />
                       </div>
                     </div>
                     <div class="col-md-6">
                       <div class="mb-4">
                         <label for="planStartDate" class="form-label">Plan Start Date</label>
-                        <input type="text" class="form-control" id="planStartDate" placeholder="01/01/1999" />
+                        <input
+                          type="date"
+                          class="form-control"
+                          id="planStartDate"
+                          v-model="form.participant.plan.start_date"
+                          placeholder="01/01/1999"
+                        />
+                        <div
+                          class="invalid-msg"
+                          v-if="form.errors.has('participant.plan.start_date')"
+                          v-html="form.errors.get('participant.plan.start_date')"
+                        />
                       </div>
                     </div>
                     <div class="col-md-6">
                       <div class="mb-4">
                         <label for="planEndDate" class="form-label">Plan End Date</label>
-                        <input type="text" class="form-control" id="planEndDate" placeholder="01/01/1999" />
+                        <input
+                          type="date"
+                          class="form-control"
+                          id="planEndDate"
+                          v-model="form.participant.plan.end_date"
+                          placeholder="01/01/1999"
+                        />
+                        <div
+                          class="invalid-msg"
+                          v-if="form.errors.has('participant.plan.end_date')"
+                          v-html="form.errors.get('participant.plan.end_date')"
+                        />
                       </div>
                     </div>
                     <div class="col-md-6">
                       <div class="mb-4">
                         <label for="budget" class="form-label">User’s Budget</label>
-                        <input type="text" class="form-control" id="budget" placeholder="$180,000" />
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="budget"
+                          v-model="form.participant.plan.budget"
+                          placeholder="$180,000"
+                        />
+                        <div
+                          class="invalid-msg"
+                          v-if="form.errors.has('participant.plan.budget')"
+                          v-html="form.errors.get('participant.plan.budget')"
+                        />
                       </div>
                     </div>
                   </div>
                 </div>
 
                 <!-- Step 5 Provider-->
-                <div class="step5 mw290 mx-auto" v-show="step === 5">
+                <div class="step5 mw290 mx-auto" v-show="step === 5 || (step === 4 && form.role_id == 3)">
                   <div class="form-check emailRequest">
                     <input class="form-check-input" type="checkbox" value="" id="emailRequest" />
                     <label class="form-check-label" for="emailRequest">
@@ -451,15 +752,26 @@
                     />
                   </div>
                 </div>
-
-                <div class="mw290 mx-auto px-4 mt-4 mt-md-5">
-                  <button class="btn btn-primary btn-lg w-100 py-3 mb-3" @click.prevent="next()">Next</button>
-<!--                  <button type="submit" class="btn btn-primary btn-lg w-100 py-3">Submit</button>-->
+                <div v-show="step > 0" class="mw290 mx-auto px-4 mt-4 mt-md-5">
+                  <button v-if="!lastStep" class="btn btn-primary btn-lg w-100 py-3 mb-3" @click.prevent="next()">
+                    Next
+                  </button>
+                  <button v-if="lastStep && !loader" type="submit" class="btn btn-primary btn-lg w-100 py-3">
+                    Submit
+                  </button>
+                  <button
+                    v-else-if="lastStep && loader"
+                    class="btn btn-primary btn-lg w-100 py-3"
+                    type="button"
+                    disabled
+                  >
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    Loading...
+                  </button>
                 </div>
-
                 <div
-                  class="step-6 step-final mw290 mx-auto px-4 text-center d-flex justify-content-center align-items-center flex-column d-none"
-                  v-show="step === 6"
+                  v-if="step == 0"
+                  class="step-6 step-final mw290 mx-auto px-4 text-center d-flex justify-content-center align-items-center flex-column"
                 >
                   <ion-icon name="checkmark-circle-outline" class="final-icon"></ion-icon>
                   <h4>New User Created!</h4>
@@ -477,26 +789,19 @@ import 'vue-select/dist/vue-select.css';
 
 <script>
 import Form from "vform"
-import Multiselect from "vue-multiselect"
+import Multiselect from 'vue-multiselect'
 export default {
   components: { Multiselect },
   data() {
     return {
-      value: [],
-      options: [
-        { name: "Vue.js", language: "JavaScript" },
-        { name: "Adonis", language: "JavaScript" },
-        { name: "Rails", language: "Ruby" },
-        { name: "Sinatra", language: "Ruby" },
-        { name: "Laravel", language: "PHP" },
-        { name: "Phoenix", language: "Elixir" },
-      ],
-
       loader: false,
       stepsMap: {
         2: 5,
+        4: 5,
+        3: 4,
       },
       step: 1,
+      lastStep: false,
       form: new Form({
         role_id: 2,
         name: null,
@@ -504,16 +809,47 @@ export default {
         password: null,
         phone: null,
         address: null,
+        state: "",
         provider: {
           abn: null,
           business_name: null,
+          participants: [],
+          items:[],
         },
+        participant: {
+          dob: null,
+          ndis_number: null,
+          representative_id: null,
+          providers: [],
+          plan: {
+            start_date: null,
+            end_date: null,
+            budget: null,
+            charges_types: null,
+          },
+        },
+        representative:{
+            participants:[]
+        }
       }),
+      participantSerachName: null,
+      participantSerachResult: [],
+      participantSelected: [],
+
+      providerSerachName: null,
+      providerSerachResult: [],
+      providerSelected: [],
+
+      representativeSerachName: null,
+      representativeSerachResult: [],
+      representativeSelected: null,
+
+
+      servicesItemsResult: [],
+      servicesItemsSelected: [],
     }
   },
-  mounted() {
-    this.asyncFind()
-  },
+  mounted() {},
   watch: {
     "form.role_id": function(val, old) {
       if (val != old) {
@@ -524,13 +860,75 @@ export default {
           password: null,
           phone: null,
           address: null,
+          state: "",
           provider: {
             abn: null,
             business_name: null,
+            participants: [],
+            items:[]
           },
-        })
+          participant: {
+            dob: null,
+            ndis_number: null,
+            representative_id: null,
+            providers: [],
+            plan: {
+              start_date: null,
+              end_date: null,
+              budget: null,
+              charges_types: null,
+            },
+          },
+          representative:{
+            participants:[]
+          }
+        });
+        this.participantSerachName = null
+        this.participantSerachResult = []
+        this.participantSelected = []
+
+        this.providerSerachName = null
+        this.providerSerachResult = []
+        this.providerSelected = []
+
+        this.representativeSerachName = null
+        this.representativeSerachResult = []
+        this.representativeSelected = null
       }
     },
+    step(val, old) {
+      if (val == this.stepsMap[this.form.role_id]) {
+        this.lastStep = true
+      } else {
+        this.lastStep = false
+      }
+    },
+    participantSerachName(val, old) {
+      if (val) {
+        this.asyncFind(val, "participant")
+      } else {
+        this.participantSerachResult = []
+      }
+    },
+    providerSerachName(val, old) {
+      if (val) {
+        this.asyncFind(val, "provider")
+      } else {
+        this.providerSerachResult = []
+      }
+    },
+    representativeSerachName(val, old) {
+      if (val) {
+        this.asyncFind(val, "representative")
+      } else {
+        this.representativeSerachResult = []
+      }
+    },
+    servicesItemsSelected(val,old) {
+        this.form.provider.items =  this.servicesItemsSelected.map(function(item){
+            return item.support_item_number;
+        });
+    }
   },
   methods: {
     current(value) {
@@ -540,7 +938,9 @@ export default {
       this.step--
     },
     next() {
-      this.step++
+      if (this.step < this.stepsMap[this.form.role_id]) {
+        this.step++
+      }
     },
     createUser() {
       this.loader = true
@@ -548,8 +948,8 @@ export default {
       this.form
         .post(route)
         .then(res => {
-          if ((res.status = 201)) {
-            this.resetForm()
+          if (res.status == 201) {
+            this.resetForm(0);
             this.$toastr.s("Success", "Account created!")
           }
         })
@@ -560,17 +960,113 @@ export default {
           this.loader = false
         })
     },
-    asyncFind(query) {
-      this.isLoading = true
-      let route = this.laroute.route("ajax.users.index", {
-        filter: {
-          name: "provider",
-        },
-      })
+    selectItem(id, $role) {
+      if ($role === "participant") {
+        let participant = this.participantSerachResult.filter(participant => participant.id == id)
+        this.participantSerachResult = this.participantSerachResult.filter(function(item) {
+          if (item.id != id) {
+            return item
+          }
+        })
+        this.participantSelected.push(participant[0])
+
+        if(this.form.role_id == 2){
+          this.form.provider.participants.push(id)
+        }
+
+        if(this.form.role_id == 3){
+            this.form.representative.participants.push(id)
+        }
+
+      } else if ($role === "provider") {
+        let provider = this.providerSerachResult.filter(provider => provider.id == id)
+        this.providerSerachResult = this.providerSerachResult.filter(function(item) {
+          if (item.id != id) {
+            return item
+          }
+        })
+        this.providerSelected.push(provider[0])
+        this.form.participant.providers.push(id)
+      } else if ($role === "representative") {
+        let representative = this.representativeSerachResult.filter(representative => representative.id == id)
+        this.representativeSelected = representative[0]
+        this.form.participant.representative_id = this.representativeSelected.id
+        this.representativeSerachName = null
+        this.representativeSerachResult = []
+      }
+    },
+    removeItem(id, $role) {
+      if ($role === "participant") {
+        this.participantSelected = this.participantSelected.filter(function(item) {
+          if (item.id != id) {
+            return item
+          }
+        })
+       if(this.form.role_id == 2){
+           this.form.provider.participants = this.form.provider.participants.filter(function(item) {
+               if (item != id) {
+                   return item
+               }
+           });
+       }
+
+       if(this.form.role_id == 3){
+          this.form.representative.participants = this.form.representative.participants.filter(function(item) {
+               if (item != id) {
+                   return item
+               }
+           });
+       }
+
+      } else if ($role === "provider") {
+        this.providerSelected = this.providerSelected.filter(function(item) {
+          if (item.id != id) {
+            return item
+          }
+        })
+        this.form.participant.providers = this.form.participant.providers.filter(function(item) {
+          if (item != id) {
+            return item
+          }
+        })
+      } else if ($role === "representative") {
+        this.representativeSelected = null
+        this.form.participant.representative_id = null
+      }
+    },
+    asyncFind(query, role = "") {
+      this.loader = true;
+      let data = {
+        "filter[name]": query,
+        "filter[roles][0]": role,
+      }
+
+      if (role === "participant") {
+        this.participantSerachResult = []
+        this.participantSelected.map(function(item, index) {
+          data["filter[not_in][" + index + "]"] = item.id
+        })
+      } else if (role === "provider") {
+        this.providerSerachResult = []
+        this.providerSelected.map(function(item, index) {
+          data["filter[not_in][" + index + "]"] = item.id
+        })
+      } else if (role === "representative") {
+        this.representativeSerachResult = []
+        if (this.representativeSelected) {
+          data["filter[not_in][0]"] = this.representativeSelected.id
+        }
+      }
+      let route = this.laroute.route("ajax.users.index", data)
       axios
         .get(route)
         .then(res => {
-          if ((res.status = 201)) {
+          if (role === "participant") {
+            this.participantSerachResult = res.data.data
+          } else if (role === "provider") {
+            this.providerSerachResult = res.data.data
+          } else if (role === "representative") {
+            this.representativeSerachResult = res.data.data
           }
         })
         .catch(error => {
@@ -580,6 +1076,83 @@ export default {
           this.loader = false
         })
     },
+
+    asyncFindItemNumber(query) {
+        this.servicesItemsResult = [];
+        let data = {
+            "filter[item_number]": query,
+        }
+        let route = this.laroute.route("ajax.services.index", data)
+        axios
+            .get(route)
+            .then(res => {
+                this.servicesItemsResult = res.data.data;
+            })
+            .catch(error => {
+                this.$toastr.e("Error", "Some thing went wrong.")
+            })
+            .finally(() => {
+                this.loader = false
+            });
+    },
+    closePopup() {
+      $("#userModal").modal('hide');
+      this.resetForm();
+   },
+   resetForm(step = null) {
+       this.loader = false;
+       if(step !=null) {
+           this.step = step;
+       }  else {
+           this.step = 1;
+       }
+
+       this.lastStep = false;
+       this.form =  new Form({
+           role_id: 2,
+           name: null,
+           email: null,
+           password: null,
+           phone: null,
+           address: null,
+           state: "",
+           provider: {
+               abn: null,
+               business_name: null,
+               participants: [],
+               items:[],
+           },
+           participant: {
+               dob: null,
+               ndis_number: null,
+               representative_id: null,
+               providers: [],
+               plan: {
+                   start_date: null,
+                   end_date: null,
+                   budget: null,
+                   charges_types: null,
+               },
+           },
+           representative:{
+               participants:[]
+           }
+       });
+       this.participantSerachName = null;
+       this.participantSerachResult = [];
+       this.participantSelected = [];
+       this.providerSerachName = null;
+       this.providerSerachResult =[];
+       this.providerSelected = [];
+       this.representativeSerachName = null;
+       this.representativeSerachResult = [];
+       this.representativeSelected = null;
+       this.servicesItemsResult = [];
+       this.servicesItemsSelected = [];
+   }
+
+
+
   },
 }
 </script>

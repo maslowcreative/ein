@@ -13,8 +13,10 @@ use F9Web\ApiResponseHelpers;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use function PHPUnit\Framework\isEmpty;
 
 class UserController extends Controller
 {
@@ -33,8 +35,27 @@ class UserController extends Controller
     public function index()
     {
         $users = User::getUsers()
-                     ->whereNotInRoles(['admin'])
-                     ->paginate(5);
+                     ->whereNotInRoles(['admin']);
+
+        if(Auth::user()->hasRole('provider')) {
+            $participantsIds = Auth::user()->provider->participants()->pluck('participant_id');
+            $users = $users->whereIn('id',$participantsIds)->with('participant.representative');
+        }
+
+        if(Auth::user()->hasRole('representative')) {
+
+            if(\request()->filter['roles'][0] == 'participant'){
+                $participantIds = Auth::user()->representative->participants()->pluck('user_id');
+                $users = $users->whereIn('id',$participantIds)->with('participant');
+            }
+            elseif (\request()->filter['roles'][0] == 'provider') {
+                $providerIds = Auth::user()->representative->providers()->pluck('provider_id');
+                $users = $users->whereIn('id',$providerIds);
+            }
+
+        }
+
+        $users = $users->paginate(5);
         return $users;
     }
 
@@ -52,16 +73,23 @@ class UserController extends Controller
         $role = Role::findOrFail($request->role_id);
         $user->assignRole($role->name);
 
-
         //Provider Role:
         if(Role::ROLE_PROVIDER == $role->id) {
           $provider = $user->provider()->create($request->provider);
           if($request->provider['participants'] ?? false )
              $provider->participants()->attach($request->provider['participants'],['created_at' => now(),'updated_at'=> now()]);
+          if($request->provider['items'] ?? false )
+             $provider->items()->sync($request->provider['items']);
+
         }
         //Participant Role:
         if(Role::ROLE_PARTICIPANT == $role->id) {
           $participant = $user->participant()->create($request->participant);
+
+          if(ifEmptyReturnNull($request->participant['providers'])) {
+              $participant->providers()->attach($request->participant['providers'],['created_at' => now(),'updated_at'=> now()]);
+          }
+
           if($request->participant['plan'] ?? false)
             $plan = $participant->plans()->create($request->participant['plan']);
         }
@@ -69,11 +97,11 @@ class UserController extends Controller
         if(Role::ROLE_REPRESENTATIVE == $role->id) {
           $representative = $user->representative()->create();
 
-          if($request->representative['participants'] ?? false){
-              foreach ($request->representative['participants'] as $participant)
+          if(ifEmptyReturnNull($request->representative['participants'])){
+              foreach ($request->representative['participants'] as $participantsIdd)
               {
-                Participant::find($participant['participants_id'])
-                           ->fill(['representative_id' => $representative->id,'relationship'=>$participant['relationship']])
+                Participant::find($participantsIdd)
+                           ->fill(['representative_id' => $representative->id])
                            ->save();
               }
           }
@@ -85,8 +113,8 @@ class UserController extends Controller
         }
 
         //Send Password Email:
-//        if(Role::ROLE_PARTICIPANT != $role->id)
-//            event(new Registered($user));
+        if(Role::ROLE_PARTICIPANT != $role->id)
+            event(new Registered($user));
 
         DB::commit();
         return $this->respondCreated();

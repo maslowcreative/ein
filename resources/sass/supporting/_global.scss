@@ -37,6 +37,17 @@
     line-height: 1;
     padding-block: 0.67rem;
   }
+
+  &.hover-danger {
+    &:hover,
+    &:active,
+    .btn-check:focus + &,
+    .btn-check:checked + &,
+    .btn-check:active + &,
+    &:focus {
+      color: var(--bs-danger);
+    }
+  }
 }
 
 //
@@ -68,7 +79,20 @@
 
 //
 
-.form-control:not(.form-control-sm):not(.form-control-lg) {
+.badge {
+  font-weight: 600;
+}
+
+//
+
+.form-label {
+  font-weight: bold;
+}
+
+//
+
+.form-control:not(.form-control-sm):not(.form-control-lg),
+.form-select:not(.form-select-sm):not(.form-select-lg) {
   min-height: 3.25rem;
 }
 
@@ -124,9 +148,9 @@
   overflow-x: auto;
   margin-top: 2rem;
 
-  @include media-breakpoint-up(xxl) {
-    margin-top: 3.75rem;
-  }
+  // @include media-breakpoint-up(xxl) {
+  //   margin-top: 3.75rem;
+  // }
 }
 
 .table {
@@ -157,6 +181,63 @@
 }
 
 //
+
+.scroll-y,
+.scroll-x {
+  --border-radius: 4px;
+
+  position: relative;
+  // scrollbar-color: #0a4c95 #c2d2e4;
+
+  &::-webkit-scrollbar {
+    width: 0.25rem;
+    background-color: rgba(#c4c4c4, 15%);
+    border-radius: var(--border-radius);
+    outline: none;
+  }
+
+  &::-webkit-scrollbar-track {
+    border-radius: var(--border-radius);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #c4c4c4;
+    border-radius: var(--border-radius);
+  }
+}
+
+.scroll-x {
+  --box-height: 100%;
+
+  max-height: var(--box-height);
+  overflow-y: auto;
+}
+
+.scroll-x {
+  --box-width: 100%;
+
+  max-width: var(--box-width);
+  overflow-x: auto;
+}
+
+//
+
+.dropdownWrap {
+  position: relative;
+
+  .dropdownSec {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    margin-top: 0.5rem;
+    background-color: #fff;
+    z-index: 10;
+  }
+}
+
+//
+
 .main {
   .multiselect {
     &__tags {
@@ -177,3 +258,36 @@
     }
   }
 }
+
+//
+
+.pagination {
+  .page-item {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+  }
+}
+
+//
+
+.loader-wrap {
+  position: relative;
+
+  .loader-bg {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-content: center;
+    background-color: rgba(#fff, 0.5);
+  }
+
+  .spinner-loder {
+    width: 3rem;
+    height: 3rem;
+  }
+}
+
+//

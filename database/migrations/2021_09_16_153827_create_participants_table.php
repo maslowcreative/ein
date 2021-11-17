@@ -17,7 +17,7 @@ class CreateParticipantsTable extends Migration
             $table->unsignedInteger('user_id')->primary();
             $table->unsignedInteger('representative_id')->nullable();
             $table->string('relationship')->nullable();
-            $table->string('unique_identifier')->unique();
+            $table->string('ndis_number')->unique();
             $table->date('dob')->nullable();
             $table->timestamps();
         });

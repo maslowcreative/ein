@@ -16,6 +16,20 @@ class User extends Authenticatable
 {
     use HasFactory,HasRoles,Notifiable;
 
+    const STATUS_ACTIVE = 1;
+    const STATUS_INACTIVE = 0;
+
+    const STATES = [
+      'ACT',
+      'NSW',
+      'NT',
+      'QLD',
+      'SA',
+      'TAS',
+      'VIC',
+      'WA',
+    ];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -27,6 +41,8 @@ class User extends Authenticatable
         'password',
         'phone',
         'address',
+        'status',
+        'state'
     ];
 
     /**
@@ -103,6 +119,11 @@ class User extends Authenticatable
         return $this->hasOne(Admin::class,'user_id');
     }
 
+    public function plans()
+    {
+        return $this->hasMany(Plan::class,'participant_id');
+    }
+
     public static function getUsers()
     {
         return QueryBuilder::for(User::class)
@@ -112,9 +133,17 @@ class User extends Authenticatable
                 AllowedFilter::partial('name', 'name'),
                 AllowedFilter::exact('email', 'email'),
                 AllowedFilter::exact('phone', 'phone'),
+                AllowedFilter::callback('not_in',function (Builder $query,$ids){
+                    $query->whereNotIn('id',$ids);
+                }),
                 AllowedFilter::callback('roles', function (Builder $query, $roles) {
                     $query->whereInRoles($roles);
                 }),
+                AllowedFilter::callback('plan_status', function (Builder $query, $plan_status) {
+                    $query->whereHas('plans', function (Builder $query) use ($plan_status){
+                        $query->where('status',$plan_status);
+                    });
+                })
 
             ]);
     }

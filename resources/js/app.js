@@ -18,6 +18,9 @@ Vue.use(VueLaroute, {
     accessor: 'laroute', // Optional: the global variable for accessing the router
 });
 
+// Register Event global
+window.VueEvents = new Vue({});
+
 // import plugin
 import VueToastr from "vue-toastr";
 // use plugin

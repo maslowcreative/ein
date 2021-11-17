@@ -13,4 +13,5 @@ class Role extends SpatieRole
     const ROLE_PROVIDER = 2;
     const ROLE_REPRESENTATIVE = 3;
     const ROLE_PARTICIPANT = 4;
+    const ROLE_SUB_ADMIN = 5;
 }
