@@ -643,7 +643,7 @@
                   <div class="row">
                     <div class="col-md-6">
                       <div class="mb-4">
-                        <label for="ndisPlan" class="form-label">NDIS Plan</label>
+                        <label for="ndisPlanName" class="form-label">NDIS Plan</label>
                         <div class="input-group-overlay">
                           <div class="input-group-prepend-overlay">
                             <span class="input-group-text text-primary"
@@ -653,9 +653,15 @@
                           <input
                             type="text"
                             class="form-control prepended-form-control"
-                            id="ndisPlan"
-                            placeholder="Upload NDIS Plan"
+                            id="ndisPlanName"
+                            placeholder="Plan Name"
+                            v-model = "form.participant.plan.plan_name"
                           />
+                          <div
+                                class="invalid-msg"
+                                v-if="form.errors.has('participant.plan.plan_name')"
+                                v-html="form.errors.get('participant.plan.plan_name')"
+                            />
                         </div>
                       </div>
                     </div>
@@ -674,7 +680,7 @@
                           v-if="form.errors.has('participant.plan.charges_types')"
                           v-html="form.errors.get('participant.plan.charges_types')"
                         />
-                      </div>
+                       </div>
                     </div>
                     <div class="col-md-6">
                       <div class="mb-4">
@@ -822,6 +828,7 @@ export default {
           representative_id: null,
           providers: [],
           plan: {
+            plan_name : null,
             start_date: null,
             end_date: null,
             budget: null,
@@ -873,6 +880,7 @@ export default {
             representative_id: null,
             providers: [],
             plan: {
+              plan_name : null,
               start_date: null,
               end_date: null,
               budget: null,
@@ -1129,6 +1137,8 @@ export default {
                representative_id: null,
                providers: [],
                plan: {
+
+                   plan_name : null,
                    start_date: null,
                    end_date: null,
                    budget: null,

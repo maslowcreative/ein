@@ -21,36 +21,36 @@
           <li class="nav-item">
             <a class="nav-link" :href="myAccountUrl">My Account</a>
           </li>
-          <li class="nav-item dropdown">
-            <a
-              class="nav-link"
-              href="#"
-              id="notificationDropdown"
-              role="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              <span class="notification-icon">
-                <ion-icon name="notifications" class="notification-icon"></ion-icon>
-                <ion-icon name="ellipse" class="notification-alrt"></ion-icon>
-              </span>
-            </a>
-            <div class="dropdown-menu dropdown-menu-end notification-dropdown" aria-labelledby="notificationDropdown">
-              <h6 class="my-2">Notifications</h6>
-              <a href="#" class="dropdown-item new">
-                <strong>Participant’s</strong> membership<br />
-                ends in 30 days.
-              </a>
-              <a href="#" class="dropdown-item new">
-                <strong>Participant’s</strong> membership<br />
-                ends in 30 days.
-              </a>
-              <a href="#" class="dropdown-item new">
-                <strong>Participant’s</strong> membership<br />
-                ends in 30 days.
-              </a>
-            </div>
-          </li>
+<!--          <li class="nav-item dropdown">-->
+<!--            <a-->
+<!--              class="nav-link"-->
+<!--              href="#"-->
+<!--              id="notificationDropdown"-->
+<!--              role="button"-->
+<!--              data-bs-toggle="dropdown"-->
+<!--              aria-expanded="false"-->
+<!--            >-->
+<!--              <span class="notification-icon">-->
+<!--                <ion-icon name="notifications" class="notification-icon"></ion-icon>-->
+<!--                <ion-icon name="ellipse" class="notification-alrt"></ion-icon>-->
+<!--              </span>-->
+<!--            </a>-->
+<!--            <div class="dropdown-menu dropdown-menu-end notification-dropdown" aria-labelledby="notificationDropdown">-->
+<!--              <h6 class="my-2">Notifications</h6>-->
+<!--              <a href="#" class="dropdown-item new">-->
+<!--                <strong>Participant’s</strong> membership<br />-->
+<!--                ends in 30 days.-->
+<!--              </a>-->
+<!--              <a href="#" class="dropdown-item new">-->
+<!--                <strong>Participant’s</strong> membership<br />-->
+<!--                ends in 30 days.-->
+<!--              </a>-->
+<!--              <a href="#" class="dropdown-item new">-->
+<!--                <strong>Participant’s</strong> membership<br />-->
+<!--                ends in 30 days.-->
+<!--              </a>-->
+<!--            </div>-->
+<!--          </li>-->
           <!-- Authentication Links -->
           <li class="nav-item" v-if="hasLogin">
             <a class="nav-link" :href="loginUrl">Login</a>

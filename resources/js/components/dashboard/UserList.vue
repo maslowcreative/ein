@@ -60,8 +60,8 @@
                   <select class="form-select form-select-sm" v-model="filters.plan_status">
                     <option selected value="all">All</option>
                     <option value="1">Active</option>
-                    <option value="2">Inactive</option>
-                    <option value="3">New Expiry</option>
+                    <option value="0">Inactive</option>
+<!--                    <option value="3">New Expiry</option>-->
                   </select>
                 </div>
               </div>
@@ -96,8 +96,7 @@
                   <button
                     v-if="user.roles[0].name == 'participant'"
                     class="btn btn-light btn-sm"
-                    data-bs-toggle="modal"
-                    data-bs-target="#editPlanModal"
+                    v-on:click="openPlanEdit(user.plan)"
                   >
                     Edit Plan
                   </button>
@@ -133,7 +132,7 @@
           listClass="pagination"
         />
       </div>
-      <plan-popup></plan-popup>
+      <plan-popup v-bind:plan="plan" ></plan-popup>
     </div>
   </div>
 </template>
@@ -154,6 +153,12 @@ export default {
         plan_status: "all",
       },
       items: {},
+      plan: {
+          plan_name: '',
+          start_date:null,
+          end_date:null,
+          status:null,
+      }
     }
   },
   watch: {
@@ -163,9 +168,9 @@ export default {
     "filters.role": function(val, old) {
       this.getUsersList(1)
     },
-    // "filters.plan_status": function (val, old){
-    //     this.getUsersList(1);
-    // }
+    "filters.plan_status": function (val, old){
+        this.getUsersList(1);
+    }
   },
   mounted() {
     this.getUsersList();
@@ -188,9 +193,10 @@ export default {
         data["filter[roles][0]"] = this.filters.role
       }
 
-      // if (this.filters.plan_status) {
-      //     data["filter[plan_status][0]"] = this.filters.plan_status;
-      // }
+      if (this.filters.plan_status != 'all' && this.filters.plan_status) {
+          this.filters.role = 'participant';
+          data["filter[plan_status][0]"] = this.filters.plan_status;
+      }
 
       let route = this.laroute.route("ajax.users.index", data)
       axios
@@ -203,6 +209,18 @@ export default {
         })
         .finally(() => (this.loading = false))
     },
+    openPlanEdit(plan) {
+
+        if(plan == null) {
+            this.$toastr.e("Error", "No active plan exist.");
+            return false;
+        }
+        this.plan = plan;
+        if(!this.plan.plan_name) {
+            this.plan.plan_name = '';
+        }
+        $("#editPlanModal").modal('show');
+    }
   },
 }
 </script>

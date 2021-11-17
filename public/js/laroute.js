@@ -140,6 +140,26 @@
         "name": "ajax.claims.destroy"
     },
     {
+        "uri": "ajax\/plans",
+        "name": "ajax.plans.index"
+    },
+    {
+        "uri": "ajax\/plans",
+        "name": "ajax.plans.store"
+    },
+    {
+        "uri": "ajax\/plans\/{plan}",
+        "name": "ajax.plans.show"
+    },
+    {
+        "uri": "ajax\/plans\/{plan}",
+        "name": "ajax.plans.update"
+    },
+    {
+        "uri": "ajax\/plans\/{plan}",
+        "name": "ajax.plans.destroy"
+    },
+    {
         "uri": "ajax\/services",
         "name": "ajax.services.index"
     },

@@ -128,7 +128,6 @@
                     listClass="pagination"
                 />
             </div>
-            <plan-popup></plan-popup>
         </div>
     </div>
 </template>
@@ -136,10 +135,9 @@
 <script>
 import AdvancedLaravelVuePaginate from "advanced-laravel-vue-paginate"
 import "advanced-laravel-vue-paginate/dist/advanced-laravel-vue-paginate.css"
-import PlanPopup from "../popups/PlanPopup"
 
 export default {
-    components: { AdvancedLaravelVuePaginate, PlanPopup },
+    components: { AdvancedLaravelVuePaginate },
     data() {
         return {
             loading: false,
@@ -175,7 +173,7 @@ export default {
             }
 
             if (this.filters.plan_status && this.filters.plan_status != "all") {
-                data["filter[plan_status]"] = this.filters.plan_status
+                data["filter[plan_status][0]"] = this.filters.plan_status
             }
 
             let route = this.laroute.route("ajax.users.index", data)

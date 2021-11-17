@@ -55,6 +55,7 @@ class UserPostRequest extends FormRequest
             'participant.providers.*' => 'integer',
 
             'participant.plan' => 'required|array',
+            'participant.plan.plan_name' => 'required|string',
             'participant.plan.start_date' => 'required|string',
             'participant.plan.end_date' => 'required|string',
             'participant.plan.budget' => 'required|integer',

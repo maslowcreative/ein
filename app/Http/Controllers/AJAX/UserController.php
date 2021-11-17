@@ -39,6 +39,10 @@ class UserController extends Controller
         $users = User::getUsers()
                      ->whereNotInRoles(['admin']);
 
+        if(Auth::user()->hasRole('admin')) {
+            $users = $users->with('plan');
+        }
+
         if(Auth::user()->hasRole('provider')) {
             $participantsIds = Auth::user()->provider->participants()->pluck('participant_id');
             $users = $users->whereIn('id',$participantsIds)->with('participant.representative');
@@ -54,7 +58,6 @@ class UserController extends Controller
                 $providerIds = Auth::user()->representative->providers()->pluck('provider_id');
                 $users = $users->whereIn('id',$providerIds);
             }
-
         }
 
         $users = $users->paginate(5);

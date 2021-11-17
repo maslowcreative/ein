@@ -15,11 +15,18 @@ class Plan extends Model
      * @var array
      */
     protected $fillable = [
+        'plan_name',
         'file_name',
         'participant_id',
         'start_date',
         'end_date',
         'budget',
         'charges_types',
+        'status'
     ];
+
+    public function scopeActive($query)
+    {
+        return $query->where('status',1);
+    }
 }
