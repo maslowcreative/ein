@@ -19,7 +19,9 @@ trait CreateUserTrait
      */
     protected function create(array $data)
     {
+        dd($data);
         $data['password'] =  $data['password'] ?? Str::random(8);
+        dd($data['password']);
         $user =  User::create([
             'name' => $data['name'],
             'email' => $data['email'],

@@ -739,23 +739,41 @@
                 <!-- Step 5 Provider-->
                 <div class="step5 mw290 mx-auto" v-show="step === 5 || (step === 4 && form.role_id == 3)">
                   <div class="form-check emailRequest">
-                    <input class="form-check-input" type="checkbox" value="" id="emailRequest" />
+                    <input  class="form-check-input" v-model="form.random_password" type="checkbox"  id="emailRequest" />
+
                     <label class="form-check-label" for="emailRequest">
                       Send email request for the new user to create password
                     </label>
+                      <div
+                          class="invalid-msg"
+                          v-if="form.errors.has('random_password')"
+                          v-html="form.errors.get('random_password')"
+                      />
                   </div>
                   <div class="my-4">
                     <label class="form-label">Enter Password</label>
-                    <input type="password" class="form-control" placeholder="****************************" />
+                    <input :disabled="form.random_password" type="password" v-model="form.password" class="form-control" placeholder="****************************" />
+                      <div
+                          class="invalid-msg"
+                          v-if="form.errors.has('password')"
+                          v-html="form.errors.get('password')"
+                      />
                   </div>
                   <div class="mb-4">
                     <label for="confirmPassword" class="form-label">Confirm the Password</label>
                     <input
+                      :disabled="form.random_password"
                       type="password"
+                      v-model="form.password_confirmation"
                       class="form-control"
                       id="confirmPassword"
                       placeholder="****************************"
                     />
+                      <div
+                          class="invalid-msg"
+                          v-if="form.errors.has('password_confirmation')"
+                          v-html="form.errors.get('password_confirmation')"
+                      />
                   </div>
                 </div>
                 <div v-show="step > 0" class="mw290 mx-auto px-4 mt-4 mt-md-5">
@@ -812,7 +830,9 @@ export default {
         role_id: 2,
         name: null,
         email: null,
+        random_password: false,
         password: null,
+        password_confirmation: null,
         phone: null,
         address: null,
         state: "",
@@ -864,7 +884,9 @@ export default {
           role_id: val,
           name: null,
           email: null,
+          random_password: false,
           password: null,
+          password_confirmation: null,
           phone: null,
           address: null,
           state: "",
@@ -936,6 +958,12 @@ export default {
         this.form.provider.items =  this.servicesItemsSelected.map(function(item){
             return item.support_item_number;
         });
+    },
+    "form.random_password": function (val,old) {
+        if(val == true ){
+            this.form.password = null;
+            this.form.password_confirmation = null;
+        }
     }
   },
   methods: {
@@ -1121,7 +1149,9 @@ export default {
            role_id: 2,
            name: null,
            email: null,
+           random_password: false,
            password: null,
+           password_confirmation: null,
            phone: null,
            address: null,
            state: "",
