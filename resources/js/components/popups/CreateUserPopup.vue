@@ -950,7 +950,8 @@ export default {
         .then(res => {
           if (res.status == 201) {
             this.resetForm(0);
-            this.$toastr.s("Success", "Account created!")
+            this.$root.$emit("ein-user:added")
+            this.$toastr.s("Success", "Account created!");
           }
         })
         .catch(error => {

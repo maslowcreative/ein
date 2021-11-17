@@ -168,7 +168,11 @@ export default {
     // }
   },
   mounted() {
-    this.getUsersList()
+    this.getUsersList();
+    //Called Whenever admin is added.
+    this.$root.$on("ein-user:added", () => {
+          this.getUsersList();
+    });
   },
   methods: {
     getUsersList(page = 1) {
