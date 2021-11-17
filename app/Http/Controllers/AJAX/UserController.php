@@ -5,6 +5,8 @@ namespace App\Http\Controllers\AJAX;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserPostRequest;
 use App\Models\Participant;
+use App\Models\Provider;
+use App\Models\ProviderItems;
 use App\Models\Role;
 use App\Models\User;
 use App\Traits\CreateUserTrait;
@@ -78,8 +80,15 @@ class UserController extends Controller
           $provider = $user->provider()->create($request->provider);
           if($request->provider['participants'] ?? false )
              $provider->participants()->attach($request->provider['participants'],['created_at' => now(),'updated_at'=> now()]);
-          if($request->provider['items'] ?? false )
-             $provider->items()->sync($request->provider['items']);
+
+          if($request->provider['items'] ?? false ){
+              $items = [];
+              foreach ($request->provider['items'] as $value) {
+                  array_push($items,['item_number' =>$value,'provider_id'=>$provider->user_id]);
+              }
+              $provider->items()->createMany($items);
+          }
+
 
         }
         //Participant Role:

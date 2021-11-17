@@ -9,4 +9,6 @@ class ProviderItems extends Model
 {
     use HasFactory;
     protected $table = "provider_items";
+
+    protected $fillable = ['provider_id','item_number','created_at','updated_at'];
 }
