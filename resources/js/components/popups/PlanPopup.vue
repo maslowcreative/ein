@@ -40,6 +40,38 @@
                                 <div class="invalid-msg" v-if="form.errors.has('end_date')" v-html="form.errors.get('end_date')" />
                             </div>
                         </div>
+
+                        <div class="col-md-6">
+                            <div class="mb-4">
+                                <label for="typesofCharges" class="form-label">Types of Charges</label>
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="typesofCharges"
+                                    v-model="plan.charges_types"
+                                    placeholder="REPW, TRAN"
+                                />
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="mb-4">
+                                <label for="budget" class="form-label">Plan’s Budget</label>
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="budget"
+                                    v-model="plan.budget"
+                                    placeholder="$180,000"
+                                />
+                                <div
+                                    class="invalid-msg"
+                                    v-if="form.errors.has('plan.budget')"
+                                    v-html="form.errors.get('plan.budget')"
+                                />
+                            </div>
+                        </div>
+
                         <div class="mw290 mx-auto px-4 mt-3">
                             <button v-if="!loader" class="btn btn-primary btn-lg w-100 py-3" v-on:click="updatePlan(plan.id)">Update Plan</button>
                             <button v-else class="btn btn-primary btn-lg w-100 py-3" type="button" disabled>
@@ -66,6 +98,8 @@ export default {
                start_date: this.plan.start_date,
                end_date: null,
                status: null,
+               charges_types: null,
+               budget: null,
            })
         }
     },
@@ -78,6 +112,8 @@ export default {
             this.form.start_date = this.plan.start_date;
             this.form.end_date = this.plan.end_date;
             this.form.status = this.plan.status;
+            this.form.charges_types = this.plan.charges_types;
+            this.form.budget = this.plan.budget;
             this.loader = true;
             let route = this.laroute.route("ajax.plans.update",{plan:planId })
             this.form
