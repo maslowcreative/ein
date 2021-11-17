@@ -103,7 +103,7 @@
                 </td>
                 <td>
                   <div class="d-inline-flex flex-nowrap align-items-center justify-content-around btn-group fs-lg">
-                    <button class="btn btn-link p-0 mx-1">
+                    <button class="btn btn-link p-0 mx-1" v-on:click="openEditUserPopup(user,user.roles[0])">
                       <ion-icon name="create-outline"></ion-icon>
                     </button>
                     <button class="btn btn-link p-0 mx-1">
@@ -133,6 +133,9 @@
         />
       </div>
       <plan-popup v-bind:plan="plan" ></plan-popup>
+      <edit-provider-popup></edit-provider-popup>
+      <edit-participant-popup></edit-participant-popup>
+      <edit-representative-popup v-bind:user="user"></edit-representative-popup>
     </div>
   </div>
 </template>
@@ -158,7 +161,8 @@ export default {
           start_date:null,
           end_date:null,
           status:null,
-      }
+      },
+      user: null
     }
   },
   watch: {
@@ -220,6 +224,18 @@ export default {
             this.plan.plan_name = '';
         }
         $("#editPlanModal").modal('show');
+    },
+    openEditUserPopup(user,role) {
+        this.user = user;
+        if(role.name == "representative") {
+            $("#userEditRepresentativeModal").modal('show');
+        } else if( role.name == "participant" ) {
+            $("#userEditParticipantModal").modal('show');
+        } else if( role.name == "provider" ) {
+            console.log('works');
+            $("#userEditProviderModal").modal('show');
+        }
+
     }
   },
 }
