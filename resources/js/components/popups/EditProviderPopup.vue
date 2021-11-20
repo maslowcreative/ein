@@ -13,19 +13,21 @@
                     <h4 class="modal-title" id="adminModalTitle">Edit Provider Profile</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
+                <div v-if="user" class="modal-body">
                     <form @submit.prevent="editUser" method="POST">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="mb-4">
                                     <label  class="form-label">Full Name</label>
-                                    <input type="text"  class="form-control"  placeholder="The Name of the Provider" />
+                                    <input type="text" v-model="user.name"  class="form-control"  placeholder="The Name of the Provider" />
+                                    <div class="invalid-msg" v-if="form.errors.has('name')" v-html="form.errors.get('name')" />
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-4">
                                     <label  class="form-label">ABN</label>
-                                    <input type="text"  class="form-control"  placeholder="00000000000000000000" />
+                                    <input type="text" v-model="user.provider.abn" class="form-control"  placeholder="00000000000000000000" />
+                                    <div class="invalid-msg" v-if="form.errors.has('provider.abn')" v-html="form.errors.get('provider.abn')" />
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -35,8 +37,10 @@
                                         cols="30"
                                         rows="2"
                                         class="form-control"
+                                        v-model="user.address"
                                        placeholder="Home Address 13, 10000 State, Country."
                                     ></textarea>
+                                    <div class="invalid-msg" v-if="form.errors.has('address')" v-html="form.errors.get('address')" />
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -46,7 +50,9 @@
                                         type="tel"
                                         class="form-control"
                                         placeholder="0000000000"
+                                        v-model="user.phone"
                                     />
+                                    <div class="invalid-msg" v-if="form.errors.has('phone')" v-html="form.errors.get('phone')" />
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -56,32 +62,60 @@
                                         type="text"
                                         class="form-control"
                                         placeholder="providersemail@gmail.com"
+                                        v-model="user.email"
                                     />
+                                    <div class="invalid-msg" v-if="form.errors.has('email')" v-html="form.errors.get('email')" />
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-4">
                                     <label class="form-label fw-bold">Participants</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                    />
+                                    <multiselect
+                                        v-model="participantItemsResultSelected"
+                                        placeholder="Search or add item"
+                                        label="name"
+                                        track-by="id"
+                                        :options="participantItemsResult"
+                                        :multiple="true"
+                                        :taggable="true"
+                                        :searchable="true"
+                                        :loading="loader"
+                                        :internal-search="false"
+                                        :clear-on-select="false"
+                                        :close-on-select="false"
+                                        :options-limit="50" :limit="15"
+                                        @search-change="getUsersList"
+
+                                    >
+                                    </multiselect>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-4">
                                     <label class="form-label fw-bold">Specific Item Numbers</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                    />
+                                    <multiselect
+                                        v-model="servicesItemsSelected"
+                                        placeholder="Search or add item"
+                                        label="support_item_number" track-by="support_item_number"
+                                        :options="servicesItemsResult"
+                                        :multiple="true"
+                                        :taggable="true"
+                                        :searchable="true"
+                                        :loading="loader"
+                                        :internal-search="false"
+                                        :clear-on-select="false"
+                                        :close-on-select="false"
+                                        :options-limit="50" :limit="15"
+                                        @search-change="asyncFindItemNumber"
+                                    >
+                                    </multiselect>
                                 </div>
                             </div>
 
                         </div>
                     </form>
                     <div class="mw290 mx-auto px-4 mt-3">
-                        <button v-if="!loader" class="btn btn-primary btn-lg w-100 py-3" >Update Information</button>
+                        <button v-if="!loader" class="btn btn-primary btn-lg w-100 py-3"  v-on:click="updateUser">Update Information</button>
                         <button v-else class="btn btn-primary btn-lg w-100 py-3" type="button" disabled>
                             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                             Loading...
@@ -96,14 +130,128 @@
 
 <script>
 import Form from "vform"
+import Multiselect from 'vue-multiselect'
 export default {
+    components: { Multiselect },
+    props:['user'],
     data() {
+
         return {
             loader: false,
+            form: new Form({
+                role_id: 2,
+                name: null,
+                email: null,
+                phone: null,
+                address: null,
+                provider: {
+                    abn: null,
+                    business_name: null,
+                    participants: [],
+                    items:[],
+                },
+            }),
+            participantItemsResultSelected: [],
+            participantItemsResult: [],
+            servicesItemsResult: [],
+            servicesItemsSelected: [],
         }
     },
-    mounted() {},
+    mounted() {
+        this.$root.$on("ein:provider-edit-popup-open", (user) => {
+            let participantItemsResult = [];
+            let servicesItemsSelected = [];
+            user.provider.participants.forEach(function (item){
+                participantItemsResult.push({
+                    id: item.user.id,
+                    name: item.user.name
+                });
+            })
+            user.provider.items.forEach(function (item){
+                servicesItemsSelected.push({
+                    support_item_number: item.item_number
+                });
+            })
+            this.participantItemsResultSelected = participantItemsResult;
+            this.servicesItemsSelected = servicesItemsSelected;
+        });
+    },
     methods: {
+        updateUser() {
+            this.loader = true;
+            this.form.name = this.user.name;
+            this.form.email = this.user.email;
+            this.form.phone = this.user.phone;
+            this.form.address = this.user.address;
+            this.form.provider.abn = this.user.provider.abn;
+            this.form.provider.business_name = this.user.provider.business_name;
+            let participants = [];
+            this.participantItemsResultSelected.forEach(function (item){
+                participants.push(item.id);
+            });
+            this.form.provider.participants = participants;
+
+            let items = [];
+            this.servicesItemsSelected.forEach(function (item){
+                items.push(item.support_item_number);
+            });
+            this.form.provider.items = items;
+
+            let route = this.laroute.route("ajax.users.update",{ 'user' : this.user.id})
+            this.form
+                .put(route)
+                .then(res => {
+                    this.$toastr.s("Success", "User updated!");
+                })
+                .catch(error => {
+                    this.$toastr.e("Error", "Some thing went wrong.")
+                })
+                .finally(() => (this.loader = false))
+        },
+        getUsersList(name) {
+            this.loading = true;
+
+            let data = {
+                page: 1,
+                "filter[name]": name,
+                "filter[roles][0]": 'participant',
+            }
+
+            if (name) {
+                data["filter[name]"] = name;
+            }
+
+
+            let route = this.laroute.route("ajax.users.index", data)
+            axios
+                .get(route)
+                .then(res => {
+                    this.participantItemsResult = res.data.data
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+                .finally(() => (this.loading = false))
+        },
+        asyncFindItemNumber(query) {
+            this.servicesItemsResult = [];
+            let data = {
+                "filter[item_number]": query,
+            }
+            let route = this.laroute.route("ajax.services.index", data)
+            axios
+                .get(route)
+                .then(res => {
+                    this.servicesItemsResult = res.data.data;
+                })
+                .catch(error => {
+                    this.$toastr.e("Error", "Some thing went wrong.")
+                })
+                .finally(() => {
+                    this.loader = false
+                });
+        },
+
     },
 }
 </script>

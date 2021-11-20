@@ -585,15 +585,6 @@
                     </div>
                     <div class="mb-4">
                       <label  class="form-label fw-bold">Specific Item Numbers</label>
-<!--                      <textarea-->
-<!--                        name=""-->
-<!--                        id=""-->
-<!--                        cols="30"-->
-<!--                        rows="2"-->
-<!--                        class="form-control"-->
-<!--                        id="specificItemNumbers"-->
-<!--                        placeholder="000000000000, 000000 0000000000, 0000000"-->
-<!--                      ></textarea>-->
                         <multiselect
                             v-model="servicesItemsSelected"
                             placeholder="Search or add item"
@@ -609,31 +600,7 @@
                             :options-limit="50" :limit="15"
                             @search-change="asyncFindItemNumber"
                             >
-
                         </multiselect>
-
-<!--                        <multiselect-->
-<!--                            v-model="servicesItemsSelected"-->
-<!--                            id="ajax"-->
-<!--                            label="support_item_number"-->
-<!--                            track-by="support_item_number"-->
-<!--                            placeholder="Type to search"-->
-<!--                            open-direction="bottom"-->
-<!--                            :options="servicesItemsResult"-->
-<!--                            :multiple="true"-->
-<!--                            :searchable="true"-->
-<!--                            :loading="loader"-->
-<!--                            :internal-search="false"-->
-<!--                            :clear-on-select="false"-->
-<!--                            :close-on-select="false"-->
-<!--                            :options-limit="300" :limit="3"-->
-<!--                            :max-height="600" :show-no-results="false" :hide-selected="true" @search-change="asyncFindItemNumber">-->
-<!--                            <template slot="tag" slot-scope="{ option, remove }"><span class="custom__tag"><span>{{ option.support_item_number }}</span><span class="custom__remove" @click="remove(option)">❌</span></span></template>-->
-<!--                            <template slot="clear" slot-scope="props">-->
-<!--                                <div class="multiselect__clear" v-if="form.provider.items.length" @mousedown.prevent.stop="clearAllItems(props.search)"></div>-->
-<!--                            </template><span slot="noResult">Oops! No elements found. Consider changing the search query.</span>-->
-<!--                        </multiselect>-->
-
                     </div>
                   </div>
                 </div>
@@ -667,11 +634,10 @@
                     </div>
                     <div class="col-md-6">
                       <div class="mb-4">
-                        <label for="typesofCharges" class="form-label">Types of Charges</label>
+                        <label  class="form-label">Types of Charges</label>
                         <input
                           type="text"
                           class="form-control"
-                          id="typesofCharges"
                           v-model="form.participant.plan.charges_types"
                           placeholder="REPW, TRAN"
                         />
@@ -722,7 +688,6 @@
                         <input
                           type="text"
                           class="form-control"
-                          id="budget"
                           v-model="form.participant.plan.budget"
                           placeholder="$180,000"
                         />

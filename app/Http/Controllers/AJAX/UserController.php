@@ -159,6 +159,18 @@ class UserController extends Controller
         DB::beginTransaction();
             $user->fill($request->all())->save();
 
+            if($user->hasRole('provider') && $request->role_id == Role::ROLE_PROVIDER) {
+                $user->provider->fill($request->provider)->save();
+                $user->provider->participants()->sync($request->provider['participants']);
+
+                $user->provider->items()->delete();
+                $items = [];
+                foreach ($request->provider['items'] as $value) {
+                    array_push($items,['item_number' => $value,'provider_id'=> $user->provider->user_id]);
+                }
+                $user->provider->items()->createMany($items);
+            }
+
             if($user->hasRole('representative') && $request->role_id == Role::ROLE_REPRESENTATIVE) {
                 $user->representative->participants()->update(['representative_id'=> null]);
                 if(ifEmptyReturnNull($request->representative['participants'])){

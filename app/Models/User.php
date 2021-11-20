@@ -133,6 +133,7 @@ class User extends Authenticatable
     {
         return QueryBuilder::for(User::class)
             ->with(['roles'])
+            ->allowedIncludes(['provider','provider.items','provider.participants','provider.participants.user','participant','representative',])
             ->allowedFilters([
                 AllowedFilter::exact('id', 'id'),
                 AllowedFilter::partial('name', 'name'),

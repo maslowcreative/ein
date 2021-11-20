@@ -47,7 +47,6 @@
                                 <input
                                     type="text"
                                     class="form-control"
-                                    id="typesofCharges"
                                     v-model="plan.charges_types"
                                     placeholder="REPW, TRAN"
                                 />
@@ -60,7 +59,6 @@
                                 <input
                                     type="text"
                                     class="form-control"
-                                    id="budget"
                                     v-model="plan.budget"
                                     placeholder="$180,000"
                                 />

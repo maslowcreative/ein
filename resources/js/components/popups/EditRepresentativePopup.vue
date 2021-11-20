@@ -125,17 +125,17 @@ export default {
     },
     mounted() {
             this.$root.$on("ein:rep-edit-popup-open", (userId) => {
-            let route = this.laroute.route("ajax.users.representative.participants", {representative : userId })
-            axios
-                .get(route)
-                .then(res => {
-                    this.setParticipantsSelected(res.data);
-                })
-                .catch(error => {
-                    console.log(error)
-                })
-                .finally(() => (this.loading = false))
-        });
+                let route = this.laroute.route("ajax.users.representative.participants", {representative : userId })
+                axios
+                    .get(route)
+                    .then(res => {
+                        this.setParticipantsSelected(res.data);
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    })
+                    .finally(() => (this.loading = false))
+            });
     },
     methods: {
         setParticipantsSelected(participants){
