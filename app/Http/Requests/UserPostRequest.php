@@ -30,7 +30,7 @@ class UserPostRequest extends FormRequest
             'name' => 'required|string',
             'email' => 'required|email|unique:users',
             'random_password' => 'required|boolean',
-            'password' => 'exclude_if:random_password,true|required|nullable|string|confirmed',
+            'password' => 'exclude_if:role_id,'.Role::ROLE_PARTICIPANT.'|exclude_if:random_password,true|required|nullable|string|confirmed',
             'phone' => 'sometimes|string|nullable',
             'address' => 'sometimes|string|nullable',
             'state' => ['exclude_unless:role_id,'.Role::ROLE_PARTICIPANT,'required',Rule::in(User::STATES)],

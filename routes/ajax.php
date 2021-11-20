@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('users/store','UserController@store');
+Route::get('users/representative/{representative}/participants','UserController@repParticipants')
+      ->name('users.representative.participants');
 Route::apiResource('users','UserController');
 
 Route::post('providers/remove-participants','ProviderController@removeParticipant')

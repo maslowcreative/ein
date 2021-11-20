@@ -4,9 +4,11 @@ namespace App\Http\Controllers\AJAX;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserPostRequest;
+use App\Http\Requests\UserUpdateRequest;
 use App\Models\Participant;
 use App\Models\Provider;
 use App\Models\ProviderItems;
+use App\Models\Representative;
 use App\Models\Role;
 use App\Models\User;
 use App\Traits\CreateUserTrait;
@@ -140,7 +142,6 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        dd('check');
         return $this->respondCreated();
     }
 
@@ -151,9 +152,28 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserUpdateRequest $request, $userId)
     {
-        //
+        $user = User::findOrFail($userId);
+
+        DB::beginTransaction();
+            $user->fill($request->all())->save();
+
+            if($user->hasRole('representative') && $request->role_id == Role::ROLE_REPRESENTATIVE) {
+                $user->representative->participants()->update(['representative_id'=> null]);
+                if(ifEmptyReturnNull($request->representative['participants'])){
+                    foreach ($request->representative['participants'] as $participantsId)
+                    {
+                        Participant::find($participantsId)
+                            ->fill(['representative_id' => $user->id])
+                            ->save();
+                    }
+                }
+            }
+
+        DB::commit();;
+
+        return $this->respondWithSuccess();
     }
 
     /**
@@ -165,5 +185,10 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function repParticipants(Representative $representative)
+    {
+        return $representative->participants()->with('user')->get();
     }
 }

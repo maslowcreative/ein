@@ -60,6 +60,10 @@
         "name": "ajax."
     },
     {
+        "uri": "ajax\/users\/representative\/{representative}\/participants",
+        "name": "ajax.users.representative.participants"
+    },
+    {
         "uri": "ajax\/users",
         "name": "ajax.users.index"
     },

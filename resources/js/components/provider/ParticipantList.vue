@@ -161,7 +161,7 @@ export default {
         this.getUsersList()
     },
     methods: {
-        getUsersList(page = 1) {
+        getUsersList(name,page = 1) {
             this.loading = true
             let data = { page: page }
             //Filtering Admin Role.
@@ -169,7 +169,7 @@ export default {
             data["filter[roles][0]"] = 'participant';
 
             if (this.filters.name) {
-                data["filter[name]"] = this.filters.name
+                data["filter[name]"] = name
             }
 
             if (this.filters.plan_status && this.filters.plan_status != "all") {

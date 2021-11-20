@@ -228,6 +228,7 @@ export default {
     openEditUserPopup(user,role) {
         this.user = user;
         if(role.name == "representative") {
+            this.$root.$emit('ein:rep-edit-popup-open',user.id);
             $("#userEditRepresentativeModal").modal('show');
         } else if( role.name == "participant" ) {
             $("#userEditParticipantModal").modal('show');

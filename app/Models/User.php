@@ -149,8 +149,20 @@ class User extends Authenticatable
                         $query->whereIn('status',$plan_status);
                     });
                 }),
+                AllowedFilter::callback('participant_has_representative', function (Builder $query, $participant_has_representatives) {
 
+                    $query->whereHas('participant', function (Builder $query) use ($participant_has_representatives){
 
+                        if($participant_has_representatives) {
+                            $query->whereNotNull('representative_id');
+                        }
+
+                        if(!$participant_has_representatives) {
+                            $query->whereNull('representative_id');
+                        }
+
+                    });
+                })
             ]);
     }
 
