@@ -134,7 +134,7 @@
       </div>
       <plan-popup v-bind:plan="plan" ></plan-popup>
       <edit-provider-popup v-bind:user="user"></edit-provider-popup>
-      <edit-participant-popup></edit-participant-popup>
+      <edit-participant-popup v-bind:user="participant"></edit-participant-popup>
       <edit-representative-popup v-bind:user="user"></edit-representative-popup>
     </div>
   </div>
@@ -162,7 +162,8 @@ export default {
           end_date:null,
           status:null,
       },
-      user: null
+      user: null,
+      participant: null
     }
   },
   watch: {
@@ -232,7 +233,27 @@ export default {
             this.$root.$emit('ein:rep-edit-popup-open',user.id);
             $("#userEditRepresentativeModal").modal('show');
         } else if( role.name == "participant" ) {
-            $("#userEditParticipantModal").modal('show');
+            this.participant = user;
+            //this.$root.$emit('ein:participant-edit-popup-open',user.id);
+
+            let data = { page: 1 , include:'participant.representative,participant.providers.user'}
+            //Filtering Admin Role.
+            data["filter[roles][0]"] = 'participant';
+            data["filter[id]"] = user.id;
+            let route = this.laroute.route("ajax.users.index", data);
+            axios
+                .get(route)
+                .then(res => {
+                    if(res.data.total == 1) {
+                        this.participant = res.data.data[0];
+                        this.$root.$emit('ein:participant-edit-popup-open',this.participant);
+                        $("#userEditParticipantModal").modal('show');
+
+                    }
+                });
+
+
+
         } else if( role.name == "provider" ) {
 
             let data = { page: 1 , include:'provider,provider.items,provider.participants.user'}

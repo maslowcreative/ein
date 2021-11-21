@@ -171,6 +171,11 @@ class UserController extends Controller
                 $user->provider->items()->createMany($items);
             }
 
+            if($user->hasRole('participant') && $request->role_id == Role::ROLE_PARTICIPANT) {
+                $user->participant->fill($request->participant)->save();
+                $user->participant->providers()->sync($request->participant['providers']);
+            }
+
             if($user->hasRole('representative') && $request->role_id == Role::ROLE_REPRESENTATIVE) {
                 $user->representative->participants()->update(['representative_id'=> null]);
                 if(ifEmptyReturnNull($request->representative['participants'])){
