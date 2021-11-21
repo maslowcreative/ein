@@ -15,6 +15,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('users/store','UserController@store');
 Route::get('users/representative/{representative}/participants','UserController@repParticipants')
       ->name('users.representative.participants');
+
+Route::put('users/{user}/basic-info','UserController@updateBasicInfo')->name('users.update.basic.info');
+
 Route::apiResource('users','UserController');
 
 Route::post('providers/remove-participants','ProviderController@removeParticipant')

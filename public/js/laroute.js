@@ -64,6 +64,10 @@
         "name": "ajax.users.representative.participants"
     },
     {
+        "uri": "ajax\/users\/{user}\/basic-info",
+        "name": "ajax.users.update.basic.info"
+    },
+    {
         "uri": "ajax\/users",
         "name": "ajax.users.index"
     },

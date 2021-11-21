@@ -20,6 +20,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 use function PHPUnit\Framework\isEmpty;
 
 class UserController extends Controller
@@ -188,10 +189,36 @@ class UserController extends Controller
                 }
             }
 
-        DB::commit();;
+        DB::commit();
 
         return $this->respondWithSuccess();
     }
+
+    /**
+     * Update the basic info.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updateBasicInfo(Request $request, $userId)
+    {
+        $user = User::findOrFail($userId);
+
+        $request->validate([
+            'name' => 'required|string',
+            'email' => 'required|email|unique:users,email,'. $userId,
+            'password' => 'sometimes|exclude_if:role_id,'.Role::ROLE_PARTICIPANT.'|required|string|confirmed',
+            'phone' => 'sometimes|string|nullable',
+            'address' => 'sometimes|string|nullable',
+
+        ]);
+
+        $user->fill($request->all())->save();
+
+        return $this->respondWithSuccess();
+    }
+
 
     /**
      * Remove the specified resource from storage.
