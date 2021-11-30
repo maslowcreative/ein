@@ -19,14 +19,14 @@
                                     <select class="form-select form-select-sm" v-model="filters.claim_status">
                                         <option  value="all">All</option>
                                         <option value="0">Pending Approval</option>
-                                        <option value="1">Approved by Represetntative</option>
-                                        <option value="2">Denied by Represetntative</option>
-                                        <option value="3">Pending Reconcilation</option>
+                                        <option value="1">Approved by Representative</option>
+                                        <option value="2">Denied by Representative</option>
+                                        <option value="3">Admin Approved</option>
                                         <option value="4">Reconciled</option>
                                     </select>
                                 </div>
                                 <div class="">
-                                    <label class="form-label">Claim Status</label>
+                                    <label class="form-label">Claim Type</label>
                                     <select class="form-select form-select-sm" v-model="filters.claim_type">
                                         <option  value="all">All</option>
                                         <option value="CANC">Cancellation Charges</option>

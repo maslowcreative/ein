@@ -1,10 +1,9 @@
 <template>
   <div>
-    <h1 class="h2 mb-4 fw-bold pb-2">Dashboard</h1>
-    <div class="qo-section bg-primary text-white">
-      <h4 class="fw-bold">Quick Options</h4>
-      <p>Choose one of the quick options for easier navigation</p>
 
+    <div class="qo-section bg-primary text-white">
+<!--      <h1 class="h2 mb-4 fw-bold pb-2">Dashboard</h1>-->
+      <h4 class="fw-bold">Dashboard</h4>
       <div class="grid options-grid">
         <a href="#" class="option-item" data-bs-toggle="modal" data-bs-target="#userModal">
           <ion-icon name="person-add-outline" class="option-item-icon"></ion-icon>
@@ -21,7 +20,7 @@
         </a>
         <a href="#" class="option-item" data-bs-toggle="modal" data-bs-target="#fileUpload">
           <ion-icon name="push-outline" class="option-item-icon"></ion-icon>
-          Bulk Upload
+          Reconcile
         </a>
         <a href="#" class="option-item" data-bs-toggle="modal" data-bs-target="#fileDownload">
           <ion-icon name="push-outline" class="flip-v option-item-icon"></ion-icon>

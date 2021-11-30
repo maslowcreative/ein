@@ -87,6 +87,7 @@ class ClaimController extends Controller
                 'invoice_path' => $path
             ])
         );
+
         foreach ($request->service as $index => $item) {
             $key = $index + 1;
             $item = array_merge($item,[
@@ -134,6 +135,8 @@ class ClaimController extends Controller
             $items->whereIn('id',explode(',',\request()->claims));
         }
 
+        $items->update(['status' => Claim::STATUS_APPROVED_BY_ADMIN]);
+
         $items = $items->get();
 
         $name = 'claims '.Carbon::now()->toDateString(). '.csv';
@@ -154,7 +157,7 @@ class ClaimController extends Controller
                 'GstCode' => $item->gst_code,
                 'InKindFundingProgram' => '',
                 'ClaimType' => $item->claim_type,
-                'CancellationReason' => '',
+                'CancellationReason' => $item->cancellation_reason,
                 'ABN of Support Provider' => '',
             ];
         });
