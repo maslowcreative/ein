@@ -102,7 +102,7 @@
       </div>
       <div class="mt-4 mt-md-5 card-right-btns justify-content-end">
 <!--        <a class="btn btn-light" :href="laroute.route('ajax.claims.bulk.upload.file')" >Download Selected</a>-->
-        <button class="btn btn-light" v-on:click="bulkUploadFile" >Download Selected</button>
+        <button class="btn btn-light" v-on:click="bulkUploadFile" >Approve Selected</button>
         <button class="btn btn-primary">Upload Selected</button>
       </div>
       <div class="mt-4 mt-md-5">
