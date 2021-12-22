@@ -106,7 +106,7 @@
                     <button class="btn btn-link p-0 mx-1" v-on:click="openEditUserPopup(user,user.roles[0])">
                       <ion-icon name="create-outline"></ion-icon>
                     </button>
-                    <button class="btn btn-link p-0 mx-1">
+                    <button v-on:click="userDelete(user)" class="btn btn-link p-0 mx-1">
                       <ion-icon name="trash-outline"></ion-icon>
                     </button>
                   </div>
@@ -144,6 +144,7 @@
 import AdvancedLaravelVuePaginate from "advanced-laravel-vue-paginate"
 import "advanced-laravel-vue-paginate/dist/advanced-laravel-vue-paginate.css"
 import PlanPopup from "../popups/PlanPopup"
+import Form from "vform";
 
 export default {
   components: { AdvancedLaravelVuePaginate, PlanPopup },
@@ -273,6 +274,23 @@ export default {
                 });
 
         }
+
+    },
+    userDelete(user) {
+        let route = this.laroute.route("ajax.users.destroy", {'user' : user.id });
+        let form = new Form();
+        form.
+            delete(route)
+            .then(res => {
+                this.getUsersList();
+                this.$toastr.s("Success", "User deleted!")
+            })
+            .catch(error => {
+                this.$toastr.e("Error", "Some thing went wrong.")
+            })
+            .finally(() => {
+
+            })
 
     }
   },

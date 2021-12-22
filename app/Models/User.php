@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
@@ -15,7 +16,7 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class User extends Authenticatable
 {
-    use HasFactory,HasRoles,Notifiable;
+    use HasFactory,HasRoles,Notifiable,SoftDeletes;
 
     const STATUS_ACTIVE = 1;
     const STATUS_INACTIVE = 0;
