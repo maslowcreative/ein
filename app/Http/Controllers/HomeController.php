@@ -57,4 +57,8 @@ class HomeController extends Controller
     public function claimInvoiceDownload(Claim $claim){
         return Storage::download($claim->invoice_path);
     }
+
+    public function planFileDownload($fileName){
+        return Storage::download('plans/'.$fileName);
+    }
 }

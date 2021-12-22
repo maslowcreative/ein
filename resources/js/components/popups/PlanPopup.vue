@@ -11,9 +11,24 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-4">
-                                <label for="NDISPlan" class="form-label fw-bold">NDIS Plan</label>
-                                <input type="text" class="form-control" id="NDISPlan" v-model="plan.plan_name" placeholder="NDIS Plan Name">
-                                <div class="invalid-msg" v-if="form.errors.has('plan_name')" v-html="form.errors.get('plan_name')" />
+                                <label for="ndisPlanFile" class="form-label fw-bold">NDIS Plan  </label>
+
+                                <a v-if="plan.file_name" class="btn btn-link p-0 mx-1" :href="this.laroute.route('plan.file.download',{'file_name':plan.file_name })">
+                                    <ion-icon name="push-outline" class="flip-v"></ion-icon>
+                                </a>
+                                <input
+                                    type="file"
+                                    class="form-control"
+                                    id="ndisPlanFile"
+                                    placeholder="Plan File"
+                                    v-on:change="onFileChange"
+                                    accept="application/pdf"
+                                />
+                                <div
+                                    class="invalid-msg"
+                                    v-if="form.errors.has('file_name')"
+                                    v-html="form.errors.get('file_name')"
+                                />
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -92,7 +107,7 @@ export default {
         return {
            loader : false,
            form : new Form({
-               plan_name : null,
+               file_name : null,
                start_date: this.plan.start_date,
                end_date: null,
                status: null,
@@ -106,7 +121,7 @@ export default {
     },
     methods:{
         updatePlan(planId) {
-            this.form.plan_name = this.plan.plan_name;
+            this.form.file_name = this.plan.file_name;
             this.form.start_date = this.plan.start_date;
             this.form.end_date = this.plan.end_date;
             this.form.status = this.plan.status;
@@ -127,6 +142,27 @@ export default {
                 .finally(() => {
                     this.loader = false
                 })
+        },
+        onFileChange(e) {
+            var files = e.target.files || e.dataTransfer.files;
+            if (!files.length)
+                return;
+
+            let route = this.laroute.route("ajax.plans.upload");
+            let  form = new Form({
+                'file':files[0]
+            });
+            form
+                .post(route)
+                .then(res => {
+                    this.plan.file_name = res.data.file_name;
+                })
+                .catch(error => {
+                    this.form.file_name = null;
+                    this.$toastr.e("Error", "Some thing went wrong while file upload.")
+                })
+                .finally(() => {
+                });
         }
     }
 }

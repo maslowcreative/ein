@@ -56,6 +56,10 @@
         "name": "claim.invoice.download"
     },
     {
+        "uri": "plan\/{file_name}",
+        "name": "plan.file.download"
+    },
+    {
         "uri": "ajax\/users\/store",
         "name": "ajax."
     },

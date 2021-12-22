@@ -52,7 +52,8 @@ class PlanController extends Controller
     public function update(Request $request, Plan $plan)
     {
         $request->validate([
-            'plan_name' => 'required',
+            //'plan_name' => 'required',
+            'file_name' => 'string',
             'status' => 'required|boolean',
             'start_date' => 'required',
             'end_date' => 'required'
