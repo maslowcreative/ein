@@ -74,7 +74,7 @@
           <tbody>
             <tr v-for="item in items.data">
               <td>
-                <input :disabled="item.status != 1" :checked="isChecked(item.id)" v-on:click="checkboxChanged($event,item.id)" class="form-check-input" type="checkbox"  aria-label="..." />
+                <input v-if="item.status == 1" :disabled="item.status != 1" :checked="isChecked(item.id)" v-on:click="checkboxChanged($event,item.id)" class="form-check-input" type="checkbox"  aria-label="..." />
               </td>
               <td class="not-center">
                 <div class="fw-bold">
@@ -91,8 +91,8 @@
                   <a v-if="item.claim.invoice_path" class="btn btn-link p-0 mx-1" :href="item.claim.invoice_url">
                       <ion-icon name="push-outline" class="flip-v"></ion-icon>
                   </a>
-                  <button class="btn btn-link p-0 mx-1">
-                    <ion-icon name="document-attach-outline"></ion-icon>
+                  <button class="btn btn-link p-0 mx-1" v-on:click="openClaimModal(item.claim,item)">
+                    <ion-icon name="cash-outline"></ion-icon>
                   </button>
                 </div>
               </td>
@@ -101,9 +101,14 @@
         </table>
       </div>
       <div class="mt-4 mt-md-5 card-right-btns justify-content-end">
+          <button v-if="!claimApproveLoader" class="btn btn-light" v-on:click="bulkUploadFile" >Approve Selected</button>
+          <button v-else class="btn btn-light" type="button" disabled>
+              <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+              Loading...
+          </button>
 <!--        <a class="btn btn-light" :href="laroute.route('ajax.claims.bulk.upload.file')" >Download Selected</a>-->
-        <button class="btn btn-light" v-on:click="bulkUploadFile" >Approve Selected</button>
-        <button class="btn btn-primary">Upload Selected</button>
+
+        <button class="btn btn-primary">Bulk Download (ABA)</button>
       </div>
       <div class="mt-4 mt-md-5">
           <advanced-laravel-vue-paginate
@@ -115,15 +120,19 @@
           />
       </div>
     </div>
+    <view-invoice-popup v-bind:claim="claim"></view-invoice-popup>
     <provider-claim-detail-popup v-bind:claim="claim"></provider-claim-detail-popup>
   </div>
 </template>
 
 <script>
+import ViewInvoicePopup from "../provider/ViewInvoicePopup";
 export default {
-  data() {
+    components: {ViewInvoicePopup},
+    data() {
     return {
         loader: false,
+        claimApproveLoader: false,
         items:{},
         claim: {
             id: null,
@@ -206,7 +215,7 @@ export default {
               this.$toastr.e("Error", "No claim selected.");
               return false;
           }
-
+          this.claimApproveLoader = true;
           let route = this.laroute.route("ajax.claims.admin.approved");
           axios
               .post(route,{claims:this.selectedClaims})
@@ -216,10 +225,13 @@ export default {
                   this.$toastr.s('Sucess','Claims approved!');
               })
               .catch(error => {
+                  this.claimApproveLoader = false;
                   this.$toastr.e("Error", "Something went wrong.");
                   console.log(error)
               })
-              .finally(() => ( [] ))
+              .finally(() => {
+                  this.claimApproveLoader = false;
+              })
       },
       checkboxChanged(event,claimId) {
         if(event.target.checked) {
@@ -230,6 +242,14 @@ export default {
       },
       isChecked(claimId) {
           return this.selectedClaims.includes(claimId);
+      },
+      openClaimModal(claim,item) {
+          this.claim = claim;
+          this.claim.items = [item];
+          this.claim.claim_reference = item.claim_reference;
+          this.claim.paid = '$' + (item.amount_paid ? item.amount_paid : 0);
+          this.claim.total = '$' + item.amount_claimed;
+          $("#claimPopup").modal('show');
       }
   }
 }

@@ -82,7 +82,7 @@
                       </div>
                     </a>
                   </li>
-                  <li v-if="form.role_id != 3">
+                  <li v-if="form.role_id != 3 && form.role_id != 4">
                     <a
                       class="title d-inline-flex align-items-center"
                       href="javascript:void(0)"
@@ -513,7 +513,7 @@
                   </div>
                 </div>
 
-                <!-- Step 3 Provider-->
+                <!-- Step 3-->
                 <div class="step3 mw290 mx-auto" v-show="step === 3">
                   <div class="mb-4">
                     <label for="homeAddress" class="form-label fw-bold">Home Address</label>
@@ -542,7 +542,7 @@
                         </select>
                         <div class="invalid-msg" v-if="form.errors.has('state')" v-html="form.errors.get('state')" />
                     </div>
-                  <div class="mb-4">
+                  <div class="mb-4" v-if="form.role_id != 4">
                     <label class="form-label fw-bold">E-mail Address</label>
                     <input
                       type="text"
@@ -786,7 +786,7 @@ export default {
       loader: false,
       stepsMap: {
         2: 5,
-        4: 5,
+        4: 4,
         3: 4,
       },
       step: 1,
