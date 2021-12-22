@@ -124,8 +124,16 @@
         "name": "ajax.claims.bulk.upload.file"
     },
     {
+        "uri": "ajax\/claims\/upload-reconciled-file",
+        "name": "ajax.claims.upload.reconciled.file"
+    },
+    {
         "uri": "ajax\/claims\/list",
         "name": "ajax.claims.list"
+    },
+    {
+        "uri": "ajax\/claims\/admin\/approved",
+        "name": "ajax.claims.admin.approved"
     },
     {
         "uri": "ajax\/claims",

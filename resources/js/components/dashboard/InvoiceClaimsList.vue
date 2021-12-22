@@ -207,20 +207,16 @@ export default {
               return false;
           }
 
-          let route = this.laroute.route("ajax.claims.bulk.upload.file",{claims:this.selectedClaims});
+          let route = this.laroute.route("ajax.claims.admin.approved");
           axios
-              .post(route)
+              .post(route,{claims:this.selectedClaims})
               .then(res => {
-                  console.log();
-                  const blob = new Blob([res.data], { type: "text/csv" });
-                  const link = document.createElement("a");
-                  link.href = URL.createObjectURL(blob);
-                  link.download = res.headers['content-disposition'].split(';')[1].split('"')[1];
-                  link.click();
-                  URL.revokeObjectURL(link.href);
+                  this.selectedClaims = [];
                   this.getProviderClaimsList();
+                  this.$toastr.s('Sucess','Claims approved!');
               })
               .catch(error => {
+                  this.$toastr.e("Error", "Something went wrong.");
                   console.log(error)
               })
               .finally(() => ( [] ))

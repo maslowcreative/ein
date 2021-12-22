@@ -44,13 +44,14 @@
             <div class="mx-md-5 px-md-5 my-4 pt-2">
               <div class="input-group-overlay">
                 <div class="input-group-prepend-overlay">
-                  <span class="input-group-text text-primary"
-                    ><ion-icon name="document-attach-outline"></ion-icon
-                  ></span>
+<!--                  <span class="input-group-text text-primary"-->
+<!--                    ><ion-icon name="document-attach-outline"></ion-icon-->
+<!--                  ></span>-->
                 </div>
                 <input
-                  type="text"
+                  type="file"
                   class="form-control prepended-form-control"
+                  v-on:change="onFileChange"
                   placeholder="Drag & Drop File Here"
                   aria-label="Sizing example input"
                   aria-describedby="inputGroup-sizing-default"
@@ -65,7 +66,12 @@
               </div>
             </div>
             <div class="mw290 mx-auto px-4 mt-3 mb-4">
-              <button class="btn btn-primary btn-lg w-100 py-3">Upload File</button>
+                <button v-if="!loader" type="button" v-on:click="uploadReconciledFile()" class="btn btn-primary btn-lg w-100 py-3">Upload File</button>
+                <button v-else class="btn btn-primary btn-lg w-100 py-3" type="button" disabled>
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    Loading...
+                </button>
+
             </div>
           </div>
         </div>
@@ -84,8 +90,13 @@
             <h3 class="downloadPopupTitle">Download Approved Claims</h3>
 
             <div class="mw290 mx-auto px-4 mt-5 mb-4">
-              <a :href="laroute.route('ajax.claims.bulk.upload.file')" class="btn btn-primary btn-lg w-100 py-3">Download File</a>
+                <a v-if="!loader" :href="laroute.route('ajax.claims.bulk.upload.file')" class="btn btn-primary btn-lg w-100 py-3">Download File</a>
+                <button v-else class="btn btn-primary btn-lg w-100 py-3" type="button" disabled>
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    Loading...
+                </button>
             </div>
+
           </div>
         </div>
       </div>
@@ -96,12 +107,44 @@
 <script>
 import CreateAdminPopup from "../popups/CreateAdminPopup"
 import CreateUserPopup from "../popups/CreateUserPopup"
+import Form from "vform";
 
 export default {
   components: { CreateUserPopup, CreateAdminPopup },
   data() {
-    return {}
+    return {
+        loader: false,
+        form: new Form({
+            file: {},
+        }),
+    }
   },
-  mounted() {},
+  mounted() {
+  },
+  methods: {
+      onFileChange(e) {
+          var files = e.target.files || e.dataTransfer.files;
+          if (!files.length)
+              return;
+          this.form.file = files[0];
+      },
+      uploadReconciledFile()  {
+          this.loader = true;
+          let route = this.laroute.route("ajax.claims.upload.reconciled.file",);
+          this.form
+              //.post(route)
+              .post( route,null,{ headers: { 'Content-Type': 'multipart/form-data'}} )
+              .then(res => {
+                  this.loader = false;
+                  this.$toastr.s('Success','Reconciled file proccessed succesfully');
+              })
+              .catch(error => {
+                  this.$toastr.e("Error", "Some thing went wrong.")
+              })
+              .finally(() => {
+                  this.loader = false;
+              });
+      },
+  }
 }
 </script>

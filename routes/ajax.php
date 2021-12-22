@@ -27,13 +27,15 @@ Route::apiResource('providers','ProviderController');
 Route::get('claims/store','ClaimController@store');
 Route::post('claims/{claim}/representative-action','ClaimController@approvedByRepresentative')->name('claims.representative.action');
 Route::match(['get', 'post'],'claims/bulk-upload-file','ClaimController@bulkUploadFile')->name('claims.bulk.upload.file');
+Route::post('claims/upload-reconciled-file','ClaimController@uploadReconciledFile')->name('claims.upload.reconciled.file');
 Route::get('claims/list','ClaimController@index2')->name('claims.list');
+Route::post('claims/admin/approved','ClaimController@approveClaimsByAdmin')->name('claims.admin.approved');
 Route::apiResource('claims','ClaimController');
 Route::apiResource('plans','PlanController');
 
 Route::apiResource('services','ServiceController');
 Route::apiResource('admins','AdminController');
 
-
+// ajax.claims.upload.reconciled.file
 
 

@@ -8,13 +8,17 @@ use App\Models\Claim;
 use App\Models\ClaimLineItem;
 use App\Models\Participant;
 use App\Models\Provider;
+use Box\Spout\Common\Exception\IOException;
 use Carbon\Carbon;
 use F9Web\ApiResponseHelpers;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
+use phpDocumentor\Reflection\Types\Collection;
+use PHPUnit\Exception;
 use Rap2hpoutre\FastExcel\FastExcel;
 
 class ClaimController extends Controller
@@ -123,23 +127,33 @@ class ClaimController extends Controller
         return $this->respondWithSuccess();
     }
 
+    public function approveClaimsByAdmin(Request $request)
+    {
+        ClaimLineItem::whereIn('id',$request->claims)->update(['status'=> Claim::STATUS_APPROVED_BY_ADMIN]);
+        return $this->respondWithSuccess();
+    }
+
+    /**
+     * @return \Illuminate\Http\JsonResponse|string|\Symfony\Component\HttpFoundation\StreamedResponse
+     * @throws \Box\Spout\Common\Exception\IOException
+     * @throws \Box\Spout\Common\Exception\InvalidArgumentException
+     * @throws \Box\Spout\Common\Exception\UnsupportedTypeException
+     * @throws \Box\Spout\Writer\Exception\WriterNotOpenedException
+     */
     public function bulkUploadFile()
     {
         if(!Auth::user()->hasRole('admin')) {
             return $this->respondForbidden();
         }
 
-        $items = ClaimLineItem::with('claim')->where('status',Claim::STATUS_APPROVED_BY_REPRESENTATIVE);
-
+        $items = ClaimLineItem::with('claim')->where('status',Claim::STATUS_APPROVED_BY_ADMIN);
         if(\request()->method() == Request::METHOD_POST){
             $items->whereIn('id',explode(',',\request()->claims));
         }
-
-        $items->update(['status' => Claim::STATUS_APPROVED_BY_ADMIN]);
-
         $items = $items->get();
 
         $name = 'claims '.Carbon::now()->toDateString(). '.csv';
+
         return (new FastExcel($items))->download($name, function ($item) {
             return [
                 'RegistrationNumber' => $item->claim->provider_id,
@@ -162,6 +176,47 @@ class ClaimController extends Controller
             ];
         });
             //->sendHeaders(['X-Header-filename'=>$name]);
+    }
+
+    /**
+     * @param Request $request
+     */
+    public function uploadReconciledFile(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|file|mimes:csv,xls,xlsx,xlsb',
+        ]);
+
+        try {
+            $path = $request->file('file')->store('reconciliations');
+            $fullPath = Storage::path($path);
+            $collection = (new FastExcel)->import($fullPath);
+
+            if($collection->isNotEmpty())
+            {
+                foreach ($collection as $claim) {
+
+                    $claimItem = ClaimLineItem::where('claim_reference',$claim['ProvClaimRef'])->first();
+                    if($claimItem){
+                        $claimItem->amount_paid = is_numeric( $claim['AmountPaid'] )? $claim['AmountPaid'] : null;
+                        $claimItem->status = Claim::STATUS_RECONCILATION_DONE;
+                        $claimItem->save();
+                    }
+                }
+            }
+
+
+        } catch (IOException $e) {
+            dd($e->getMessage());
+        }
+        catch (QueryException $e){
+            dd($e->getMessage());
+        }
+        catch (Exception $e) {
+            dd($e->getMessage());
+        }
+
+        return $this->respondWithSuccess();
     }
 
     /**
