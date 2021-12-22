@@ -156,6 +156,10 @@
         "name": "ajax.claims.destroy"
     },
     {
+        "uri": "ajax\/plans\/upload",
+        "name": "ajax.plans.upload"
+    },
+    {
         "uri": "ajax\/plans",
         "name": "ajax.plans.index"
     },

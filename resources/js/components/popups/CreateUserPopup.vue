@@ -610,28 +610,53 @@
                   <div class="row">
                     <div class="col-md-6">
                       <div class="mb-4">
-                        <label for="ndisPlanName" class="form-label">NDIS Plan</label>
-                        <div class="input-group-overlay">
-                          <div class="input-group-prepend-overlay">
-                            <span class="input-group-text text-primary"
-                              ><ion-icon name="document-attach-outline"></ion-icon
-                            ></span>
+                          <label for="ndisPlanFile" class="form-label">NDIS File</label>
+                          <div class="input-group-overlay">
+<!--                              <div class="input-group-prepend-overlay">-->
+<!--                                <span class="input-group-text text-primary"-->
+<!--                                ><ion-icon name="document-attach-outline"></ion-icon-->
+<!--                                ></span>-->
+<!--                              </div>-->
+                              <input
+                                  type="file"
+                                  class="form-control"
+                                  id="ndisPlanFile"
+                                  placeholder="Plan File"
+                                  v-on:change="onFileChange"
+                                  accept="application/pdf"
+                              />
+                              <div
+                                  class="invalid-msg"
+                                  v-if="form.errors.has('participant.plan.file_name')"
+                                  v-html="form.errors.get('participant.plan.file_name')"
+                              />
                           </div>
-                          <input
-                            type="text"
-                            class="form-control prepended-form-control"
-                            id="ndisPlanName"
-                            placeholder="Plan Name"
-                            v-model = "form.participant.plan.plan_name"
-                          />
-                          <div
-                                class="invalid-msg"
-                                v-if="form.errors.has('participant.plan.plan_name')"
-                                v-html="form.errors.get('participant.plan.plan_name')"
-                            />
-                        </div>
                       </div>
                     </div>
+<!--                    <div class="col-md-6">-->
+<!--                      <div class="mb-4">-->
+<!--                        <label for="ndisPlanName" class="form-label">NDIS Plan</label>-->
+<!--                        <div class="input-group-overlay">-->
+<!--                          <div class="input-group-prepend-overlay">-->
+<!--                            <span class="input-group-text text-primary"-->
+<!--                              ><ion-icon name="document-attach-outline"></ion-icon-->
+<!--                            ></span>-->
+<!--                          </div>-->
+<!--                          <input-->
+<!--                            type="text"-->
+<!--                            class="form-control prepended-form-control"-->
+<!--                            id="ndisPlanName"-->
+<!--                            placeholder="Plan Name"-->
+<!--                            v-model = "form.participant.plan.plan_name"-->
+<!--                          />-->
+<!--                          <div-->
+<!--                                class="invalid-msg"-->
+<!--                                v-if="form.errors.has('participant.plan.plan_name')"-->
+<!--                                v-html="form.errors.get('participant.plan.plan_name')"-->
+<!--                            />-->
+<!--                        </div>-->
+<!--                      </div>-->
+<!--                    </div>-->
                     <div class="col-md-6">
                       <div class="mb-4">
                         <label  class="form-label">Types of Charges</label>
@@ -813,7 +838,7 @@ export default {
           representative_id: null,
           providers: [],
           plan: {
-            plan_name : null,
+            file_name: null,
             start_date: null,
             end_date: null,
             budget: null,
@@ -867,7 +892,7 @@ export default {
             representative_id: null,
             providers: [],
             plan: {
-              plan_name : null,
+              file_name: null,
               start_date: null,
               end_date: null,
               budget: null,
@@ -1155,6 +1180,27 @@ export default {
        this.representativeSelected = null;
        this.servicesItemsResult = [];
        this.servicesItemsSelected = [];
+   },
+   onFileChange(e) {
+      var files = e.target.files || e.dataTransfer.files;
+      if (!files.length)
+          return;
+
+      let route = this.laroute.route("ajax.plans.upload");
+      let  form = new Form({
+          'file':files[0]
+      });
+      form
+           .post(route)
+           .then(res => {
+               this.form.participant.plan.file_name = res.data.file_name;
+            })
+           .catch(error => {
+               this.form.participant.plan.file_name = null;
+               this.$toastr.e("Error", "Some thing went wrong while file upload.")
+           })
+           .finally(() => {
+           });
    }
 
 

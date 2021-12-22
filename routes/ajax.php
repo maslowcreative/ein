@@ -31,6 +31,7 @@ Route::post('claims/upload-reconciled-file','ClaimController@uploadReconciledFil
 Route::get('claims/list','ClaimController@index2')->name('claims.list');
 Route::post('claims/admin/approved','ClaimController@approveClaimsByAdmin')->name('claims.admin.approved');
 Route::apiResource('claims','ClaimController');
+Route::post('plans/upload','PlanController@uploadPlanFile')->name('plans.upload');
 Route::apiResource('plans','PlanController');
 
 Route::apiResource('services','ServiceController');

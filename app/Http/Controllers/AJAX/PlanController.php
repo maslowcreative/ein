@@ -73,4 +73,16 @@ class PlanController extends Controller
     {
         //
     }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function uploadPlanFile(Request $request)
+    {
+        $request->validate(['file' => 'required|mimes:pdf' ]);
+        $path = $request->file('file')->store('plans');
+        $file_name = explode('/',$path)[1];
+        return $this->respondWithSuccess(compact('file_name'));
+    }
 }
