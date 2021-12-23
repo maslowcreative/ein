@@ -1190,16 +1190,20 @@ export default {
       let  form = new Form({
           'file':files[0]
       });
+       this.loader = true;
       form
            .post(route)
            .then(res => {
                this.form.participant.plan.file_name = res.data.file_name;
+               this.loader = false;
             })
            .catch(error => {
                this.form.participant.plan.file_name = null;
-               this.$toastr.e("Error", "Some thing went wrong while file upload.")
+               this.$toastr.e("Error", "Some thing went wrong while file upload.");
+               this.loader = false;
            })
            .finally(() => {
+               this.loader = false;
            });
    }
 
