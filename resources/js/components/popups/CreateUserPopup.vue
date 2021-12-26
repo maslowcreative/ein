@@ -272,7 +272,7 @@
                         <div
                           class="invalid-msg"
                           v-if="form.errors.has('participant.dob')"
-                          v-html="form.errors.get('participant.dob')"
+                          v-html="form.errors.get('participant.dob').replace('participant.dob','dob')"
                         />
                       </div>
                     </div>
@@ -289,7 +289,7 @@
                         <div
                           class="invalid-msg"
                           v-if="form.errors.has('participant.ndis_number')"
-                          v-html="form.errors.get('participant.ndis_number')"
+                          v-html="form.errors.get('participant.ndis_number').replace('participant.ndis number','ndis number')"
                         />
                       </div>
                     </div>
@@ -359,7 +359,7 @@
                           <div
                             class="invalid-msg"
                             v-if="form.errors.has('participant.representative_id')"
-                            v-html="form.errors.get('participant.representative_id')"
+                            v-html="form.errors.get('participant.representative_id').replace('participant.representative id','representative')"
                           />
                         </div>
                       </div>
@@ -580,7 +580,7 @@
                       <div
                         class="invalid-msg"
                         v-if="form.errors.has('provider.abn')"
-                        v-html="form.errors.get('provider.abn')"
+                        v-html="form.errors.get('provider.abn').replace('provider.abn','abn')"
                       />
                     </div>
                     <div class="mb-4">
@@ -628,7 +628,7 @@
                               <div
                                   class="invalid-msg"
                                   v-if="form.errors.has('participant.plan.file_name')"
-                                  v-html="form.errors.get('participant.plan.file_name')"
+                                  v-html="form.errors.get('participant.plan.file_name').replace('participant.plan.file name','file name')"
                               />
                           </div>
                       </div>
@@ -669,7 +669,7 @@
                         <div
                           class="invalid-msg"
                           v-if="form.errors.has('participant.plan.charges_types')"
-                          v-html="form.errors.get('participant.plan.charges_types')"
+                          v-html="form.errors.get('participant.plan.charges_types').replace('participant.plan.charges types','charges types')"
                         />
                        </div>
                     </div>
@@ -686,7 +686,7 @@
                         <div
                           class="invalid-msg"
                           v-if="form.errors.has('participant.plan.start_date')"
-                          v-html="form.errors.get('participant.plan.start_date')"
+                          v-html="form.errors.get('participant.plan.start_date').replace('participant.plan.start date','start date')"
                         />
                       </div>
                     </div>
@@ -703,7 +703,7 @@
                         <div
                           class="invalid-msg"
                           v-if="form.errors.has('participant.plan.end_date')"
-                          v-html="form.errors.get('participant.plan.end_date')"
+                          v-html="form.errors.get('participant.plan.end_date').replace('participant.plan.end date','end date')"
                         />
                       </div>
                     </div>
@@ -719,7 +719,7 @@
                         <div
                           class="invalid-msg"
                           v-if="form.errors.has('participant.plan.budget')"
-                          v-html="form.errors.get('participant.plan.budget')"
+                          v-html="form.errors.get('participant.plan.budget').replace('participant.plan.budget','budget')"
                         />
                       </div>
                     </div>
