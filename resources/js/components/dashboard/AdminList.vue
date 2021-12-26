@@ -62,14 +62,14 @@
               <td>
                 <div class="d-inline-block">
                   <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" checked id="flexSwitchCheckDefault" />
+                    <input class="form-check-input" v-on:change="onChange($event,admin.id)" type="checkbox" v-model="admin.status" id="flexSwitchCheckDefault" />
                     <label class="form-check-label" for="flexSwitchCheckDefault"></label>
                   </div>
                 </div>
               </td>
               <td>
                 <div class="d-inline-flex flex-nowrap align-items-center justify-content-around btn-group fs-lg">
-                  <button class="btn btn-link p-0 fs-16 mx-1">
+                  <button class="btn btn-link p-0 fs-16 mx-1" v-on:click="openPermissionPopup(admin)">
                     <ion-icon name="options-outline"></ion-icon>
                   </button>
                 </div>
@@ -93,7 +93,8 @@
                 useStyle="bootstrap"
                 listClass="pagination"
             />
-        </div>
+      </div>
+      <admin-permissions-popup v-bind:uid="adminId" v-bind:permissions="permissions"></admin-permissions-popup>
     </div>
   </div>
 </template>
@@ -102,12 +103,21 @@
 
 import AdvancedLaravelVuePaginate from "advanced-laravel-vue-paginate";
 import "advanced-laravel-vue-paginate/dist/advanced-laravel-vue-paginate.css";
+import Form from "vform";
 
 export default {
   components: { AdvancedLaravelVuePaginate },
   data() {
     return {
       loader: false,
+      adminId: null,
+       permissions: {
+          edit_provider_profiles: false,
+          edit_participants_profiles : false,
+          edit_representatives_profiles: false,
+          approving_claims: false,
+          export_import_documents: false
+      },
       items: {},
       filters: {
         name: null,
@@ -133,9 +143,10 @@ export default {
       this.loader = true
       let data = { page: page }
       //Filtering Admin Role.
-      data["filter[not_in][0]"] = 2;
-      data["filter[not_in][0]"] = 3;
-      data["filter[not_in][0]"] = 4;
+      data["filter[not_in][0]"] = 1;
+      data["filter[not_in][1]"] = 2;
+      data["filter[not_in][2]"] = 3;
+      data["filter[not_in][3]"] = 4;
       if (this.filters.name) {
         data["filter[name]"] = this.filters.name;
       }
@@ -150,6 +161,38 @@ export default {
         })
         .finally(() => (this.loader = false))
     },
+    onChange: function(e,userId){
+        let form = new Form({
+            status: e.target.checked ? 1 : 0,
+            user_id: userId
+        });
+        let status = e.target.checked ? 'Enabled' : 'Disabled';
+        let route = this.laroute.route("ajax.user.status.toggle")
+        form
+           .post(route)
+           .then(res => {
+              this.$toastr.s("Success", "User "+status+ " successfully!")
+           })
+           .catch(error => {
+               this.$toastr.e("Error", "Some thing went wrong.")
+           })
+           .finally(() => {
+           })
+    },
+    openPermissionPopup: function (admin){
+        this.permissions = {
+            edit_provider_profiles: false,
+                edit_participants_profiles : false,
+                edit_representatives_profiles: false,
+                approving_claims: false,
+                export_import_documents: false
+        };
+        admin.permissions.forEach((item, index) => {
+            this.permissions[item.name] = true;
+        });
+        this.adminId = admin.id;
+        $("#adminPermissionModal").modal('show');
+    }
   },
 }
 </script>

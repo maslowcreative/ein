@@ -72,6 +72,10 @@
         "name": "ajax.users.update.basic.info"
     },
     {
+        "uri": "ajax\/users\/status-toggle",
+        "name": "ajax.user.status.toggle"
+    },
+    {
         "uri": "ajax\/users",
         "name": "ajax.users.index"
     },
@@ -206,6 +210,10 @@
     {
         "uri": "ajax\/services\/{service}",
         "name": "ajax.services.destroy"
+    },
+    {
+        "uri": "ajax\/admin\/update-permissions",
+        "name": "ajax.admins.update.permission"
     },
     {
         "uri": "ajax\/admins",

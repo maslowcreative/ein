@@ -17,7 +17,7 @@ Route::get('users/representative/{representative}/participants','UserController@
       ->name('users.representative.participants');
 
 Route::put('users/{user}/basic-info','UserController@updateBasicInfo')->name('users.update.basic.info');
-
+Route::post('users/status-toggle','UserController@statusToggle')->name('user.status.toggle');
 Route::apiResource('users','UserController');
 
 Route::post('providers/remove-participants','ProviderController@removeParticipant')
@@ -36,6 +36,7 @@ Route::post('plans/upload','PlanController@uploadPlanFile')->name('plans.upload'
 Route::apiResource('plans','PlanController');
 
 Route::apiResource('services','ServiceController');
+Route::post('admin/update-permissions','AdminController@updatePermissions')->name('admins.update.permission');
 Route::apiResource('admins','AdminController');
 
 // ajax.claims.upload.reconciled.file

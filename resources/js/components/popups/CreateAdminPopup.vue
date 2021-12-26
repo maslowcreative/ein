@@ -60,7 +60,7 @@
                 <div class="d-flex justify-content-between align-items-center mb-4">
                   <label class="fw-bold">Edit Provider Profiles</label>
                   <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="editOption1" checked />
+                    <input class="form-check-input" v-model="form.permissions.edit_provider_profiles" type="checkbox" id="editOption1" checked />
                     <label class="form-check-label" for="editOption1"></label>
                   </div>
                 </div>
@@ -69,7 +69,7 @@
                 <div class="d-flex justify-content-between align-items-center mb-4">
                   <label class="fw-bold">Edit Participants Profiles</label>
                   <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="editOption2" checked />
+                    <input class="form-check-input" v-model="form.permissions.edit_participants_profiles" type="checkbox" id="editOption2" checked />
                     <label class="form-check-label" for="editOption2"></label>
                   </div>
                 </div>
@@ -78,7 +78,7 @@
                 <div class="d-flex justify-content-between align-items-center mb-4">
                   <label class="fw-bold">Edit Representatives Profiles</label>
                   <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="editOption3" checked />
+                    <input class="form-check-input" v-model="form.permissions.edit_representatives_profiles" type="checkbox" id="editOption3" checked />
                     <label class="form-check-label" for="editOption3"></label>
                   </div>
                 </div>
@@ -87,7 +87,7 @@
                 <div class="d-flex justify-content-between align-items-center mb-4">
                   <label class="fw-bold">Approving Claims</label>
                   <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="editOption4" checked />
+                    <input class="form-check-input" type="checkbox" v-model="form.permissions.approving_claims" id="editOption4" checked />
                     <label class="form-check-label" for="editOption4"></label>
                   </div>
                 </div>
@@ -96,7 +96,7 @@
                 <div class="d-flex justify-content-between align-items-center mb-4">
                   <label class="fw-bold">Export / Import Documents</label>
                   <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="editOption5" checked />
+                    <input class="form-check-input" type="checkbox" v-model="form.permissions.export_import_documents" id="editOption5" checked />
                     <label class="form-check-label" for="editOption5"></label>
                   </div>
                 </div>
@@ -134,8 +134,15 @@ export default {
         email: null,
         password: null,
         password_confirmation: null,
-        role_id: 1,
-        permissions: {},
+        random_password: false,
+        role_id: 5,
+        permissions: {
+            edit_provider_profiles: true,
+            edit_participants_profiles : true,
+            edit_representatives_profiles: true,
+            approving_claims: true,
+            export_import_documents: true
+        },
       }),
     }
   },
@@ -162,11 +169,19 @@ export default {
     },
     resetForm() {
       this.form = new Form({
-        name: null,
-        email: null,
-        password: null,
-        role_id: 1,
-        permissions: {},
+          name: null,
+          email: null,
+          password: null,
+          password_confirmation: null,
+          random_password: false,
+          role_id: 5,
+          permissions: {
+              edit_provider_profiles: true,
+              edit_participants_profiles : true,
+              edit_representatives_profiles: true,
+              approving_claims: true,
+              export_import_documents: true
+          },
       })
     },
   },

@@ -122,9 +122,14 @@ class UserController extends Controller
           }
         }
 
-        //Representative Admin:
-        if(Role::ROLE_ADMIN == $role->id) {
+        //Admin:
+        if(Role::ROLE_SUB_ADMIN == $role->id) {
+
+            $permissions = collect($request->permissions)->filter(function ($value, $key) {
+                return $value == true;
+            })->keys();
             $admin = $user->admin()->create();
+            $user->syncPermissions($permissions);
         }
 
         //Send Password Email:
@@ -233,8 +238,34 @@ class UserController extends Controller
         return $this->respondWithSuccess();
     }
 
+    /**
+     * @param Representative $representative
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
     public function repParticipants(Representative $representative)
     {
         return $representative->participants()->with('user')->get();
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function statusToggle(Request $request)
+    {
+        if(!Auth::user()->hasRole('admin')) {
+            return $this->respondForbidden();
+        }
+
+        $request->validate([
+            'status' => 'required|in:1,0',
+            'user_id' => 'required|numeric'
+        ]);
+
+       $user = User::findOrFail($request->user_id);
+       $user->status = $request->status;
+       $user->save();
+
+       return $this->respondWithSuccess();
     }
 }

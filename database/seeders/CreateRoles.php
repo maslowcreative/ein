@@ -35,6 +35,11 @@ class CreateRoles extends Seeder
                 'id' => Role::ROLE_PARTICIPANT,
                 'name' => 'participant',
                 'guard_name' => 'web'
+            ],
+            [
+                'id' => Role::ROLE_SUB_ADMIN,
+                'name' => 'sub-admin',
+                'guard_name' => 'web'
             ]
 
         ];
