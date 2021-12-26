@@ -91,8 +91,7 @@
 
             <div class="mw290 mx-auto px-4 mt-5 mb-4">
                 <a  :href="laroute.route('ajax.claims.reconciled.results.file')" class="btn btn-primary btn-lg w-100 py-3">Reconciled Claims</a>
-                <br>
-                <a  :href="laroute.route('ajax.claims.bulk.upload.file')" class="btn btn-primary btn-lg w-100 py-3">Approved Claims</a>
+                <a  :href="laroute.route('ajax.claims.bulk.upload.file')" class="btn btn-primary btn-lg w-100 py-3 mt-3">Approved Claims</a>
             </div>
 
           </div>
