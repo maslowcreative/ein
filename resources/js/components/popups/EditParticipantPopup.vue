@@ -32,7 +32,7 @@
                                         placeholder="01/01/1999"
                                         v-model="user.participant.dob"
                                     />
-                                    <div class="invalid-msg" v-if="form.errors.has('participant.dob')" v-html="form.errors.get('participant.dob')" />
+                                    <div class="invalid-msg" v-if="form.errors.has('participant.dob')" v-html="form.errors.get('participant.dob').replace('participant.dob','dob')" />
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -74,7 +74,7 @@
                                         placeholder="16515656115615656"
                                         v-model="user.participant.ndis_number"
                                     />
-                                    <div class="invalid-msg" v-if="form.errors.has('participant.ndis_number')" v-html="form.errors.get('participant.ndis_number')" />
+                                    <div class="invalid-msg" v-if="form.errors.has('participant.ndis_number')" v-html="form.errors.get('participant.ndis_number').replace('participant.ndis number','ndis number')" />
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -146,7 +146,7 @@
 
                                     >
                                     </multiselect>
-                                    <div class="invalid-msg" v-if="form.errors.has('participant.representative_id')" v-html="form.errors.get('participant.representative_id')" />
+                                    <div class="invalid-msg" v-if="form.errors.has('participant.representative_id')" v-html="form.errors.get('participant.representative_id').replace('participant.representative id','representative')" />
 
                                 </div>
                             </div>

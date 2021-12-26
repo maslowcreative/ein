@@ -27,7 +27,7 @@
                                 <div class="mb-4">
                                     <label  class="form-label">ABN</label>
                                     <input type="text" v-model="user.provider.abn" class="form-control"  placeholder="00000000000000000000" />
-                                    <div class="invalid-msg" v-if="form.errors.has('provider.abn')" v-html="form.errors.get('provider.abn')" />
+                                    <div class="invalid-msg" v-if="form.errors.has('provider.abn')" v-html="form.errors.get('provider.abn').replace('provider.abn','abn')" />
                                 </div>
                             </div>
                             <div class="col-md-6">

@@ -166,7 +166,7 @@
                                             <div
                                                 class="invalid-msg"
                                                 v-if="form.errors.has('service.'+index+'.item_number')"
-                                                v-html="form.errors.get('service.'+index+'.item_number')"
+                                                v-html="form.errors.get('service.'+index+'.item_number').replace('service.'+index+'.item_number','item number')"
                                             />
                                         </div>
 
@@ -185,7 +185,7 @@
                                             <div
                                                 class="invalid-msg"
                                                 v-if="form.errors.has('service.'+index+'.claim_type')"
-                                                v-html="form.errors.get('service.'+index+'.claim_type')"
+                                                v-html="form.errors.get('service.'+index+'.claim_type').replace('service.'+index+'.claim_type','claim type')"
                                             />
                                         </div>
 
@@ -200,7 +200,7 @@
                                             <div
                                                 class="invalid-msg"
                                                 v-if="form.errors.has('service.'+index+'.cancellation_reason')"
-                                                v-html="form.errors.get('service.'+index+'.cancellation_reason')"
+                                                v-html="form.errors.get('service.'+index+'.cancellation_reason').replace('service.'+index+'.cancellation_reason','cancellation reason')"
                                             />
                                         </div>
 
@@ -217,7 +217,7 @@
                                                         <div
                                                             class="invalid-msg"
                                                             v-if="form.errors.has('service.'+index+'.hours')"
-                                                            v-html="form.errors.get('service.'+index+'.hours')"
+                                                            v-html="form.errors.get('service.'+index+'.hours').replace('service.'+index+'.hours','hours')"
                                                         />
                                                     </div>
 
@@ -229,7 +229,7 @@
                                                         <div
                                                             class="invalid-msg"
                                                             v-if="form.errors.has('service.'+index+'.unit_price')"
-                                                            v-html="form.errors.get('service.'+index+'.unit_price')"
+                                                            v-html="form.errors.get('service.'+index+'.unit_price').replace('service.'+index+'.unit_price','unit price')"
                                                         />
                                                     </div>
                                                 </div>
@@ -248,7 +248,7 @@
                                                         <div
                                                             class="invalid-msg"
                                                             v-if="form.errors.has('service.'+index+'.gst_code')"
-                                                            v-html="form.errors.get('service.'+index+'.gst_code')"
+                                                            v-html="form.errors.get('service.'+index+'.gst_code').replace('service.'+index+'.gst_code','gst code')"
                                                         />
                                                     </div>
                                                 </div>
