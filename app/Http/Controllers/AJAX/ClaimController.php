@@ -70,10 +70,10 @@ class ClaimController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-//    public function store()
     public function store(ClaimPostRequest $request)
     {
         $provider = optional(\auth()->user())->provider;
+
         if(!$provider){
             return $this->respondNotFound(__('record.not_found',['model'=>'Provider']));
         }
@@ -83,6 +83,7 @@ class ClaimController extends Controller
         DB::beginTransaction();
 
         $path = $request->file('file')->store('claims');
+
         $claim = $provider->claims()->create(
             array_merge($request->all(),[
                 'ndis_number' => $participant->ndis_number,
@@ -174,7 +175,7 @@ class ClaimController extends Controller
                 'InKindFundingProgram' => '',
                 'ClaimType' => $item->claim_type,
                 'CancellationReason' => $item->cancellation_reason,
-                'ABN of Support Provider' => '',
+                'ABN of Support Provider' => $item->claim->provider_abn,
             ];
         });
     }
@@ -192,14 +193,18 @@ class ClaimController extends Controller
             $path = $request->file('file')->store('reconciliations');
             $fullPath = Storage::path($path);
             $collection = (new FastExcel)->import($fullPath);
-
+            $now = Carbon::now();
             if($collection->isNotEmpty())
             {
                 foreach ($collection as $claim) {
-
-                    $claimItem = ClaimLineItem::where('claim_reference',$claim['ProvClaimRef'])->first();
+                    $claimItem = ClaimLineItem::where('claim_reference',$claim['ClaimReference'] )->first();
                     if($claimItem){
-                        $claimItem->amount_paid = is_numeric( $claim['AmountPaid'] )? $claim['AmountPaid'] : null;
+                        $claimItem->amount_paid = is_numeric( $claim['PaidTotalAmount'] )? $claim['PaidTotalAmount'] : null;
+                        $claimItem->rec_is_full_paid = $claimItem->amount_paid == $claimItem->amount_claimed ? true: false;
+                        $claimItem->rec_payment_request_status = $claim['Payment Request Status'];
+                        $claimItem->rec_payment_request_number = $claim['Payment Request Number'];
+                        $claimItem->rec_capped_price = $claim['Capped Price'];
+                        $claimItem->rec_date = $now;
                         $claimItem->status = Claim::STATUS_RECONCILATION_DONE;
                         $claimItem->save();
                     }

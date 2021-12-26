@@ -32,6 +32,11 @@ class ClaimLineItem extends Model
         'claim_type',
         'cancellation_reason',
         'status',
+        'rec_is_full_paid',
+        'rec_payment_request_status',
+        'rec_payment_request_number',
+        'rec_capped_price',
+        'rec_date'
     ];
 
     protected $appends = [
