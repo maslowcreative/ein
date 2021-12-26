@@ -150,8 +150,10 @@ class ClaimController extends Controller
         if(\request()->method() == Request::METHOD_POST){
             $items->whereIn('id',explode(',',\request()->claims));
         }
+        $itemsUpdate = $items;
         $items = $items->get();
 
+        $itemsUpdate->update(['status' => Claim::STATUS_PROCESSED]);
         $name = 'claims '.Carbon::now()->toDateString(). '.csv';
 
         return (new FastExcel($items))->download($name, function ($item) {
@@ -175,7 +177,6 @@ class ClaimController extends Controller
                 'ABN of Support Provider' => '',
             ];
         });
-            //->sendHeaders(['X-Header-filename'=>$name]);
     }
 
     /**

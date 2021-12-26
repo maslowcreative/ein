@@ -25,7 +25,8 @@
                                         <option value="1">Approved by Representative</option>
                                         <option value="2">Denied by Representative</option>
                                         <option value="3">Admin Approved</option>
-                                        <option value="4">Reconciled</option>
+                                        <option value="4">Processed</option>
+                                        <option value="5">Reconciled</option>
                                     </select>
                                 </div>
                                 <div class="">

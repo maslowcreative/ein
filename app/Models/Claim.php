@@ -79,19 +79,16 @@ class Claim extends Model
     const STATUS_APPROVED_BY_REPRESENTATIVE = 1;
     const STATUS_DENIED_BY_REPRESENTATIVE = 2;
     const STATUS_APPROVED_BY_ADMIN = 3;
-    const STATUS_RECONCILATION_DONE = 4;
-    //const STATUS_RECONCILATION_PENDING = 3;
-    //const STATUS_RECONCILATION_PASSED = 4;
-    //const STATUS_RECONCILATION_FAILED = 5;
+    const STATUS_PROCESSED = 4;
+    const STATUS_RECONCILATION_DONE = 5;
 
     const STATS = [
         self::STATUS_APPROVAL_PENDING => 'Pending Approval',
         self::STATUS_APPROVED_BY_REPRESENTATIVE => 'Approved by Representative',
         self::STATUS_DENIED_BY_REPRESENTATIVE => 'Denied by Representative',
         self::STATUS_APPROVED_BY_ADMIN => 'Admin Approved',
+        self::STATUS_PROCESSED => 'Processed',
         self::STATUS_RECONCILATION_DONE => 'Reconciled',
-        //self::STATUS_RECONCILATION_PENDING => 'Pending Reconcilation',
-        //self::STATUS_RECONCILATION_FAILED => 'reconcilation failed',
     ];
 
 
