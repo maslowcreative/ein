@@ -181,6 +181,51 @@ class ClaimController extends Controller
     }
 
     /**
+     * @return \Illuminate\Http\JsonResponse|string|\Symfony\Component\HttpFoundation\StreamedResponse
+     * @throws IOException
+     * @throws \Box\Spout\Common\Exception\InvalidArgumentException
+     * @throws \Box\Spout\Common\Exception\UnsupportedTypeException
+     * @throws \Box\Spout\Writer\Exception\WriterNotOpenedException
+     */
+    public function reconciledResultsFile()
+    {
+        if(!Auth::user()->hasRole('admin')) {
+            return $this->respondForbidden();
+        }
+
+        $items = ClaimLineItem::with('claim','claim.provider.user','claim.participant.user')->where('status',Claim::STATUS_RECONCILATION_DONE);
+        if(\request()->method() == Request::METHOD_POST){
+            $items->whereIn('id',explode(',',\request()->claims));
+        }
+        $items = $items->get();
+        $name = 'Reconciliation Result '.Carbon::now()->toDateString(). '.csv';
+
+        return (new FastExcel($items))->download($name, function ($item) {
+            return [
+                'InvoiceNumber' => $item->claim->claim_reference,
+                'ProvClaimRef' => $item->claim_reference,
+                'ItemID' => $item->support_item_number,
+                'ItemQty' => $item->hours,
+                'UnitPrice' => $item->unit_price,
+                'AmountClaimed' => $item->amount_claimed,
+                'AmountPaid' => $item->amount_paid,
+                'ParticipantNDIS' => $item->claim->participant->ndis_number,
+                'ParticipantName' => $item->claim->participant->user->name,
+                //'ParticipantLastName' => $item->claim->participant->user->name,
+                'ProvName' => $item->claim->provider->user->name,
+                'ProviderInvoiceRefNo' => $item->claim->claim_reference,
+                'SupportStartDate' => $item->claim->start_date,
+                'SupportEndDate' => $item->claim->end_date,
+                //'ServiceBookingNum' => 'N/A',
+                //'BulkClmId' => 'N/A',
+                'FullyPaid' => $item->rec_is_full_paid,
+                'ClaimType' => $item->claim_type,
+                'CancelRsn' => $item->cancellation_reason,
+            ];
+        });
+    }
+
+    /**
      * @param Request $request
      */
     public function uploadReconciledFile(Request $request)
@@ -224,6 +269,8 @@ class ClaimController extends Controller
 
         return $this->respondWithSuccess();
     }
+
+
 
     /**
      * Display the specified resource.

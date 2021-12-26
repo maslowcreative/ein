@@ -24,7 +24,7 @@
         </a>
         <a href="#" class="option-item" data-bs-toggle="modal" data-bs-target="#fileDownload">
           <ion-icon name="push-outline" class="flip-v option-item-icon"></ion-icon>
-          Bulk Download
+          Download
         </a>
       </div>
     </div>
@@ -87,14 +87,12 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body text-center">
-            <h3 class="downloadPopupTitle">Download Approved Claims</h3>
+            <h3 class="downloadPopupTitle">Download Files</h3>
 
             <div class="mw290 mx-auto px-4 mt-5 mb-4">
-                <a v-if="!loader" :href="laroute.route('ajax.claims.bulk.upload.file')" class="btn btn-primary btn-lg w-100 py-3">Download File</a>
-                <button v-else class="btn btn-primary btn-lg w-100 py-3" type="button" disabled>
-                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                    Loading...
-                </button>
+                <a  :href="laroute.route('ajax.claims.reconciled.results.file')" class="btn btn-primary btn-lg w-100 py-3">Reconciled Claims</a>
+                <br>
+                <a  :href="laroute.route('ajax.claims.bulk.upload.file')" class="btn btn-primary btn-lg w-100 py-3">Approved Claims</a>
             </div>
 
           </div>

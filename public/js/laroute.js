@@ -128,6 +128,10 @@
         "name": "ajax.claims.bulk.upload.file"
     },
     {
+        "uri": "ajax\/claims\/reconciled-results-file",
+        "name": "ajax.claims.reconciled.results.file"
+    },
+    {
         "uri": "ajax\/claims\/upload-reconciled-file",
         "name": "ajax.claims.upload.reconciled.file"
     },
