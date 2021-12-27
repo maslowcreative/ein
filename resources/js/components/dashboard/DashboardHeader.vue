@@ -5,11 +5,11 @@
 <!--      <h1 class="h2 mb-4 fw-bold pb-2">Dashboard</h1>-->
       <h4 class="fw-bold">Dashboard</h4>
       <div class="grid options-grid">
-        <a href="#" class="option-item" data-bs-toggle="modal" data-bs-target="#userModal">
+        <a v-if="getPermission('is_supper_admin')" href="#" class="option-item" data-bs-toggle="modal" data-bs-target="#userModal">
           <ion-icon name="person-add-outline" class="option-item-icon"></ion-icon>
           Add New User
         </a>
-        <a href="#" class="option-item" data-bs-toggle="modal" data-bs-target="#adminModal">
+        <a  v-if="getPermission('is_supper_admin')" href="#" class="option-item" data-bs-toggle="modal" data-bs-target="#adminModal">
           <span class="option-item-icon">
             <span class="admin-icon">
               <ion-icon name="person-add-outline" class=""></ion-icon>
@@ -18,11 +18,11 @@
           </span>
           Add New Admin
         </a>
-        <a href="#" class="option-item" data-bs-toggle="modal" data-bs-target="#fileUpload">
+        <a v-if="getPermission('export_import_documents')" href="#" class="option-item" data-bs-toggle="modal" data-bs-target="#fileUpload">
           <ion-icon name="push-outline" class="option-item-icon"></ion-icon>
           Reconcile
         </a>
-        <a href="#" class="option-item" data-bs-toggle="modal" data-bs-target="#fileDownload">
+        <a v-if="getPermission('export_import_documents')" href="#" class="option-item" data-bs-toggle="modal" data-bs-target="#fileDownload">
           <ion-icon name="push-outline" class="flip-v option-item-icon"></ion-icon>
           Download
         </a>
@@ -107,6 +107,7 @@ import CreateUserPopup from "../popups/CreateUserPopup"
 import Form from "vform";
 
 export default {
+  props:["policy"],
   components: { CreateUserPopup, CreateAdminPopup },
   data() {
     return {
@@ -142,6 +143,12 @@ export default {
                   this.loader = false;
               });
       },
+      getPermission(pName) {
+          if(this.policy.is_supper_admin){
+              return true;
+          }
+          return this.policy.permissions[pName];
+      }
   }
 }
 </script>

@@ -130,6 +130,10 @@ class ClaimController extends Controller
 
     public function approveClaimsByAdmin(Request $request)
     {
+        if(!Auth::user()->hasRole('admin') && !Auth::user()->hasPermissionTo('approving_claims')){
+            return $this->respondForbidden();
+        }
+
         ClaimLineItem::whereIn('id',$request->claims)->update(['status'=> Claim::STATUS_APPROVED_BY_ADMIN]);
         return $this->respondWithSuccess();
     }
@@ -143,7 +147,7 @@ class ClaimController extends Controller
      */
     public function bulkUploadFile()
     {
-        if(!Auth::user()->hasRole('admin')) {
+        if(!Auth::user()->hasRole('admin') && !Auth::user()->hasPermissionTo('export_import_documents')) {
             return $this->respondForbidden();
         }
 
@@ -189,10 +193,9 @@ class ClaimController extends Controller
      */
     public function reconciledResultsFile()
     {
-        if(!Auth::user()->hasRole('admin')) {
+        if(!Auth::user()->hasRole('admin') && !Auth::user()->hasPermissionTo('export_import_documents')) {
             return $this->respondForbidden();
         }
-
         $items = ClaimLineItem::with('claim','claim.provider.user','claim.participant.user')->where('status',Claim::STATUS_RECONCILATION_DONE);
         if(\request()->method() == Request::METHOD_POST){
             $items->whereIn('id',explode(',',\request()->claims));
@@ -230,6 +233,10 @@ class ClaimController extends Controller
      */
     public function uploadReconciledFile(Request $request)
     {
+        if(!Auth::user()->hasRole('admin') && !Auth::user()->hasPermissionTo('export_import_documents')) {
+            return $this->respondForbidden();
+        }
+
         $request->validate([
             'file' => 'required|file|mimes:csv,xls,xlsx,xlsb',
         ]);

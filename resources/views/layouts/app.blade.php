@@ -24,7 +24,7 @@
 <body>
 	<div id="app">
 		@if(auth()->check())
-		<nav-bar user="{{auth()->user()}}"></nav-bar>
+        <nav-bar user="{{auth()->user()}}"></nav-bar>
 		@endif
 
 		@yield('content')

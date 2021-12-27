@@ -233,6 +233,10 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
+        if(!Auth::user()->hasRole('admin')) {
+            return $this->respondForbidden();
+        }
+
         $user = User::findOrFail($id);
         $user->delete();
         return $this->respondWithSuccess();

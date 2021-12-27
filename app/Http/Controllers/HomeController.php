@@ -29,6 +29,9 @@ class HomeController extends Controller
             case 'admin':
                 $view =  view('home-admin');
             break;
+            case 'sub-admin':
+                $view =  view('home-admin');
+                break;
             case 'provider':
                 $view =  view('home-provider');
             break;

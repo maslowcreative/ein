@@ -7,7 +7,7 @@
           <small class="text-primary">{{ items.total }} Active Users</small>
         </div>
         <div class="card-right-btns">
-          <button class="btn btn-primary btn-icon" data-bs-toggle="modal" data-bs-target="#userModal">
+          <button v-if="getPermission('is_supper_admin')" class="btn btn-primary btn-icon" data-bs-toggle="modal" data-bs-target="#userModal">
             <ion-icon name="add-outline"></ion-icon> Add New User
           </button>
           <div class="dropdown">
@@ -94,7 +94,7 @@
                 </td>
                 <td>
                   <button
-                    v-if="user.roles[0].name == 'participant'"
+                    v-if="user.roles[0].name == 'participant' && getPermission('is_supper_admin')"
                     class="btn btn-light btn-sm"
                     v-on:click="openPlanEdit(user.plan)"
                   >
@@ -103,10 +103,10 @@
                 </td>
                 <td>
                   <div class="d-inline-flex flex-nowrap align-items-center justify-content-around btn-group fs-lg">
-                    <button class="btn btn-link p-0 mx-1" v-on:click="openEditUserPopup(user,user.roles[0])">
+                    <button v-if="checkEditPermission(user.roles[0].id)" class="btn btn-link p-0 mx-1" v-on:click="openEditUserPopup(user,user.roles[0])">
                       <ion-icon name="create-outline"></ion-icon>
                     </button>
-                    <button v-on:click="userDelete(user)" class="btn btn-link p-0 mx-1">
+                    <button v-if="getPermission('delete_user')" v-on:click="userDelete(user)" class="btn btn-link p-0 mx-1">
                       <ion-icon name="trash-outline"></ion-icon>
                     </button>
                   </div>
@@ -148,6 +148,7 @@ import Form from "vform";
 
 export default {
   components: { AdvancedLaravelVuePaginate, PlanPopup },
+  props: ["policy"],
   data() {
     return {
       loading: false,
@@ -292,7 +293,24 @@ export default {
 
             })
 
+    },
+    checkEditPermission(role){
+        switch (role){
+            case 2: // ROLE_PROVIDER
+                return this.getPermission('edit_provider_profiles');
+            case 3: //ROLE_REPRESENTATIVE
+                return this.getPermission('edit_representatives_profiles');
+            case 4: //ROLE_PARTICIPANT
+                return this.getPermission('edit_participants_profiles');
+        }
+    },
+    getPermission(pName) {
+        if(this.policy.is_supper_admin){
+            return true;
+        }
+        return this.policy.permissions[pName];
     }
+
   },
 }
 </script>

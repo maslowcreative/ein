@@ -102,11 +102,13 @@
         </table>
       </div>
       <div class="mt-4 mt-md-5 card-right-btns justify-content-end">
+          <span v-if="getPermission('approving_claims')">
           <button v-if="!claimApproveLoader" class="btn btn-light" v-on:click="bulkUploadFile" >Approve Selected</button>
-          <button v-else class="btn btn-light" type="button" disabled>
+          <button v-else  class="btn btn-light" type="button" disabled>
               <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
               Loading...
           </button>
+          </span>
 <!--        <a class="btn btn-light" :href="laroute.route('ajax.claims.bulk.upload.file')" >Download Selected</a>-->
 
         <button class="btn btn-primary">Bulk Download (ABA)</button>
@@ -129,6 +131,7 @@
 <script>
 import ViewInvoicePopup from "../provider/ViewInvoicePopup";
 export default {
+    props:["policy"],
     components: {ViewInvoicePopup},
     data() {
     return {
@@ -251,6 +254,12 @@ export default {
           this.claim.paid = '$' + (item.amount_paid ? item.amount_paid : 0);
           this.claim.total = '$' + item.amount_claimed;
           $("#claimPopup").modal('show');
+      },
+      getPermission(pName) {
+          if(this.policy.is_supper_admin){
+              return true;
+          }
+          return this.policy.permissions[pName];
       }
   }
 }
