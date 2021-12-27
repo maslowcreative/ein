@@ -40,7 +40,7 @@ class UserController extends Controller
     public function index()
     {
         $users = User::getUsers()
-                     ->whereNotInRoles(['admin']);
+                     ->whereNotInRoles(['admin','sub-admin']);
 
         if(Auth::user()->hasRole('admin')) {
             $users = $users->with('plan');
@@ -271,5 +271,17 @@ class UserController extends Controller
        $user->save();
 
        return $this->respondWithSuccess();
+    }
+
+    public function uploadAvatar(Request $request, $userId)
+    {
+        $request->validate([
+            'avatar' => 'required|file|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+        ]);
+
+        $path = $request->file('avatar')->store('public/avatars');
+        $avatar = explode('/',$path)[2];
+        $avatar_url = asset("storage/avatars/{$avatar}");
+        return compact('avatar','avatar_url');
     }
 }

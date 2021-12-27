@@ -18,6 +18,7 @@ Route::get('users/representative/{representative}/participants','UserController@
 
 Route::put('users/{user}/basic-info','UserController@updateBasicInfo')->name('users.update.basic.info');
 Route::post('users/status-toggle','UserController@statusToggle')->name('user.status.toggle');
+Route::post('users/{user}/upload-avatar','UserController@uploadAvatar')->name('users.upload.avatar');
 Route::apiResource('users','UserController');
 
 Route::post('providers/remove-participants','ProviderController@removeParticipant')

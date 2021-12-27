@@ -76,6 +76,10 @@
         "name": "ajax.user.status.toggle"
     },
     {
+        "uri": "ajax\/users\/{user}\/upload-avatar",
+        "name": "ajax.users.upload.avatar"
+    },
+    {
         "uri": "ajax\/users",
         "name": "ajax.users.index"
     },

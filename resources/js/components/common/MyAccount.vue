@@ -8,16 +8,20 @@
                     <div class="">
                         <label class="form-label">Profile Picture</label>
                         <div class="profile-img-wrap">
-                            <div class="profile-img"></div>
+                            <div class="profile-img" >
+                                <img :src="avatar_url">
+                            </div>
                             <div class="profile-btns">
-                                <button type="button" class="btn btn-light">
-                                    <ion-icon name="duplicate-outline"></ion-icon>
-                                </button>
-                                <button type="button" class="btn btn-light">
-                                    <ion-icon name="trash-outline"></ion-icon>
-                                </button>
+<!--                                <button type="button" class="btn btn-light">-->
+<!--                                    <ion-icon name="duplicate-outline"></ion-icon>-->
+<!--                                </button>-->
+<!--                                <button type="button" class="btn btn-light">-->
+<!--                                    <ion-icon name="trash-outline"></ion-icon>-->
+<!--                                </button>-->
                             </div>
                         </div>
+
+                        <input type="file" v-on:change="onFileChange">
                         <div class="profile-hint py-3">Allowed File Types: .png . jpg and .jpeg.</div>
                     </div>
                 </div>
@@ -120,8 +124,11 @@ export default {
     data() {
         return {
             loader: false,
+            avatar: null,
+            avatar_url: null,
             form: new Form({
                 name: null,
+                avatar: null,
                 email: null,
                 phone: null,
                 address: null,
@@ -131,7 +138,8 @@ export default {
         }
     },
     mounted() {
-
+        this.avatar = this.user.avatar;
+        this.avatar_url = this.user.avatar_url
     },
     methods:{
         updateUser() {
@@ -143,6 +151,7 @@ export default {
             data.email = this.user.email;
             data.phone = this.user.phone;
             data.address = this.user.address;
+            data.avatar = this.avatar;
 
             if( this.form.password || this.form.password_confirmation) {
                 data.password = this.form.password;
@@ -152,7 +161,7 @@ export default {
             this.form = new Form(data);
 
             let route = this.laroute.route("ajax.users.update.basic.info",{ 'user' : this.user.id});
-            console.log(route);
+
             this.form
                 .put(route)
                 .then(res => {
@@ -163,6 +172,34 @@ export default {
                     console.log(error)
                 })
                 .finally(() => (this.loader = false))
+        },
+        onFileChange(e) {
+
+            var files = e.target.files || e.dataTransfer.files;
+            if (!files.length)
+                return;
+
+            let route = this.laroute.route("ajax.users.upload.avatar");
+            let  form = new Form({
+                'avatar':files[0]
+            });
+
+            this.loader = true;
+            form
+                .post(route)
+                .then(res => {
+                    this.avatar = res.data.avatar;
+                    this.avatar_url = res.data.avatar_url;
+                    this.loader = false;
+                })
+                .catch(error => {
+                    this.avatar = null;
+                    this.$toastr.e("Error", "Some thing went wrong while file upload.");
+                    this.loader = false;
+                })
+                .finally(() => {
+                    this.loader = false;
+                });
         }
     }
 }

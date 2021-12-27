@@ -84,7 +84,7 @@
                 <td class="not-center">
                   <div class="d-flex">
                     <div class="me-4">
-                      <img :src="'/images/avatar.png'" width="50" height="50" alt="" />
+                      <img :src="user.avatar_url" width="50" height="50" alt="" />
                     </div>
                     <div class="fw-bold">
                       {{ user.name }}
@@ -192,6 +192,7 @@ export default {
       let data = { page: page }
       //Filtering Admin Role.
       data["filter[not_in][0]"] = 1;
+      data["filter[not_in][1]"] = 5;
 
       if (this.filters.name) {
         data["filter[name]"] = this.filters.name

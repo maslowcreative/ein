@@ -67,7 +67,7 @@
             >
               <!-- {{ userData.name }} -->
               <div class="avatar">
-                <img :src="'/images/avatar.png'" width="50" height="50" alt="" />
+                <img :src="userData.avatar_url" width="50" height="50" alt="" />
               </div>
             </a>
             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
@@ -105,6 +105,7 @@ export default {
     }
   },
   mounted() {
+
     try {
       this.userData = JSON.parse(this.user)
     } catch (e) {

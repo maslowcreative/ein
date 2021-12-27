@@ -40,6 +40,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'avatar',
         'password',
         'phone',
         'address',
@@ -55,6 +56,10 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+    ];
+
+    protected $appends =[
+      'avatar_url'
     ];
 
     /**
@@ -76,6 +81,14 @@ class User extends Authenticatable
                     ->select('id','name')
                     ->first()
                     ->makeHidden('pivot');
+    }
+
+    public function getAvatarUrlAttribute()
+    {
+        if($this->avatar){
+            return asset("storage/avatars/{$this->avatar}");
+        }
+        return asset("images/avatar.png");
     }
 
     public function setPasswordAttribute($value)
