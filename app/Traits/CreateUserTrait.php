@@ -25,14 +25,11 @@ trait CreateUserTrait
             'email' => $data['email'],
             'phone' => $data['phone'] ?? null,
             'address' => $data['address'] ?? null,
-            'password' => Hash::make($data['password'] ),
+            'password' => $data['password'],
             'status' => User::STATUS_ACTIVE,
             'state' => $data['state'] ?? null,
         ]);
         $user->orgianl_password = $data['password'];
-
-
-
         return $user;
     }
 
