@@ -94,7 +94,7 @@
                                                     :key="participant.id"
                                                     v-on:click="selectItem(participant.id, 'participant')"
                                                 >
-                                                    <div class="me-3"><img src="/images/avatar.png" width="40" alt="" /></div>
+                                                    <div class="me-3"><img :src="participant.avatar_url" width="40" alt="" /></div>
                                                     <div class="participant-name">
                                                         <h6>{{ participant.name }}</h6>
                                                         <span class="text-primary">Participant</span>
@@ -117,7 +117,7 @@
                                                 class="bg-light d-flex align-items-center p-3 participant-card"
                                                 v-if="participantSelected"
                                             >
-                                                <div class="me-3"><img src="/images/avatar.png" width="40" alt="" /></div>
+                                                <div class="me-3"><img :src="participantSelected.avatar_url" width="40" alt="" /></div>
                                                 <div class="participant-name">
                                                     <h6>{{ participantSelected.name }}</h6>
                                                     <span class="text-primary">Participant</span>

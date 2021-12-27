@@ -15,7 +15,7 @@
                             <td class="not-center">
                                 <div class="d-flex">
                                     <div class="me-4">
-                                        <img src="/images/avatar.png" width="50" height="50" alt="" />
+                                        <img :src="user.avatar_url" width="50" height="50" alt="" />
                                     </div>
                                     <div class="fw-bold">
                                         {{ user.name }}

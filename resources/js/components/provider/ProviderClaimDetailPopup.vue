@@ -28,7 +28,7 @@
                                     <div class="mb-4">
                                         <label class="form-label">Provider</label>
                                         <div class="bg-light d-flex align-items-center p-3 participant-card">
-                                            <div class="me-3"><img src="/images/avatar.png" width="40" alt=""></div>
+                                            <div class="me-3"><img :src="claim.provider.user.avatar_url" width="40" alt=""></div>
                                             <div class="participant-name">
                                                 <h6>{{claim.provider.user.name}}</h6> <span class="text-primary">Provider</span>
                                             </div>
@@ -39,7 +39,7 @@
                                     <div class="mb-4">
                                         <label class="form-label">Participant</label>
                                         <div class="bg-light d-flex align-items-center p-3 participant-card">
-                                            <div class="me-3"><img src="/images/avatar.png" width="40" alt=""></div>
+                                            <div class="me-3"><img :src="claim.participant.user.avatar_url" width="40" alt=""></div>
                                             <div class="participant-name">
                                                 <h6>{{claim.participant.user.name}}</h6> <span class="text-primary">Participant</span>
                                             </div>

@@ -200,7 +200,7 @@
                                         v-on:click="selectItem(participant.id, 'participant')"
                                         class="bg-light d-flex align-items-center p-3 participant-card"
                                     >
-                                        <div class="me-3"><img src="/images/avatar.png" width="40" alt="" /></div>
+                                        <div class="me-3"><img :src="participant.avatar_url" width="40" alt="" /></div>
                                         <div class="participant-name">
                                             <h6>{{ participant.name }}</h6>
                                             <span class="text-primary">Participant</span>
@@ -223,7 +223,7 @@
                                     class="bg-light d-flex align-items-center p-3 participant-card"
                                     v-for="participant in participantSelected"
                                 >
-                                    <div class="me-3"><img src="/images/avatar.png" width="40" alt="" /></div>
+                                    <div class="me-3"><img :src="participant.avatar_url" width="40" alt="" /></div>
                                     <div class="participant-name">
                                         <h6>{{ participant.name }}</h6>
                                         <span class="text-primary">Participant</span>
@@ -316,7 +316,7 @@
                               :key="representative.id"
                               v-on:click="selectItem(representative.id, 'representative')"
                             >
-                              <div class="me-3"><img src="/images/avatar.png" width="40" alt="" /></div>
+                              <div class="me-3"><img :src="representative.avatar_url" width="40" alt="" /></div>
                               <div class="participant-name">
                                 <h6>{{ representative.name }}</h6>
                                 <span class="text-primary">Representative</span>
@@ -340,7 +340,7 @@
                             class="bg-light d-flex align-items-center p-3 participant-card"
                             v-if="representativeSelected"
                           >
-                            <div class="me-3"><img src="/images/avatar.png" width="40" alt="" /></div>
+                            <div class="me-3"><img :src="representativeSelected.avatar_url" width="40" alt="" /></div>
                             <div class="participant-name">
                               <h6>{{ representativeSelected.name }}</h6>
                               <span class="text-primary">Representative</span>
@@ -387,7 +387,7 @@
                               v-on:click="selectItem(provider.id, 'provider')"
                               class="bg-light d-flex align-items-center p-3 participant-card"
                             >
-                              <div class="me-3"><img src="/images/avatar.png" width="40" alt="" /></div>
+                              <div class="me-3"><img :src="provider.avatar_url" width="40" alt="" /></div>
                               <div class="participant-name">
                                 <h6>{{ provider.name }}</h6>
                                 <span class="text-primary">Provider</span>
@@ -410,7 +410,7 @@
                             class="bg-light d-flex align-items-center p-3 participant-card"
                             v-for="provider in providerSelected"
                           >
-                            <div class="me-3"><img src="/images/avatar.png" width="40" alt="" /></div>
+                            <div class="me-3"><img :src="provider.avatar_url" width="40" alt="" /></div>
                             <div class="participant-name">
                               <h6>{{ provider.name }}</h6>
                               <span class="text-primary">Provider</span>
@@ -469,7 +469,7 @@
                                         v-on:click="selectItem(participant.id, 'participant')"
                                         class="bg-light d-flex align-items-center p-3 participant-card"
                                     >
-                                        <div class="me-3"><img src="/images/avatar.png" width="40" alt="" /></div>
+                                        <div class="me-3"><img :src="participant.avatar_url" width="40" alt="" /></div>
                                         <div class="participant-name">
                                             <h6>{{ participant.name }}</h6>
                                             <span class="text-primary">Participant</span>
@@ -492,7 +492,7 @@
                                     class="bg-light d-flex align-items-center p-3 participant-card"
                                     v-for="participant in participantSelected"
                                 >
-                                    <div class="me-3"><img src="/images/avatar.png" width="40" alt="" /></div>
+                                    <div class="me-3"><img :src="participant.avatar_url" width="40" alt="" /></div>
                                     <div class="participant-name">
                                         <h6>{{ participant.name }}</h6>
                                         <span class="text-primary">Participant</span>

@@ -71,7 +71,7 @@
                             <td class="not-center">
                                 <div class="d-flex">
                                     <div class="me-4">
-                                        <img src="/images/avatar.png" width="50" height="50" alt="" />
+                                        <img :src="user.avatar_url" width="50" height="50" alt="" />
                                     </div>
                                     <div class="fw-bold">
                                         {{ user.name }}
@@ -87,7 +87,7 @@
                                 <div class="collapse" :id="'part_collapse_'+user.id" v-if="user.participant.representative">
                                     <div class="d-flex pt-3 ps-4">
                                         <div class="me-4">
-                                            <img src="/images/avatar.png" width="40" height="40" alt="" />
+                                            <img :src="user.avatar_url" width="40" height="40" alt="" />
                                         </div>
                                         <div class="fw-bold" >
                                             {{user.participant.representative.name}}
