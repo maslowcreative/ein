@@ -163,7 +163,7 @@ class ClaimController extends Controller
 
         return (new FastExcel($items))->download($name, function ($item) {
             return [
-                'RegistrationNumber' => $item->claim->provider_id,
+                'RegistrationNumber' => env('EIN_REGISTRATION_NUMBER','N/A'),
                 'NdisNumber' => (string) $item->claim->ndis_number,
                 'SupportDeliveredFrom' => Carbon::create($item->claim->start_date)->format('Y-m-d'),
                 'SupportsDeliveredTo' => Carbon::create($item->claim->end_date)->format('Y-m-d'),
