@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use phpDocumentor\Reflection\Types\Collection;
 use PHPUnit\Exception;
@@ -236,13 +237,22 @@ class ClaimController extends Controller
         if(!Auth::user()->hasRole('admin') && !Auth::user()->hasPermissionTo('export_import_documents')) {
             return $this->respondForbidden();
         }
-
         $request->validate([
-            'file' => 'required|file|mimes:csv,xls,xlsx,xlsb',
+            'file' => 'required|file',
         ]);
 
+        $ext = $request->file('file')->extension();
+        $orgianlExt = $request->file('file')->getClientOriginalExtension();
+
+        $rule = "required|file|mimes:csv,xls,xlsx,xlsb";
+        if( $ext == 'txt' && $orgianlExt == 'csv'){
+            $rule = "required|file|mimes:txt,csv,xls,xlsx,xlsb";
+            //$filename = Str::random(15).".".$orgianlExt;
+        }
+        $request->validate(['file' => $rule]);
+        $filename = Str::random(15) .".".$orgianlExt;
         try {
-            $path = $request->file('file')->store('reconciliations');
+            $path = $request->file('file')->storeAs('reconciliations',$filename);
             $fullPath = Storage::path($path);
             $collection = (new FastExcel)->import($fullPath);
             $now = Carbon::now();
