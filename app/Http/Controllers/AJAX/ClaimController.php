@@ -160,7 +160,8 @@ class ClaimController extends Controller
         $items = $items->get();
 
         $itemsUpdate->update(['status' => Claim::STATUS_PROCESSED]);
-        $name = 'claims '.Carbon::now()->toDateString(). '.csv';
+
+        $name = Carbon::now()->format('YmdHi'). '.csv';
 
         return (new FastExcel($items))->download($name, function ($item) {
             return [
@@ -169,9 +170,9 @@ class ClaimController extends Controller
                 'SupportDeliveredFrom' => Carbon::create($item->claim->start_date)->format('Y-m-d'),
                 'SupportsDeliveredTo' => Carbon::create($item->claim->end_date)->format('Y-m-d'),
                 'SupportNumber' => $item->support_item_number,
-                'ClaimReference' => $item->claim_reference,
-                'Quantity' => '',
-                'Hours' => $item->hours,
+                'ClaimReference' => 'A'.$item->claim_reference,
+                'Quantity' => $item->hours,
+                'Hours' => null,
                 'UnitPrice' => $item->unit_price,
                 'GstCode' => $item->gst_code,
                 'AuthorisedBy' => '',
@@ -181,6 +182,7 @@ class ClaimController extends Controller
                 'ClaimType' => $item->claim_type,
                 'CancellationReason' => $item->cancellation_reason,
                 'ABN of Support Provider' => $item->claim->provider_abn,
+                'ServiceBookingNumber' => null
             ];
         });
     }
@@ -207,7 +209,7 @@ class ClaimController extends Controller
         return (new FastExcel($items))->download($name, function ($item) {
             return [
                 'InvoiceNumber' => $item->claim->claim_reference,
-                'ProvClaimRef' => $item->claim_reference,
+                'ProvClaimRef' => 'A'.$item->claim_reference,
                 'ItemID' => $item->support_item_number,
                 'ItemQty' => $item->hours,
                 'UnitPrice' => $item->unit_price,
