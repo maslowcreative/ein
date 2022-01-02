@@ -98,7 +98,7 @@ class ClaimController extends Controller
             $key = $index + 1;
             $item = array_merge($item,[
                 'status' => ClaimLineItem::STATUS_PENDING,
-                'claim_reference' => "{$claim->claim_reference}_{$key}",
+                'claim_reference' => "{$claim->id}_{$key}",
                 'provider_id' => $provider->user_id,
                 'participant_id' => $participant->user_id,
                 'amount_claimed' => $item['hours'] * $item['unit_price']
@@ -208,7 +208,7 @@ class ClaimController extends Controller
 
         return (new FastExcel($items))->download($name, function ($item) {
             return [
-                'InvoiceNumber' => $item->claim->claim_reference,
+                'InvoiceNumber' => 'A'.$item->claim->id,
                 'ProvClaimRef' => 'A'.$item->claim_reference,
                 'ItemID' => $item->support_item_number,
                 'ItemQty' => $item->hours,
