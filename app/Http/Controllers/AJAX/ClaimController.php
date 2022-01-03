@@ -261,7 +261,7 @@ class ClaimController extends Controller
             if($collection->isNotEmpty())
             {
                 foreach ($collection as $claim) {
-                    $claimItem = ClaimLineItem::where('claim_reference',$claim['ClaimReference'] )->first();
+                    $claimItem = ClaimLineItem::where('claim_reference', substr($claim['ClaimReference'],1) )->first();
                     if($claimItem){
                         $claimItem->amount_paid = is_numeric( $claim['PaidTotalAmount'] )? $claim['PaidTotalAmount'] : null;
                         $claimItem->rec_is_full_paid = $claimItem->amount_paid == $claimItem->amount_claimed ? true: false;
