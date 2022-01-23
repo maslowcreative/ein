@@ -53,7 +53,8 @@ class PlanController extends Controller
     {
         $request->validate([
             //'plan_name' => 'required',
-            'file_name' => 'string',
+            'file_name' => 'nullable|string',
+            'budget' => 'required|numeric',
             'status' => 'required|boolean',
             'start_date' => 'required',
             'end_date' => 'required'

@@ -58,19 +58,24 @@
 
                         <div class="col-md-6">
                             <div class="mb-4">
-                                <label for="typesofCharges" class="form-label">Types of Charges</label>
+                                <label  class="form-label">Types of Charges</label>
                                 <input
                                     type="text"
                                     class="form-control"
                                     v-model="plan.charges_types"
                                     placeholder="REPW, TRAN"
                                 />
+                                <div
+                                    class="invalid-msg"
+                                    v-if="form.errors.has('charges_types')"
+                                    v-html="form.errors.get('charges_types')"
+                                />
                             </div>
                         </div>
 
                         <div class="col-md-6">
                             <div class="mb-4">
-                                <label for="budget" class="form-label">Plan’s Budget</label>
+                                <label  class="form-label">Plan’s Budget</label>
                                 <input
                                     type="text"
                                     class="form-control"
@@ -79,8 +84,8 @@
                                 />
                                 <div
                                     class="invalid-msg"
-                                    v-if="form.errors.has('plan.budget')"
-                                    v-html="form.errors.get('plan.budget')"
+                                    v-if="form.errors.has('budget')"
+                                    v-html="form.errors.get('budget')"
                                 />
                             </div>
                         </div>

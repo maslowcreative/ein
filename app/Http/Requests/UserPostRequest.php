@@ -57,11 +57,11 @@ class UserPostRequest extends FormRequest
 
             'participant.plan' => 'required|array',
             'participant.plan.plan_name' => 'string',
-            'participant.plan.file_name' => 'string',
+            'participant.plan.file_name' => 'nullable|file',
             'participant.plan.start_date' => 'required|string',
             'participant.plan.end_date' => 'required|string',
-            'participant.plan.budget' => 'required|integer',
-            'participant.plan.charges_types' => 'required|string',
+            'participant.plan.budget' => 'required|numeric',
+            'participant.plan.charges_types' => 'nullable|string',
 
             //Role is representative
             'representative' => 'exclude_unless:role_id,'.Role::ROLE_REPRESENTATIVE.'|sometimes|array',
