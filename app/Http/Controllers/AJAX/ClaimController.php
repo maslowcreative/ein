@@ -264,7 +264,7 @@ class ClaimController extends Controller
                     $claimItem = ClaimLineItem::where('claim_reference', substr($claim['ClaimReference'],1) )->first();
                     if($claimItem){
                         $claimItem->amount_paid = is_numeric( $claim['PaidTotalAmount'] )? $claim['PaidTotalAmount'] : null;
-                        $claimItem->rec_is_full_paid = $claimItem->amount_paid == $claimItem->amount_claimed ? true: false;
+                        $claimItem->rec_is_full_paid = abs($claimItem->amount_claimed - $claimItem->amount_paid) <= 1   ? true: false;
                         $claimItem->rec_payment_request_status = $claim['Payment Request Status'];
                         $claimItem->rec_payment_request_number = $claim['Payment Request Number'];
                         $claimItem->rec_capped_price = $claim['Capped Price'];
