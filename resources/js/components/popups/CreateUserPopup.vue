@@ -552,7 +552,7 @@
                     />
                     <div class="invalid-msg" v-if="form.errors.has('email')" v-html="form.errors.get('email')" />
                   </div>
-                  <div class="mb-4">
+                  <div class="mb-4" v-if="form.role_id != 4">
                     <label for="phoneNumber" class="form-label fw-bold">Phone Number</label>
                     <input
                       type="tel"
