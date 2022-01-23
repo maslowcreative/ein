@@ -29,7 +29,7 @@ class ClaimPostRequest extends FormRequest
         return [
             'start_date' => 'required|string',
             'end_date' => 'required|string',
-            'invoice_number' => 'required|integer|unique:claims,claim_reference,null,null,provider_id,'.auth()->user()->id,
+            'invoice_number' => 'required|string|unique:claims,claim_reference,null,null,provider_id,'.auth()->user()->id,
             'participant_id' => 'required|exists:provider_participant,participant_id,provider_id,'.auth()->user()->id,
             'file' => 'required|file|mimes:pdf',
             //required_if:anotherfield,value,...
