@@ -545,11 +545,19 @@
                   <div class="mb-4" v-if="form.role_id != 4">
                     <label class="form-label fw-bold">E-mail Address</label>
                     <input
+                      v-if="form.role_id == 2"
                       type="text"
                       class="form-control"
                       v-model="form.email"
-                      placeholder="providersemail@gmail.com"
+                      placeholder="provider@gmail.com"
                     />
+                     <input
+                          v-if="form.role_id == 3"
+                          type="text"
+                          class="form-control"
+                          v-model="form.email"
+                          placeholder="representative@email.com"
+                     />
                     <div class="invalid-msg" v-if="form.errors.has('email')" v-html="form.errors.get('email')" />
                   </div>
                   <div class="mb-4" v-if="form.role_id != 4">
