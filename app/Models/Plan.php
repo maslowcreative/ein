@@ -29,4 +29,9 @@ class Plan extends Model
     {
         return $query->where('status',1);
     }
+
+    public function setBudgetAttribute($value)
+    {
+        $this->attributes['budget'] = round($value,2);
+    }
 }
