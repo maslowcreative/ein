@@ -45,7 +45,8 @@ class User extends Authenticatable
         'phone',
         'address',
         'status',
-        'state'
+        'state',
+        'temp_ndis_number'
     ];
 
     /**
