@@ -7,6 +7,9 @@
                     <small class="text-primary">{{items.total}} Submitted Invoices/Claims </small>
                 </div>
                 <div class="card-right-btns">
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#invoicePopup">
+                        + New Invoice
+                    </button>
                     <div class="dropdown">
                         <button class="btn btn-light btn-icon" type="button" id="filterDropdown1" data-bs-toggle="dropdown"
                                 aria-expanded="false">
@@ -97,6 +100,7 @@
             </div>
             <view-invoice-popup v-bind:claim="claim" ></view-invoice-popup>
             <provider-claim-detail-popup v-bind:claim="claim" role="representative"></provider-claim-detail-popup>
+            <rep-create-invoice-popup></rep-create-invoice-popup>
         </div>
     </div>
 </template>

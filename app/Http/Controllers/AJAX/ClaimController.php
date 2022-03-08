@@ -73,10 +73,16 @@ class ClaimController extends Controller
      */
     public function store(ClaimPostRequest $request)
     {
+        $user = \auth();
         $provider = optional(\auth()->user())->provider;
-
+        $isRepresentative = false;
         if(!$provider){
-            return $this->respondNotFound(__('record.not_found',['model'=>'Provider']));
+            $representative = optional(\auth()->user())->representative;
+            if(!$representative){
+                return $this->respondNotFound(__('record.not_found',['model'=>'Provider']));
+            }
+            $isRepresentative = true;
+            $provider = Provider::find($request->provider_id);
         }
 
         $participant = Participant::find($request->participant_id);
@@ -89,7 +95,7 @@ class ClaimController extends Controller
             array_merge($request->all(),[
                 'ndis_number' => $participant->ndis_number,
                 'provider_abn' => $provider->abn ,
-                'status' => Claim::STATUS_APPROVAL_PENDING,
+                'status' =>  $isRepresentative ? Claim::STATUS_APPROVED_BY_REPRESENTATIVE : Claim::STATUS_APPROVAL_PENDING,
                 'invoice_path' => $path
             ])
         );
@@ -97,7 +103,7 @@ class ClaimController extends Controller
         foreach ($request->service as $index => $item) {
             $key = $index + 1;
             $item = array_merge($item,[
-                'status' => ClaimLineItem::STATUS_PENDING,
+                'status' =>  $isRepresentative ? Claim::STATUS_APPROVED_BY_REPRESENTATIVE : Claim::STATUS_APPROVAL_PENDING,
                 'claim_reference' => "{$claim->id}_{$key}",
                 'provider_id' => $provider->user_id,
                 'participant_id' => $participant->user_id,

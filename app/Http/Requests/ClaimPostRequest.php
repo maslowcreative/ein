@@ -9,6 +9,8 @@ use Illuminate\Validation\Rule;
 
 class ClaimPostRequest extends FormRequest
 {
+    private $role;
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -16,7 +18,18 @@ class ClaimPostRequest extends FormRequest
      */
     public function authorize()
     {
-        return optional(auth()->user())->provider ? true: false;
+            $provider = optional(auth()->user())->provider;
+            if($provider){
+                $this->role = 'provider';
+                return true;
+            }
+
+            $representative = optional(auth()->user())->representative;
+            if($representative){
+                $this->role = 'representative';
+                return true;
+            }
+            return false;
     }
 
     /**
@@ -26,11 +39,10 @@ class ClaimPostRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rule =  [
             'start_date' => 'required|string',
             'end_date' => 'required|string',
             'invoice_number' => 'required|string|unique:claims,claim_reference,null,null,provider_id,'.auth()->user()->id,
-            'participant_id' => 'required|exists:provider_participant,participant_id,provider_id,'.auth()->user()->id,
             'file' => 'required|file|mimes:pdf',
             //required_if:anotherfield,value,...
 
@@ -42,5 +54,15 @@ class ClaimPostRequest extends FormRequest
             'service.*.unit_price' => 'required|numeric|min:0.1',
             'service.*.gst_code' => ['required',Rule::in(collect(Claim::TAX_TYPES)->keys()->toArray())],
         ];
+
+        if($this->role == 'porvider'){
+            $rule['participant_id'] = 'required|exists:provider_participant,participant_id,provider_id,'.auth()->user()->id;
+        }
+
+        if($this->role == 'representative'){
+            $rule['participant_id'] = 'required|exists:participants,user_id,representative_id,'.auth()->user()->id;
+            $rule['provider_id'] = 'required|exists:provider_participant,provider_id,participant_id,'.request()->participant_id;
+        }
+        return $rule;
     }
 }
