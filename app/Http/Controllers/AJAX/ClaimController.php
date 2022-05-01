@@ -94,7 +94,7 @@ class ClaimController extends Controller
         $claim = $provider->claims()->create(
             array_merge($request->all(),[
                 'ndis_number' => $participant->ndis_number,
-                'provider_abn' => $provider->abn ,
+                'provider_abn' => $isRepresentative ? 'REIMB' : $provider->abn ,
                 'status' =>  $isRepresentative ? Claim::STATUS_APPROVED_BY_REPRESENTATIVE : Claim::STATUS_APPROVAL_PENDING,
                 'invoice_path' => $path
             ])
