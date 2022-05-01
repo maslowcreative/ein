@@ -8,7 +8,6 @@
         </div>
         <div class="card-right-btns">
           <button class="btn" v-bind:class="[filters.claim_status == 'all' ?  'btn-primary' : 'btn-light']"
-          <button class="btn" v-bind:class="[filters.claim_status == 'all' ?  'btn-primary' : 'btn-light']"
             v-on:click="setFilter('all')"
           >
             All Claims
@@ -163,7 +162,7 @@ export default {
             items: [],
         },
         filters: {
-            claim_status: "all",
+            claim_status: "0",
             claim_type: "all",
         },
         selectedClaims: []

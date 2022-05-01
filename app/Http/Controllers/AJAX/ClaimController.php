@@ -62,7 +62,7 @@ class ClaimController extends Controller
             $claims->whereIn('participant_id',Auth::user()->representative->participants()->pluck('user_id'));
         }
 
-        return  $claims->paginate(5);
+        return  $claims->orderBy('created_at','DESC')->paginate(5);
     }
 
     /**
