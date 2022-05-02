@@ -54,7 +54,9 @@ class HomeController extends Controller
      */
     public function myAccount()
     {
-        return view('my-account');
+        $user = auth()->user();
+        $role = $user->roles[0]->name;
+        return view('my-account',['user' => $user, 'role' => $role]);
     }
 
     public function claimInvoiceDownload(Claim $claim){
