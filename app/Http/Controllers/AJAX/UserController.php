@@ -210,6 +210,8 @@ class UserController extends Controller
     {
         $user = User::findOrFail($userId);
 
+        $user->hasRole('provider');
+
         $request->validate([
             'name' => 'required|string',
             'email' => 'required|email|unique:users,email,'. $userId,
@@ -217,6 +219,32 @@ class UserController extends Controller
             'phone' => 'sometimes|string|nullable',
             'address' => 'sometimes|string|nullable',
 
+        ]);
+
+        $user->fill($request->all())->save();
+
+        return $this->respondWithSuccess();
+    }
+
+    /**
+     * Update the Bank info.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updateBankInfo(Request $request, $userId)
+    {
+        $user = User::findOrFail($userId);
+
+        if( !$user->hasAnyRole('provider','representative') ){
+            return $this->respondForbidden();
+        }
+
+        $request->validate([
+            'bank_name' => 'string|required_with_all:account_number,bsb_number',
+            'account_number' => 'string|required_with_all:bank_name,bsb_number',
+            'bsb_number' => 'string|required_with_all:bank_name,account_number',
         ]);
 
         $user->fill($request->all())->save();

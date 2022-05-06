@@ -112,7 +112,10 @@ export default {
       this.form
         .post(route)
         .then(res => {
-          if ((res.status = 200)) this.message = res.data.message
+          if ((res.status = 200)){
+              this.message = res.data.message;
+              window.location.reload();
+          }
         })
         .catch(error => {})
     },

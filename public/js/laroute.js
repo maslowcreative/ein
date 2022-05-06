@@ -72,6 +72,10 @@
         "name": "ajax.users.update.basic.info"
     },
     {
+        "uri": "ajax\/users\/{user}\/bank-info",
+        "name": "ajax.users.update.bank.info"
+    },
+    {
         "uri": "ajax\/users\/status-toggle",
         "name": "ajax.user.status.toggle"
     },

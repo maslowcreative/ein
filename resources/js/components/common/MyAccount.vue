@@ -1,6 +1,9 @@
 <template>
     <div>
         <div class="card">
+            <div v-if="(this.userRole == 'provider' || this.userRole == 'representative') && (!this.user.bank_name || !this.user.account_number || !this.user.bsb_number )" class="alert alert-danger" role="alert">
+                Please enter your banking information before using this portal.
+            </div>
             <div  class="card-body">
                 <h3 class="border-bottom pb-4 mb-5">My Account</h3>
                 <div class="row">
@@ -96,26 +99,27 @@
                     </div>
                 </div>
                 <br><br>
-                <h3 v-if="this.userRole" class="border-bottom pb-4 mb-5">Bank Information</h3>
-                <div v-if="this.userRole" class="row">
+
+                <h3 v-if="this.userRole == 'provider' || this.userRole == 'representative'" class="border-bottom pb-4 mb-5">Bank Information</h3>
+                <div v-if="this.userRole == 'provider' || this.userRole == 'representative'"  class="row">
                     <div class="col-lg-3">
                     </div>
                     <div class="col-lg-9">
                         <div class="row">
-                            <div class="col-md-4 col-sm-6">
+                           <div class="col-md-4 col-sm-6">
                                 <div class="mb-4">
                                     <label  class="form-label">Bank Name</label>
                                     <div class="input-group-overlay">
-                                        <input type="text"  class="form-control"  placeholder="Bank name" />
-                                        <div class="invalid-msg" v-if="form.errors.has('name')" v-html="form.errors.get('name')" />
+                                        <input type="text"  class="form-control"  v-model="bankForm.bank_name" placeholder="Bank name" />
+                                        <div class="invalid-msg" v-if="bankForm.errors.has('bank_name')" v-html="bankForm.errors.get('bank_name')" />
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-4 col-sm-6">
                                 <div class="mb-4">
                                     <label class="form-label fw-bold">Account Number</label>
-                                    <input type="email" placeholder="Account Number" class="form-control appended-form-control">
-                                    <div class="invalid-msg" v-if="form.errors.has('email')" v-html="form.errors.get('email')" />
+                                    <input type="email" placeholder="Account Number" v-model="bankForm.account_number" class="form-control appended-form-control">
+                                    <div class="invalid-msg" v-if="bankForm.errors.has('account_number')" v-html="bankForm.errors.get('account_number')" />
                                 </div>
                             </div>
                             <div class="col-md-4 col-sm-6">
@@ -125,14 +129,15 @@
                                         type="tel"
                                         class="form-control"
                                         placeholder="0000000000"
+                                        v-model="bankForm.bsb_number"
                                     />
-                                    <div class="invalid-msg" v-if="form.errors.has('phone')" v-html="form.errors.get('phone')" />
+                                    <div class="invalid-msg" v-if="bankForm.errors.has('bsb_number')" v-html="bankForm.errors.get('bsb_number')" />
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-4 col-sm-6">
-                                <button v-if="!loader" class="btn btn-primary btn-lg w-100 py-3" v-on:click="updateUser" >Update Information</button>
+                                <button v-if="!bankinfoLoader" class="btn btn-primary btn-lg w-100 py-3" v-on:click="updateBankInfo" >Update Information</button>
                                 <button v-else class="btn btn-primary btn-lg w-100 py-3" type="button" disabled>
                                     <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                                     Loading...
@@ -153,6 +158,7 @@ export default {
     data() {
         return {
             loader: false,
+            bankinfoLoader: false,
             avatar: null,
             avatar_url: null,
             userRole : null,
@@ -165,17 +171,25 @@ export default {
                 password: null,
                 password_confirmation: null,
             }),
+            bankForm: new Form({
+                bank_name: null,
+                account_number: null,
+                bsb_number: null,
+            })
         }
     },
     mounted() {
         this.avatar = this.user.avatar;
         this.avatar_url = this.user.avatar_url
         this.userRole = this.role;
+        this.bankForm.bank_name = this.user.bank_name;
+        this.bankForm.account_number = this.user.account_number;
+        this.bankForm.bsb_number = this.user.bsb_number;
+
     },
     methods:{
         updateUser() {
             this.loader = true;
-
             let data = [];
 
             data.name = this.user.name;
@@ -231,7 +245,22 @@ export default {
                 .finally(() => {
                     this.loader = false;
                 });
-        }
+        },
+        updateBankInfo() {
+            this.bankinfoLoader = true;
+
+            let route = this.laroute.route("ajax.users.update.bank.info",{ 'user' : this.user.id});
+
+            this.bankForm
+                .put(route)
+                .then(res => {
+                    this.$toastr.s("Success", "User bank info updated!");
+                })
+                .catch(error => {
+                    this.$toastr.e("Error", "Some thing went wrong.")
+                })
+                .finally(() => (this.bankinfoLoader = false))
+        },
     }
 }
 </script>

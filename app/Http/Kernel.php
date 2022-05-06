@@ -64,5 +64,6 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'participant.email.replace' => \App\Http\Middleware\ProcessCreateRequest::class,
         'claim.service.clean' => \App\Http\Middleware\CleanClaimPostRequest::class,
+        'bank.info.check' => \App\Http\Middleware\BankInfoCheck::class,
     ];
 }
