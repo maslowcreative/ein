@@ -572,7 +572,10 @@ export default {
           this.servicesItemsResult = [];
           let data = {
               "filter[item_number]": query,
+              'participant_id': this.form.participant_id,
+              'provider_id' : this.form.provider_id,
           }
+
           let route = this.laroute.route("ajax.services.index", data)
           axios
               .get(route)
@@ -583,7 +586,12 @@ export default {
                   this.servicesItemsResult= data;
               })
               .catch(error => {
-                  this.$toastr.e("Error", "Some thing went wrong.")
+                  if(error.response.status == 422){
+                      this.$toastr.e("Error", "Please select particpant & provider first.");
+                  }else {
+                      this.$toastr.e("Error", "Some thing went wrong.");
+                  }
+
               })
               .finally(() => {
                   this.loader = false

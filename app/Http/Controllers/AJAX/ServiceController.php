@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\AJAX;
 
 use App\Http\Controllers\Controller;
+use App\Models\ParticipantItem;
+use App\Models\ProviderItems;
 use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,9 +21,32 @@ class ServiceController extends Controller
         $items =  Service::getServices()
                         ->select('support_item_number','support_item_name','reg_group_number','reg_group_name','support_category_number','support_category_name');
 
-//        if(Auth::user()->hasRole('provider')) {
-//            $items = $items->whereIn('support_item_number',Auth::user()->provider->items()->pluck('item_number'));
-//        }
+        if(Auth::user()->hasRole('provider')) {
+            \request()->validate([
+                'participant_id' => 'required|integer'
+            ]);
+
+            $participantItems = ParticipantItem::where('participant_id',\request()->participant_id)->pluck('item_number');
+
+            $providerItems = Auth::user()->provider->items()->whereIn('item_number',$participantItems)->pluck('item_number');
+
+            $items = $items->whereIn('support_item_number',$providerItems);
+        }
+
+        if(Auth::user()->hasRole('representative')) {
+
+            \request()->validate([
+                'participant_id' => 'required|integer',
+                'provider_id' => 'required|integer',
+            ]);
+
+            $participantItems = ParticipantItem::where('participant_id',\request()->participant_id)->pluck('item_number');
+
+            $providerItems = ProviderItems::where('provider_id',\request()->provider_id)
+                ->whereIn('item_number',$participantItems)
+                ->pluck('item_number');
+            $items = $items->whereIn('support_item_number',$providerItems);
+        }
 
         return $items->paginate(100);
     }

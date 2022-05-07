@@ -165,6 +165,12 @@
                                             </multiselect>
                                             <div
                                                 class="invalid-msg"
+                                                v-if="form.errors.has('participant_id')"
+                                            >
+                                                Please select participant first.
+                                            </div>
+                                            <div
+                                                class="invalid-msg"
                                                 v-if="form.errors.has('service.'+index+'.item_number')"
                                                 v-html="form.errors.get('service.'+index+'.item_number').replace('service.'+index+'.item_number','item number')"
                                             />
@@ -482,6 +488,7 @@ export default {
           this.servicesItemsResult = [];
           let data = {
               "filter[item_number]": query,
+              'participant_id': this.form.participant_id
           }
           let route = this.laroute.route("ajax.services.index", data)
           axios
@@ -493,7 +500,12 @@ export default {
                   this.servicesItemsResult= data;
               })
               .catch(error => {
-                  this.$toastr.e("Error", "Some thing went wrong.")
+
+                  if(error.response.status == 422){
+                      this.$toastr.e("Error", "Please select particpant first.");
+                  }else {
+                      this.$toastr.e("Error", "Some thing went wrong.");
+                  }
               })
               .finally(() => {
                   this.loader = false

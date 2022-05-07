@@ -52,7 +52,6 @@ class UserController extends Controller
         }
 
         if(Auth::user()->hasRole('representative')) {
-
             if(\request()->filter['roles'][0] == 'participant'){
                 $participantIds = Auth::user()->representative->participants()->pluck('user_id');
                 $users = $users->whereIn('id',$participantIds)->with('participant');
