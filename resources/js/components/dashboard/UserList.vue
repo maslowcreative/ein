@@ -239,7 +239,7 @@ export default {
             this.participant = user;
             //this.$root.$emit('ein:participant-edit-popup-open',user.id);
 
-            let data = { page: 1 , include:'participant.representative,participant.providers.user'}
+            let data = { page: 1 , include:'participant.items,participant.representative,participant.providers.user'}
             //Filtering Admin Role.
             data["filter[roles][0]"] = 'participant';
             data["filter[id]"] = user.id;

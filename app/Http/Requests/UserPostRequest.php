@@ -55,6 +55,9 @@ class UserPostRequest extends FormRequest
             'participant.providers' => 'sometimes|array',
             'participant.providers.*' => 'integer',
 
+            'participant.items' => 'sometimes|array',
+            'participant.items.*' => 'exists:services,support_item_number',
+
             'participant.plan' => 'required|array',
             'participant.plan.plan_name' => 'string',
             'participant.plan.file_name' => 'nullable|file',

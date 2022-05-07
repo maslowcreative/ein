@@ -105,6 +105,14 @@ class UserController extends Controller
               $participant->providers()->attach($request->participant['providers'],['created_at' => now(),'updated_at'=> now()]);
           }
 
+          if($request->participant['items'] ?? false ){
+            $items = [];
+            foreach ($request->participant['items'] as $value) {
+                array_push($items,['item_number' => $value,'participant_id'=> $participant->user_id]);
+            }
+            $participant->items()->createMany($items);
+          }
+
           if($request->participant['plan'] ?? false)
             $plan = $participant->plans()->create($request->participant['plan']);
         }
@@ -180,6 +188,14 @@ class UserController extends Controller
             if($user->hasRole('participant') && $request->role_id == Role::ROLE_PARTICIPANT) {
                 $user->participant->fill($request->participant)->save();
                 $user->participant->providers()->sync($request->participant['providers']);
+
+                $user->participant->items()->delete();
+                $items = [];
+                foreach ($request->participant['items'] as $value) {
+                    array_push($items,['item_number' => $value,'participant_id'=> $user->participant->user_id]);
+                }
+                $user->participant->items()->createMany($items);
+
             }
 
             if($user->hasRole('representative') && $request->role_id == Role::ROLE_REPRESENTATIVE) {

@@ -56,4 +56,8 @@ class Participant extends Model
         return $this->belongsTo(User::class,'user_id');
     }
 
+    public function items() {
+        return $this->hasMany(ParticipantItem::class,'participant_id');
+    }
+
 }

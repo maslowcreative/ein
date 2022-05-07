@@ -37,7 +37,20 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $guarded = [];
+    protected $fillable = [
+        'name',
+        'email',
+        'avatar',
+        'password',
+        'phone',
+        'address',
+        'status',
+        'state',
+        'temp_ndis_number',
+        'bank_name',
+        'account_number',
+        'bsb_number'
+    ];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -144,7 +157,7 @@ class User extends Authenticatable
     {
         return QueryBuilder::for(User::class)
             ->with(['roles'])
-            ->allowedIncludes(['provider','provider.items','provider.participants','provider.participants.user','participant','participant.representative','participant.providers','participant.providers.user','representative',])
+            ->allowedIncludes(['provider','provider.items','provider.participants','provider.participants.user','participant','participant.items','participant.representative','participant.providers','participant.providers.user','representative',])
             ->allowedFilters([
                 AllowedFilter::exact('id', 'id'),
                 AllowedFilter::partial('name', 'name'),

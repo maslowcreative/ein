@@ -150,6 +150,27 @@
 
                                 </div>
                             </div>
+                            <div class="col-md-6">
+                                <div class="mb-4">
+                                    <label class="form-label fw-bold">Specific Item Numbers</label>
+                                    <multiselect
+                                        v-model="servicesItemsSelected"
+                                        placeholder="Search or add item"
+                                        label="support_item_number" track-by="support_item_number"
+                                        :options="servicesItemsResult"
+                                        :multiple="true"
+                                        :taggable="true"
+                                        :searchable="true"
+                                        :loading="loader"
+                                        :internal-search="false"
+                                        :clear-on-select="false"
+                                        :close-on-select="false"
+                                        :options-limit="50" :limit="15"
+                                        @search-change="asyncFindItemNumber"
+                                    >
+                                    </multiselect>
+                                </div>
+                            </div>
                         </div>
                     </form>
                     <div class="mw290 mx-auto px-4 mt-3">
@@ -186,7 +207,8 @@ export default {
                     dob: null,
                     ndis_number: null,
                     representative_id: null,
-                    providers: []
+                    providers: [],
+                    items:[],
                 }
             }),
             providerItemsResultSelected: [],
@@ -194,17 +216,28 @@ export default {
 
             representativeItemsResultSelected: null,
             representativeItemsResult: [],
+
+            servicesItemsResult: [],
+            servicesItemsSelected: [],
         }
     },
     mounted() {
         this.$root.$on("ein:participant-edit-popup-open", (user) => {
             let providerItemsResultSelected = [];
+            let servicesItemsSelected = [];
             user.participant.providers.forEach(function (item){
                 providerItemsResultSelected.push({
                     id: item.user.id,
                     name: item.user.name
                 });
             });
+
+            user.participant.items.forEach(function (item){
+                servicesItemsSelected.push({
+                    support_item_number: item.item_number
+                });
+            })
+
             if(user.participant && user.participant.representative ){
                 this.representativeItemsResultSelected = {id: user.participant.representative.id,  name: user.participant.representative.name};
             }else {
@@ -212,7 +245,8 @@ export default {
             }
 
             this.providerItemsResultSelected = providerItemsResultSelected;
-        })
+            this.servicesItemsSelected = servicesItemsSelected;
+        });
     },
     methods: {
         updateUser() {
@@ -229,6 +263,12 @@ export default {
             this.providerItemsResultSelected.forEach(function (item){
                 providers.push(item.id);
             });
+
+            let items = [];
+            this.servicesItemsSelected.forEach(function (item){
+                items.push(item.support_item_number);
+            });
+            this.form.participant.items = items;
 
             this.form.participant.providers = providers;
 
@@ -292,6 +332,24 @@ export default {
                     console.log(error)
                 })
                 .finally(() => (this.loading = false))
+        },
+        asyncFindItemNumber(query) {
+            this.servicesItemsResult = [];
+            let data = {
+                "filter[item_number]": query,
+            }
+            let route = this.laroute.route("ajax.services.index", data)
+            axios
+                .get(route)
+                .then(res => {
+                    this.servicesItemsResult = res.data.data;
+                })
+                .catch(error => {
+                    this.$toastr.e("Error", "Some thing went wrong.")
+                })
+                .finally(() => {
+                    this.loader = false
+                });
         },
     },
 }

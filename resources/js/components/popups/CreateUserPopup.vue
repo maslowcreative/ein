@@ -427,6 +427,25 @@
                           </div>
                         </div>
                       </div>
+                      <div class="mb-4">
+                            <label  class="form-label fw-bold">Specific Item Numbers</label>
+                            <multiselect
+                                v-model="servicesItemsSelected"
+                                placeholder="Search or add item"
+                                label="support_item_number" track-by="support_item_number"
+                                :options="servicesItemsResult"
+                                :multiple="true"
+                                :taggable="true"
+                                :searchable="true"
+                                :loading="loader"
+                                :internal-search="false"
+                                :clear-on-select="false"
+                                :close-on-select="false"
+                                :options-limit="50" :limit="15"
+                                @search-change="asyncFindItemNumber"
+                            >
+                            </multiselect>
+                        </div>
                     </div>
                   </div>
                 </div>
@@ -620,11 +639,6 @@
                       <div class="mb-4">
                           <label for="ndisPlanFile" class="form-label">NDIS File</label>
                           <div class="input-group-overlay">
-<!--                              <div class="input-group-prepend-overlay">-->
-<!--                                <span class="input-group-text text-primary"-->
-<!--                                ><ion-icon name="document-attach-outline"></ion-icon-->
-<!--                                ></span>-->
-<!--                              </div>-->
                               <input
                                   type="file"
                                   class="form-control"
@@ -845,6 +859,7 @@ export default {
           ndis_number: null,
           representative_id: null,
           providers: [],
+          items:[],
           plan: {
             file_name: null,
             start_date: null,
@@ -899,6 +914,7 @@ export default {
             ndis_number: null,
             representative_id: null,
             providers: [],
+            items:[] ,
             plan: {
               file_name: null,
               start_date: null,
@@ -922,6 +938,7 @@ export default {
         this.representativeSerachName = null
         this.representativeSerachResult = []
         this.representativeSelected = null
+        this.servicesItemsSelected  = [];
       }
     },
     step(val, old) {
@@ -954,6 +971,9 @@ export default {
     },
     servicesItemsSelected(val,old) {
         this.form.provider.items =  this.servicesItemsSelected.map(function(item){
+            return item.support_item_number;
+        });
+        this.form.participant.items =  this.servicesItemsSelected.map(function(item){
             return item.support_item_number;
         });
     },
@@ -1164,6 +1184,7 @@ export default {
                ndis_number: null,
                representative_id: null,
                providers: [],
+               items:[],
                plan: {
 
                    plan_name : null,
