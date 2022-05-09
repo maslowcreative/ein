@@ -49,7 +49,8 @@ class User extends Authenticatable
         'temp_ndis_number',
         'bank_name',
         'account_number',
-        'bsb_number'
+        'bsb_number',
+        'source'
     ];
 
     /**
