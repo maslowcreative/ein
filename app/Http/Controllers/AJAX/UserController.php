@@ -257,9 +257,9 @@ class UserController extends Controller
         }
 
         $request->validate([
-            'bank_name' => 'string|required_with_all:account_number,bsb_number',
-            'account_number' => 'string|required_with_all:bank_name,bsb_number',
-            'bsb_number' => 'string|required_with_all:bank_name,account_number',
+            'account_name' => 'string|required_with_all:account_number,bsb',
+            'account_number' => 'string|required_with_all:account_name,bsb',
+            'bsb' => 'string|required_with_all:account_name,account_number',
         ]);
 
         $user->fill($request->all())->save();

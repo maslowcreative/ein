@@ -47,9 +47,9 @@ class User extends Authenticatable
         'status',
         'state',
         'temp_ndis_number',
-        'bank_name',
+        'account_name',
         'account_number',
-        'bsb_number',
+        'bsb',
         'source'
     ];
 

@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="card">
-            <div v-if="(this.userRole == 'provider' || this.userRole == 'representative') && (!this.user.bank_name || !this.user.account_number || !this.user.bsb_number )" class="alert alert-danger" role="alert">
+            <div v-if="(this.userRole == 'provider' || this.userRole == 'representative') && (!this.user.account_name || !this.user.account_number || !this.user.bsb )" class="alert alert-danger" role="alert">
                 Please enter your banking information before using this portal.
             </div>
             <div  class="card-body">
@@ -100,7 +100,7 @@
                 </div>
                 <br><br>
 
-                <h3 v-if="this.userRole == 'provider' || this.userRole == 'representative'" class="border-bottom pb-4 mb-5">Bank Information</h3>
+                <h3 v-if="this.userRole == 'provider' || this.userRole == 'representative'" class="border-bottom pb-4 mb-5">Bank Details</h3>
                 <div v-if="this.userRole == 'provider' || this.userRole == 'representative'"  class="row">
                     <div class="col-lg-3">
                     </div>
@@ -108,11 +108,23 @@
                         <div class="row">
                            <div class="col-md-4 col-sm-6">
                                 <div class="mb-4">
-                                    <label  class="form-label">Bank Name</label>
+                                    <label  class="form-label">Account Name</label>
                                     <div class="input-group-overlay">
-                                        <input type="text"  class="form-control"  v-model="bankForm.bank_name" placeholder="Bank name" />
-                                        <div class="invalid-msg" v-if="bankForm.errors.has('bank_name')" v-html="bankForm.errors.get('bank_name')" />
+                                        <input type="text"  class="form-control"  v-model="bankForm.account_name" placeholder="Account name" />
+                                        <div class="invalid-msg" v-if="bankForm.errors.has('account_name')" v-html="bankForm.errors.get('account_name')" />
                                     </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-6">
+                                <div class="mb-4">
+                                    <label  class="form-label fw-bold">BSB</label>
+                                    <input
+                                        type="tel"
+                                        class="form-control"
+                                        placeholder="0000000000"
+                                        v-model="bankForm.bsb"
+                                    />
+                                    <div class="invalid-msg" v-if="bankForm.errors.has('bsb')" v-html="bankForm.errors.get('bsb')" />
                                 </div>
                             </div>
                             <div class="col-md-4 col-sm-6">
@@ -120,18 +132,6 @@
                                     <label class="form-label fw-bold">Account Number</label>
                                     <input type="email" placeholder="Account Number" v-model="bankForm.account_number" class="form-control appended-form-control">
                                     <div class="invalid-msg" v-if="bankForm.errors.has('account_number')" v-html="bankForm.errors.get('account_number')" />
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-sm-6">
-                                <div class="mb-4">
-                                    <label  class="form-label fw-bold">BSB Number</label>
-                                    <input
-                                        type="tel"
-                                        class="form-control"
-                                        placeholder="0000000000"
-                                        v-model="bankForm.bsb_number"
-                                    />
-                                    <div class="invalid-msg" v-if="bankForm.errors.has('bsb_number')" v-html="bankForm.errors.get('bsb_number')" />
                                 </div>
                             </div>
                         </div>
@@ -172,9 +172,9 @@ export default {
                 password_confirmation: null,
             }),
             bankForm: new Form({
-                bank_name: null,
+                account_name: null,
                 account_number: null,
-                bsb_number: null,
+                bsb: null,
             })
         }
     },
@@ -182,9 +182,9 @@ export default {
         this.avatar = this.user.avatar;
         this.avatar_url = this.user.avatar_url
         this.userRole = this.role;
-        this.bankForm.bank_name = this.user.bank_name;
+        this.bankForm.account_name = this.user.account_name;
         this.bankForm.account_number = this.user.account_number;
-        this.bankForm.bsb_number = this.user.bsb_number;
+        this.bankForm.bsb = this.user.bsb;
 
     },
     methods:{
