@@ -12,14 +12,10 @@
           >
             All Claims
           </button>
-          <button class="btn position-relative" v-bind:class="[filters.claim_status == 0 ?  'btn-primary' : 'btn-light']"
-                  v-on:click="setFilter('0')"
+          <button class="btn position-relative" v-bind:class="[filters.claim_status == 1 ?  'btn-primary' : 'btn-light']"
+                  v-on:click="setFilter('1')"
           >
-            Pending
-<!--            <span-->
-<!--              class="position-absolute top-0 start-100 translate-middle badge badge-alrt border border-light rounded-circle bg-primary"-->
-<!--              ><span class="visually-hidden">unread messages</span></span-->
-<!--            >-->
+              Attention
           </button>
           <div class="dropdown">
             <button
@@ -162,7 +158,7 @@ export default {
             items: [],
         },
         filters: {
-            claim_status: "0",
+            claim_status: "1",
             claim_type: "all",
         },
         selectedClaims: []
