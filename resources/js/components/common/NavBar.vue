@@ -15,7 +15,7 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <h3 v-if="userData">Hello, {{userData.name}}!</h3>
+      <h3 v-if="userData">Hello, {{userData.first_name}}!</h3>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
           <li class="nav-item">
