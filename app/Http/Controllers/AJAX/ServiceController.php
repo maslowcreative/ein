@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\AJAX;
 
 use App\Http\Controllers\Controller;
-use App\Models\ParticipantItem;
+use App\Models\ParticipantItems;
 use App\Models\ProviderItems;
 use App\Models\Service;
 use Illuminate\Http\Request;
@@ -26,7 +26,7 @@ class ServiceController extends Controller
                 'participant_id' => 'required|integer'
             ]);
 
-            $participantItems = ParticipantItem::where('participant_id',\request()->participant_id)->pluck('item_number');
+            $participantItems = ParticipantItems::where('participant_id',\request()->participant_id)->pluck('item_number');
 
             $providerItems = Auth::user()->provider->items()->whereIn('item_number',$participantItems)->pluck('item_number');
 
@@ -40,7 +40,7 @@ class ServiceController extends Controller
                 'provider_id' => 'required|integer',
             ]);
 
-            $participantItems = ParticipantItem::where('participant_id',\request()->participant_id)->pluck('item_number');
+            $participantItems = ParticipantItems::where('participant_id',\request()->participant_id)->pluck('item_number');
 
             $providerItems = ProviderItems::where('provider_id',\request()->provider_id)
                 ->whereIn('item_number',$participantItems)

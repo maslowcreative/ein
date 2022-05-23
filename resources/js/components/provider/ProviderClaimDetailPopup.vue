@@ -59,11 +59,14 @@
                                         <div class="mb-4">
                                             <label class="form-label">Claim Type</label>
                                             <select disabled class="form-select" :value="item.claim_type" >
+                                                <option value=" ">N/A</option>
                                                 <option value="">Face-To-Face</option>
                                                 <option value="CANC">Cancellation Charges</option>
                                                 <option value="REPW">Report Writing Charges</option>
                                                 <option value="TRAN">Travel Charges</option>
                                                 <option value="NF2F">Non-Face to Face Services</option>
+                                                <option value="THLT">Telehealth</option>
+                                                <option value="IRSS">Irregular SIL Supports</option>
                                             </select>
                                         </div>
                                     </div>
