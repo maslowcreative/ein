@@ -332,7 +332,7 @@ export default {
             'service': [
                 {
                     'item_number': null,
-                    'claim_type': '',
+                    'claim_type': " ",
                     'hours' : null,
                     'unit_price': null,
                     'gst_code': 'P2',
@@ -412,7 +412,7 @@ export default {
               'service': [
                   {
                       'item_number': null,
-                      'claim_type': ' ',
+                      'claim_type': " ",
                       'hours' : null,
                       'unit_price': null,
                       'gst_code': 'P2',
