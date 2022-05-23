@@ -18,9 +18,23 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="mb-4">
-                                    <label  class="form-label">Full Name</label>
-                                    <input type="text" v-model="user.name"  class="form-control"  placeholder="The Name of the Provider" />
-                                    <div class="invalid-msg" v-if="form.errors.has('name')" v-html="form.errors.get('name')" />
+                                    <label  class="form-label">First Name</label>
+                                    <input type="text" v-model="user.first_name"  class="form-control"  placeholder="The first name of the Provider" />
+                                    <div class="invalid-msg" v-if="form.errors.has('first_name')" v-html="form.errors.get('first_name')" />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-4">
+                                    <label  class="form-label">Last Name</label>
+                                    <input type="text" v-model="user.last_name"  class="form-control"  placeholder="The last name of the Provider" />
+                                    <div class="invalid-msg" v-if="form.errors.has('last_name')" v-html="form.errors.get('last_name')" />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-4">
+                                    <label  class="form-label">Other Name</label>
+                                    <input type="text" v-model="user.other_name"  class="form-control"  placeholder="Other Name of the participant" />
+                                    <div class="invalid-msg" v-if="form.errors.has('other_name')" v-html="form.errors.get('other_name')" />
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -198,7 +212,8 @@ export default {
             loader: false,
             form: new Form({
                 role_id: 4,
-                name: null,
+                first_name: null,
+                last_name: null,
                 email: null,
                 phone: null,
                 address: null,
@@ -251,7 +266,9 @@ export default {
     methods: {
         updateUser() {
             this.loader = true;
-            this.form.name = this.user.name;
+            this.form.first_name = this.user.first_name;
+            this.form.last_name = this.user.last_name;
+            this.form.other_name = this.user.other_name;
             this.form.email = this.user.email;
             this.form.phone = this.user.phone;
             this.form.address = this.user.address;

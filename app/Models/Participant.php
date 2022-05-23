@@ -57,7 +57,7 @@ class Participant extends Model
     }
 
     public function items() {
-        return $this->hasMany(ParticipantItem::class,'participant_id');
+        return $this->hasMany(ParticipantItems::class,'participant_id');
     }
 
 }

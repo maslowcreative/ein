@@ -18,9 +18,16 @@
             <div class="row">
               <div class="col-md-6">
                 <div class="mb-4">
-                  <label for="fullName" class="form-label">Full Name</label>
-                  <input type="text" v-model="form.name" class="form-control" id="fullName" placeholder="admin name" />
-                  <div class="invalid-msg" v-if="form.errors.has('name')" v-html="form.errors.get('name')" />
+                  <label  class="form-label">First Name</label>
+                  <input type="text" v-model="form.first_name" class="form-control"  placeholder="admin first name" />
+                  <div class="invalid-msg" v-if="form.errors.has('first_name')" v-html="form.errors.get('first_name')" />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="mb-4">
+                  <label  class="form-label">Last Name</label>
+                  <input type="text" v-model="form.last_name" class="form-control"  placeholder="admin last name" />
+                  <div class="invalid-msg" v-if="form.errors.has('last_name')" v-html="form.errors.get('last_name')" />
                 </div>
               </div>
               <div class="col-md-6">
@@ -130,7 +137,8 @@ export default {
     return {
       loader: false,
       form: new Form({
-        name: null,
+        first_name: null,
+        last_name: null,
         email: null,
         password: null,
         password_confirmation: null,
@@ -169,7 +177,8 @@ export default {
     },
     resetForm() {
       this.form = new Form({
-          name: null,
+          first_name: null,
+          last_name: null,
           email: null,
           password: null,
           password_confirmation: null,

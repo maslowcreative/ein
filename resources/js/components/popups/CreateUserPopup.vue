@@ -166,15 +166,39 @@
                 <div class="step2" v-show="step === 2 && form.role_id == 2">
                   <div class="row">
                     <div class="col-md-6">
+                          <div class="mb-4">
+                              <label class="form-label">First Name</label>
+                              <input
+                                  type="text"
+                                  class="form-control"
+                                  v-model="form.first_name"
+                                  placeholder="The first name of the Provider"
+                              />
+                              <div class="invalid-msg" v-if="form.errors.has('first_name')" v-html="form.errors.get('first_name')" />
+                          </div>
+                    </div>
+                    <div class="col-md-6">
+                          <div class="mb-4">
+                              <label class="form-label">Last Name</label>
+                              <input
+                                  type="text"
+                                  class="form-control"
+                                  v-model="form.last_name"
+                                  placeholder="The last name of the Provider"
+                              />
+                              <div class="invalid-msg" v-if="form.errors.has('last_name')" v-html="form.errors.get('last_name')" />
+                          </div>
+                      </div>
+                    <div class="col-md-6" v-if="form.role_id == 2">
                       <div class="mb-4">
-                        <label class="form-label">Full Name</label>
-                        <input
-                          type="text"
-                          class="form-control"
-                          v-model="form.name"
-                          placeholder="The Name of the Provider"
-                        />
-                        <div class="invalid-msg" v-if="form.errors.has('name')" v-html="form.errors.get('name')" />
+                          <label class="form-label">Other Name</label>
+                          <input
+                              type="text"
+                              class="form-control"
+                              v-model="form.other_name"
+                              placeholder="Other name of the user"
+                          />
+                          <div class="invalid-msg" v-if="form.errors.has('other_name')" v-html="form.errors.get('other_name')" />
                       </div>
                     </div>
                     <div class="col-md-6">
@@ -250,16 +274,40 @@
                   <div class="row">
                     <div class="col-md-6">
                       <div class="mb-4">
-                        <label class="form-label">Full Name</label>
+                        <label class="form-label">First Name</label>
                         <input
                           type="text"
                           class="form-control"
-                          v-model="form.name"
-                          placeholder="The Name of the Participant"
+                          v-model="form.first_name"
+                          placeholder="The first name of the Participant"
                         />
-                        <div class="invalid-msg" v-if="form.errors.has('name')" v-html="form.errors.get('name')" />
+                        <div class="invalid-msg" v-if="form.errors.has('first_name')" v-html="form.errors.get('first_name')" />
                       </div>
                     </div>
+                    <div class="col-md-6">
+                      <div class="mb-4">
+                        <label class="form-label">Last Name</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          v-model="form.last_name"
+                          placeholder="The last name of the Participant"
+                        />
+                        <div class="invalid-msg" v-if="form.errors.has('last_name')" v-html="form.errors.get('last_name')" />
+                      </div>
+                    </div>
+                    <div class="col-md-6" v-if="form.role_id == 4">
+                          <div class="mb-4">
+                              <label class="form-label">Other Name </label>
+                              <input
+                                  type="text"
+                                  class="form-control"
+                                  v-model="form.other_name"
+                                  placeholder="Other name of the user"
+                              />
+                              <div class="invalid-msg" v-if="form.errors.has('other_name')" v-html="form.errors.get('other_name')" />
+                          </div>
+                      </div>
                     <div class="col-md-6">
                       <div class="mb-4">
                         <label class="form-label">Date of Birth</label>
@@ -455,14 +503,26 @@
                   <div class="row">
                     <div class="col-md-6">
                       <div class="mb-4">
-                        <label class="form-label">Full Name</label>
+                        <label class="form-label">First Name</label>
                         <input
                           type="text"
                           class="form-control"
-                          v-model="form.name"
-                          placeholder="The Name of the Representative"
+                          v-model="form.first_name"
+                          placeholder="The first name of the Representative"
                         />
-                        <div class="invalid-msg" v-if="form.errors.has('name')" v-html="form.errors.get('name')" />
+                        <div class="invalid-msg" v-if="form.errors.has('first_name')" v-html="form.errors.get('first_name')" />
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="mb-4">
+                        <label class="form-label">Last Name</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          v-model="form.last_name"
+                          placeholder="The last name of the Representative"
+                        />
+                        <div class="invalid-msg" v-if="form.errors.has('last_name')" v-html="form.errors.get('last_name')" />
                       </div>
                     </div>
                     <div class="col-md-6">
@@ -841,6 +901,9 @@ export default {
       form: new Form({
         role_id: 2,
         name: null,
+        first_name: null,
+        last_name: null,
+        other_name: null,
         email: null,
         random_password: false,
         password: null,
@@ -896,6 +959,9 @@ export default {
         this.form = new Form({
           role_id: val,
           name: null,
+          first_name: null,
+          last_name: null,
+          other_name: null,
           email: null,
           random_password: false,
           password: null,
@@ -982,7 +1048,32 @@ export default {
             this.form.password = null;
             this.form.password_confirmation = null;
         }
-    }
+    },
+    "form.first_name": function(val, old) {
+        let str = '';
+
+        if(this.form.first_name){
+            str = this.form.first_name;
+        }
+
+        if(this.form.last_name) {
+            str = (str + ' ' + this.form.last_name).trim();
+        }
+        this.form.other_name = str;
+    },
+    "form.last_name": function(val, old) {
+
+        let str = '';
+
+        if(this.form.first_name){
+            str = this.form.first_name;
+        }
+
+        if(this.form.last_name) {
+            str = (str + ' ' + this.form.last_name).trim();
+        }
+        this.form.other_name = str;
+    },
   },
   methods: {
     current(value) {
@@ -1166,6 +1257,9 @@ export default {
        this.form =  new Form({
            role_id: 2,
            name: null,
+           first_name: null,
+           last_name: null,
+           other_name: null,
            email: null,
            random_password: false,
            password: null,

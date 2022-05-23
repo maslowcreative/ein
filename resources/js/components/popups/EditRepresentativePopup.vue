@@ -18,9 +18,16 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="mb-4">
-                                    <label  class="form-label">Full Name</label>
-                                    <input type="text" v-model="user.name"  class="form-control"  placeholder="The Name of the Representative" />
-                                    <div class="invalid-msg" v-if="form.errors.has('name')" v-html="form.errors.get('name')" />
+                                    <label  class="form-label">First Name</label>
+                                    <input type="text" v-model="user.first_name"  class="form-control"  placeholder="The first name of the Representative" />
+                                    <div class="invalid-msg" v-if="form.errors.has('first_name')" v-html="form.errors.get('first_name')" />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-4">
+                                    <label  class="form-label">Last Name</label>
+                                    <input type="text" v-model="user.last_name"  class="form-control"  placeholder="The last name of the Representative" />
+                                    <div class="invalid-msg" v-if="form.errors.has('last_name')" v-html="form.errors.get('last_name')" />
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -109,7 +116,8 @@ export default {
         return {
             loader: false,
             form: new Form({
-                name: null,
+                first_name: null,
+                last_name: null,
                 email: null,
                 phone: null,
                 address: null,
@@ -174,7 +182,8 @@ export default {
         },
         updateUser() {
             this.loader = true;
-            this.form.name = this.user.name;
+            this.form.first_name = this.user.first_name;
+            this.form.last_name = this.user.last_name;
             this.form.email = this.user.email;
             this.form.phone = this.user.phone;
             this.form.address = this.user.address;

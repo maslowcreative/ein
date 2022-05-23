@@ -25,13 +25,23 @@
                         <div class="row">
                             <div class="col-md-4 col-sm-6">
                                 <div class="mb-4">
-                                    <label  class="form-label">Full Name</label>
+                                    <label  class="form-label">First Name</label>
                                     <div class="input-group-overlay">
-                                        <input type="text"  class="form-control" v-model="user.name"  placeholder="The Name of User" />
-                                        <div class="invalid-msg" v-if="form.errors.has('name')" v-html="form.errors.get('name')" />
+                                        <input type="text"  class="form-control" v-model="user.first_name"  placeholder="The first name of User" />
+                                        <div class="invalid-msg" v-if="form.errors.has('first_name')" v-html="form.errors.get('first_name')" />
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-md-4 col-sm-6">
+                                <div class="mb-4">
+                                    <label  class="form-label">Last Name</label>
+                                    <div class="input-group-overlay">
+                                        <input type="text"  class="form-control" v-model="user.last_name"  placeholder="The last name of User" />
+                                        <div class="invalid-msg" v-if="form.errors.has('last_name')" v-html="form.errors.get('last_name')" />
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="col-md-4 col-sm-6">
                                 <div class="mb-4">
                                     <label class="form-label fw-bold">E-mail Address</label>
@@ -163,7 +173,8 @@ export default {
             avatar_url: null,
             userRole : null,
             form: new Form({
-                name: null,
+                first_name: null,
+                last_name: null,
                 avatar: null,
                 email: null,
                 phone: null,
@@ -192,7 +203,8 @@ export default {
             this.loader = true;
             let data = [];
 
-            data.name = this.user.name;
+            data.first_name = this.user.first_name;
+            data.last_name = this.user.last_name;
             data.email = this.user.email;
             data.phone = this.user.phone;
             data.address = this.user.address;
