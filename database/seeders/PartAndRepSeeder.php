@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Participant;
 use App\Models\Plan;
 use App\Models\Representative;
+use App\Models\Role;
 use App\Models\User;
 use Box\Spout\Common\Exception\IOException;
 use Illuminate\Database\Seeder;
@@ -148,6 +149,9 @@ class PartAndRepSeeder extends Seeder
 
                 $participant->representative_id = $repUser->id;
                 $participant->save();
+
+                $user->assignRole(Role::ROLE_PARTICIPANT);
+                $repUser->assignRole(Role::ROLE_REPRESENTATIVE);
 
             }
 
