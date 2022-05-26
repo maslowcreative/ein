@@ -22,6 +22,8 @@ class Participant extends Model
         'relationship',
         'ndis_number',
         'dob',
+        'sr_no',
+        'old_id'
     ];
 
 
