@@ -26,8 +26,11 @@ class UserPostRequest extends FormRequest
      */
     public function rules()
     {
+        $nonUsers =  Role::ROLE_REPRESENTATIVE .',' .Role::ROLE_ADMIN . ',' . Role::ROLE_SUB_ADMIN;
         return [
-            'name' => 'required|string',
+            'first_name' => 'required|string',
+            'last_name' => 'required|string',
+            'other_name' => 'exclude_if:role_id,'. $nonUsers .'|required|string',
             'email' => 'required|email|unique:users',
             'random_password' => 'required|boolean',
             'password' => 'exclude_if:role_id,'.Role::ROLE_PARTICIPANT.'|exclude_if:random_password,true|required|nullable|string|confirmed',

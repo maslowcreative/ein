@@ -98,18 +98,19 @@ class UserController extends Controller
         }
         //Participant Role:
         if(Role::ROLE_PARTICIPANT == $role->id) {
+
           $participant = $user->participant()->create($request->participant);
 
           if(ifEmptyReturnNull($request->participant['providers'])) {
               $participant->providers()->attach($request->participant['providers'],['created_at' => now(),'updated_at'=> now()]);
           }
-
           if($request->participant['items'] ?? false ){
             $items = [];
             foreach ($request->participant['items'] as $value) {
                 array_push($items,['item_number' => $value,'participant_id'=> $participant->user_id]);
             }
             $participant->items()->createMany($items);
+
           }
 
           if($request->participant['plan'] ?? false)
@@ -228,7 +229,8 @@ class UserController extends Controller
         $user->hasRole('provider');
 
         $request->validate([
-            'name' => 'required|string',
+            'first_name' => 'required|string',
+            'last_name' => 'required|string',
             'email' => 'required|email|unique:users,email,'. $userId,
             'password' => 'sometimes|exclude_if:role_id,'.Role::ROLE_PARTICIPANT.'|required|string|confirmed',
             'phone' => 'sometimes|string|nullable',
@@ -257,9 +259,9 @@ class UserController extends Controller
         }
 
         $request->validate([
-            'bank_name' => 'string|required_with_all:account_number,bsb_number',
-            'account_number' => 'string|required_with_all:bank_name,bsb_number',
-            'bsb_number' => 'string|required_with_all:bank_name,account_number',
+            'account_name' => 'string|required_with_all:account_number,bsb',
+            'account_number' => 'string|required_with_all:account_name,bsb',
+            'bsb' => 'string|required_with_all:account_name,account_number',
         ]);
 
         $user->fill($request->all())->save();

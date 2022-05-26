@@ -26,7 +26,7 @@ class BankInfoCheck
             return $next($request);
         }
 
-        if( !$user->bank_name || !$user->account_number || !$user->bsb_number  ){
+        if( !$user->account_name || !$user->account_number || !$user->bsb  ){
             return redirect()->route('my.account');
         }
 

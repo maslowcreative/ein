@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Traits\HasRoles;
@@ -38,7 +39,10 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
+        'first_name',
+        'last_name',
         'name',
+        'other_name',
         'email',
         'avatar',
         'password',
@@ -47,9 +51,9 @@ class User extends Authenticatable
         'status',
         'state',
         'temp_ndis_number',
-        'bank_name',
+        'account_name',
         'account_number',
-        'bsb_number',
+        'bsb',
         'source'
     ];
 
@@ -64,6 +68,7 @@ class User extends Authenticatable
     ];
 
     protected $appends =[
+      'name',
       'avatar_url'
     ];
 
@@ -86,6 +91,19 @@ class User extends Authenticatable
                     ->select('id','name')
                     ->first()
                     ->makeHidden('pivot');
+    }
+
+    public function getFullAttribute()
+    {
+        return $this->roles()
+            ->select('id','name')
+            ->first()
+            ->makeHidden('pivot');
+    }
+
+    public function getNameAttribute()
+    {
+        return trim($this->first_name .' '.$this->last_name);
     }
 
     public function getAvatarUrlAttribute()
@@ -161,7 +179,17 @@ class User extends Authenticatable
             ->allowedIncludes(['provider','provider.items','provider.participants','provider.participants.user','participant','participant.items','participant.representative','participant.providers','participant.providers.user','representative',])
             ->allowedFilters([
                 AllowedFilter::exact('id', 'id'),
-                AllowedFilter::partial('name', 'name'),
+//                AllowedFilter::partial('name', 'name'),
+                AllowedFilter::callback('name', function (Builder $query,$name){
+
+                    $name = '%'.$name.'%';
+                    $query->where('first_name','LIKE',$name )
+                           ->orWhere('last_name','LIKE',$name );
+                    if(Auth::user()->hasAnyRole('admin','sub-admin')) {
+                        $query = $query->orWhere('other_name','LIKE',$name);
+                    }
+
+                }),
                 AllowedFilter::exact('email', 'email'),
                 AllowedFilter::exact('phone', 'phone'),
                 AllowedFilter::callback('not_in',function (Builder $query,$ids){

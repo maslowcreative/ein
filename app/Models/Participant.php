@@ -22,6 +22,8 @@ class Participant extends Model
         'relationship',
         'ndis_number',
         'dob',
+        'sr_no',
+        'old_id'
     ];
 
 
@@ -57,7 +59,7 @@ class Participant extends Model
     }
 
     public function items() {
-        return $this->hasMany(ParticipantItem::class,'participant_id');
+        return $this->hasMany(ParticipantItems::class,'participant_id');
     }
 
 }

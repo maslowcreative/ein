@@ -48,7 +48,7 @@ class ClaimPostRequest extends FormRequest
 
             'service' => 'required|array',
             'service.*.item_number' => 'required|exists:services,support_item_number',
-            'service.*.claim_type' => ['nullable',Rule::in(collect(Claim::CLAIM_TYPES)->keys()->toArray())],
+            'service.*.claim_type' => ['nullable','string',Rule::in(collect(Claim::CLAIM_TYPES)->keys()->toArray())],
             'service.*.cancellation_reason' => ['exclude_unless:service.*.claim_type,CANC','required',Rule::in(collect(Claim::CANCELLATION_REASONS)->keys()->toArray())],
             'service.*.hours' => 'required|numeric|min:0.1',
             'service.*.unit_price' => 'required|numeric|min:0.1',

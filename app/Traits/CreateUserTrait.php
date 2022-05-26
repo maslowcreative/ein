@@ -21,7 +21,9 @@ trait CreateUserTrait
     {
         $data['password'] =  $data['password'] ?? Str::random(8);
         $user =  User::create([
-            'name' => $data['name'],
+            'first_name' => $data['first_name'] ?? null,
+            'last_name' => $data['last_name'] ?? null,
+            'other_name' => $data['other_name'] ?? null,
             'email' => $data['email'],
             'phone' => $data['phone'] ?? null,
             'address' => $data['address'] ?? null,

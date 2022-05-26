@@ -41,15 +41,25 @@ class Claim extends Model
 
 
     //Claim type of the service provided
+    const CLAIM_TYPE_NA = ' ';
     const CLAIM_TYPE_CANC = 'CANC';
     const CLAIM_TYPE_REPW = 'REPW';
     const CLAIM_TYPE_TRAN = 'TRAN';
     const CLAIM_TYPE_NF2F = 'NF2F';
+
+    const CLAIM_TYPE_THLT = 'THLT';
+    const CLAIM_TYPE_IRSS = 'IRSS';
+
+
     const CLAIM_TYPES = [
+        self::CLAIM_TYPE_NA => 'N/A',
         self::CLAIM_TYPE_CANC => 'Cancellation Charges',
         self::CLAIM_TYPE_REPW => 'Report Writing Charges',
         self::CLAIM_TYPE_TRAN => 'Travel Charges',
         self::CLAIM_TYPE_NF2F => 'Non-Face to Face Services',
+
+        self::CLAIM_TYPE_THLT => 'Telehealth',
+        self::CLAIM_TYPE_IRSS => 'Irregular SIL Supports',
     ];
 
     //GST information as applicable to the item or service.
