@@ -283,7 +283,7 @@
                                             <div class="row g-3">
                                                 <div class="col-8">
                                                     <div class="mb-4">
-                                                        <label class="form-label">Service Length (1h = 1)</label>
+                                                        <label class="form-label">Units (30 mins = 0.5)</label>
                                                         <input type="text" v-model="service.hours"  class="form-control" placeholder="Enter Amount">
                                                         <div
                                                             class="invalid-msg"
@@ -395,7 +395,7 @@ export default {
             'service': [
                 {
                     'item_number': null,
-                    'claim_type': ' ',
+                    'claim_type': " ",
                     'hours' : null,
                     'unit_price': null,
                     'gst_code': 'P2',
@@ -492,7 +492,7 @@ export default {
               'service': [
                   {
                       'item_number': null,
-                      'claim_type': '',
+                      'claim_type': " ",
                       'hours' : null,
                       'unit_price': null,
                       'gst_code': 'P2',
