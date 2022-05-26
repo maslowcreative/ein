@@ -19,7 +19,7 @@ class UserFirstAndLastNameSeeder extends Seeder
         foreach ($users as $user)
         {
 
-          $name = preg_replace("/[[:blank:]]+/"," ",$user->name);
+          $name = preg_replace("/[[:blank:]]+/"," ",$user->other_name);
           $names = explode(' ',trim($name));
           if ( count($names) == 1 ){
               $user->first_name = $names[0];
