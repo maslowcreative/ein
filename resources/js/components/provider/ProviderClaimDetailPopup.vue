@@ -82,7 +82,7 @@
                                         <div class="row g-3">
                                             <div class="col-sm-8">
                                                 <div class="mb-4">
-                                                    <label class="form-label">Service Length (1h = 1)</label>
+                                                    <label class="form-label">Units (30 mins = 0.5)</label>
                                                     <input disabled type="text" class="form-control" :value="item.hours" placeholder="0.5">
                                                 </div>
                                             </div>

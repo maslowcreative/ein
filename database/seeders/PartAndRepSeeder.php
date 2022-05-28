@@ -95,7 +95,7 @@ class PartAndRepSeeder extends Seeder
                         'last_name' => $item['Participant Last Name'],
                         'other_name' => $item['Participant First Name'].' '.$item['Participant Last Name'],
                         'email' => Str::random(8) ."@participant.ein.net.au",
-                        'password' => Hash::make($password),
+                        'password' => $password,
                         'state' => $state,
                         'created_at' => $signup
                     ]);
@@ -137,7 +137,7 @@ class PartAndRepSeeder extends Seeder
                         'last_name' => $repLastName,
                         'other_name' => $repOtherName,
                         'email' => $item['Representative Email'],
-                        'password' => Hash::make($password),
+                        'password' => $password,
                         'created_at' => $signup
                     ]);
 
