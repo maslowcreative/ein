@@ -47,9 +47,15 @@ class ProviderOldDataUpdateAndAddNewSeeder extends Seeder
                 $last_name = implode(' ',$names);
             }
 
+            $email = $item['Provider_Remittance_Email'];
+            if(str_replace(' ','',$item['ABN']) == 'REIMB'){
+                $email = str_replace("reimb.","",$email);
+                $email = str_replace("reimb2.","",$email);
+            }
+
             $user = User::updateOrCreate(
                 [
-                    'email' => $item['Provider_Remittance_Email']
+                    'email' => $email
                 ],
                 [
                     'first_name' => $first_name,
@@ -77,7 +83,7 @@ class ProviderOldDataUpdateAndAddNewSeeder extends Seeder
             $user->assignRole('provider');
 
             if(str_replace(' ','',$item['ABN']) == 'REIMB'){
-                $user->email = 'reimb.'.$user->email;
+                $user->email = $item['Provider_Remittance_Email'];
                 $user->save();
             }
 
