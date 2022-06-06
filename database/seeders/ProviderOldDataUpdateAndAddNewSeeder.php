@@ -48,10 +48,10 @@ class ProviderOldDataUpdateAndAddNewSeeder extends Seeder
             }
 
             $email = $item['Provider_Remittance_Email'];
-            if(str_replace(' ','',$item['ABN']) == 'REIMB'){
+            /*if(str_replace(' ','',$item['ABN']) == 'REIMB'){
                 $email = str_replace("reimb.","",$email);
                 $email = str_replace("reimb2.","",$email);
-            }
+            }*/
 
             $user = User::updateOrCreate(
                 [
@@ -82,10 +82,10 @@ class ProviderOldDataUpdateAndAddNewSeeder extends Seeder
             Representative::where('user_id',$user->id)->delete();
             $user->assignRole('provider');
 
-            if(str_replace(' ','',$item['ABN']) == 'REIMB'){
+            /*if(str_replace(' ','',$item['ABN']) == 'REIMB'){
                 $user->email = $item['Provider_Remittance_Email'];
                 $user->save();
-            }
+            }*/
 
         }
 
