@@ -77,7 +77,7 @@ class ProviderOldDataUpdateAndAddNewSeeder extends Seeder
             $user->assignRole('provider');
 
             if(str_replace(' ','',$item['ABN']) == 'REIMB'){
-                $user->email = 'remib.'.$user->email;
+                $user->email = 'reimb.'.$user->email;
                 $user->save();
             }
 
