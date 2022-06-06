@@ -741,22 +741,6 @@
 <!--                    </div>-->
                     <div class="col-md-6">
                       <div class="mb-4">
-                        <label  class="form-label">Types of Charges</label>
-                        <input
-                          type="text"
-                          class="form-control"
-                          v-model="form.participant.plan.charges_types"
-                          placeholder="REPW, TRAN"
-                        />
-                        <div
-                          class="invalid-msg"
-                          v-if="form.errors.has('participant.plan.charges_types')"
-                          v-html="form.errors.get('participant.plan.charges_types').replace('participant.plan.charges types','charges types')"
-                        />
-                       </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="mb-4">
                         <label for="planStartDate" class="form-label">Plan Start Date</label>
                         <input
                           type="date"
@@ -791,7 +775,7 @@
                     </div>
                     <div class="col-md-6">
                       <div class="mb-4">
-                        <label for="budget" class="form-label">User’s Budget</label>
+                        <label class="form-label">User’s Budget</label>
                         <input
                           type="text"
                           class="form-control"

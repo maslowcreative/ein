@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Participant;
 use App\Models\Plan;
+use App\Models\Provider;
 use App\Models\Representative;
 use App\Models\Role;
 use App\Models\User;
@@ -151,6 +152,9 @@ class PartAndRepSeeder extends Seeder
                 $participant->save();
 
                 $user->assignRole(Role::ROLE_PARTICIPANT);
+
+                $repUser->removeRole('provider');
+                Provider::where('user_id',$repUser->id)->delete();
                 $repUser->assignRole(Role::ROLE_REPRESENTATIVE);
 
             }
