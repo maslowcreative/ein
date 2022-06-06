@@ -76,7 +76,7 @@ class ProviderOldDataUpdateAndAddNewSeeder extends Seeder
             Representative::where('user_id',$user->id)->delete();
             $user->assignRole('provider');
 
-            if(str_replace(' ','',$item['ABN']) == 'REMIB'){
+            if(str_replace(' ','',$item['ABN']) == 'REIMB'){
                 $user->email = 'remib.'.$user->email;
                 $user->save();
             }
