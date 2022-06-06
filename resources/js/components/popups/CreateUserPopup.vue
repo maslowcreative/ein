@@ -11,7 +11,7 @@
       <div class="modal-content addUserPopup">
         <div class="modal-header">
           <h4 class="modal-title" id="userModalTitle">Create a new user</h4>
-          <button type="button" class="btn-close"  v-on:click="closePopup()"></button>
+          <button type="button" class="btn-close" v-on:click="closePopup()"></button>
         </div>
         <form @submit.prevent="createUser" method="POST">
           <div class="modal-body addUser">
@@ -166,106 +166,117 @@
                 <div class="step2" v-show="step === 2 && form.role_id == 2">
                   <div class="row">
                     <div class="col-md-6">
-                          <div class="mb-4">
-                              <label class="form-label">First Name</label>
-                              <input
-                                  type="text"
-                                  class="form-control"
-                                  v-model="form.first_name"
-                                  placeholder="The first name of the Provider"
-                              />
-                              <div class="invalid-msg" v-if="form.errors.has('first_name')" v-html="form.errors.get('first_name')" />
-                          </div>
+                      <div class="mb-4">
+                        <label class="form-label">First Name</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          v-model="form.first_name"
+                          placeholder="The first name of the Provider"
+                        />
+                        <div
+                          class="invalid-msg"
+                          v-if="form.errors.has('first_name')"
+                          v-html="form.errors.get('first_name')"
+                        />
+                      </div>
                     </div>
                     <div class="col-md-6">
-                          <div class="mb-4">
-                              <label class="form-label">Last Name</label>
-                              <input
-                                  type="text"
-                                  class="form-control"
-                                  v-model="form.last_name"
-                                  placeholder="The last name of the Provider"
-                              />
-                              <div class="invalid-msg" v-if="form.errors.has('last_name')" v-html="form.errors.get('last_name')" />
-                          </div>
+                      <div class="mb-4">
+                        <label class="form-label">Last Name</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          v-model="form.last_name"
+                          placeholder="The last name of the Provider"
+                        />
+                        <div
+                          class="invalid-msg"
+                          v-if="form.errors.has('last_name')"
+                          v-html="form.errors.get('last_name')"
+                        />
                       </div>
+                    </div>
                     <div class="col-md-6" v-if="form.role_id == 2">
                       <div class="mb-4">
-                          <label class="form-label">Other Name</label>
-                          <input
-                              type="text"
-                              class="form-control"
-                              v-model="form.other_name"
-                              placeholder="Other name of the user"
-                          />
-                          <div class="invalid-msg" v-if="form.errors.has('other_name')" v-html="form.errors.get('other_name')" />
+                        <label class="form-label">Other Name</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          v-model="form.other_name"
+                          placeholder="Other name of the user"
+                        />
+                        <div
+                          class="invalid-msg"
+                          v-if="form.errors.has('other_name')"
+                          v-html="form.errors.get('other_name')"
+                        />
                       </div>
                     </div>
                     <div class="col-md-6">
                       <div class="mb-4">
-                            <div class="dropdownWrap">
-                                <label for="linkAParticipant" class="form-label">Link a Participant</label>
-                                <input
-                                    type="text"
-                                    autocomplete="off"
-                                    class="form-control"
-                                    id="linkAParticipant"
-                                    placeholder="Participant’s Name"
-                                    v-model="participantSerachName"
-                                />
-                                <div
-                                    class="dropdownSec scroll-y"
-                                    style="--box-height:154px"
-                                    v-if="participantSerachResult.length > 0"
+                        <div class="dropdownWrap">
+                          <label for="linkAParticipant" class="form-label">Link a Participant</label>
+                          <input
+                            type="text"
+                            autocomplete="off"
+                            class="form-control"
+                            id="linkAParticipant"
+                            placeholder="Participant’s Name"
+                            v-model="participantSerachName"
+                          />
+                          <div
+                            class="dropdownSec scroll-y"
+                            style="--box-height:154px"
+                            v-if="participantSerachResult.length > 0"
+                          >
+                            <div
+                              v-for="participant in participantSerachResult"
+                              :key="participant.id"
+                              v-on:click="selectItem(participant.id, 'participant')"
+                              class="bg-light d-flex align-items-center p-3 participant-card"
+                            >
+                              <div class="me-3"><img :src="participant.avatar_url" width="40" alt="" /></div>
+                              <div class="participant-name">
+                                <h6>{{ participant.name }}</h6>
+                                <span class="text-primary">Participant</span>
+                              </div>
+                              <div class="ms-auto">
+                                <button
+                                  class="btn btn-link p-0 participant-remove"
+                                  type="button"
+                                  v-on:click="removeItem(participant.id, 'participant')"
                                 >
-                                    <div
-                                        v-for="participant in participantSerachResult"
-                                        :key="participant.id"
-                                        v-on:click="selectItem(participant.id, 'participant')"
-                                        class="bg-light d-flex align-items-center p-3 participant-card"
-                                    >
-                                        <div class="me-3"><img :src="participant.avatar_url" width="40" alt="" /></div>
-                                        <div class="participant-name">
-                                            <h6>{{ participant.name }}</h6>
-                                            <span class="text-primary">Participant</span>
-                                        </div>
-                                        <div class="ms-auto">
-                                            <button
-                                                class="btn btn-link p-0 participant-remove"
-                                                type="button"
-                                                v-on:click="removeItem(participant.id, 'participant')"
-                                            >
-                                                <ion-icon name="remove-circle-outline"></ion-icon>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
+                                  <ion-icon name="remove-circle-outline"></ion-icon>
+                                </button>
+                              </div>
                             </div>
-
-                            <div class="mt-2 scroll-y" style="--box-height:154px">
-                                <div
-                                    class="bg-light d-flex align-items-center p-3 participant-card"
-                                    v-for="participant in participantSelected"
-                                >
-                                    <div class="me-3"><img :src="participant.avatar_url" width="40" alt="" /></div>
-                                    <div class="participant-name">
-                                        <h6>{{ participant.name }}</h6>
-                                        <span class="text-primary">Participant</span>
-                                    </div>
-                                    <div class="ms-auto">
-                                        <button
-                                            class="btn btn-link p-0 participant-remove"
-                                            type="button"
-                                            v-on:click="removeItem(participant.id, 'participant')"
-                                        >
-                                            <ion-icon name="remove-circle-outline"></ion-icon>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
+                          </div>
                         </div>
-                    </div>
 
+                        <div class="mt-2 scroll-y" style="--box-height:154px">
+                          <div
+                            class="bg-light d-flex align-items-center p-3 participant-card"
+                            v-for="participant in participantSelected"
+                          >
+                            <div class="me-3"><img :src="participant.avatar_url" width="40" alt="" /></div>
+                            <div class="participant-name">
+                              <h6>{{ participant.name }}</h6>
+                              <span class="text-primary">Participant</span>
+                            </div>
+                            <div class="ms-auto">
+                              <button
+                                class="btn btn-link p-0 participant-remove"
+                                type="button"
+                                v-on:click="removeItem(participant.id, 'participant')"
+                              >
+                                <ion-icon name="remove-circle-outline"></ion-icon>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
@@ -281,7 +292,11 @@
                           v-model="form.first_name"
                           placeholder="The first name of the Participant"
                         />
-                        <div class="invalid-msg" v-if="form.errors.has('first_name')" v-html="form.errors.get('first_name')" />
+                        <div
+                          class="invalid-msg"
+                          v-if="form.errors.has('first_name')"
+                          v-html="form.errors.get('first_name')"
+                        />
                       </div>
                     </div>
                     <div class="col-md-6">
@@ -293,21 +308,29 @@
                           v-model="form.last_name"
                           placeholder="The last name of the Participant"
                         />
-                        <div class="invalid-msg" v-if="form.errors.has('last_name')" v-html="form.errors.get('last_name')" />
+                        <div
+                          class="invalid-msg"
+                          v-if="form.errors.has('last_name')"
+                          v-html="form.errors.get('last_name')"
+                        />
                       </div>
                     </div>
                     <div class="col-md-6" v-if="form.role_id == 4">
-                          <div class="mb-4">
-                              <label class="form-label">Other Name </label>
-                              <input
-                                  type="text"
-                                  class="form-control"
-                                  v-model="form.other_name"
-                                  placeholder="Other name of the user"
-                              />
-                              <div class="invalid-msg" v-if="form.errors.has('other_name')" v-html="form.errors.get('other_name')" />
-                          </div>
+                      <div class="mb-4">
+                        <label class="form-label">Other Name </label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          v-model="form.other_name"
+                          placeholder="Other name of the user"
+                        />
+                        <div
+                          class="invalid-msg"
+                          v-if="form.errors.has('other_name')"
+                          v-html="form.errors.get('other_name')"
+                        />
                       </div>
+                    </div>
                     <div class="col-md-6">
                       <div class="mb-4">
                         <label class="form-label">Date of Birth</label>
@@ -320,7 +343,7 @@
                         <div
                           class="invalid-msg"
                           v-if="form.errors.has('participant.dob')"
-                          v-html="form.errors.get('participant.dob').replace('participant.dob','dob')"
+                          v-html="form.errors.get('participant.dob').replace('participant.dob', 'dob')"
                         />
                       </div>
                     </div>
@@ -337,7 +360,9 @@
                         <div
                           class="invalid-msg"
                           v-if="form.errors.has('participant.ndis_number')"
-                          v-html="form.errors.get('participant.ndis_number').replace('participant.ndis number','ndis number')"
+                          v-html="
+                            form.errors.get('participant.ndis_number').replace('participant.ndis number', 'ndis number')
+                          "
                         />
                       </div>
                     </div>
@@ -370,7 +395,6 @@
                                 <span class="text-primary">Representative</span>
                               </div>
                               <div class="ms-auto">
-
                                 <button
                                   class="btn btn-link p-0 participant-remove"
                                   type="button"
@@ -407,7 +431,11 @@
                           <div
                             class="invalid-msg"
                             v-if="form.errors.has('participant.representative_id')"
-                            v-html="form.errors.get('participant.representative_id').replace('participant.representative id','representative')"
+                            v-html="
+                              form.errors
+                                .get('participant.representative_id')
+                                .replace('participant.representative id', 'representative')
+                            "
                           />
                         </div>
                       </div>
@@ -476,24 +504,26 @@
                         </div>
                       </div>
                       <div class="mb-4">
-                            <label  class="form-label fw-bold">Specific Item Numbers</label>
-                            <multiselect
-                                v-model="servicesItemsSelected"
-                                placeholder="Search or add item"
-                                label="support_item_number" track-by="support_item_number"
-                                :options="servicesItemsResult"
-                                :multiple="true"
-                                :taggable="true"
-                                :searchable="true"
-                                :loading="loader"
-                                :internal-search="false"
-                                :clear-on-select="false"
-                                :close-on-select="false"
-                                :options-limit="50" :limit="15"
-                                @search-change="asyncFindItemNumber"
-                            >
-                            </multiselect>
-                        </div>
+                        <label class="form-label fw-bold">Specific Item Numbers</label>
+                        <multiselect
+                          v-model="servicesItemsSelected"
+                          placeholder="Search or add item"
+                          label="support_item_number"
+                          track-by="support_item_number"
+                          :options="servicesItemsResult"
+                          :multiple="true"
+                          :taggable="true"
+                          :searchable="true"
+                          :loading="loader"
+                          :internal-search="false"
+                          :clear-on-select="false"
+                          :close-on-select="false"
+                          :options-limit="50"
+                          :limit="15"
+                          @search-change="asyncFindItemNumber"
+                        >
+                        </multiselect>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -510,7 +540,11 @@
                           v-model="form.first_name"
                           placeholder="The first name of the Representative"
                         />
-                        <div class="invalid-msg" v-if="form.errors.has('first_name')" v-html="form.errors.get('first_name')" />
+                        <div
+                          class="invalid-msg"
+                          v-if="form.errors.has('first_name')"
+                          v-html="form.errors.get('first_name')"
+                        />
                       </div>
                     </div>
                     <div class="col-md-6">
@@ -522,72 +556,76 @@
                           v-model="form.last_name"
                           placeholder="The last name of the Representative"
                         />
-                        <div class="invalid-msg" v-if="form.errors.has('last_name')" v-html="form.errors.get('last_name')" />
+                        <div
+                          class="invalid-msg"
+                          v-if="form.errors.has('last_name')"
+                          v-html="form.errors.get('last_name')"
+                        />
                       </div>
                     </div>
                     <div class="col-md-6">
                       <div class="mb-4">
-                            <div class="dropdownWrap">
-                                <label for="linkAParticipant2" class="form-label">Link a Participant</label>
-                                <input
-                                    type="text"
-                                    autocomplete="off"
-                                    class="form-control"
-                                    id="linkAParticipant2"
-                                    placeholder="Participant’s Name"
-                                    v-model="participantSerachName"
-                                />
-                                <div
-                                    class="dropdownSec scroll-y"
-                                    style="--box-height:154px"
-                                    v-if="participantSerachResult.length > 0"
+                        <div class="dropdownWrap">
+                          <label for="linkAParticipant2" class="form-label">Link a Participant</label>
+                          <input
+                            type="text"
+                            autocomplete="off"
+                            class="form-control"
+                            id="linkAParticipant2"
+                            placeholder="Participant’s Name"
+                            v-model="participantSerachName"
+                          />
+                          <div
+                            class="dropdownSec scroll-y"
+                            style="--box-height:154px"
+                            v-if="participantSerachResult.length > 0"
+                          >
+                            <div
+                              v-for="participant in participantSerachResult"
+                              :key="participant.id"
+                              v-on:click="selectItem(participant.id, 'participant')"
+                              class="bg-light d-flex align-items-center p-3 participant-card"
+                            >
+                              <div class="me-3"><img :src="participant.avatar_url" width="40" alt="" /></div>
+                              <div class="participant-name">
+                                <h6>{{ participant.name }}</h6>
+                                <span class="text-primary">Participant</span>
+                              </div>
+                              <div class="ms-auto">
+                                <button
+                                  class="btn btn-link p-0 participant-remove"
+                                  type="button"
+                                  v-on:click="removeItem(participant.id, 'participant')"
                                 >
-                                    <div
-                                        v-for="participant in participantSerachResult"
-                                        :key="participant.id"
-                                        v-on:click="selectItem(participant.id, 'participant')"
-                                        class="bg-light d-flex align-items-center p-3 participant-card"
-                                    >
-                                        <div class="me-3"><img :src="participant.avatar_url" width="40" alt="" /></div>
-                                        <div class="participant-name">
-                                            <h6>{{ participant.name }}</h6>
-                                            <span class="text-primary">Participant</span>
-                                        </div>
-                                        <div class="ms-auto">
-                                            <button
-                                                class="btn btn-link p-0 participant-remove"
-                                                type="button"
-                                                v-on:click="removeItem(participant.id, 'participant')"
-                                            >
-                                                <ion-icon name="remove-circle-outline"></ion-icon>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
+                                  <ion-icon name="remove-circle-outline"></ion-icon>
+                                </button>
+                              </div>
                             </div>
-
-                            <div class="mt-2 scroll-y" style="--box-height:154px">
-                                <div
-                                    class="bg-light d-flex align-items-center p-3 participant-card"
-                                    v-for="participant in participantSelected"
-                                >
-                                    <div class="me-3"><img :src="participant.avatar_url" width="40" alt="" /></div>
-                                    <div class="participant-name">
-                                        <h6>{{ participant.name }}</h6>
-                                        <span class="text-primary">Participant</span>
-                                    </div>
-                                    <div class="ms-auto">
-                                        <button
-                                            class="btn btn-link p-0 participant-remove"
-                                            type="button"
-                                            v-on:click="removeItem(participant.id, 'participant')"
-                                        >
-                                            <ion-icon name="remove-circle-outline"></ion-icon>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
+                          </div>
                         </div>
+
+                        <div class="mt-2 scroll-y" style="--box-height:154px">
+                          <div
+                            class="bg-light d-flex align-items-center p-3 participant-card"
+                            v-for="participant in participantSelected"
+                          >
+                            <div class="me-3"><img :src="participant.avatar_url" width="40" alt="" /></div>
+                            <div class="participant-name">
+                              <h6>{{ participant.name }}</h6>
+                              <span class="text-primary">Participant</span>
+                            </div>
+                            <div class="ms-auto">
+                              <button
+                                class="btn btn-link p-0 participant-remove"
+                                type="button"
+                                v-on:click="removeItem(participant.id, 'participant')"
+                              >
+                                <ion-icon name="remove-circle-outline"></ion-icon>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -607,20 +645,20 @@
                     <div class="invalid-msg" v-if="form.errors.has('address')" v-html="form.errors.get('address')" />
                   </div>
                   <div class="mb-4" v-if="form.role_id == 4">
-                        <label for="state" class="form-label fw-bold">State</label>
-                        <select class="form-control" id="state" v-model="form.state">
-                            <option value="">Select a state</option>
-                            <option value="ACT">Australian Capital Territory</option>
-                            <option value="NSW">New South Wales</option>
-                            <option value="NT">Northern Territory</option>
-                            <option value="QLD">Queensland</option>
-                            <option value="SA">South Australia</option>
-                            <option value="TAS">Tasmania</option>
-                            <option value="VIC">Victoria</option>
-                            <option value="WA">Western Australia</option>
-                        </select>
-                        <div class="invalid-msg" v-if="form.errors.has('state')" v-html="form.errors.get('state')" />
-                    </div>
+                    <label for="state" class="form-label fw-bold">State</label>
+                    <select class="form-control" id="state" v-model="form.state">
+                      <option value="">Select a state</option>
+                      <option value="ACT">Australian Capital Territory</option>
+                      <option value="NSW">New South Wales</option>
+                      <option value="NT">Northern Territory</option>
+                      <option value="QLD">Queensland</option>
+                      <option value="SA">South Australia</option>
+                      <option value="TAS">Tasmania</option>
+                      <option value="VIC">Victoria</option>
+                      <option value="WA">Western Australia</option>
+                    </select>
+                    <div class="invalid-msg" v-if="form.errors.has('state')" v-html="form.errors.get('state')" />
+                  </div>
                   <div class="mb-4" v-if="form.role_id != 4">
                     <label class="form-label fw-bold">E-mail Address</label>
                     <input
@@ -630,13 +668,13 @@
                       v-model="form.email"
                       placeholder="provider@gmail.com"
                     />
-                     <input
-                          v-if="form.role_id == 3"
-                          type="text"
-                          class="form-control"
-                          v-model="form.email"
-                          placeholder="representative@email.com"
-                     />
+                    <input
+                      v-if="form.role_id == 3"
+                      type="text"
+                      class="form-control"
+                      v-model="form.email"
+                      placeholder="representative@email.com"
+                    />
                     <div class="invalid-msg" v-if="form.errors.has('email')" v-html="form.errors.get('email')" />
                   </div>
                   <div class="mb-4" v-if="form.role_id != 4">
@@ -667,27 +705,29 @@
                       <div
                         class="invalid-msg"
                         v-if="form.errors.has('provider.abn')"
-                        v-html="form.errors.get('provider.abn').replace('provider.abn','abn')"
+                        v-html="form.errors.get('provider.abn').replace('provider.abn', 'abn')"
                       />
                     </div>
                     <div class="mb-4">
-                      <label  class="form-label fw-bold">Specific Item Numbers</label>
-                        <multiselect
-                            v-model="servicesItemsSelected"
-                            placeholder="Search or add item"
-                            label="support_item_number" track-by="support_item_number"
-                            :options="servicesItemsResult"
-                            :multiple="true"
-                            :taggable="true"
-                            :searchable="true"
-                            :loading="loader"
-                            :internal-search="false"
-                            :clear-on-select="false"
-                            :close-on-select="false"
-                            :options-limit="50" :limit="15"
-                            @search-change="asyncFindItemNumber"
-                            >
-                        </multiselect>
+                      <label class="form-label fw-bold">Specific Item Numbers</label>
+                      <multiselect
+                        v-model="servicesItemsSelected"
+                        placeholder="Search or add item"
+                        label="support_item_number"
+                        track-by="support_item_number"
+                        :options="servicesItemsResult"
+                        :multiple="true"
+                        :taggable="true"
+                        :searchable="true"
+                        :loading="loader"
+                        :internal-search="false"
+                        :clear-on-select="false"
+                        :close-on-select="false"
+                        :options-limit="50"
+                        :limit="15"
+                        @search-change="asyncFindItemNumber"
+                      >
+                      </multiselect>
                     </div>
                   </div>
                 </div>
@@ -697,48 +737,52 @@
                   <div class="row">
                     <div class="col-md-6">
                       <div class="mb-4">
-                          <label for="ndisPlanFile" class="form-label">NDIS File</label>
-                          <div class="input-group-overlay">
-                              <input
-                                  type="file"
-                                  class="form-control"
-                                  id="ndisPlanFile"
-                                  placeholder="Plan File"
-                                  v-on:change="onFileChange"
-                                  accept="application/pdf"
-                              />
-                              <div
-                                  class="invalid-msg"
-                                  v-if="form.errors.has('participant.plan.file_name')"
-                                  v-html="form.errors.get('participant.plan.file_name').replace('participant.plan.file name','file name')"
-                              />
-                          </div>
+                        <label for="ndisPlanFile" class="form-label">NDIS File</label>
+                        <div class="input-group-overlay">
+                          <input
+                            type="file"
+                            class="form-control"
+                            id="ndisPlanFile"
+                            placeholder="Plan File"
+                            v-on:change="onFileChange"
+                            accept="application/pdf"
+                          />
+                          <div
+                            class="invalid-msg"
+                            v-if="form.errors.has('participant.plan.file_name')"
+                            v-html="
+                              form.errors
+                                .get('participant.plan.file_name')
+                                .replace('participant.plan.file name', 'file name')
+                            "
+                          />
+                        </div>
                       </div>
                     </div>
-<!--                    <div class="col-md-6">-->
-<!--                      <div class="mb-4">-->
-<!--                        <label for="ndisPlanName" class="form-label">NDIS Plan</label>-->
-<!--                        <div class="input-group-overlay">-->
-<!--                          <div class="input-group-prepend-overlay">-->
-<!--                            <span class="input-group-text text-primary"-->
-<!--                              ><ion-icon name="document-attach-outline"></ion-icon-->
-<!--                            ></span>-->
-<!--                          </div>-->
-<!--                          <input-->
-<!--                            type="text"-->
-<!--                            class="form-control prepended-form-control"-->
-<!--                            id="ndisPlanName"-->
-<!--                            placeholder="Plan Name"-->
-<!--                            v-model = "form.participant.plan.plan_name"-->
-<!--                          />-->
-<!--                          <div-->
-<!--                                class="invalid-msg"-->
-<!--                                v-if="form.errors.has('participant.plan.plan_name')"-->
-<!--                                v-html="form.errors.get('participant.plan.plan_name')"-->
-<!--                            />-->
-<!--                        </div>-->
-<!--                      </div>-->
-<!--                    </div>-->
+                    <!--                    <div class="col-md-6">-->
+                    <!--                      <div class="mb-4">-->
+                    <!--                        <label for="ndisPlanName" class="form-label">NDIS Plan</label>-->
+                    <!--                        <div class="input-group-overlay">-->
+                    <!--                          <div class="input-group-prepend-overlay">-->
+                    <!--                            <span class="input-group-text text-primary"-->
+                    <!--                              ><ion-icon name="document-attach-outline"></ion-icon-->
+                    <!--                            ></span>-->
+                    <!--                          </div>-->
+                    <!--                          <input-->
+                    <!--                            type="text"-->
+                    <!--                            class="form-control prepended-form-control"-->
+                    <!--                            id="ndisPlanName"-->
+                    <!--                            placeholder="Plan Name"-->
+                    <!--                            v-model = "form.participant.plan.plan_name"-->
+                    <!--                          />-->
+                    <!--                          <div-->
+                    <!--                                class="invalid-msg"-->
+                    <!--                                v-if="form.errors.has('participant.plan.plan_name')"-->
+                    <!--                                v-html="form.errors.get('participant.plan.plan_name')"-->
+                    <!--                            />-->
+                    <!--                        </div>-->
+                    <!--                      </div>-->
+                    <!--                    </div>-->
                     <div class="col-md-6">
                       <div class="mb-4">
                         <label for="planStartDate" class="form-label">Plan Start Date</label>
@@ -752,7 +796,11 @@
                         <div
                           class="invalid-msg"
                           v-if="form.errors.has('participant.plan.start_date')"
-                          v-html="form.errors.get('participant.plan.start_date').replace('participant.plan.start date','start date')"
+                          v-html="
+                            form.errors
+                              .get('participant.plan.start_date')
+                              .replace('participant.plan.start date', 'start date')
+                          "
                         />
                       </div>
                     </div>
@@ -769,13 +817,28 @@
                         <div
                           class="invalid-msg"
                           v-if="form.errors.has('participant.plan.end_date')"
-                          v-html="form.errors.get('participant.plan.end_date').replace('participant.plan.end date','end date')"
+                          v-html="
+                            form.errors
+                              .get('participant.plan.end_date')
+                              .replace('participant.plan.end date', 'end date')
+                          "
                         />
                       </div>
                     </div>
                     <div class="col-md-6">
                       <div class="mb-4">
-                        <label class="form-label">User’s Budget</label>
+                        <div class="d-flex justify-content-between align-items-center">
+                          <label class="form-label">User’s Budget</label>
+                          <a
+                            class="fs-sm mb-2"
+                            data-bs-toggle="collapse"
+                            href="#budgetOption"
+                            role="button"
+                            aria-expanded="false"
+                            aria-controls="budgetOption"
+                            >More Options</a
+                          >
+                        </div>
                         <input
                           type="text"
                           class="form-control"
@@ -785,8 +848,38 @@
                         <div
                           class="invalid-msg"
                           v-if="form.errors.has('participant.plan.budget')"
-                          v-html="form.errors.get('participant.plan.budget').replace('participant.plan.budget','budget')"
+                          v-html="
+                            form.errors.get('participant.plan.budget').replace('participant.plan.budget', 'budget')
+                          "
                         />
+                      </div>
+                    </div>
+                    <div id="budgetOption" class="col-md-12 collapse">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="mb-4">
+                            <label class="form-label">Option 1</label>
+                            <input type="text" class="form-control" />
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="mb-4">
+                            <label class="form-label">Option 2</label>
+                            <input type="text" class="form-control" />
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="mb-4">
+                            <label class="form-label">Option 3</label>
+                            <input type="text" class="form-control" />
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="mb-4">
+                            <label class="form-label">Option 4</label>
+                            <input type="text" class="form-control" />
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -795,25 +888,27 @@
                 <!-- Step 5 Provider-->
                 <div class="step5 mw290 mx-auto" v-show="step === 5 || (step === 4 && form.role_id == 3)">
                   <div class="form-check emailRequest">
-                    <input  class="form-check-input" v-model="form.random_password" type="checkbox"  id="emailRequest" />
+                    <input class="form-check-input" v-model="form.random_password" type="checkbox" id="emailRequest" />
 
                     <label class="form-check-label" for="emailRequest">
                       Send email request for the new user to create password
                     </label>
-                      <div
-                          class="invalid-msg"
-                          v-if="form.errors.has('random_password')"
-                          v-html="form.errors.get('random_password')"
-                      />
+                    <div
+                      class="invalid-msg"
+                      v-if="form.errors.has('random_password')"
+                      v-html="form.errors.get('random_password')"
+                    />
                   </div>
                   <div class="my-4">
                     <label class="form-label">Enter Password</label>
-                    <input :disabled="form.random_password" type="password" v-model="form.password" class="form-control" placeholder="****************************" />
-                      <div
-                          class="invalid-msg"
-                          v-if="form.errors.has('password')"
-                          v-html="form.errors.get('password')"
-                      />
+                    <input
+                      :disabled="form.random_password"
+                      type="password"
+                      v-model="form.password"
+                      class="form-control"
+                      placeholder="****************************"
+                    />
+                    <div class="invalid-msg" v-if="form.errors.has('password')" v-html="form.errors.get('password')" />
                   </div>
                   <div class="mb-4">
                     <label for="confirmPassword" class="form-label">Confirm the Password</label>
@@ -825,11 +920,11 @@
                       id="confirmPassword"
                       placeholder="****************************"
                     />
-                      <div
-                          class="invalid-msg"
-                          v-if="form.errors.has('password_confirmation')"
-                          v-html="form.errors.get('password_confirmation')"
-                      />
+                    <div
+                      class="invalid-msg"
+                      v-if="form.errors.has('password_confirmation')"
+                      v-html="form.errors.get('password_confirmation')"
+                    />
                   </div>
                 </div>
                 <div v-show="step > 0" class="mw290 mx-auto px-4 mt-4 mt-md-5">
@@ -869,7 +964,7 @@ import 'vue-select/dist/vue-select.css';
 
 <script>
 import Form from "vform"
-import Multiselect from 'vue-multiselect'
+import Multiselect from "vue-multiselect"
 export default {
   components: { Multiselect },
   data() {
@@ -899,14 +994,14 @@ export default {
           abn: null,
           business_name: null,
           participants: [],
-          items:[],
+          items: [],
         },
         participant: {
           dob: null,
           ndis_number: null,
           representative_id: null,
           providers: [],
-          items:[],
+          items: [],
           plan: {
             file_name: null,
             start_date: null,
@@ -915,9 +1010,9 @@ export default {
             charges_types: null,
           },
         },
-        representative:{
-            participants:[]
-        }
+        representative: {
+          participants: [],
+        },
       }),
       participantSerachName: null,
       participantSerachResult: [],
@@ -930,7 +1025,6 @@ export default {
       representativeSerachName: null,
       representativeSerachResult: [],
       representativeSelected: null,
-
 
       servicesItemsResult: [],
       servicesItemsSelected: [],
@@ -957,14 +1051,14 @@ export default {
             abn: null,
             business_name: null,
             participants: [],
-            items:[]
+            items: [],
           },
           participant: {
             dob: null,
             ndis_number: null,
             representative_id: null,
             providers: [],
-            items:[] ,
+            items: [],
             plan: {
               file_name: null,
               start_date: null,
@@ -973,10 +1067,10 @@ export default {
               charges_types: null,
             },
           },
-          representative:{
-            participants:[]
-          }
-        });
+          representative: {
+            participants: [],
+          },
+        })
         this.participantSerachName = null
         this.participantSerachResult = []
         this.participantSelected = []
@@ -988,7 +1082,7 @@ export default {
         this.representativeSerachName = null
         this.representativeSerachResult = []
         this.representativeSelected = null
-        this.servicesItemsSelected  = [];
+        this.servicesItemsSelected = []
       }
     },
     step(val, old) {
@@ -1019,44 +1113,43 @@ export default {
         this.representativeSerachResult = []
       }
     },
-    servicesItemsSelected(val,old) {
-        this.form.provider.items =  this.servicesItemsSelected.map(function(item){
-            return item.support_item_number;
-        });
-        this.form.participant.items =  this.servicesItemsSelected.map(function(item){
-            return item.support_item_number;
-        });
+    servicesItemsSelected(val, old) {
+      this.form.provider.items = this.servicesItemsSelected.map(function(item) {
+        return item.support_item_number
+      })
+      this.form.participant.items = this.servicesItemsSelected.map(function(item) {
+        return item.support_item_number
+      })
     },
-    "form.random_password": function (val,old) {
-        if(val == true ){
-            this.form.password = null;
-            this.form.password_confirmation = null;
-        }
+    "form.random_password": function(val, old) {
+      if (val == true) {
+        this.form.password = null
+        this.form.password_confirmation = null
+      }
     },
     "form.first_name": function(val, old) {
-        let str = '';
+      let str = ""
 
-        if(this.form.first_name){
-            str = this.form.first_name;
-        }
+      if (this.form.first_name) {
+        str = this.form.first_name
+      }
 
-        if(this.form.last_name) {
-            str = (str + ' ' + this.form.last_name).trim();
-        }
-        this.form.other_name = str;
+      if (this.form.last_name) {
+        str = (str + " " + this.form.last_name).trim()
+      }
+      this.form.other_name = str
     },
     "form.last_name": function(val, old) {
+      let str = ""
 
-        let str = '';
+      if (this.form.first_name) {
+        str = this.form.first_name
+      }
 
-        if(this.form.first_name){
-            str = this.form.first_name;
-        }
-
-        if(this.form.last_name) {
-            str = (str + ' ' + this.form.last_name).trim();
-        }
-        this.form.other_name = str;
+      if (this.form.last_name) {
+        str = (str + " " + this.form.last_name).trim()
+      }
+      this.form.other_name = str
     },
   },
   methods: {
@@ -1078,9 +1171,9 @@ export default {
         .post(route)
         .then(res => {
           if (res.status == 201) {
-            this.resetForm(0);
+            this.resetForm(0)
             this.$root.$emit("ein-user:added")
-            this.$toastr.s("Success", "Account created!");
+            this.$toastr.s("Success", "Account created!")
           }
         })
         .catch(error => {
@@ -1100,14 +1193,13 @@ export default {
         })
         this.participantSelected.push(participant[0])
 
-        if(this.form.role_id == 2){
+        if (this.form.role_id == 2) {
           this.form.provider.participants.push(id)
         }
 
-        if(this.form.role_id == 3){
-            this.form.representative.participants.push(id)
+        if (this.form.role_id == 3) {
+          this.form.representative.participants.push(id)
         }
-
       } else if ($role === "provider") {
         let provider = this.providerSerachResult.filter(provider => provider.id == id)
         this.providerSerachResult = this.providerSerachResult.filter(function(item) {
@@ -1132,22 +1224,21 @@ export default {
             return item
           }
         })
-       if(this.form.role_id == 2){
-           this.form.provider.participants = this.form.provider.participants.filter(function(item) {
-               if (item != id) {
-                   return item
-               }
-           });
-       }
+        if (this.form.role_id == 2) {
+          this.form.provider.participants = this.form.provider.participants.filter(function(item) {
+            if (item != id) {
+              return item
+            }
+          })
+        }
 
-       if(this.form.role_id == 3){
+        if (this.form.role_id == 3) {
           this.form.representative.participants = this.form.representative.participants.filter(function(item) {
-               if (item != id) {
-                   return item
-               }
-           });
-       }
-
+            if (item != id) {
+              return item
+            }
+          })
+        }
       } else if ($role === "provider") {
         this.providerSelected = this.providerSelected.filter(function(item) {
           if (item.id != id) {
@@ -1165,7 +1256,7 @@ export default {
       }
     },
     asyncFind(query, role = "") {
-      this.loader = true;
+      this.loader = true
       let data = {
         "filter[name]": query,
         "filter[roles][0]": role,
@@ -1208,114 +1299,109 @@ export default {
     },
 
     asyncFindItemNumber(query) {
-        this.servicesItemsResult = [];
-        let data = {
-            "filter[item_number]": query,
-        }
-        let route = this.laroute.route("ajax.services.index", data)
-        axios
-            .get(route)
-            .then(res => {
-                this.servicesItemsResult = res.data.data;
-            })
-            .catch(error => {
-                this.$toastr.e("Error", "Some thing went wrong.")
-            })
-            .finally(() => {
-                this.loader = false
-            });
+      this.servicesItemsResult = []
+      let data = {
+        "filter[item_number]": query,
+      }
+      let route = this.laroute.route("ajax.services.index", data)
+      axios
+        .get(route)
+        .then(res => {
+          this.servicesItemsResult = res.data.data
+        })
+        .catch(error => {
+          this.$toastr.e("Error", "Some thing went wrong.")
+        })
+        .finally(() => {
+          this.loader = false
+        })
     },
     closePopup() {
-      $("#userModal").modal('hide');
-      this.resetForm();
-   },
-   resetForm(step = null) {
-       this.loader = false;
-       if(step !=null) {
-           this.step = step;
-       }  else {
-           this.step = 1;
-       }
+      $("#userModal").modal("hide")
+      this.resetForm()
+    },
+    resetForm(step = null) {
+      this.loader = false
+      if (step != null) {
+        this.step = step
+      } else {
+        this.step = 1
+      }
 
-       this.lastStep = false;
-       this.form =  new Form({
-           role_id: 2,
-           name: null,
-           first_name: null,
-           last_name: null,
-           other_name: null,
-           email: null,
-           random_password: false,
-           password: null,
-           password_confirmation: null,
-           phone: null,
-           address: null,
-           state: "",
-           provider: {
-               abn: null,
-               business_name: null,
-               participants: [],
-               items:[],
-           },
-           participant: {
-               dob: null,
-               ndis_number: null,
-               representative_id: null,
-               providers: [],
-               items:[],
-               plan: {
+      this.lastStep = false
+      this.form = new Form({
+        role_id: 2,
+        name: null,
+        first_name: null,
+        last_name: null,
+        other_name: null,
+        email: null,
+        random_password: false,
+        password: null,
+        password_confirmation: null,
+        phone: null,
+        address: null,
+        state: "",
+        provider: {
+          abn: null,
+          business_name: null,
+          participants: [],
+          items: [],
+        },
+        participant: {
+          dob: null,
+          ndis_number: null,
+          representative_id: null,
+          providers: [],
+          items: [],
+          plan: {
+            plan_name: null,
+            start_date: null,
+            end_date: null,
+            budget: null,
+            charges_types: null,
+          },
+        },
+        representative: {
+          participants: [],
+        },
+      })
+      this.participantSerachName = null
+      this.participantSerachResult = []
+      this.participantSelected = []
+      this.providerSerachName = null
+      this.providerSerachResult = []
+      this.providerSelected = []
+      this.representativeSerachName = null
+      this.representativeSerachResult = []
+      this.representativeSelected = null
+      this.servicesItemsResult = []
+      this.servicesItemsSelected = []
+    },
+    onFileChange(e) {
+      var files = e.target.files || e.dataTransfer.files
+      if (!files.length) return
 
-                   plan_name : null,
-                   start_date: null,
-                   end_date: null,
-                   budget: null,
-                   charges_types: null,
-               },
-           },
-           representative:{
-               participants:[]
-           }
-       });
-       this.participantSerachName = null;
-       this.participantSerachResult = [];
-       this.participantSelected = [];
-       this.providerSerachName = null;
-       this.providerSerachResult =[];
-       this.providerSelected = [];
-       this.representativeSerachName = null;
-       this.representativeSerachResult = [];
-       this.representativeSelected = null;
-       this.servicesItemsResult = [];
-       this.servicesItemsSelected = [];
-   },
-   onFileChange(e) {
-      var files = e.target.files || e.dataTransfer.files;
-      if (!files.length)
-          return;
-
-      let route = this.laroute.route("ajax.plans.upload");
-      let  form = new Form({
-          'file':files[0]
-      });
-       this.loader = true;
+      let route = this.laroute.route("ajax.plans.upload")
+      let form = new Form({
+        file: files[0],
+      })
+      this.loader = true
       form
-           .post(route)
-           .then(res => {
-               this.form.participant.plan.file_name = res.data.file_name;
-               this.loader = false;
-            })
-           .catch(error => {
-               this.form.participant.plan.file_name = null;
-               this.$toastr.e("Error", "Some thing went wrong while file upload.");
-               this.loader = false;
-           })
-           .finally(() => {
-               this.loader = false;
-           });
-   }
-
-
-
+        .post(route)
+        .then(res => {
+          this.form.participant.plan.file_name = res.data.file_name
+          this.loader = false
+        })
+        .catch(error => {
+          this.form.participant.plan.file_name = null
+          this.$toastr.e("Error", "Some thing went wrong while file upload.")
+          this.loader = false
+        })
+        .finally(() => {
+          this.loader = false
+        })
+    },
   },
 }
 </script>

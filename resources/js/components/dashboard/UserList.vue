@@ -7,7 +7,12 @@
           <small class="text-primary">{{ items.total }} Active Users</small>
         </div>
         <div class="card-right-btns">
-          <button v-if="getPermission('is_supper_admin')" class="btn btn-primary btn-icon" data-bs-toggle="modal" data-bs-target="#userModal">
+          <button
+            v-if="getPermission('is_supper_admin')"
+            class="btn btn-primary btn-icon"
+            data-bs-toggle="modal"
+            data-bs-target="#userModal"
+          >
             <ion-icon name="add-outline"></ion-icon> Add New User
           </button>
           <div class="dropdown">
@@ -61,7 +66,7 @@
                     <option selected value="all">All</option>
                     <option value="1">Active</option>
                     <option value="0">Inactive</option>
-<!--                    <option value="3">New Expiry</option>-->
+                    <!--                    <option value="3">New Expiry</option>-->
                   </select>
                 </div>
               </div>
@@ -75,7 +80,7 @@
             <thead>
               <tr>
                 <th scope="col" class="not-center">User</th>
-                <th scope="col">Plan</th>
+                <th scope="col" class="not-center">Plan</th>
                 <th scope="col">Actions</th>
               </tr>
             </thead>
@@ -92,7 +97,15 @@
                     </div>
                   </div>
                 </td>
-                <td>
+                <td class="not-center">
+                  <button
+                    class="btn btn-primary btn-sm"
+                    type="button"
+                    data-bs-toggle="modal"
+                    data-bs-target="#statusModal"
+                  >
+                    Open Model
+                  </button>
                   <button
                     v-if="user.roles[0].name == 'participant' && getPermission('is_supper_admin')"
                     class="btn btn-light btn-sm"
@@ -103,10 +116,18 @@
                 </td>
                 <td>
                   <div class="d-inline-flex flex-nowrap align-items-center justify-content-around btn-group fs-lg">
-                    <button v-if="checkEditPermission(user.roles[0].id)" class="btn btn-link p-0 mx-1" v-on:click="openEditUserPopup(user,user.roles[0])">
+                    <button
+                      v-if="checkEditPermission(user.roles[0].id)"
+                      class="btn btn-link p-0 mx-1"
+                      v-on:click="openEditUserPopup(user, user.roles[0])"
+                    >
                       <ion-icon name="create-outline"></ion-icon>
                     </button>
-                    <button v-if="getPermission('delete_user')" v-on:click="userDelete(user)" class="btn btn-link p-0 mx-1">
+                    <button
+                      v-if="getPermission('delete_user')"
+                      v-on:click="userDelete(user)"
+                      class="btn btn-link p-0 mx-1"
+                    >
                       <ion-icon name="trash-outline"></ion-icon>
                     </button>
                   </div>
@@ -116,7 +137,7 @@
           </table>
         </div>
         <!-- Loader -->
-        <div  v-if="this.loading" class="loader-bg">
+        <div v-if="this.loading" class="loader-bg">
           <div class="spinner-grow text-primary spinner-loder" role="status">
             <span class="visually-hidden">Loading...</span>
           </div>
@@ -132,10 +153,226 @@
           listClass="pagination"
         />
       </div>
-      <plan-popup v-bind:plan="plan" ></plan-popup>
+      <plan-popup v-bind:plan="plan"></plan-popup>
       <edit-provider-popup v-bind:user="user"></edit-provider-popup>
       <edit-participant-popup v-bind:user="participant"></edit-participant-popup>
       <edit-representative-popup v-bind:user="user"></edit-representative-popup>
+
+      <!-- Modal -->
+      <div class="modal fade" id="statusModal" tabindex="-1" aria-labelledby="statusModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="statusModalLabel">Title</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body scroll-y py-0" style="--box-height: 600px">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col" class="not-center sticky-top bg-white">Plan Name</th>
+                    <th scope="col" class="sticky-top bg-white">Status</th>
+                    <th scope="col" class="sticky-top bg-white" width="150">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th class="not-center">Name</th>
+                    <td>
+                      <span class="badge rounded-pill bg-danger mx-1">Inactive</span>
+                      <span class="badge rounded-pill bg-primary mx-1">Status</span>
+                    </td>
+                    <td>
+                      <div class="d-inline-flex flex-nowrap align-items-center justify-content-around btn-group fs-lg">
+                        <button class="btn btn-link p-0 mx-1">
+                          <ion-icon name="create-outline"></ion-icon>
+                        </button>
+                        <button class="btn btn-link p-0 mx-1">
+                          <ion-icon name="trash-outline"></ion-icon>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th class="not-center">Name</th>
+                    <td>
+                      <span class="badge rounded-pill bg-danger mx-1">Inactive</span>
+                      <span class="badge rounded-pill bg-primary mx-1">Status</span>
+                    </td>
+                    <td>
+                      <div class="d-inline-flex flex-nowrap align-items-center justify-content-around btn-group fs-lg">
+                        <button class="btn btn-link p-0 mx-1">
+                          <ion-icon name="create-outline"></ion-icon>
+                        </button>
+                        <button class="btn btn-link p-0 mx-1">
+                          <ion-icon name="trash-outline"></ion-icon>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th class="not-center">Name</th>
+                    <td>
+                      <span class="badge rounded-pill bg-danger mx-1">Inactive</span>
+                      <span class="badge rounded-pill bg-primary mx-1">Status</span>
+                    </td>
+                    <td>
+                      <div class="d-inline-flex flex-nowrap align-items-center justify-content-around btn-group fs-lg">
+                        <button class="btn btn-link p-0 mx-1">
+                          <ion-icon name="create-outline"></ion-icon>
+                        </button>
+                        <button class="btn btn-link p-0 mx-1">
+                          <ion-icon name="trash-outline"></ion-icon>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th class="not-center">Name</th>
+                    <td>
+                      <span class="badge rounded-pill bg-danger mx-1">Inactive</span>
+                      <span class="badge rounded-pill bg-primary mx-1">Status</span>
+                    </td>
+                    <td>
+                      <div class="d-inline-flex flex-nowrap align-items-center justify-content-around btn-group fs-lg">
+                        <button class="btn btn-link p-0 mx-1">
+                          <ion-icon name="create-outline"></ion-icon>
+                        </button>
+                        <button class="btn btn-link p-0 mx-1">
+                          <ion-icon name="trash-outline"></ion-icon>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th class="not-center">Name</th>
+                    <td>
+                      <span class="badge rounded-pill bg-danger mx-1">Inactive</span>
+                      <span class="badge rounded-pill bg-primary mx-1">Status</span>
+                    </td>
+                    <td>
+                      <div class="d-inline-flex flex-nowrap align-items-center justify-content-around btn-group fs-lg">
+                        <button class="btn btn-link p-0 mx-1">
+                          <ion-icon name="create-outline"></ion-icon>
+                        </button>
+                        <button class="btn btn-link p-0 mx-1">
+                          <ion-icon name="trash-outline"></ion-icon>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th class="not-center">Name</th>
+                    <td>
+                      <span class="badge rounded-pill bg-danger mx-1">Inactive</span>
+                      <span class="badge rounded-pill bg-primary mx-1">Status</span>
+                    </td>
+                    <td>
+                      <div class="d-inline-flex flex-nowrap align-items-center justify-content-around btn-group fs-lg">
+                        <button class="btn btn-link p-0 mx-1">
+                          <ion-icon name="create-outline"></ion-icon>
+                        </button>
+                        <button class="btn btn-link p-0 mx-1">
+                          <ion-icon name="trash-outline"></ion-icon>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th class="not-center">Name</th>
+                    <td>
+                      <span class="badge rounded-pill bg-danger mx-1">Inactive</span>
+                      <span class="badge rounded-pill bg-primary mx-1">Status</span>
+                    </td>
+                    <td>
+                      <div class="d-inline-flex flex-nowrap align-items-center justify-content-around btn-group fs-lg">
+                        <button class="btn btn-link p-0 mx-1">
+                          <ion-icon name="create-outline"></ion-icon>
+                        </button>
+                        <button class="btn btn-link p-0 mx-1">
+                          <ion-icon name="trash-outline"></ion-icon>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th class="not-center">Name</th>
+                    <td>
+                      <span class="badge rounded-pill bg-danger mx-1">Inactive</span>
+                      <span class="badge rounded-pill bg-primary mx-1">Status</span>
+                    </td>
+                    <td>
+                      <div class="d-inline-flex flex-nowrap align-items-center justify-content-around btn-group fs-lg">
+                        <button class="btn btn-link p-0 mx-1">
+                          <ion-icon name="create-outline"></ion-icon>
+                        </button>
+                        <button class="btn btn-link p-0 mx-1">
+                          <ion-icon name="trash-outline"></ion-icon>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th class="not-center">Name</th>
+                    <td>
+                      <span class="badge rounded-pill bg-danger mx-1">Inactive</span>
+                      <span class="badge rounded-pill bg-primary mx-1">Status</span>
+                    </td>
+                    <td>
+                      <div class="d-inline-flex flex-nowrap align-items-center justify-content-around btn-group fs-lg">
+                        <button class="btn btn-link p-0 mx-1">
+                          <ion-icon name="create-outline"></ion-icon>
+                        </button>
+                        <button class="btn btn-link p-0 mx-1">
+                          <ion-icon name="trash-outline"></ion-icon>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th class="not-center">Name</th>
+                    <td>
+                      <span class="badge rounded-pill bg-danger mx-1">Inactive</span>
+                      <span class="badge rounded-pill bg-primary mx-1">Status</span>
+                    </td>
+                    <td>
+                      <div class="d-inline-flex flex-nowrap align-items-center justify-content-around btn-group fs-lg">
+                        <button class="btn btn-link p-0 mx-1">
+                          <ion-icon name="create-outline"></ion-icon>
+                        </button>
+                        <button class="btn btn-link p-0 mx-1">
+                          <ion-icon name="trash-outline"></ion-icon>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th class="not-center">Name</th>
+                    <td>
+                      <span class="badge rounded-pill bg-danger mx-1">Inactive</span>
+                      <span class="badge rounded-pill bg-primary mx-1">Status</span>
+                    </td>
+                    <td>
+                      <div class="d-inline-flex flex-nowrap align-items-center justify-content-around btn-group fs-lg">
+                        <button class="btn btn-link p-0 mx-1">
+                          <ion-icon name="create-outline"></ion-icon>
+                        </button>
+                        <button class="btn btn-link p-0 mx-1">
+                          <ion-icon name="trash-outline"></ion-icon>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -144,7 +381,7 @@
 import AdvancedLaravelVuePaginate from "advanced-laravel-vue-paginate"
 import "advanced-laravel-vue-paginate/dist/advanced-laravel-vue-paginate.css"
 import PlanPopup from "../popups/PlanPopup"
-import Form from "vform";
+import Form from "vform"
 
 export default {
   components: { AdvancedLaravelVuePaginate, PlanPopup },
@@ -159,13 +396,13 @@ export default {
       },
       items: {},
       plan: {
-          plan_name: '',
-          start_date:null,
-          end_date:null,
-          status:null,
+        plan_name: "",
+        start_date: null,
+        end_date: null,
+        status: null,
       },
       user: null,
-      participant: null
+      participant: null,
     }
   },
   watch: {
@@ -175,24 +412,24 @@ export default {
     "filters.role": function(val, old) {
       this.getUsersList(1)
     },
-    "filters.plan_status": function (val, old){
-        this.getUsersList(1);
-    }
+    "filters.plan_status": function(val, old) {
+      this.getUsersList(1)
+    },
   },
   mounted() {
-    this.getUsersList();
+    this.getUsersList()
     //Called Whenever admin is added.
     this.$root.$on("ein-user:added", () => {
-          this.getUsersList();
-    });
+      this.getUsersList()
+    })
   },
   methods: {
     getUsersList(page = 1) {
       this.loading = true
       let data = { page: page }
       //Filtering Admin Role.
-      data["filter[not_in][0]"] = 1;
-      data["filter[not_in][1]"] = 5;
+      data["filter[not_in][0]"] = 1
+      data["filter[not_in][1]"] = 5
 
       if (this.filters.name) {
         data["filter[name]"] = this.filters.name
@@ -201,9 +438,9 @@ export default {
         data["filter[roles][0]"] = this.filters.role
       }
 
-      if (this.filters.plan_status != 'all' && this.filters.plan_status) {
-          this.filters.role = 'participant';
-          data["filter[plan_status][0]"] = this.filters.plan_status;
+      if (this.filters.plan_status != "all" && this.filters.plan_status) {
+        this.filters.role = "participant"
+        data["filter[plan_status][0]"] = this.filters.plan_status
       }
 
       let route = this.laroute.route("ajax.users.index", data)
@@ -218,100 +455,82 @@ export default {
         .finally(() => (this.loading = false))
     },
     openPlanEdit(plan) {
-
-        if(plan == null) {
-            this.$toastr.e("Error", "No active plan exist.");
-            return false;
-        }
-        this.plan = plan;
-        if(!this.plan.plan_name) {
-            this.plan.plan_name = '';
-        }
-        $("#editPlanModal").modal('show');
+      if (plan == null) {
+        this.$toastr.e("Error", "No active plan exist.")
+        return false
+      }
+      this.plan = plan
+      if (!this.plan.plan_name) {
+        this.plan.plan_name = ""
+      }
+      $("#editPlanModal").modal("show")
     },
-    openEditUserPopup(user,role) {
+    openEditUserPopup(user, role) {
+      if (role.name == "representative") {
+        this.user = user
+        this.$root.$emit("ein:rep-edit-popup-open", user.id)
+        $("#userEditRepresentativeModal").modal("show")
+      } else if (role.name == "participant") {
+        this.participant = user
+        //this.$root.$emit('ein:participant-edit-popup-open',user.id);
 
-        if(role.name == "representative") {
-            this.user = user;
-            this.$root.$emit('ein:rep-edit-popup-open',user.id);
-            $("#userEditRepresentativeModal").modal('show');
-        } else if( role.name == "participant" ) {
-            this.participant = user;
-            //this.$root.$emit('ein:participant-edit-popup-open',user.id);
-
-            let data = { page: 1 , include:'participant.items,participant.representative,participant.providers.user'}
-            //Filtering Admin Role.
-            data["filter[roles][0]"] = 'participant';
-            data["filter[id]"] = user.id;
-            let route = this.laroute.route("ajax.users.index", data);
-            axios
-                .get(route)
-                .then(res => {
-                    if(res.data.total == 1) {
-                        this.participant = res.data.data[0];
-                        this.$root.$emit('ein:participant-edit-popup-open',this.participant);
-                        $("#userEditParticipantModal").modal('show');
-
-                    }
-                });
-
-
-
-        } else if( role.name == "provider" ) {
-
-            let data = { page: 1 , include:'provider,provider.items,provider.participants.user'}
-            //Filtering Admin Role.
-            data["filter[roles][0]"] = 'provider';
-            data["filter[id]"] = user.id;
-            let route = this.laroute.route("ajax.users.index", data);
-            axios
-                .get(route)
-                .then(res => {
-                    if(res.data.total == 1) {
-                        this.user = res.data.data[0];
-                        this.$root.$emit('ein:provider-edit-popup-open',this.user);
-                        $("#userEditProviderModal").modal('show');
-
-                    }
-                });
-
-        }
-
+        let data = { page: 1, include: "participant.items,participant.representative,participant.providers.user" }
+        //Filtering Admin Role.
+        data["filter[roles][0]"] = "participant"
+        data["filter[id]"] = user.id
+        let route = this.laroute.route("ajax.users.index", data)
+        axios.get(route).then(res => {
+          if (res.data.total == 1) {
+            this.participant = res.data.data[0]
+            this.$root.$emit("ein:participant-edit-popup-open", this.participant)
+            $("#userEditParticipantModal").modal("show")
+          }
+        })
+      } else if (role.name == "provider") {
+        let data = { page: 1, include: "provider,provider.items,provider.participants.user" }
+        //Filtering Admin Role.
+        data["filter[roles][0]"] = "provider"
+        data["filter[id]"] = user.id
+        let route = this.laroute.route("ajax.users.index", data)
+        axios.get(route).then(res => {
+          if (res.data.total == 1) {
+            this.user = res.data.data[0]
+            this.$root.$emit("ein:provider-edit-popup-open", this.user)
+            $("#userEditProviderModal").modal("show")
+          }
+        })
+      }
     },
     userDelete(user) {
-        let route = this.laroute.route("ajax.users.destroy", {'user' : user.id });
-        let form = new Form();
-        form.
-            delete(route)
-            .then(res => {
-                this.getUsersList();
-                this.$toastr.s("Success", "User deleted!")
-            })
-            .catch(error => {
-                this.$toastr.e("Error", "Some thing went wrong.")
-            })
-            .finally(() => {
-
-            })
-
+      let route = this.laroute.route("ajax.users.destroy", { user: user.id })
+      let form = new Form()
+      form
+        .delete(route)
+        .then(res => {
+          this.getUsersList()
+          this.$toastr.s("Success", "User deleted!")
+        })
+        .catch(error => {
+          this.$toastr.e("Error", "Some thing went wrong.")
+        })
+        .finally(() => {})
     },
-    checkEditPermission(role){
-        switch (role){
-            case 2: // ROLE_PROVIDER
-                return this.getPermission('edit_provider_profiles');
-            case 3: //ROLE_REPRESENTATIVE
-                return this.getPermission('edit_representatives_profiles');
-            case 4: //ROLE_PARTICIPANT
-                return this.getPermission('edit_participants_profiles');
-        }
+    checkEditPermission(role) {
+      switch (role) {
+        case 2: // ROLE_PROVIDER
+          return this.getPermission("edit_provider_profiles")
+        case 3: //ROLE_REPRESENTATIVE
+          return this.getPermission("edit_representatives_profiles")
+        case 4: //ROLE_PARTICIPANT
+          return this.getPermission("edit_participants_profiles")
+      }
     },
     getPermission(pName) {
-        if(this.policy.is_supper_admin){
-            return true;
-        }
-        return this.policy.permissions[pName];
-    }
-
+      if (this.policy.is_supper_admin) {
+        return true
+      }
+      return this.policy.permissions[pName]
+    },
   },
 }
 </script>

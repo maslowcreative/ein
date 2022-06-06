@@ -11166,7 +11166,7 @@ textarea.form-control-lg {
   border-radius: var(--border-radius);
 }
 
-.scroll-x {
+.scroll-y {
   --box-height: 100%;
   max-height: var(--box-height);
   overflow-y: auto;
