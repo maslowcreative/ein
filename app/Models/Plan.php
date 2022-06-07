@@ -34,4 +34,8 @@ class Plan extends Model
     {
         $this->attributes['budget'] = round($value,2);
     }
+
+    public function budgets(){
+        return $this->hasMany(PlanBudget::class,'plan_id');
+    }
 }

@@ -842,14 +842,15 @@
                         <input
                           type="text"
                           class="form-control"
-                          v-model="form.participant.plan.budget"
+                          disabled
+                          v-model="form.participant.plan.budget.total"
                           placeholder="$180,000"
                         />
                         <div
                           class="invalid-msg"
-                          v-if="form.errors.has('participant.plan.budget')"
+                          v-if="form.errors.has('participant.plan.budget.total')"
                           v-html="
-                            form.errors.get('participant.plan.budget').replace('participant.plan.budget', 'budget')
+                            form.errors.get('participant.plan.budget.total').replace('participant.plan.budget.total', 'budget')
                           "
                         />
                       </div>
@@ -858,26 +859,107 @@
                       <div class="row">
                         <div class="col-md-6">
                           <div class="mb-4">
-                            <label class="form-label">Option 1</label>
-                            <input type="text" class="form-control" />
+                            <label class="form-label">Assistance with Daily Life</label>
+                            <input type="text"   v-model="form.participant.plan.budget.cat_1" class="form-control" />
+                            <div class="invalid-msg" v-if="form.errors.has('participant.plan.budget.cat_1')" v-html="form.errors.get('participant.plan.budget.cat_1')" />
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                              <div class="mb-4">
+                                  <label class="form-label">Transport</label>
+                                  <input type="text"  v-model="form.participant.plan.budget.cat_2" class="form-control" />
+                                  <div class="invalid-msg" v-if="form.errors.has('participant.plan.budget.cat_2')" v-html="form.errors.get('participant.plan.budget.cat_2')" />
+                              </div>
+                          </div>
+                        <div class="col-md-6">
+                              <div class="mb-4">
+                                  <label class="form-label">Consumables</label>
+                                  <input type="text"  v-model="form.participant.plan.budget.cat_3" class="form-control" />
+                                  <div class="invalid-msg" v-if="form.errors.has('participant.plan.budget.cat_3')" v-html="form.errors.get('participant.plan.budget.cat_3')" />
+                              </div>
+                          </div>
+                        <div class="col-md-6">
+                              <div class="mb-4">
+                                  <label class="form-label">Assistance with Social</label>
+                                  <input type="text"  v-model="form.participant.plan.budget.cat_4" class="form-control" />
+                                  <div class="invalid-msg" v-if="form.errors.has('participant.plan.budget.cat_4')" v-html="form.errors.get('participant.plan.budget.cat_4')" />
+                              </div>
+                          </div>
+                        <div class="col-md-6">
+                          <div class="mb-4">
+                              <label class="form-label">Assistive Technology</label>
+                              <input type="text"  v-model="form.participant.plan.budget.cat_5" class="form-control" />
+                              <div class="invalid-msg" v-if="form.errors.has('participant.plan.budget.cat_5')" v-html="form.errors.get('participant.plan.budget.cat_5')" />
                           </div>
                         </div>
                         <div class="col-md-6">
                           <div class="mb-4">
-                            <label class="form-label">Option 2</label>
-                            <input type="text" class="form-control" />
+                              <label class="form-label">Home Modifications</label>
+                              <input type="text"  v-model="form.participant.plan.budget.cat_6" class="form-control" />
+                              <div class="invalid-msg" v-if="form.errors.has('participant.plan.budget.cat_6')" v-html="form.errors.get('participant.plan.budget.cat_6')" />
                           </div>
                         </div>
                         <div class="col-md-6">
                           <div class="mb-4">
-                            <label class="form-label">Option 3</label>
-                            <input type="text" class="form-control" />
+                              <label class="form-label">Support Coordination</label>
+                              <input type="text" v-model="form.participant.plan.budget.cat_7" class="form-control" />
+                              <div class="invalid-msg" v-if="form.errors.has('participant.plan.budget.cat_7')" v-html="form.errors.get('participant.plan.budget.cat_7')" />
                           </div>
                         </div>
                         <div class="col-md-6">
                           <div class="mb-4">
-                            <label class="form-label">Option 4</label>
-                            <input type="text" class="form-control" />
+                              <label class="form-label">Improved Living Arrangements</label>
+                              <input type="text"  v-model="form.participant.plan.budget.cat_8" class="form-control" />
+                              <div class="invalid-msg" v-if="form.errors.has('participant.plan.budget.cat_8')" v-html="form.errors.get('participant.plan.budget.cat_8')" />
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="mb-4">
+                              <label class="form-label">Increased Social</label>
+                              <input type="text" v-model="form.participant.plan.budget.cat_9" class="form-control" />
+                              <div class="invalid-msg" v-if="form.errors.has('participant.plan.budget.cat_9')" v-html="form.errors.get('participant.plan.budget.cat_9')" />
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="mb-4">
+                              <label class="form-label">Finding and Keeping a Job</label>
+                              <input type="text"  v-model="form.participant.plan.budget.cat_10" class="form-control" />
+                              <div class="invalid-msg" v-if="form.errors.has('participant.plan.budget.cat_10')" v-html="form.errors.get('participant.plan.budget.cat_10')" />
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="mb-4">
+                              <label class="form-label">Improved Relationships</label>
+                              <input type="text"  v-model="form.participant.plan.budget.cat_11" class="form-control" />
+                              <div class="invalid-msg" v-if="form.errors.has('participant.plan.budget.cat_11')" v-html="form.errors.get('participant.plan.budget.cat_11')" />
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="mb-4">
+                              <label class="form-label">Improved Health and Wellbeing</label>
+                              <input type="text"  v-model="form.participant.plan.budget.cat_12" class="form-control" />
+                              <div class="invalid-msg" v-if="form.errors.has('participant.plan.budget.cat_12')" v-html="form.errors.get('participant.plan.budget.cat_12')" />
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="mb-4">
+                              <label class="form-label">Improved Learning</label>
+                              <input type="text"  v-model="form.participant.plan.budget.cat_13" class="form-control" />
+                              <div class="invalid-msg" v-if="form.errors.has('participant.plan.budget.cat_13')" v-html="form.errors.get('participant.plan.budget.cat_13')" />
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="mb-4">
+                              <label class="form-label">Improved Life Choices</label>
+                              <input type="text"  v-model="form.participant.plan.budget.cat_14" class="form-control" />
+                              <div class="invalid-msg" v-if="form.errors.has('participant.plan.budget.cat_14')" v-html="form.errors.get('participant.plan.budget.cat_14')" />
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="mb-4">
+                              <label class="form-label">Improved Daily Living Skills</label>
+                              <input type="text"  v-model="form.participant.plan.budget.cat_15" class="form-control" />
+                              <div class="invalid-msg" v-if="form.errors.has('participant.plan.budget.cat_15')" v-html="form.errors.get('participant.plan.budget.cat_15')" />
                           </div>
                         </div>
                       </div>
@@ -1006,7 +1088,24 @@ export default {
             file_name: null,
             start_date: null,
             end_date: null,
-            budget: null,
+            budget: {
+                cat_1 : 0,
+                cat_2 : 0,
+                cat_3 : 0,
+                cat_4 : 0,
+                cat_5 : 0,
+                cat_6 : 0,
+                cat_7 : 0,
+                cat_8 : 0,
+                cat_9 : 0,
+                cat_10 : 0,
+                cat_11 : 0,
+                cat_12 : 0,
+                cat_13 : 0,
+                cat_14 : 0,
+                cat_15 : 0,
+                total: 0,
+            },
             charges_types: null,
           },
         },
@@ -1063,7 +1162,24 @@ export default {
               file_name: null,
               start_date: null,
               end_date: null,
-              budget: null,
+              budget: {
+                    cat_1 : 0,
+                    cat_2 : 0,
+                    cat_3 : 0,
+                    cat_4 : 0,
+                    cat_5 : 0,
+                    cat_6 : 0,
+                    cat_7 : 0,
+                    cat_8 : 0,
+                    cat_9 : 0,
+                    cat_10 : 0,
+                    cat_11 : 0,
+                    cat_12 : 0,
+                    cat_13 : 0,
+                    cat_14 : 0,
+                    cat_15 : 0,
+                    total: 0,
+                },
               charges_types: null,
             },
           },
@@ -1085,6 +1201,69 @@ export default {
         this.servicesItemsSelected = []
       }
     },
+    "form.participant.plan.budget.cat_1": function (val,old){
+        this.form.participant.plan.budget.total =   this.parseFloatValue(this.form.participant.plan.budget.total)
+                                                  + this.parseFloatValue(val)  - this.parseFloatValue(old);
+        this.form.participant.plan.budget.cat_1 = this.parseFloatValue(val);
+     },
+      "form.participant.plan.budget.cat_2": function (val,old){
+          this.form.participant.plan.budget.total =   this.parseFloatValue(this.form.participant.plan.budget.total)
+              + this.parseFloatValue(val)  - this.parseFloatValue(old);
+          this.form.participant.plan.budget.cat_2 = this.parseFloatValue(val);
+      },
+      "form.participant.plan.budget.cat_3": function (val,old){
+          this.form.participant.plan.budget.total =   this.parseFloatValue(this.form.participant.plan.budget.total)
+              + this.parseFloatValue(val)  - this.parseFloatValue(old);
+          this.form.participant.plan.budget.cat_3 = this.parseFloatValue(val);      },
+      "form.participant.plan.budget.cat_4": function (val,old){
+          this.form.participant.plan.budget.total =   this.parseFloatValue(this.form.participant.plan.budget.total)
+              + this.parseFloatValue(val)  - this.parseFloatValue(old);
+          this.form.participant.plan.budget.cat_4 = this.parseFloatValue(val);      },
+      "form.participant.plan.budget.cat_5": function (val,old){
+          this.form.participant.plan.budget.total =   this.parseFloatValue(this.form.participant.plan.budget.total)
+              + this.parseFloatValue(val)  - this.parseFloatValue(old);
+          this.form.participant.plan.budget.cat_5 = this.parseFloatValue(val);      },
+      "form.participant.plan.budget.cat_6": function (val,old){
+          this.form.participant.plan.budget.total =   this.parseFloatValue(this.form.participant.plan.budget.total)
+              + this.parseFloatValue(val)  - this.parseFloatValue(old);
+          this.form.participant.plan.budget.cat_6 = this.parseFloatValue(val);      },
+      "form.participant.plan.budget.cat_7": function (val,old){
+          this.form.participant.plan.budget.total =   this.parseFloatValue(this.form.participant.plan.budget.total)
+              + this.parseFloatValue(val)  - this.parseFloatValue(old);
+          this.form.participant.plan.budget.cat_7 = this.parseFloatValue(val);      },
+      "form.participant.plan.budget.cat_8": function (val,old){
+          this.form.participant.plan.budget.total =   this.parseFloatValue(this.form.participant.plan.budget.total)
+              + this.parseFloatValue(val)  - this.parseFloatValue(old);
+          this.form.participant.plan.budget.cat_8 = this.parseFloatValue(val);      },
+      "form.participant.plan.budget.cat_9": function (val,old){
+          this.form.participant.plan.budget.total =   this.parseFloatValue(this.form.participant.plan.budget.total)
+              + this.parseFloatValue(val)  - this.parseFloatValue(old);
+          this.form.participant.plan.budget.cat_9 = this.parseFloatValue(val);      },
+      "form.participant.plan.budget.cat_10": function (val,old){
+          this.form.participant.plan.budget.total =   this.parseFloatValue(this.form.participant.plan.budget.total)
+              + this.parseFloatValue(val)  - this.parseFloatValue(old);
+          this.form.participant.plan.budget.cat_10 = this.parseFloatValue(val);      },
+      "form.participant.plan.budget.cat_11": function (val,old){
+          this.form.participant.plan.budget.total =   this.parseFloatValue(this.form.participant.plan.budget.total)
+              + this.parseFloatValue(val)  - this.parseFloatValue(old);
+          this.form.participant.plan.budget.cat_11 = this.parseFloatValue(val);      },
+      "form.participant.plan.budget.cat_12": function (val,old){
+          this.form.participant.plan.budget.total =   this.parseFloatValue(this.form.participant.plan.budget.total)
+              + this.parseFloatValue(val)  - this.parseFloatValue(old);
+          this.form.participant.plan.budget.cat_12 = this.parseFloatValue(val);      },
+      "form.participant.plan.budget.cat_13": function (val,old){
+          this.form.participant.plan.budget.total =   this.parseFloatValue(this.form.participant.plan.budget.total)
+              + this.parseFloatValue(val)  - this.parseFloatValue(old);
+          this.form.participant.plan.budget.cat_13 = this.parseFloatValue(val);      },
+      "form.participant.plan.budget.cat_14": function (val,old){
+          this.form.participant.plan.budget.total =   this.parseFloatValue(this.form.participant.plan.budget.total)
+              + this.parseFloatValue(val)  - this.parseFloatValue(old);
+          this.form.participant.plan.budget.cat_14 = this.parseFloatValue(val);      },
+      "form.participant.plan.budget.cat_15": function (val,old){
+          this.form.participant.plan.budget.total =   this.parseFloatValue(this.form.participant.plan.budget.total)
+              + this.parseFloatValue(val)  - this.parseFloatValue(old);
+          this.form.participant.plan.budget.cat_15 = this.parseFloatValue(val);      },
+
     step(val, old) {
       if (val == this.stepsMap[this.form.role_id]) {
         this.lastStep = true
@@ -1153,6 +1332,13 @@ export default {
     },
   },
   methods: {
+    parseFloatValue(val){
+        val = parseFloat(val);
+        if(isNaN(val)){
+            val = 0;
+        }
+        return val;
+    },
     current(value) {
       this.step = value
     },
@@ -1358,7 +1544,24 @@ export default {
             plan_name: null,
             start_date: null,
             end_date: null,
-            budget: null,
+            budget: {
+                  cat_1 : 0,
+                  cat_2 : 0,
+                  cat_3 : 0,
+                  cat_4 : 0,
+                  cat_5 : 0,
+                  cat_6 : 0,
+                  cat_7 : 0,
+                  cat_8 : 0,
+                  cat_9 : 0,
+                  cat_10 : 0,
+                  cat_11 : 0,
+                  cat_12 : 0,
+                  cat_13 : 0,
+                  cat_14 : 0,
+                  cat_15 : 0,
+                  total: 0,
+              },
             charges_types: null,
           },
         },

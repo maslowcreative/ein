@@ -113,8 +113,27 @@ class UserController extends Controller
 
           }
 
-          if($request->participant['plan'] ?? false)
-            $plan = $participant->plans()->create($request->participant['plan']);
+          if($request->participant['plan'] ?? false){
+              $planData = $request->participant['plan'];
+              $planData['budget'] = $request->participant['plan']['budget']['total'];
+              $plan = $participant->plans()->create($planData);
+          }
+
+          $bugdetCategories = [];
+          foreach($request->participant['plan']['budget'] as $key => $val) {
+                $cat = explode('_',$key);
+                if($cat[0] == 'cat'){
+                    array_push(
+                        $bugdetCategories,
+                        [
+                            'category_id' => $cat[1],
+                            'amount' => $val,
+                        ]
+                    );
+                }
+          }
+          $plan->budgets()->createMany($bugdetCategories);
+
         }
         //Representative Role:
         if(Role::ROLE_REPRESENTATIVE == $role->id) {
