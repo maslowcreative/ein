@@ -53,6 +53,7 @@
 <script>
 
 import PlanPopup from "./PlanPopup";
+import Form from "vform";
 export default {
     components: {PlanPopup},
     data() {
@@ -83,8 +84,52 @@ export default {
                 .finally(() => (this.loader = false))
         },
         openPlanEdit(plan) {
-            this.$root.$emit("ein:participant-plan-edit-popup-open", plan);
+
+
+            let form = new Form({
+                file_name: null,
+                start_date: null,
+                end_date: null,
+                status: null,
+                charges_types: null,
+                budget: 0,
+                budgets: {
+                    cat_1 : 0,
+                    cat_2 : 0,
+                    cat_3 : 0,
+                    cat_4 : 0,
+                    cat_5 : 0,
+                    cat_6 : 0,
+                    cat_7 : 0,
+                    cat_8 : 0,
+                    cat_9 : 0,
+                    cat_10 : 0,
+                    cat_11 : 0,
+                    cat_12 : 0,
+                    cat_13 : 0,
+                    cat_14 : 0,
+                    cat_15 : 0,
+                    total: 0,
+                },
+            });
+
+            form.file_name = plan.name;
+            form.start_date = plan.start_date;
+            form.end_date = plan.end_date;
+            form.status = plan.status;
+            form.budget = 0;
+
+            plan.budgets.forEach((item, index) => {
+                let cat = 'cat_'+ item.category_id;
+                form.budgets[cat] = item.amount;
+            });
+            form.budget = plan.budget;
+            let data = {
+                plan: plan,
+                form : form
+            }
             $("#planList").modal("hide");
+            this.$root.$emit("ein:participant-plan-edit-popup-open", data);
             $("#editPlanModal").modal("show");
         },
         parseFloatValue(val){

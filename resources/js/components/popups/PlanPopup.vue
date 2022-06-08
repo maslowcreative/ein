@@ -238,40 +238,41 @@ export default {
     }
   },
   mounted() {
-      this.$root.$on("ein:participant-plan-edit-popup-open", (plan) => {
-          this.form.reset();
-          this.plan = plan;
-          this.form.file_name = this.plan.name;
-          this.form.start_date = this.plan.start_date;
-          this.form.end_date = this.plan.end_date;
-          this.form.status = this.plan.status;
-          this.form.status = this.plan.status;
-          this.form.budget = 0;
+      this.$root.$on("ein:participant-plan-edit-popup-open", (data) => {
 
-          this.form.budgets = {
-              cat_1 : 0,
-              cat_2 : 0,
-              cat_3 : 0,
-              cat_4 : 0,
-              cat_5 : 0,
-              cat_6 : 0,
-              cat_7 : 0,
-              cat_8 : 0,
-              cat_9 : 0,
-              cat_10 : 0,
-              cat_11 : 0,
-              cat_12 : 0,
-              cat_13 : 0,
-              cat_14 : 0,
-              cat_15 : 0,
-              total: 0,
-          };
+          this.plan = data.plan;
+          this.form = data.form;
 
-          this.plan.budgets.forEach((item, index) => {
-              let cat = 'cat_'+ item.category_id;
-              this.form.budgets[cat] = item.amount;
-          });
-          //this.form.budget = this.plan.budget;
+          // this.form.file_name = this.plan.name;
+          // this.form.start_date = this.plan.start_date;
+          // this.form.end_date = this.plan.end_date;
+          // this.form.status = this.plan.status;
+          // this.form.status = this.plan.status;
+          // this.form.budget = 0;
+          //
+          // this.form.budgets = {
+          //     cat_1 : 0,
+          //     cat_2 : 0,
+          //     cat_3 : 0,
+          //     cat_4 : 0,
+          //     cat_5 : 0,
+          //     cat_6 : 0,
+          //     cat_7 : 0,
+          //     cat_8 : 0,
+          //     cat_9 : 0,
+          //     cat_10 : 0,
+          //     cat_11 : 0,
+          //     cat_12 : 0,
+          //     cat_13 : 0,
+          //     cat_14 : 0,
+          //     cat_15 : 0,
+          // };
+          //
+          // this.plan.budgets.forEach((item, index) => {
+          //     let cat = 'cat_'+ item.category_id;
+          //     this.form.budgets[cat] = item.amount;
+          // });
+          // this.form.budget = this.plan.budget;
       });
   },
   watch:{
