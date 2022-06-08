@@ -72,9 +72,16 @@ class PlanController extends Controller
         foreach($request->budgets as $key => $val) {
             $cat = explode('_',$key);
             if($cat[0] == 'cat'){
-                PlanBudget::where('category_id',$cat[1])
+                $buget = PlanBudget::where('category_id',$cat[1])
                            ->where('plan_id',$plan->id)
-                            ->update(['amount' => $val]);
+                           ->first();
+                if(!$buget){
+                    $buget = new PlanBudget();
+                    $buget->category_id = $cat[1];
+                    $buget->plan_id = $plan->id;
+                }
+                $buget->amount = $val;
+                $buget->save();
             }
         }
 
