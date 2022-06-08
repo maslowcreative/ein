@@ -101,17 +101,10 @@
                   <button
                     class="btn btn-primary btn-sm"
                     type="button"
-                    data-bs-toggle="modal"
-                    data-bs-target="#statusModal"
-                  >
-                    Open Model
-                  </button>
-                  <button
+                    v-on:click="openParticipantPlansListPopup(user)"
                     v-if="user.roles[0].name == 'participant' && getPermission('is_supper_admin')"
-                    class="btn btn-light btn-sm"
-                    v-on:click="openPlanEdit(user.plan)"
                   >
-                    Edit Plan
+                    Plans
                   </button>
                 </td>
                 <td>
@@ -153,226 +146,11 @@
           listClass="pagination"
         />
       </div>
-      <plan-popup v-bind:plan="plan"></plan-popup>
       <edit-provider-popup v-bind:user="user"></edit-provider-popup>
       <edit-participant-popup v-bind:user="participant"></edit-participant-popup>
       <edit-representative-popup v-bind:user="user"></edit-representative-popup>
-
-      <!-- Modal -->
-      <div class="modal fade" id="statusModal" tabindex="-1" aria-labelledby="statusModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="statusModalLabel">Title</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body scroll-y py-0" style="--box-height: 600px">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th scope="col" class="not-center sticky-top bg-white">Plan Name</th>
-                    <th scope="col" class="sticky-top bg-white">Status</th>
-                    <th scope="col" class="sticky-top bg-white" width="150">Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th class="not-center">Name</th>
-                    <td>
-                      <span class="badge rounded-pill bg-danger mx-1">Inactive</span>
-                      <span class="badge rounded-pill bg-primary mx-1">Status</span>
-                    </td>
-                    <td>
-                      <div class="d-inline-flex flex-nowrap align-items-center justify-content-around btn-group fs-lg">
-                        <button class="btn btn-link p-0 mx-1">
-                          <ion-icon name="create-outline"></ion-icon>
-                        </button>
-                        <button class="btn btn-link p-0 mx-1">
-                          <ion-icon name="trash-outline"></ion-icon>
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th class="not-center">Name</th>
-                    <td>
-                      <span class="badge rounded-pill bg-danger mx-1">Inactive</span>
-                      <span class="badge rounded-pill bg-primary mx-1">Status</span>
-                    </td>
-                    <td>
-                      <div class="d-inline-flex flex-nowrap align-items-center justify-content-around btn-group fs-lg">
-                        <button class="btn btn-link p-0 mx-1">
-                          <ion-icon name="create-outline"></ion-icon>
-                        </button>
-                        <button class="btn btn-link p-0 mx-1">
-                          <ion-icon name="trash-outline"></ion-icon>
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th class="not-center">Name</th>
-                    <td>
-                      <span class="badge rounded-pill bg-danger mx-1">Inactive</span>
-                      <span class="badge rounded-pill bg-primary mx-1">Status</span>
-                    </td>
-                    <td>
-                      <div class="d-inline-flex flex-nowrap align-items-center justify-content-around btn-group fs-lg">
-                        <button class="btn btn-link p-0 mx-1">
-                          <ion-icon name="create-outline"></ion-icon>
-                        </button>
-                        <button class="btn btn-link p-0 mx-1">
-                          <ion-icon name="trash-outline"></ion-icon>
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th class="not-center">Name</th>
-                    <td>
-                      <span class="badge rounded-pill bg-danger mx-1">Inactive</span>
-                      <span class="badge rounded-pill bg-primary mx-1">Status</span>
-                    </td>
-                    <td>
-                      <div class="d-inline-flex flex-nowrap align-items-center justify-content-around btn-group fs-lg">
-                        <button class="btn btn-link p-0 mx-1">
-                          <ion-icon name="create-outline"></ion-icon>
-                        </button>
-                        <button class="btn btn-link p-0 mx-1">
-                          <ion-icon name="trash-outline"></ion-icon>
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th class="not-center">Name</th>
-                    <td>
-                      <span class="badge rounded-pill bg-danger mx-1">Inactive</span>
-                      <span class="badge rounded-pill bg-primary mx-1">Status</span>
-                    </td>
-                    <td>
-                      <div class="d-inline-flex flex-nowrap align-items-center justify-content-around btn-group fs-lg">
-                        <button class="btn btn-link p-0 mx-1">
-                          <ion-icon name="create-outline"></ion-icon>
-                        </button>
-                        <button class="btn btn-link p-0 mx-1">
-                          <ion-icon name="trash-outline"></ion-icon>
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th class="not-center">Name</th>
-                    <td>
-                      <span class="badge rounded-pill bg-danger mx-1">Inactive</span>
-                      <span class="badge rounded-pill bg-primary mx-1">Status</span>
-                    </td>
-                    <td>
-                      <div class="d-inline-flex flex-nowrap align-items-center justify-content-around btn-group fs-lg">
-                        <button class="btn btn-link p-0 mx-1">
-                          <ion-icon name="create-outline"></ion-icon>
-                        </button>
-                        <button class="btn btn-link p-0 mx-1">
-                          <ion-icon name="trash-outline"></ion-icon>
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th class="not-center">Name</th>
-                    <td>
-                      <span class="badge rounded-pill bg-danger mx-1">Inactive</span>
-                      <span class="badge rounded-pill bg-primary mx-1">Status</span>
-                    </td>
-                    <td>
-                      <div class="d-inline-flex flex-nowrap align-items-center justify-content-around btn-group fs-lg">
-                        <button class="btn btn-link p-0 mx-1">
-                          <ion-icon name="create-outline"></ion-icon>
-                        </button>
-                        <button class="btn btn-link p-0 mx-1">
-                          <ion-icon name="trash-outline"></ion-icon>
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th class="not-center">Name</th>
-                    <td>
-                      <span class="badge rounded-pill bg-danger mx-1">Inactive</span>
-                      <span class="badge rounded-pill bg-primary mx-1">Status</span>
-                    </td>
-                    <td>
-                      <div class="d-inline-flex flex-nowrap align-items-center justify-content-around btn-group fs-lg">
-                        <button class="btn btn-link p-0 mx-1">
-                          <ion-icon name="create-outline"></ion-icon>
-                        </button>
-                        <button class="btn btn-link p-0 mx-1">
-                          <ion-icon name="trash-outline"></ion-icon>
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th class="not-center">Name</th>
-                    <td>
-                      <span class="badge rounded-pill bg-danger mx-1">Inactive</span>
-                      <span class="badge rounded-pill bg-primary mx-1">Status</span>
-                    </td>
-                    <td>
-                      <div class="d-inline-flex flex-nowrap align-items-center justify-content-around btn-group fs-lg">
-                        <button class="btn btn-link p-0 mx-1">
-                          <ion-icon name="create-outline"></ion-icon>
-                        </button>
-                        <button class="btn btn-link p-0 mx-1">
-                          <ion-icon name="trash-outline"></ion-icon>
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th class="not-center">Name</th>
-                    <td>
-                      <span class="badge rounded-pill bg-danger mx-1">Inactive</span>
-                      <span class="badge rounded-pill bg-primary mx-1">Status</span>
-                    </td>
-                    <td>
-                      <div class="d-inline-flex flex-nowrap align-items-center justify-content-around btn-group fs-lg">
-                        <button class="btn btn-link p-0 mx-1">
-                          <ion-icon name="create-outline"></ion-icon>
-                        </button>
-                        <button class="btn btn-link p-0 mx-1">
-                          <ion-icon name="trash-outline"></ion-icon>
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th class="not-center">Name</th>
-                    <td>
-                      <span class="badge rounded-pill bg-danger mx-1">Inactive</span>
-                      <span class="badge rounded-pill bg-primary mx-1">Status</span>
-                    </td>
-                    <td>
-                      <div class="d-inline-flex flex-nowrap align-items-center justify-content-around btn-group fs-lg">
-                        <button class="btn btn-link p-0 mx-1">
-                          <ion-icon name="create-outline"></ion-icon>
-                        </button>
-                        <button class="btn btn-link p-0 mx-1">
-                          <ion-icon name="trash-outline"></ion-icon>
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-          </div>
-        </div>
-      </div>
+      <plan-list-popup></plan-list-popup>
+      <plan-popup></plan-popup>
     </div>
   </div>
 </template>
@@ -384,7 +162,7 @@ import PlanPopup from "../popups/PlanPopup"
 import Form from "vform"
 
 export default {
-  components: { AdvancedLaravelVuePaginate, PlanPopup },
+  components: { AdvancedLaravelVuePaginate },
   props: ["policy"],
   data() {
     return {
@@ -531,6 +309,10 @@ export default {
       }
       return this.policy.permissions[pName]
     },
+    openParticipantPlansListPopup(user){
+        this.$root.$emit("ein:participant-plan-list-popup-open", user);
+        $("#planList").modal("show")
+    }
   },
 }
 </script>

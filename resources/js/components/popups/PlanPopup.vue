@@ -13,7 +13,7 @@
           <h4 class="modal-title" id="editPlanModalTitle">Edit Plan</h4>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body">
+        <div v-if="plan" class="modal-body">
           <div class="row">
             <div class="col-md-6">
               <div class="mb-4">
@@ -88,39 +88,105 @@
                     >More Options</a
                   >
                 </div>
-                <input type="text" class="form-control" v-model="plan.budget" placeholder="$180,000" />
+                <input type="text" class="form-control" disabled v-model="form.budget" placeholder="$180,000" />
                 <div class="invalid-msg" v-if="form.errors.has('budget')" v-html="form.errors.get('budget')" />
               </div>
             </div>
           </div>
-          <div id="editBudgetOption" class="collapse">
-            <div class="row">
-              <div class="col-md-6">
-                <div class="mb-4">
-                  <label class="form-label">Option 1</label>
-                  <input type="text" class="form-control" />
+          <div id="editBudgetOption" class="col-md-12 collapse">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-4">
+                            <label class="form-label">Assistance with Daily Life</label>
+                            <input type="text"   v-model="form.budgets.cat_1" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-4">
+                            <label class="form-label">Transport</label>
+                            <input type="text"  v-model="form.budgets.cat_2" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-4">
+                            <label class="form-label">Consumables</label>
+                            <input type="text"  v-model="form.budgets.cat_3" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-4">
+                            <label class="form-label">Assistance with Social</label>
+                            <input type="text"  v-model="form.budgets.cat_4" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-4">
+                            <label class="form-label">Assistive Technology</label>
+                            <input type="text"  v-model="form.budgets.cat_5" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-4">
+                            <label class="form-label">Home Modifications</label>
+                            <input type="text"  v-model="form.budgets.cat_6" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-4">
+                            <label class="form-label">Support Coordination</label>
+                            <input type="text" v-model="form.budgets.cat_7" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-4">
+                            <label class="form-label">Improved Living Arrangements</label>
+                            <input type="text"  v-model="form.budgets.cat_8" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-4">
+                            <label class="form-label">Increased Social</label>
+                            <input type="text" v-model="form.budgets.cat_9" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-4">
+                            <label class="form-label">Finding and Keeping a Job</label>
+                            <input type="text"  v-model="form.budgets.cat_10" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-4">
+                            <label class="form-label">Improved Relationships</label>
+                            <input type="text"  v-model="form.budgets.cat_11" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-4">
+                            <label class="form-label">Improved Health and Wellbeing</label>
+                            <input type="text"  v-model="form.budgets.cat_12" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-4">
+                            <label class="form-label">Improved Learning</label>
+                            <input type="text"  v-model="form.budgets.cat_13" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-4">
+                            <label class="form-label">Improved Life Choices</label>
+                            <input type="text"  v-model="form.budgets.cat_14" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-4">
+                            <label class="form-label">Improved Daily Living Skills</label>
+                            <input type="text"  v-model="form.budgets.cat_15" class="form-control" />
+                        </div>
+                    </div>
                 </div>
-              </div>
-              <div class="col-md-6">
-                <div class="mb-4">
-                  <label class="form-label">Option 2</label>
-                  <input type="text" class="form-control" />
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="mb-4">
-                  <label class="form-label">Option 3</label>
-                  <input type="text" class="form-control" />
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="mb-4">
-                  <label class="form-label">Option 4</label>
-                  <input type="text" class="form-control" />
-                </div>
-              </div>
             </div>
-          </div>
           <div class="mw290 mx-auto px-4 mt-3">
             <button v-if="!loader" class="btn btn-primary btn-lg w-100 py-3" v-on:click="updatePlan(plan.id)">
               Update Plan
@@ -139,21 +205,115 @@
 import Form from "vform"
 
 export default {
-  props: ["plan"],
   data() {
     return {
       loader: false,
+      plan: null,
       form: new Form({
         file_name: null,
-        start_date: this.plan.start_date,
+        start_date: null,
         end_date: null,
         status: null,
         charges_types: null,
         budget: null,
+        budgets: {
+          cat_1 : 0,
+          cat_2 : 0,
+          cat_3 : 0,
+          cat_4 : 0,
+          cat_5 : 0,
+          cat_6 : 0,
+          cat_7 : 0,
+          cat_8 : 0,
+          cat_9 : 0,
+          cat_10 : 0,
+          cat_11 : 0,
+          cat_12 : 0,
+          cat_13 : 0,
+          cat_14 : 0,
+          cat_15 : 0,
+          total: 0,
+        },
       }),
     }
   },
-  mounted() {},
+  mounted() {
+      this.$root.$on("ein:participant-plan-edit-popup-open", (plan) => {
+          this.plan = plan;
+          this.form.start_date = this.plan.start_date;
+          this.plan.budgets.forEach((item, index) => {
+              let cat = 'cat_'+ item.category_id;
+              this.form.budgets[cat] = item.amount;
+          });
+          this.form.budget = this.plan.budget;
+      });
+  },
+  watch:{
+        "form.budgets.cat_1": function (val,old){
+            this.form.budget =   this.parseFloatValue(this.form.budget)
+                + this.parseFloatValue(val)  - this.parseFloatValue(old);
+            this.form.budgets.cat_1 = this.parseFloatValue(val);
+        },
+        "form.budgets.cat_2": function (val,old){
+            this.form.budget =   this.parseFloatValue(this.form.budget)
+                + this.parseFloatValue(val)  - this.parseFloatValue(old);
+            this.form.budgets.cat_2 = this.parseFloatValue(val);
+        },
+        "form.budgets.cat_3": function (val,old){
+            this.form.budget =   this.parseFloatValue(this.form.budget)
+                + this.parseFloatValue(val)  - this.parseFloatValue(old);
+            this.form.budgets.cat_3 = this.parseFloatValue(val);      },
+        "form.budgets.cat_4": function (val,old){
+            this.form.budget =   this.parseFloatValue(this.form.budget)
+                + this.parseFloatValue(val)  - this.parseFloatValue(old);
+            this.form.budgets.cat_4 = this.parseFloatValue(val);      },
+        "form.budgets.cat_5": function (val,old){
+            this.form.budget =   this.parseFloatValue(this.form.budget)
+                + this.parseFloatValue(val)  - this.parseFloatValue(old);
+            this.form.budgets.cat_5 = this.parseFloatValue(val);      },
+        "form.budgets.cat_6": function (val,old){
+            this.form.budget =   this.parseFloatValue(this.form.budget)
+                + this.parseFloatValue(val)  - this.parseFloatValue(old);
+            this.form.budgets.cat_6 = this.parseFloatValue(val);      },
+        "form.budgets.cat_7": function (val,old){
+            this.form.budget =   this.parseFloatValue(this.form.budget)
+                + this.parseFloatValue(val)  - this.parseFloatValue(old);
+            this.form.budgets.cat_7 = this.parseFloatValue(val);      },
+        "form.budgets.cat_8": function (val,old){
+            this.form.budget =   this.parseFloatValue(this.form.budget)
+                + this.parseFloatValue(val)  - this.parseFloatValue(old);
+            this.form.budgets.cat_8 = this.parseFloatValue(val);      },
+        "form.budgets.cat_9": function (val,old){
+            this.form.budget =   this.parseFloatValue(this.form.budget)
+                + this.parseFloatValue(val)  - this.parseFloatValue(old);
+            this.form.budgets.cat_9 = this.parseFloatValue(val);      },
+        "form.budgets.cat_10": function (val,old){
+            this.form.budget =   this.parseFloatValue(this.form.budget)
+                + this.parseFloatValue(val)  - this.parseFloatValue(old);
+            this.form.budgets.cat_10 = this.parseFloatValue(val);      },
+        "form.budgets.cat_11": function (val,old){
+            this.form.budget =   this.parseFloatValue(this.form.budget)
+                + this.parseFloatValue(val)  - this.parseFloatValue(old);
+            this.form.budgets.cat_11 = this.parseFloatValue(val);      },
+        "form.budgets.cat_12": function (val,old){
+            this.form.budget =   this.parseFloatValue(this.form.budget)
+                + this.parseFloatValue(val)  - this.parseFloatValue(old);
+            this.form.budgets.cat_12 = this.parseFloatValue(val);      },
+        "form.budgets.cat_13": function (val,old){
+            this.form.budget =   this.parseFloatValue(this.form.budget)
+                + this.parseFloatValue(val)  - this.parseFloatValue(old);
+            this.form.budgets.cat_13 = this.parseFloatValue(val);      },
+        "form.budgets.cat_14": function (val,old){
+            this.form.budget =   this.parseFloatValue(this.form.budget)
+                + this.parseFloatValue(val)  - this.parseFloatValue(old);
+            this.form.budgets.cat_14 = this.parseFloatValue(val);      },
+        "form.budgets.cat_15": function (val,old){
+            this.form.budget =   this.parseFloatValue(this.form.budget)
+                + this.parseFloatValue(val)  - this.parseFloatValue(old);
+
+            this.form.budgets.cat_15 = this.parseFloatValue(val);      },
+    },
+
   methods: {
     updatePlan(planId) {
       this.form.file_name = this.plan.file_name
@@ -161,7 +321,7 @@ export default {
       this.form.end_date = this.plan.end_date
       this.form.status = this.plan.status
       this.form.charges_types = this.plan.charges_types
-      this.form.budget = this.plan.budget
+      this.plan.budget = this.form.budget;
       this.loader = true
       let route = this.laroute.route("ajax.plans.update", { plan: planId })
       this.form
@@ -201,6 +361,13 @@ export default {
         .finally(() => {
           this.loader = false
         })
+    },
+    parseFloatValue(val){
+      val = parseFloat(val);
+      if(isNaN(val)){
+          val = 0;
+      }
+      return val;
     },
   },
 }

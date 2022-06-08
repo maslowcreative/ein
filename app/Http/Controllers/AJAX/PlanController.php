@@ -4,6 +4,7 @@ namespace App\Http\Controllers\AJAX;
 
 use App\Http\Controllers\Controller;
 use App\Models\Plan;
+use App\Models\PlanBudget;
 use F9Web\ApiResponseHelpers;
 use Illuminate\Http\Request;
 
@@ -15,9 +16,16 @@ class PlanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $participantId = $request->user_id;
+
+        $plans = Plan::where('participant_id',$participantId)
+            ->with('budgets')
+            ->orderBy('status', 'desc')
+            ->get();
+
+        return $plans;
     }
 
     /**
@@ -28,7 +36,6 @@ class PlanController extends Controller
      */
     public function store(Request $request)
     {
-        //
     }
 
     /**
@@ -39,7 +46,7 @@ class PlanController extends Controller
      */
     public function show($id)
     {
-        //
+
     }
 
     /**
@@ -62,7 +69,16 @@ class PlanController extends Controller
 
         $plan->fill($request->all())->save();
 
-        return $this->respondWithSuccess();
+        foreach($request->budgets as $key => $val) {
+            $cat = explode('_',$key);
+            if($cat[0] == 'cat'){
+                PlanBudget::where('category_id',$cat[1])
+                           ->where('plan_id',$plan->id)
+                            ->update(['amount' => $val]);
+            }
+        }
+
+        return $plan->load('budgets');
     }
 
     /**
