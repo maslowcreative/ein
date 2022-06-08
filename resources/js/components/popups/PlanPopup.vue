@@ -215,7 +215,7 @@ export default {
         end_date: null,
         status: null,
         charges_types: null,
-        budget: null,
+        budget: 0,
         budgets: {
           cat_1 : 0,
           cat_2 : 0,
@@ -239,79 +239,313 @@ export default {
   },
   mounted() {
       this.$root.$on("ein:participant-plan-edit-popup-open", (plan) => {
+          this.form.reset();
           this.plan = plan;
+          this.form.file_name = this.plan.name;
           this.form.start_date = this.plan.start_date;
+          this.form.end_date = this.plan.end_date;
+          this.form.status = this.plan.status;
+          this.form.status = this.plan.status;
+          this.form.budget = 0;
+
+          this.form.budgets = {
+              cat_1 : 0,
+              cat_2 : 0,
+              cat_3 : 0,
+              cat_4 : 0,
+              cat_5 : 0,
+              cat_6 : 0,
+              cat_7 : 0,
+              cat_8 : 0,
+              cat_9 : 0,
+              cat_10 : 0,
+              cat_11 : 0,
+              cat_12 : 0,
+              cat_13 : 0,
+              cat_14 : 0,
+              cat_15 : 0,
+              total: 0,
+          };
+
           this.plan.budgets.forEach((item, index) => {
               let cat = 'cat_'+ item.category_id;
               this.form.budgets[cat] = item.amount;
           });
-          this.form.budget = this.plan.budget;
+          //this.form.budget = this.plan.budget;
       });
   },
   watch:{
         "form.budgets.cat_1": function (val,old){
-            this.form.budget =   this.parseFloatValue(this.form.budget)
-                + this.parseFloatValue(val)  - this.parseFloatValue(old);
-            this.form.budgets.cat_1 = this.parseFloatValue(val);
+            this.form.budget =
+                + this.parseFloatValue(val)
+                + this.parseFloatValue(this.form.budgets.cat_2)
+                + this.parseFloatValue(this.form.budgets.cat_3)
+                + this.parseFloatValue(this.form.budgets.cat_4)
+                + this.parseFloatValue(this.form.budgets.cat_5)
+                + this.parseFloatValue(this.form.budgets.cat_6)
+                + this.parseFloatValue(this.form.budgets.cat_7)
+                + this.parseFloatValue(this.form.budgets.cat_8)
+                + this.parseFloatValue(this.form.budgets.cat_9)
+                + this.parseFloatValue(this.form.budgets.cat_10)
+                + this.parseFloatValue(this.form.budgets.cat_11)
+                + this.parseFloatValue(this.form.budgets.cat_12)
+                + this.parseFloatValue(this.form.budgets.cat_13)
+                + this.parseFloatValue(this.form.budgets.cat_14)
+                + this.parseFloatValue(this.form.budgets.cat_15);
         },
         "form.budgets.cat_2": function (val,old){
-            this.form.budget =   this.parseFloatValue(this.form.budget)
-                + this.parseFloatValue(val)  - this.parseFloatValue(old);
-            this.form.budgets.cat_2 = this.parseFloatValue(val);
+            this.form.budget =
+                this.parseFloatValue(this.form.budgets.cat_1)
+                + this.parseFloatValue(val)
+                + this.parseFloatValue(this.form.budgets.cat_3)
+                + this.parseFloatValue(this.form.budgets.cat_4)
+                + this.parseFloatValue(this.form.budgets.cat_5)
+                + this.parseFloatValue(this.form.budgets.cat_6)
+                + this.parseFloatValue(this.form.budgets.cat_7)
+                + this.parseFloatValue(this.form.budgets.cat_8)
+                + this.parseFloatValue(this.form.budgets.cat_9)
+                + this.parseFloatValue(this.form.budgets.cat_10)
+                + this.parseFloatValue(this.form.budgets.cat_11)
+                + this.parseFloatValue(this.form.budgets.cat_12)
+                + this.parseFloatValue(this.form.budgets.cat_13)
+                + this.parseFloatValue(this.form.budgets.cat_14)
+                + this.parseFloatValue(this.form.budgets.cat_15);
         },
         "form.budgets.cat_3": function (val,old){
-            this.form.budget =   this.parseFloatValue(this.form.budget)
-                + this.parseFloatValue(val)  - this.parseFloatValue(old);
-            this.form.budgets.cat_3 = this.parseFloatValue(val);      },
+            this.form.budget =
+                this.parseFloatValue(this.form.budgets.cat_1)
+                + this.parseFloatValue(this.form.budgets.cat_2)
+                + this.parseFloatValue(val)
+                + this.parseFloatValue(this.form.budgets.cat_4)
+                + this.parseFloatValue(this.form.budgets.cat_5)
+                + this.parseFloatValue(this.form.budgets.cat_6)
+                + this.parseFloatValue(this.form.budgets.cat_7)
+                + this.parseFloatValue(this.form.budgets.cat_8)
+                + this.parseFloatValue(this.form.budgets.cat_9)
+                + this.parseFloatValue(this.form.budgets.cat_10)
+                + this.parseFloatValue(this.form.budgets.cat_11)
+                + this.parseFloatValue(this.form.budgets.cat_12)
+                + this.parseFloatValue(this.form.budgets.cat_13)
+                + this.parseFloatValue(this.form.budgets.cat_14)
+                + this.parseFloatValue(this.form.budgets.cat_15);
+        },
         "form.budgets.cat_4": function (val,old){
-            this.form.budget =   this.parseFloatValue(this.form.budget)
-                + this.parseFloatValue(val)  - this.parseFloatValue(old);
-            this.form.budgets.cat_4 = this.parseFloatValue(val);      },
+            this.form.budget =
+                this.parseFloatValue(this.form.budgets.cat_1)
+                + this.parseFloatValue(this.form.budgets.cat_2)
+                + this.parseFloatValue(this.form.budgets.cat_3)
+                + this.parseFloatValue(val)
+                + this.parseFloatValue(this.form.budgets.cat_5)
+                + this.parseFloatValue(this.form.budgets.cat_6)
+                + this.parseFloatValue(this.form.budgets.cat_7)
+                + this.parseFloatValue(this.form.budgets.cat_8)
+                + this.parseFloatValue(this.form.budgets.cat_9)
+                + this.parseFloatValue(this.form.budgets.cat_10)
+                + this.parseFloatValue(this.form.budgets.cat_11)
+                + this.parseFloatValue(this.form.budgets.cat_12)
+                + this.parseFloatValue(this.form.budgets.cat_13)
+                + this.parseFloatValue(this.form.budgets.cat_14)
+                + this.parseFloatValue(this.form.budgets.cat_15);
+        },
         "form.budgets.cat_5": function (val,old){
-            this.form.budget =   this.parseFloatValue(this.form.budget)
-                + this.parseFloatValue(val)  - this.parseFloatValue(old);
-            this.form.budgets.cat_5 = this.parseFloatValue(val);      },
+            this.form.budget =
+                this.parseFloatValue(this.form.budgets.cat_1)
+                + this.parseFloatValue(this.form.budgets.cat_2)
+                + this.parseFloatValue(this.form.budgets.cat_3)
+                + this.parseFloatValue(this.form.budgets.cat_4)
+                + this.parseFloatValue(val)
+                + this.parseFloatValue(this.form.budgets.cat_6)
+                + this.parseFloatValue(this.form.budgets.cat_7)
+                + this.parseFloatValue(this.form.budgets.cat_8)
+                + this.parseFloatValue(this.form.budgets.cat_9)
+                + this.parseFloatValue(this.form.budgets.cat_10)
+                + this.parseFloatValue(this.form.budgets.cat_11)
+                + this.parseFloatValue(this.form.budgets.cat_12)
+                + this.parseFloatValue(this.form.budgets.cat_13)
+                + this.parseFloatValue(this.form.budgets.cat_14)
+                + this.parseFloatValue(this.form.budgets.cat_15);
+        },
         "form.budgets.cat_6": function (val,old){
-            this.form.budget =   this.parseFloatValue(this.form.budget)
-                + this.parseFloatValue(val)  - this.parseFloatValue(old);
-            this.form.budgets.cat_6 = this.parseFloatValue(val);      },
+            this.form.budget =
+                this.parseFloatValue(this.form.budgets.cat_1)
+                + this.parseFloatValue(this.form.budgets.cat_2)
+                + this.parseFloatValue(this.form.budgets.cat_3)
+                + this.parseFloatValue(this.form.budgets.cat_4)
+                + this.parseFloatValue(this.form.budgets.cat_5)
+                + this.parseFloatValue(val)
+                + this.parseFloatValue(this.form.budgets.cat_7)
+                + this.parseFloatValue(this.form.budgets.cat_8)
+                + this.parseFloatValue(this.form.budgets.cat_9)
+                + this.parseFloatValue(this.form.budgets.cat_10)
+                + this.parseFloatValue(this.form.budgets.cat_11)
+                + this.parseFloatValue(this.form.budgets.cat_12)
+                + this.parseFloatValue(this.form.budgets.cat_13)
+                + this.parseFloatValue(this.form.budgets.cat_14)
+                + this.parseFloatValue(this.form.budgets.cat_15);
+        },
         "form.budgets.cat_7": function (val,old){
-            this.form.budget =   this.parseFloatValue(this.form.budget)
-                + this.parseFloatValue(val)  - this.parseFloatValue(old);
-            this.form.budgets.cat_7 = this.parseFloatValue(val);      },
+            this.form.budget =
+                this.parseFloatValue(this.form.budgets.cat_1)
+                + this.parseFloatValue(this.form.budgets.cat_2)
+                + this.parseFloatValue(this.form.budgets.cat_3)
+                + this.parseFloatValue(this.form.budgets.cat_4)
+                + this.parseFloatValue(this.form.budgets.cat_5)
+                + this.parseFloatValue(this.form.budgets.cat_6)
+                + this.parseFloatValue(val)
+                + this.parseFloatValue(this.form.budgets.cat_8)
+                + this.parseFloatValue(this.form.budgets.cat_9)
+                + this.parseFloatValue(this.form.budgets.cat_10)
+                + this.parseFloatValue(this.form.budgets.cat_11)
+                + this.parseFloatValue(this.form.budgets.cat_12)
+                + this.parseFloatValue(this.form.budgets.cat_13)
+                + this.parseFloatValue(this.form.budgets.cat_14)
+                + this.parseFloatValue(this.form.budgets.cat_15);
+        },
         "form.budgets.cat_8": function (val,old){
-            this.form.budget =   this.parseFloatValue(this.form.budget)
-                + this.parseFloatValue(val)  - this.parseFloatValue(old);
-            this.form.budgets.cat_8 = this.parseFloatValue(val);      },
+            this.form.budget =
+                this.parseFloatValue(this.form.budgets.cat_1)
+                + this.parseFloatValue(this.form.budgets.cat_2)
+                + this.parseFloatValue(this.form.budgets.cat_3)
+                + this.parseFloatValue(this.form.budgets.cat_4)
+                + this.parseFloatValue(this.form.budgets.cat_5)
+                + this.parseFloatValue(this.form.budgets.cat_6)
+                + this.parseFloatValue(this.form.budgets.cat_7)
+                + this.parseFloatValue(val)
+                + this.parseFloatValue(this.form.budgets.cat_9)
+                + this.parseFloatValue(this.form.budgets.cat_10)
+                + this.parseFloatValue(this.form.budgets.cat_11)
+                + this.parseFloatValue(this.form.budgets.cat_12)
+                + this.parseFloatValue(this.form.budgets.cat_13)
+                + this.parseFloatValue(this.form.budgets.cat_14)
+                + this.parseFloatValue(this.form.budgets.cat_15);
+        },
         "form.budgets.cat_9": function (val,old){
-            this.form.budget =   this.parseFloatValue(this.form.budget)
-                + this.parseFloatValue(val)  - this.parseFloatValue(old);
-            this.form.budgets.cat_9 = this.parseFloatValue(val);      },
+            this.form.budget =
+                this.parseFloatValue(this.form.budgets.cat_1)
+                + this.parseFloatValue(this.form.budgets.cat_2)
+                + this.parseFloatValue(this.form.budgets.cat_3)
+                + this.parseFloatValue(this.form.budgets.cat_4)
+                + this.parseFloatValue(this.form.budgets.cat_5)
+                + this.parseFloatValue(this.form.budgets.cat_6)
+                + this.parseFloatValue(this.form.budgets.cat_7)
+                + this.parseFloatValue(this.form.budgets.cat_8)
+                + this.parseFloatValue(val)
+                + this.parseFloatValue(this.form.budgets.cat_10)
+                + this.parseFloatValue(this.form.budgets.cat_11)
+                + this.parseFloatValue(this.form.budgets.cat_12)
+                + this.parseFloatValue(this.form.budgets.cat_13)
+                + this.parseFloatValue(this.form.budgets.cat_14)
+                + this.parseFloatValue(this.form.budgets.cat_15);
+        },
         "form.budgets.cat_10": function (val,old){
-            this.form.budget =   this.parseFloatValue(this.form.budget)
-                + this.parseFloatValue(val)  - this.parseFloatValue(old);
-            this.form.budgets.cat_10 = this.parseFloatValue(val);      },
+            this.form.budget =
+                this.parseFloatValue(this.form.budgets.cat_1)
+                + this.parseFloatValue(this.form.budgets.cat_2)
+                + this.parseFloatValue(this.form.budgets.cat_3)
+                + this.parseFloatValue(this.form.budgets.cat_4)
+                + this.parseFloatValue(this.form.budgets.cat_5)
+                + this.parseFloatValue(this.form.budgets.cat_6)
+                + this.parseFloatValue(this.form.budgets.cat_7)
+                + this.parseFloatValue(this.form.budgets.cat_8)
+                + this.parseFloatValue(this.form.budgets.cat_9)
+                + this.parseFloatValue(val)
+                + this.parseFloatValue(this.form.budgets.cat_11)
+                + this.parseFloatValue(this.form.budgets.cat_12)
+                + this.parseFloatValue(this.form.budgets.cat_13)
+                + this.parseFloatValue(this.form.budgets.cat_14)
+                + this.parseFloatValue(this.form.budgets.cat_15);
+        },
         "form.budgets.cat_11": function (val,old){
-            this.form.budget =   this.parseFloatValue(this.form.budget)
-                + this.parseFloatValue(val)  - this.parseFloatValue(old);
-            this.form.budgets.cat_11 = this.parseFloatValue(val);      },
+            this.form.budget =
+                this.parseFloatValue(this.form.budgets.cat_1)
+                + this.parseFloatValue(this.form.budgets.cat_2)
+                + this.parseFloatValue(this.form.budgets.cat_3)
+                + this.parseFloatValue(this.form.budgets.cat_4)
+                + this.parseFloatValue(this.form.budgets.cat_5)
+                + this.parseFloatValue(this.form.budgets.cat_6)
+                + this.parseFloatValue(this.form.budgets.cat_7)
+                + this.parseFloatValue(this.form.budgets.cat_8)
+                + this.parseFloatValue(this.form.budgets.cat_9)
+                + this.parseFloatValue(this.form.budgets.cat_10)
+                + this.parseFloatValue(val)
+                + this.parseFloatValue(this.form.budgets.cat_12)
+                + this.parseFloatValue(this.form.budgets.cat_13)
+                + this.parseFloatValue(this.form.budgets.cat_14)
+                + this.parseFloatValue(this.form.budgets.cat_15);
+        },
         "form.budgets.cat_12": function (val,old){
-            this.form.budget =   this.parseFloatValue(this.form.budget)
-                + this.parseFloatValue(val)  - this.parseFloatValue(old);
-            this.form.budgets.cat_12 = this.parseFloatValue(val);      },
+            this.form.budget =
+                this.parseFloatValue(this.form.budgets.cat_1)
+                + this.parseFloatValue(this.form.budgets.cat_2)
+                + this.parseFloatValue(this.form.budgets.cat_3)
+                + this.parseFloatValue(this.form.budgets.cat_4)
+                + this.parseFloatValue(this.form.budgets.cat_5)
+                + this.parseFloatValue(this.form.budgets.cat_6)
+                + this.parseFloatValue(this.form.budgets.cat_7)
+                + this.parseFloatValue(this.form.budgets.cat_8)
+                + this.parseFloatValue(this.form.budgets.cat_9)
+                + this.parseFloatValue(this.form.budgets.cat_10)
+                + this.parseFloatValue(this.form.budgets.cat_11)
+                + this.parseFloatValue(val)
+                + this.parseFloatValue(this.form.budgets.cat_13)
+                + this.parseFloatValue(this.form.budgets.cat_14)
+                + this.parseFloatValue(this.form.budgets.cat_15);
+        },
         "form.budgets.cat_13": function (val,old){
-            this.form.budget =   this.parseFloatValue(this.form.budget)
-                + this.parseFloatValue(val)  - this.parseFloatValue(old);
-            this.form.budgets.cat_13 = this.parseFloatValue(val);      },
+            this.form.budget =
+                this.parseFloatValue(this.form.budgets.cat_1)
+                + this.parseFloatValue(this.form.budgets.cat_2)
+                + this.parseFloatValue(this.form.budgets.cat_3)
+                + this.parseFloatValue(this.form.budgets.cat_4)
+                + this.parseFloatValue(this.form.budgets.cat_5)
+                + this.parseFloatValue(this.form.budgets.cat_6)
+                + this.parseFloatValue(this.form.budgets.cat_7)
+                + this.parseFloatValue(this.form.budgets.cat_8)
+                + this.parseFloatValue(this.form.budgets.cat_9)
+                + this.parseFloatValue(this.form.budgets.cat_10)
+                + this.parseFloatValue(this.form.budgets.cat_11)
+                + this.parseFloatValue(this.form.budgets.cat_12)
+                + this.parseFloatValue(val)
+                + this.parseFloatValue(this.form.budgets.cat_14)
+                + this.parseFloatValue(this.form.budgets.cat_15);
+        },
         "form.budgets.cat_14": function (val,old){
-            this.form.budget =   this.parseFloatValue(this.form.budget)
-                + this.parseFloatValue(val)  - this.parseFloatValue(old);
-            this.form.budgets.cat_14 = this.parseFloatValue(val);      },
+            this.form.budget =
+                this.parseFloatValue(this.form.budgets.cat_1)
+                + this.parseFloatValue(this.form.budgets.cat_2)
+                + this.parseFloatValue(this.form.budgets.cat_3)
+                + this.parseFloatValue(this.form.budgets.cat_4)
+                + this.parseFloatValue(this.form.budgets.cat_5)
+                + this.parseFloatValue(this.form.budgets.cat_6)
+                + this.parseFloatValue(this.form.budgets.cat_7)
+                + this.parseFloatValue(this.form.budgets.cat_8)
+                + this.parseFloatValue(this.form.budgets.cat_9)
+                + this.parseFloatValue(this.form.budgets.cat_10)
+                + this.parseFloatValue(this.form.budgets.cat_11)
+                + this.parseFloatValue(this.form.budgets.cat_12)
+                + this.parseFloatValue(this.form.budgets.cat_13)
+                + this.parseFloatValue(val)
+                + this.parseFloatValue(this.form.budgets.cat_15);
+        },
         "form.budgets.cat_15": function (val,old){
-            this.form.budget =   this.parseFloatValue(this.form.budget)
-                + this.parseFloatValue(val)  - this.parseFloatValue(old);
-
-            this.form.budgets.cat_15 = this.parseFloatValue(val);      },
+            this.form.budget =
+                this.parseFloatValue(this.form.budgets.cat_1)
+                + this.parseFloatValue(this.form.budgets.cat_2)
+                + this.parseFloatValue(this.form.budgets.cat_3)
+                + this.parseFloatValue(this.form.budgets.cat_4)
+                + this.parseFloatValue(this.form.budgets.cat_5)
+                + this.parseFloatValue(this.form.budgets.cat_6)
+                + this.parseFloatValue(this.form.budgets.cat_7)
+                + this.parseFloatValue(this.form.budgets.cat_8)
+                + this.parseFloatValue(this.form.budgets.cat_9)
+                + this.parseFloatValue(this.form.budgets.cat_10)
+                + this.parseFloatValue(this.form.budgets.cat_11)
+                + this.parseFloatValue(this.form.budgets.cat_12)
+                + this.parseFloatValue(this.form.budgets.cat_13)
+                + this.parseFloatValue(this.form.budgets.cat_14)
+                + this.parseFloatValue(val)
+            ;
+        },
     },
 
   methods: {
