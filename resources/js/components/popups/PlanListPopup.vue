@@ -27,7 +27,7 @@
                             <td class="not-center">{{ plan.end_date }}</td>
                             <td>
                                 <span v-if="!plan.status" class="badge rounded-pill bg-danger mx-1">Inactive</span>
-                                <span v-if="plan.status" class="badge rounded-pill bg-primary mx-1">Status</span>
+                                <span v-if="plan.status" class="badge rounded-pill bg-primary mx-1">Active</span>
                             </td>
                             <td>
                                 <div class="d-inline-flex flex-nowrap align-items-center justify-content-around btn-group fs-lg">
