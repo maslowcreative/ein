@@ -25,6 +25,8 @@ class Plan extends Model
         'status'
     ];
 
+    protected $guarded = [];
+
     public function scopeActive($query)
     {
         return $query->where('status',1);

@@ -1,7 +1,7 @@
 <template>
   <div
     class="modal fade"
-    id="editPlanModal"
+    id="createPlanModal"
     tabindex="-1"
     data-bs-backdrop="static"
     aria-labelledby="editPlanModalTitle"
@@ -10,19 +10,19 @@
     <div class="modal-dialog modal-lg modal-dialog-centered">
       <div class="modal-content addUserPopup">
         <div class="modal-header">
-          <h4 class="modal-title" id="editPlanModalTitle" v-if="user">{{user.name}}: Edit Plan</h4>
+          <h4 class="modal-title"  v-if="user">{{user.name}}: Create Plan</h4>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div v-if="plan" class="modal-body">
+        <div  class="modal-body">
           <div class="row">
             <div class="col-md-6">
               <div class="mb-4">
                 <label for="ndisPlanFile" class="form-label fw-bold">NDIS Plan </label>
 
                 <a
-                  v-if="plan.file_name"
+                  v-if="form.file_name"
                   class="btn btn-link p-0 mx-1"
-                  :href="this.laroute.route('plan.file.download', { file_name: plan.file_name })"
+                  :href="this.laroute.route('form.file.download', { file_name: form.file_name })"
                 >
                   <ion-icon name="push-outline" class="flip-v"></ion-icon>
                 </a>
@@ -32,6 +32,7 @@
                   id="ndisPlanFile"
                   placeholder="Plan File"
                   v-on:change="onFileChange"
+                  ref="inputFile"
                   accept="application/pdf"
                 />
                 <div class="invalid-msg" v-if="form.errors.has('file_name')" v-html="form.errors.get('file_name')" />
@@ -41,7 +42,7 @@
               <div class="mb-4">
                 <label for="enablePlan" class="form-label fw-bold">Edit Plan</label>
                 <div class="form-check form-switch">
-                  <input class="form-check-input" type="checkbox" v-model="plan.status" id="enablePlan" />
+                  <input class="form-check-input" type="checkbox" v-model="form.status" id="enablePlan" />
                   <label class="form-check-label" for="enablePlan"></label>
                   <div class="invalid-msg" v-if="form.errors.has('status')" v-html="form.errors.get('status')" />
                 </div>
@@ -50,29 +51,18 @@
             <div class="col-md-6">
               <div class="mb-4">
                 <label class="form-label fw-bold">Start Date</label>
-                <input type="date" class="form-control" v-model="plan.start_date" placeholder="01/01/2021" />
+                <input type="date" class="form-control" v-model="form.start_date" placeholder="01/01/2021" />
                 <div class="invalid-msg" v-if="form.errors.has('start_date')" v-html="form.errors.get('start_date')" />
               </div>
             </div>
             <div class="col-md-6">
               <div class="mb-4">
                 <label class="form-label fw-bold">End Date</label>
-                <input type="date" class="form-control" v-model="plan.end_date" placeholder="01/01/2021" />
+                <input type="date" class="form-control" v-model="form.end_date" placeholder="01/01/2021" />
                 <div class="invalid-msg" v-if="form.errors.has('end_date')" v-html="form.errors.get('end_date')" />
               </div>
             </div>
 
-            <!-- <div class="col-md-6">
-              <div class="mb-4">
-                <label class="form-label">Types of Charges</label>
-                <input type="text" class="form-control" v-model="plan.charges_types" placeholder="REPW, TRAN" />
-                <div
-                  class="invalid-msg"
-                  v-if="form.errors.has('charges_types')"
-                  v-html="form.errors.get('charges_types')"
-                />
-              </div>
-            </div> -->
 
             <div class="col-md-6">
               <div class="mb-4">
@@ -188,8 +178,8 @@
                 </div>
             </div>
           <div class="mw290 mx-auto px-4 mt-3">
-            <button v-if="!loader" class="btn btn-primary btn-lg w-100 py-3" v-on:click="updatePlan(plan.id)">
-              Update Plan
+            <button v-if="!loader" class="btn btn-primary btn-lg w-100 py-3" v-on:click="createPlan()">
+              Create Plan
             </button>
             <button v-else class="btn btn-primary btn-lg w-100 py-3" type="button" disabled>
               <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
@@ -209,9 +199,9 @@ export default {
     return {
       loader: false,
       user: null,
-      plan: null,
       form: new Form({
         file_name: null,
+        participant_id: null,
         start_date: null,
         end_date: null,
         status: null,
@@ -239,41 +229,12 @@ export default {
     }
   },
   mounted() {
-      this.$root.$on("ein:participant-plan-edit-popup-open", (data) => {
+      this.$root.$on("ein:participant-plan-create-popup-open", (user) => {
+          this.form.reset();
+          this.$refs.inputFile.value=null;
+          this.user = user;
+          this.form.participant_id = user.id;
 
-          this.plan = data.plan;
-          this.form = data.form;
-          this.user = data.user;
-          // this.form.file_name = this.plan.name;
-          // this.form.start_date = this.plan.start_date;
-          // this.form.end_date = this.plan.end_date;
-          // this.form.status = this.plan.status;
-          // this.form.status = this.plan.status;
-          // this.form.budget = 0;
-          //
-          // this.form.budgets = {
-          //     cat_1 : 0,
-          //     cat_2 : 0,
-          //     cat_3 : 0,
-          //     cat_4 : 0,
-          //     cat_5 : 0,
-          //     cat_6 : 0,
-          //     cat_7 : 0,
-          //     cat_8 : 0,
-          //     cat_9 : 0,
-          //     cat_10 : 0,
-          //     cat_11 : 0,
-          //     cat_12 : 0,
-          //     cat_13 : 0,
-          //     cat_14 : 0,
-          //     cat_15 : 0,
-          // };
-          //
-          // this.plan.budgets.forEach((item, index) => {
-          //     let cat = 'cat_'+ item.category_id;
-          //     this.form.budgets[cat] = item.amount;
-          // });
-          // this.form.budget = this.plan.budget;
       });
   },
   watch:{
@@ -551,20 +512,16 @@ export default {
     },
 
   methods: {
-    updatePlan(planId) {
-      this.form.file_name = this.plan.file_name
-      this.form.start_date = this.plan.start_date
-      this.form.end_date = this.plan.end_date
-      this.form.status = this.plan.status
-      this.form.charges_types = this.plan.charges_types
-      this.plan.budget = this.form.budget;
-      this.loader = true
-      let route = this.laroute.route("ajax.plans.update", { plan: planId })
+    createPlan() {
+
+      this.loader = true;
+      let route = this.laroute.route("ajax.plans.store")
       this.form
-        .put(route)
+        .post(route)
         .then(res => {
           if ((res.status = 200)) {
-            this.$toastr.s("Success", "Record Updated!");
+            this.$toastr.s("Success", "Record Added!");
+            $("#createPlanModal").modal("hide");
           }
         })
         .catch(error => {
@@ -586,11 +543,12 @@ export default {
       form
         .post(route)
         .then(res => {
-          this.plan.file_name = res.data.file_name
+          this.form.file_name = res.data.file_name
           this.loader = false
         })
         .catch(error => {
-          this.form.file_name = null;
+          this.form.file_name = null
+          this.$toastr.e("Error", "Some thing went wrong while file upload.")
           this.loader = false
         })
         .finally(() => {

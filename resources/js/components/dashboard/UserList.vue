@@ -151,6 +151,7 @@
       <edit-representative-popup v-bind:user="user"></edit-representative-popup>
       <plan-list-popup></plan-list-popup>
       <plan-popup></plan-popup>
+      <create-plan-popup></create-plan-popup>
     </div>
   </div>
 </template>

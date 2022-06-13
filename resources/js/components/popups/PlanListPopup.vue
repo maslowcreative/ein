@@ -3,7 +3,7 @@
         <div class="modal-dialog modal-lg" >
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="statusModalLabel">User Plans</h5>
+                    <h5 class="modal-title" id="statusModalLabel" v-if="user">{{user.name}} Plans</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body scroll-y py-0 loader-wrap"  style="--box-height: 600px" >
@@ -44,7 +44,7 @@
                     </table>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">New Plan</button>
+                    <button type="button" class="btn btn-primary" v-on:click="openPlanCreate()">New Plan</button>
                 </div>
             </div>
         </div>
@@ -60,10 +60,12 @@ export default {
         return {
             loader: true,
             plans : null,
+            user : null
         }
     },
     mounted() {
         this.$root.$on("ein:participant-plan-list-popup-open", (user) => {
+            this.user = user;
             this.getPlansList(user.id);
         });
     },
@@ -84,8 +86,6 @@ export default {
                 .finally(() => (this.loader = false))
         },
         openPlanEdit(plan) {
-
-
             let form = new Form({
                 file_name: null,
                 start_date: null,
@@ -126,11 +126,17 @@ export default {
             form.budget = plan.budget;
             let data = {
                 plan: plan,
-                form : form
+                form : form,
+                user : this.user
             }
             $("#planList").modal("hide");
             this.$root.$emit("ein:participant-plan-edit-popup-open", data);
             $("#editPlanModal").modal("show");
+        },
+        openPlanCreate() {
+            this.$root.$emit("ein:participant-plan-create-popup-open", this.user);
+            $("#planList").modal("hide");
+            $("#createPlanModal").modal("show");
         },
         parseFloatValue(val){
             val = parseFloat(val);
