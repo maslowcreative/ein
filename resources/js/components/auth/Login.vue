@@ -46,7 +46,7 @@
           </div>
 
           <div class="d-grid gap-3">
-            <div><a class="text-secondary" :href="passwordRequestUrl">Forgot Your Password?</a></div>
+<!--            <div><a class="text-secondary" :href="passwordRequestUrl">Forgot Your Password?</a></div>-->
             <button type="submit" class="btn btn-primary btn-lg">Login</button>
           </div>
         </form>
