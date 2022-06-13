@@ -4,6 +4,7 @@ namespace App\Http\Controllers\AJAX;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ClaimPostRequest;
+use App\Mail\InvoiceCreated;
 use App\Models\Claim;
 use App\Models\ClaimLineItem;
 use App\Models\Participant;
@@ -15,6 +16,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
@@ -71,7 +73,8 @@ class ClaimController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ClaimPostRequest $request)
+    //ClaimPostRequest
+    public function store(Request $request)
     {
         $user = \auth();
         $provider = optional(\auth()->user())->provider;
@@ -112,6 +115,15 @@ class ClaimController extends Controller
             $claim->items()->create($item);
         }
         DB::commit();
+
+        if(!$isRepresentative && $participant){
+            $toEmail = optional($participant->representative)->email;
+            if($toEmail) {
+                Mail::to($toEmail)
+                    ->send(new InvoiceCreated($provider));
+            }
+        }
+
         return $this->respondCreated();
 
     }

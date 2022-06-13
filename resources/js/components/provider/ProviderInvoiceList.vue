@@ -60,7 +60,7 @@
                             <td class="not-center">
                                 <div class="fw-bold">
                                     Claim #{{item.claim_reference}}
-                                    <span class="d-block text-primary fw-normal">{{item.claim.participant.user.name}}</span>
+                                    <span class="d-block text-primary fw-normal" v-if="item.claim.participant">{{item.claim.participant.user.name}}</span>
                                 </div>
                             </td>
                             <td>
