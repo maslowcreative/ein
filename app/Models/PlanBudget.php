@@ -18,7 +18,6 @@ class PlanBudget extends Model
     }
 
     public function getAmountAttribute() {
-
-        return round($this->amount,2);
+        return round($this->attributes['amount'],2);
     }
 }

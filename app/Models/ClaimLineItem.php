@@ -53,6 +53,47 @@ class ClaimLineItem extends Model
         return Claim::STATS[$this->status];
     }
 
+    public function setHoursAttribute($value)
+    {
+        $this->attributes['hours'] = round($value,2);
+    }
+
+    public function getHoursAttribute() {
+
+        return round($this->attributes['hours'],2);
+    }
+
+    public function setUnitPriceAttribute($value)
+    {
+        $this->attributes['unit_price'] = round($value,2);
+    }
+
+    public function getUnitPriceAttribute() {
+
+        return round($this->attributes['unit_price'],2);
+    }
+
+    public function setAmountClaimedAttribute($value)
+    {
+        $this->attributes['amount_claimed'] = round($value,2);
+    }
+
+    public function getAmountClaimedAttribute() {
+
+        return round($this->attributes['amount_claimed'],2);
+    }
+
+
+    public function setAmountPaidAttribute($value)
+    {
+        $this->attributes['amount_paid'] = round($value,2);
+    }
+
+    public function getAmountPaidAttribute() {
+
+        return round($this->attributes['amount_paid'],2);
+    }
+
     /*
     |--------------------------------------------------------------------------
     | Model Local Scope queries defined below.
