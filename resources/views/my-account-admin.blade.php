@@ -74,9 +74,9 @@
 							</div>
 							<div class="col-md-4 col-sm-6">
 								<div class="mb-4">
-									<label class="form-label">Home Address</label>
+									<label class="form-label">Mailing Address</label>
 									<div class="input-group-overlay">
-										<textarea class="form-control appended-form-control" name="" id="" cols="30" rows="2" placeholder="Home Address 13, 
+										<textarea class="form-control appended-form-control" name="" id="" cols="30" rows="2" placeholder="Home Address 13,
 10000 State, Country."></textarea>
 										<div class="input-group-append-overlay">
 											<span class="input-group-text">

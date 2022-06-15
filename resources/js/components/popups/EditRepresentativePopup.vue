@@ -44,7 +44,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-4">
-                                    <label  class="form-label fw-bold">Home Address</label>
+                                    <label  class="form-label fw-bold">Mailing Address</label>
                                     <textarea
                                         cols="30"
                                         rows="2"

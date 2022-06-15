@@ -633,7 +633,7 @@
                 <!-- Step 3-->
                 <div class="step3 mw290 mx-auto" v-show="step === 3">
                   <div class="mb-4">
-                    <label for="homeAddress" class="form-label fw-bold">Home Address</label>
+                    <label for="homeAddress" class="form-label fw-bold">Mailing Address</label>
                     <textarea
                       cols="30"
                       rows="2"
