@@ -111,9 +111,9 @@ import Form from "vform"
 import Multiselect from 'vue-multiselect'
 export default {
     components: { Multiselect },
-    props:['user'],
     data() {
         return {
+            user:null,
             loader: false,
             form: new Form({
                 first_name: null,
@@ -132,8 +132,11 @@ export default {
         }
     },
     mounted() {
-            this.$root.$on("ein:rep-edit-popup-open", (userId) => {
-                let route = this.laroute.route("ajax.users.representative.participants", {representative : userId })
+            this.$root.$on("ein:rep-edit-popup-open", (user) => {
+                this.form.reset();
+                this.form.errors.errors = {};
+                this.user = user;
+                let route = this.laroute.route("ajax.users.representative.participants", {representative : user.id })
                 axios
                     .get(route)
                     .then(res => {

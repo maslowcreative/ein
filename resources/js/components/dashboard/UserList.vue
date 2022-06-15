@@ -146,9 +146,9 @@
           listClass="pagination"
         />
       </div>
-      <edit-provider-popup v-bind:user="user"></edit-provider-popup>
+      <edit-provider-popup v-bind:user="provider"></edit-provider-popup>
       <edit-participant-popup v-bind:user="participant"></edit-participant-popup>
-      <edit-representative-popup v-bind:user="user"></edit-representative-popup>
+      <edit-representative-popup ></edit-representative-popup>
       <plan-list-popup></plan-list-popup>
       <plan-popup></plan-popup>
       <create-plan-popup></create-plan-popup>
@@ -181,6 +181,8 @@ export default {
         status: null,
       },
       user: null,
+      provider: null,
+      representative: null,
       participant: null,
     }
   },
@@ -246,9 +248,19 @@ export default {
     },
     openEditUserPopup(user, role) {
       if (role.name == "representative") {
-        this.user = user
-        this.$root.$emit("ein:rep-edit-popup-open", user.id)
-        $("#userEditRepresentativeModal").modal("show")
+          let data = { page: 1, include: "representative" }
+          //Filtering Admin Role.
+          data["filter[roles][0]"] = "representative"
+          data["filter[id]"] = user.id
+          let route = this.laroute.route("ajax.users.index", data)
+          axios.get(route).then(res => {
+              if (res.data.total == 1) {
+                  this.representative = res.data.data[0];
+                  this.$root.$emit("ein:rep-edit-popup-open", this.representative);
+                  $("#userEditRepresentativeModal").modal("show");
+              }
+          });
+
       } else if (role.name == "participant") {
         this.participant = user
         //this.$root.$emit('ein:participant-edit-popup-open',user.id);
@@ -273,8 +285,8 @@ export default {
         let route = this.laroute.route("ajax.users.index", data)
         axios.get(route).then(res => {
           if (res.data.total == 1) {
-            this.user = res.data.data[0]
-            this.$root.$emit("ein:provider-edit-popup-open", this.user)
+            this.provider = res.data.data[0]
+            this.$root.$emit("ein:provider-edit-popup-open", this.provider)
             $("#userEditProviderModal").modal("show")
           }
         })

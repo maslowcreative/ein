@@ -176,6 +176,8 @@ export default {
         this.$root.$on("ein:provider-edit-popup-open", (user) => {
             let participantItemsResult = [];
             let servicesItemsSelected = [];
+            this.form.reset();
+            this.form.errors.errors = {};
             user.provider.participants.forEach(function (item){
                 participantItemsResult.push({
                     id: item.user.id,

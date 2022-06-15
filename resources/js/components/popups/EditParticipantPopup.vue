@@ -240,6 +240,8 @@ export default {
         this.$root.$on("ein:participant-edit-popup-open", (user) => {
             let providerItemsResultSelected = [];
             let servicesItemsSelected = [];
+            this.form.reset();
+            this.form.errors.errors = {};
             user.participant.providers.forEach(function (item){
                 providerItemsResultSelected.push({
                     id: item.user.id,
