@@ -55,6 +55,8 @@ class ClaimController extends Controller
     public function index2()
     {
         $claims = ClaimLineItem::getClaims();
+        $claims->has('claim.provider.user')
+                ->has('claim.participant.user');
 
         if(Auth::user()->hasRole('provider')) {
             $claims->where('provider_id',Auth::user()->id);
