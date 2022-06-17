@@ -465,7 +465,7 @@
                             >
                               <div class="me-3"><img :src="provider.avatar_url" width="40" alt="" /></div>
                               <div class="participant-name">
-                                <h6>{{ provider.name }}</h6>
+                                <h6>{{ provider.other_name }}</h6>
                                 <span class="text-primary">Provider</span>
                               </div>
                               <div class="ms-auto">
@@ -488,7 +488,7 @@
                           >
                             <div class="me-3"><img :src="provider.avatar_url" width="40" alt="" /></div>
                             <div class="participant-name">
-                              <h6>{{ provider.name }}</h6>
+                              <h6>{{ provider.other_name }}</h6>
                               <span class="text-primary">Provider</span>
                             </div>
                             <div class="ms-auto">

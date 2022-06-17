@@ -69,6 +69,7 @@ class User extends Authenticatable
 
     protected $appends =[
       'name',
+      'show_name',
       'avatar_url'
     ];
 
@@ -103,6 +104,16 @@ class User extends Authenticatable
 
     public function getNameAttribute()
     {
+        return trim($this->first_name .' '.$this->last_name);
+    }
+
+    public function getShowNameAttribute()
+    {
+        if(  \auth()->user()->hasAnyRole('admin','sub-admin') )
+        {
+            return trim($this->other_name);
+        }
+
         return trim($this->first_name .' '.$this->last_name);
     }
 

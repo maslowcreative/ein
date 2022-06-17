@@ -92,9 +92,11 @@
                       <img :src="user.avatar_url" width="50" height="50" alt="" />
                     </div>
                     <div class="fw-bold">
-                      {{ user.name }}
+                      <span v-if="user.roles[0].name == 'provider'" >{{ user.other_name }}</span>
+                      <span v-if="user.roles[0].name == 'representative' || user.roles[0].name == 'participant'">{{ user.name }}</span>
                       <span class="d-block text-primary fw-normal">{{ user.roles[0].name }}</span>
                     </div>
+
                   </div>
                 </td>
                 <td class="not-center">

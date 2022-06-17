@@ -121,7 +121,7 @@
                                     <multiselect
                                         v-model="providerItemsResultSelected"
                                         placeholder="Search or add item"
-                                        label="name"
+                                        label="show_name"
                                         track-by="id"
                                         :options="providerItemsResult"
                                         :multiple="true"
@@ -243,9 +243,10 @@ export default {
             this.form.reset();
             this.form.errors.errors = {};
             user.participant.providers.forEach(function (item){
+
                 providerItemsResultSelected.push({
                     id: item.user.id,
-                    name: item.user.name
+                    show_name: item.user.show_name
                 });
             });
 
