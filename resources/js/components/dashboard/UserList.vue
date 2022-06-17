@@ -326,7 +326,7 @@ export default {
     },
     openParticipantPlansListPopup(user){
         this.$root.$emit("ein:participant-plan-list-popup-open", user);
-        $("#planList").modal("show")
+        $("#planList").modal("show");
     }
   },
 }

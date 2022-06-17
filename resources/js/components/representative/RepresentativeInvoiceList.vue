@@ -7,8 +7,8 @@
                     <small class="text-primary">{{items.total}} Submitted Invoices/Claims </small>
                 </div>
                 <div class="card-right-btns">
-                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#invoicePopup">
-                        + New Invoice
+                    <button class="btn btn-primary" v-on:click="openCreateInvoicePopup" >
+                        + Receipts
                     </button>
                     <div class="dropdown">
                         <button class="btn btn-light btn-icon" type="button" id="filterDropdown1" data-bs-toggle="dropdown"
@@ -198,6 +198,10 @@ export default {
           this.claim.paid = '$' + (item.amount_paid ? item.amount_paid : 0);
           this.claim.total = '$' + item.amount_claimed;
           $("#claimPopup").modal('show');
+      },
+      openCreateInvoicePopup(){
+          this.$root.$emit("ein-representative:create-invoice-popup");
+          $("#invoicePopup").modal("show");
       }
 
   }

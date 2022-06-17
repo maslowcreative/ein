@@ -283,7 +283,7 @@
                             <div class="mb-4">
                                 <label class="form-label">Upload Invoice</label>
                                 <div class="input-group">
-                                    <input type="file" v-on:change="onFileChange" class="form-control" placeholder="Invoice file name"
+                                    <input type="file" ref="inputFile" v-on:change="onFileChange" class="form-control" placeholder="Invoice file name"
                                            aria-label="Invoice file name" aria-describedby="fileBtn">
                                     <div class="invalid-msg" v-if="form.errors.has('file')" v-html="form.errors.get('file')" />
                                 </div>
@@ -365,22 +365,26 @@ export default {
       }
   },
   mounted() {
-      let today = new Date();
-      let yesterday = new Date();
-      yesterday.setDate(today.getDate() - 1);
+      this.$root.$on('ein-provider:create-invoice-popup', () => {
+          this.form.reset();
+          this.resetForm();
+          this.$refs.inputFile.value=null;
 
-      var month = this.pad2(yesterday.getMonth()+1);//months (0-11)
-      var day = this.pad2(yesterday.getDate());//day (1-31)
-      var year= yesterday.getFullYear();
+          let today = new Date();
+          let yesterday = new Date();
+          yesterday.setDate(today.getDate() - 1);
 
-      var formattedDate =  year+"-"+month+"-"+day;
-      this.maxDate = formattedDate;
+          var month = this.pad2(yesterday.getMonth()+1);//months (0-11)
+          var day = this.pad2(yesterday.getDate());//day (1-31)
+          var year= yesterday.getFullYear();
 
-      this.resetForm();
-      VueEvents.$on('ein-provider:participant-selected-to-invoice', (participant) => {
+          var formattedDate =  year+"-"+month+"-"+day;
+          this.maxDate = formattedDate;
+      });
+
+      this.$root.$on('ein-provider:participant-selected-to-invoice', (participant) => {
           this.participantSelected = participant;
           this.form.participant_id = participant.id;
-          console.log('participant',participant);
       });
   },
   methods: {
@@ -414,6 +418,7 @@ export default {
           }
       },
       resetForm(){
+          this.$refs.inputFile.value=null;
           this.loader = false;
           this.step= 1;
           this.lastStep= false;

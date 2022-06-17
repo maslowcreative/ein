@@ -7,7 +7,7 @@
                     <small class="text-primary">{{items.total}} Submitted Invoices/Claims </small>
                 </div>
                 <div class="card-right-btns">
-                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#invoicePopup">
+                    <button class="btn btn-primary" v-on:click="openCreateInvoicePopup">
                         + New Invoice
                     </button>
                     <div class="dropdown">
@@ -217,6 +217,10 @@ export default {
           // },0);
 
           $("#claimPopup").modal('show');
+      },
+      openCreateInvoicePopup(){
+          this.$root.$emit("ein-provider:create-invoice-popup");
+          $("#invoicePopup").modal("show");
       }
   }
 }

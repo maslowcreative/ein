@@ -202,7 +202,7 @@ export default {
                 .finally(() => (this.loading = false));
         },
         openCreateInvoiceModal(participant) {
-            VueEvents.$emit('ein-provider:participant-selected-to-invoice',participant)
+            this.$root.$emit('ein-provider:participant-selected-to-invoice',participant)
             $("#invoicePopup").modal('show');
         }
 
