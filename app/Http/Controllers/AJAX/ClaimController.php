@@ -238,7 +238,7 @@ class ClaimController extends Controller
                 'ParticipantNDIS' => optional($item->claim->participant)->ndis_number,
                 'ParticipantFirstName' => optional(optional($item->claim->participant)->user)->first_name,
                 'ParticipantLastName' => optional(optional($item->claim->participant)->user)->last_name,
-                'ProvName' => optional(optional($item->claim->provider)->user)->name,
+                'ProvName' => optional(optional($item->claim->provider)->user)->other_name,
                 'ProviderInvoiceRefNo' => $item->claim->claim_reference,
                 'SupportStartDate' => $item->claim->start_date,
                 'SupportEndDate' => $item->claim->end_date,
