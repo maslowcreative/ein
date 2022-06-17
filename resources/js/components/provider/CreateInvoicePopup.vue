@@ -54,14 +54,14 @@
                                 <div class="col-md-6">
                                     <div class="mb-4">
                                         <label class="form-label">Start Date</label>
-                                        <input type="date" placeholder="DD/MM/YYYY" v-model="form.start_date" class="form-control" >
+                                        <input type="date" placeholder="DD/MM/YYYY"  v-model="form.start_date" :max="maxDate" class="form-control" >
                                         <div class="invalid-msg" v-if="form.errors.has('start_date')" v-html="form.errors.get('start_date')" />
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-4">
                                         <label class="form-label">End Date</label>
-                                        <input type="date" v-model="form.end_date" class="form-control" placeholder="" value="DD/MM/YYYY">
+                                        <input type="date" v-model="form.end_date" class="form-control" :max="maxDate" placeholder="" value="DD/MM/YYYY">
                                         <div class="invalid-msg" v-if="form.errors.has('end_date')" v-html="form.errors.get('end_date')" />
                                     </div>
                                 </div>
@@ -323,6 +323,7 @@ export default {
         loader: false,
         step: 1,
         lastStep: false,
+        maxDate : null,
         form: new Form({
             'start_date': null,
             'end_date': null,
@@ -364,6 +365,17 @@ export default {
       }
   },
   mounted() {
+      let today = new Date();
+      let yesterday = new Date();
+      yesterday.setDate(today.getDate() - 1);
+
+      var month = this.pad2(yesterday.getMonth()+1);//months (0-11)
+      var day = this.pad2(yesterday.getDate());//day (1-31)
+      var year= yesterday.getFullYear();
+
+      var formattedDate =  year+"-"+month+"-"+day;
+      this.maxDate = formattedDate;
+
       this.resetForm();
       VueEvents.$on('ein-provider:participant-selected-to-invoice', (participant) => {
           this.participantSelected = participant;
@@ -372,6 +384,9 @@ export default {
       });
   },
   methods: {
+      pad2(n) {
+        return (n < 10 ? '0' : '') + n;
+      },
       current(value) {
           this.step = value;
       },

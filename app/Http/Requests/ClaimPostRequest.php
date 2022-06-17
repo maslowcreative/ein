@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Models\Claim;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -39,9 +40,11 @@ class ClaimPostRequest extends FormRequest
      */
     public function rules()
     {
+        $yesterday = Carbon::now()->toDateString();
+
         $rule =  [
-            'start_date' => 'required|string',
-            'end_date' => 'required|string',
+            'start_date' => 'required|date|before:'.$yesterday,
+            'end_date' => 'required|date|after_or_equal:start_date|before:'.$yesterday,
             'invoice_number' => 'required|string|unique:claims,claim_reference,null,null,provider_id,'.auth()->user()->id,
             'file' => 'required|file|mimes:pdf',
             //required_if:anotherfield,value,...

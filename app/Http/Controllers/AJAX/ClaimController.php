@@ -75,8 +75,7 @@ class ClaimController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    //ClaimPostRequest
-    public function store(Request $request)
+    public function store(ClaimPostRequest $request)
     {
         $user = \auth();
         $provider = optional(\auth()->user())->provider;
