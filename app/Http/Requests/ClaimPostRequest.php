@@ -43,8 +43,8 @@ class ClaimPostRequest extends FormRequest
         $yesterday = Carbon::now()->toDateString();
 
         $rule =  [
-            'start_date' => 'required|date|before:'.$yesterday,
-            'end_date' => 'required|date|after_or_equal:start_date|before:'.$yesterday,
+            'start_date' => 'required|date|before_or_equal:'.$yesterday,
+            'end_date' => 'required|date|after_or_equal:start_date|before_or_equal:'.$yesterday,
             'invoice_number' => 'required|string|unique:claims,claim_reference,null,null,provider_id,'.auth()->user()->id,
             'file' => 'required|file|mimes:pdf',
             //required_if:anotherfield,value,...

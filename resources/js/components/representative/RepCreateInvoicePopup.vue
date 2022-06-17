@@ -444,12 +444,9 @@ export default {
           this.$refs.inputFile.value=null;
 
           let today = new Date();
-          let yesterday = new Date();
-          yesterday.setDate(today.getDate() - 1);
-
-          var month = this.pad2(yesterday.getMonth()+1);//months (0-11)
-          var day = this.pad2(yesterday.getDate());//day (1-31)
-          var year= yesterday.getFullYear();
+          var month = this.pad2(today.getMonth()+1);//months (0-11)
+          var day = this.pad2(today.getDate());//day (1-31)
+          var year= today.getFullYear();
 
           var formattedDate =  year+"-"+month+"-"+day;
           this.maxDate = formattedDate;
