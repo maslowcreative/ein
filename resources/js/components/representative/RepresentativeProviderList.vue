@@ -18,7 +18,7 @@
                                         <img :src="user.avatar_url" width="50" height="50" alt="" />
                                     </div>
                                     <div class="fw-bold">
-                                        {{ user.name }}
+                                        {{ user.other_name }}
                                         <span class="d-block text-primary fw-normal">{{ user.roles[0].name }}</span>
                                     </div>
                                 </div>

@@ -109,7 +109,7 @@ class User extends Authenticatable
 
     public function getShowNameAttribute()
     {
-        if(  \auth()->user()->hasAnyRole('admin','sub-admin') )
+        if( \auth()->check() && \auth()->user()->hasAnyRole('admin','sub-admin','representative') )
         {
             return trim($this->other_name);
         }
