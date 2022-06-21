@@ -255,6 +255,7 @@ export default {
                 + this.parseFloatValue(this.form.budgets.cat_13)
                 + this.parseFloatValue(this.form.budgets.cat_14)
                 + this.parseFloatValue(this.form.budgets.cat_15);
+            this.form.budget = Math.round((this.form.budget + Number.EPSILON) * 100) / 100;
         },
         "form.budgets.cat_2": function (val,old){
             this.form.budget =
@@ -273,6 +274,7 @@ export default {
                 + this.parseFloatValue(this.form.budgets.cat_13)
                 + this.parseFloatValue(this.form.budgets.cat_14)
                 + this.parseFloatValue(this.form.budgets.cat_15);
+            this.form.budget = Math.round((this.form.budget + Number.EPSILON) * 100) / 100;
         },
         "form.budgets.cat_3": function (val,old){
             this.form.budget =
@@ -291,6 +293,7 @@ export default {
                 + this.parseFloatValue(this.form.budgets.cat_13)
                 + this.parseFloatValue(this.form.budgets.cat_14)
                 + this.parseFloatValue(this.form.budgets.cat_15);
+            this.form.budget = Math.round((this.form.budget + Number.EPSILON) * 100) / 100;
         },
         "form.budgets.cat_4": function (val,old){
             this.form.budget =
@@ -309,6 +312,7 @@ export default {
                 + this.parseFloatValue(this.form.budgets.cat_13)
                 + this.parseFloatValue(this.form.budgets.cat_14)
                 + this.parseFloatValue(this.form.budgets.cat_15);
+            this.form.budget = Math.round((this.form.budget + Number.EPSILON) * 100) / 100;
         },
         "form.budgets.cat_5": function (val,old){
             this.form.budget =
@@ -327,6 +331,7 @@ export default {
                 + this.parseFloatValue(this.form.budgets.cat_13)
                 + this.parseFloatValue(this.form.budgets.cat_14)
                 + this.parseFloatValue(this.form.budgets.cat_15);
+            this.form.budget = Math.round((this.form.budget + Number.EPSILON) * 100) / 100;
         },
         "form.budgets.cat_6": function (val,old){
             this.form.budget =
@@ -345,6 +350,7 @@ export default {
                 + this.parseFloatValue(this.form.budgets.cat_13)
                 + this.parseFloatValue(this.form.budgets.cat_14)
                 + this.parseFloatValue(this.form.budgets.cat_15);
+            this.form.budget = Math.round((this.form.budget + Number.EPSILON) * 100) / 100;
         },
         "form.budgets.cat_7": function (val,old){
             this.form.budget =
@@ -363,6 +369,7 @@ export default {
                 + this.parseFloatValue(this.form.budgets.cat_13)
                 + this.parseFloatValue(this.form.budgets.cat_14)
                 + this.parseFloatValue(this.form.budgets.cat_15);
+            this.form.budget = Math.round((this.form.budget + Number.EPSILON) * 100) / 100;
         },
         "form.budgets.cat_8": function (val,old){
             this.form.budget =
@@ -381,6 +388,7 @@ export default {
                 + this.parseFloatValue(this.form.budgets.cat_13)
                 + this.parseFloatValue(this.form.budgets.cat_14)
                 + this.parseFloatValue(this.form.budgets.cat_15);
+            this.form.budget = Math.round((this.form.budget + Number.EPSILON) * 100) / 100;
         },
         "form.budgets.cat_9": function (val,old){
             this.form.budget =
@@ -399,6 +407,7 @@ export default {
                 + this.parseFloatValue(this.form.budgets.cat_13)
                 + this.parseFloatValue(this.form.budgets.cat_14)
                 + this.parseFloatValue(this.form.budgets.cat_15);
+            this.form.budget = Math.round((this.form.budget + Number.EPSILON) * 100) / 100;
         },
         "form.budgets.cat_10": function (val,old){
             this.form.budget =
@@ -417,6 +426,7 @@ export default {
                 + this.parseFloatValue(this.form.budgets.cat_13)
                 + this.parseFloatValue(this.form.budgets.cat_14)
                 + this.parseFloatValue(this.form.budgets.cat_15);
+            this.form.budget = Math.round((this.form.budget + Number.EPSILON) * 100) / 100;
         },
         "form.budgets.cat_11": function (val,old){
             this.form.budget =
@@ -435,6 +445,7 @@ export default {
                 + this.parseFloatValue(this.form.budgets.cat_13)
                 + this.parseFloatValue(this.form.budgets.cat_14)
                 + this.parseFloatValue(this.form.budgets.cat_15);
+            this.form.budget = Math.round((this.form.budget + Number.EPSILON) * 100) / 100;
         },
         "form.budgets.cat_12": function (val,old){
             this.form.budget =
@@ -453,6 +464,7 @@ export default {
                 + this.parseFloatValue(this.form.budgets.cat_13)
                 + this.parseFloatValue(this.form.budgets.cat_14)
                 + this.parseFloatValue(this.form.budgets.cat_15);
+            this.form.budget = Math.round((this.form.budget + Number.EPSILON) * 100) / 100;
         },
         "form.budgets.cat_13": function (val,old){
             this.form.budget =
@@ -471,6 +483,7 @@ export default {
                 + this.parseFloatValue(val)
                 + this.parseFloatValue(this.form.budgets.cat_14)
                 + this.parseFloatValue(this.form.budgets.cat_15);
+            this.form.budget = Math.round((this.form.budget + Number.EPSILON) * 100) / 100;
         },
         "form.budgets.cat_14": function (val,old){
             this.form.budget =
@@ -489,6 +502,7 @@ export default {
                 + this.parseFloatValue(this.form.budgets.cat_13)
                 + this.parseFloatValue(val)
                 + this.parseFloatValue(this.form.budgets.cat_15);
+            this.form.budget = Math.round((this.form.budget + Number.EPSILON) * 100) / 100;
         },
         "form.budgets.cat_15": function (val,old){
             this.form.budget =
@@ -508,12 +522,11 @@ export default {
                 + this.parseFloatValue(this.form.budgets.cat_14)
                 + this.parseFloatValue(val)
             ;
+            this.form.budget = Math.round((this.form.budget + Number.EPSILON) * 100) / 100;
         },
     },
-
   methods: {
     createPlan() {
-
       this.loader = true;
       let route = this.laroute.route("ajax.plans.store")
       this.form

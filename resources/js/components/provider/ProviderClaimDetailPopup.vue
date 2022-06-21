@@ -85,13 +85,13 @@
                                             <div class="col-sm-8">
                                                 <div class="mb-4">
                                                     <label class="form-label">Units (30 mins = 0.5)</label>
-                                                    <input disabled type="text" class="form-control" :value="item.hours" placeholder="0.5">
+                                                    <input disabled type="text" class="form-control" :value="Math.round((item.hours + Number.EPSILON) * 100) / 100"  placeholder="0.5">
                                                 </div>
                                             </div>
                                             <div class="col-sm-4">
                                                 <div class="mb-4">
                                                     <label class="form-label">Cost</label>
-                                                    <input disabled type="text" :value="item.unit_price" class="form-control" placeholder="$100">
+                                                    <input disabled type="text"  :value="Math.round((item.unit_price + Number.EPSILON) * 100) / 100"  class="form-control" placeholder="$100">
                                                 </div>
                                             </div>
                                         </div>
@@ -111,7 +111,7 @@
                                             <div class="col-sm-4">
                                                 <div class="mb-4">
                                                     <label class="form-label">Total</label>
-                                                    <input disabled type="text" :value="item.hours * item.unit_price" class="form-control" placeholder="$100">
+                                                    <input disabled type="text" :value="Math.round((item.amount_claimed + Number.EPSILON) * 100) / 100" class="form-control" placeholder="$100">
                                                 </div>
                                             </div>
                                         </div>

@@ -860,7 +860,7 @@
                         <div class="col-md-6">
                           <div class="mb-4">
                             <label class="form-label">Assistance with Daily Life</label>
-                            <input type="text"   v-model="form.participant.plan.budget.cat_1" class="form-control" />
+                            <input type="text" v-model="form.participant.plan.budget.cat_1" class="form-control" />
                             <div class="invalid-msg" v-if="form.errors.has('participant.plan.budget.cat_1')" v-html="form.errors.get('participant.plan.budget.cat_1')" />
                           </div>
                         </div>
@@ -1204,65 +1204,93 @@ export default {
     "form.participant.plan.budget.cat_1": function (val,old){
         this.form.participant.plan.budget.total =   this.parseFloatValue(this.form.participant.plan.budget.total)
                                                   + this.parseFloatValue(val)  - this.parseFloatValue(old);
-        this.form.participant.plan.budget.cat_1 = this.parseFloatValue(val);
+        this.form.participant.plan.budget.total = Math.round((this.form.participant.plan.budget.total + Number.EPSILON) * 100) / 100;
+        //this.form.participant.plan.budget.cat_1 = this.parseFloatValue(val);
      },
       "form.participant.plan.budget.cat_2": function (val,old){
           this.form.participant.plan.budget.total =   this.parseFloatValue(this.form.participant.plan.budget.total)
               + this.parseFloatValue(val)  - this.parseFloatValue(old);
-          this.form.participant.plan.budget.cat_2 = this.parseFloatValue(val);
+          this.form.participant.plan.budget.total = Math.round((this.form.participant.plan.budget.total + Number.EPSILON) * 100) / 100;
+          //this.form.participant.plan.budget.cat_2 = this.parseFloatValue(val);
       },
       "form.participant.plan.budget.cat_3": function (val,old){
           this.form.participant.plan.budget.total =   this.parseFloatValue(this.form.participant.plan.budget.total)
               + this.parseFloatValue(val)  - this.parseFloatValue(old);
-          this.form.participant.plan.budget.cat_3 = this.parseFloatValue(val);      },
+          this.form.participant.plan.budget.total = Math.round((this.form.participant.plan.budget.total + Number.EPSILON) * 100) / 100;
+          //this.form.participant.plan.budget.cat_3 = this.parseFloatValue(val);
+      },
       "form.participant.plan.budget.cat_4": function (val,old){
           this.form.participant.plan.budget.total =   this.parseFloatValue(this.form.participant.plan.budget.total)
               + this.parseFloatValue(val)  - this.parseFloatValue(old);
-          this.form.participant.plan.budget.cat_4 = this.parseFloatValue(val);      },
+          this.form.participant.plan.budget.total = Math.round((this.form.participant.plan.budget.total + Number.EPSILON) * 100) / 100;
+          //this.form.participant.plan.budget.cat_4 = this.parseFloatValue(val);
+      },
       "form.participant.plan.budget.cat_5": function (val,old){
           this.form.participant.plan.budget.total =   this.parseFloatValue(this.form.participant.plan.budget.total)
               + this.parseFloatValue(val)  - this.parseFloatValue(old);
-          this.form.participant.plan.budget.cat_5 = this.parseFloatValue(val);      },
+          this.form.participant.plan.budget.total = Math.round((his.form.participant.plan.budget.total + Number.EPSILON) * 100) / 100;
+          //this.form.participant.plan.budget.cat_5 = this.parseFloatValue(val);
+      },
       "form.participant.plan.budget.cat_6": function (val,old){
           this.form.participant.plan.budget.total =   this.parseFloatValue(this.form.participant.plan.budget.total)
               + this.parseFloatValue(val)  - this.parseFloatValue(old);
-          this.form.participant.plan.budget.cat_6 = this.parseFloatValue(val);      },
+          this.form.participant.plan.budget.total = Math.round((this.form.participant.plan.budget.total + Number.EPSILON) * 100) / 100;
+          //this.form.participant.plan.budget.cat_6 = this.parseFloatValue(val);
+      },
       "form.participant.plan.budget.cat_7": function (val,old){
           this.form.participant.plan.budget.total =   this.parseFloatValue(this.form.participant.plan.budget.total)
               + this.parseFloatValue(val)  - this.parseFloatValue(old);
-          this.form.participant.plan.budget.cat_7 = this.parseFloatValue(val);      },
+          this.form.participant.plan.budget.total = Math.round((this.form.participant.plan.budget.total + Number.EPSILON) * 100) / 100;
+          //this.form.participant.plan.budget.cat_7 = this.parseFloatValue(val);
+      },
       "form.participant.plan.budget.cat_8": function (val,old){
           this.form.participant.plan.budget.total =   this.parseFloatValue(this.form.participant.plan.budget.total)
               + this.parseFloatValue(val)  - this.parseFloatValue(old);
-          this.form.participant.plan.budget.cat_8 = this.parseFloatValue(val);      },
+          this.form.participant.plan.budget.total = Math.round((this.form.participant.plan.budget.total + Number.EPSILON) * 100) / 100;
+          //this.form.participant.plan.budget.cat_8 = this.parseFloatValue(val);
+      },
       "form.participant.plan.budget.cat_9": function (val,old){
           this.form.participant.plan.budget.total =   this.parseFloatValue(this.form.participant.plan.budget.total)
               + this.parseFloatValue(val)  - this.parseFloatValue(old);
-          this.form.participant.plan.budget.cat_9 = this.parseFloatValue(val);      },
+          this.form.participant.plan.budget.total = Math.round((this.form.participant.plan.budget.total + Number.EPSILON) * 100) / 100;
+          //this.form.participant.plan.budget.cat_9 = this.parseFloatValue(val);
+      },
       "form.participant.plan.budget.cat_10": function (val,old){
           this.form.participant.plan.budget.total =   this.parseFloatValue(this.form.participant.plan.budget.total)
               + this.parseFloatValue(val)  - this.parseFloatValue(old);
-          this.form.participant.plan.budget.cat_10 = this.parseFloatValue(val);      },
+          this.form.participant.plan.budget.total = Math.round((this.form.participant.plan.budget.total + Number.EPSILON) * 100) / 100;
+          //this.form.participant.plan.budget.cat_10 = this.parseFloatValue(val);
+      },
       "form.participant.plan.budget.cat_11": function (val,old){
           this.form.participant.plan.budget.total =   this.parseFloatValue(this.form.participant.plan.budget.total)
               + this.parseFloatValue(val)  - this.parseFloatValue(old);
-          this.form.participant.plan.budget.cat_11 = this.parseFloatValue(val);      },
+          this.form.participant.plan.budget.total = Math.round((this.form.participant.plan.budget.total + Number.EPSILON) * 100) / 100;
+          //this.form.participant.plan.budget.cat_11 = this.parseFloatValue(val);
+      },
       "form.participant.plan.budget.cat_12": function (val,old){
           this.form.participant.plan.budget.total =   this.parseFloatValue(this.form.participant.plan.budget.total)
               + this.parseFloatValue(val)  - this.parseFloatValue(old);
-          this.form.participant.plan.budget.cat_12 = this.parseFloatValue(val);      },
+          this.form.participant.plan.budget.total = Math.round((this.form.participant.plan.budget.total + Number.EPSILON) * 100) / 100;
+          //this.form.participant.plan.budget.cat_12 = this.parseFloatValue(val);
+      },
       "form.participant.plan.budget.cat_13": function (val,old){
           this.form.participant.plan.budget.total =   this.parseFloatValue(this.form.participant.plan.budget.total)
               + this.parseFloatValue(val)  - this.parseFloatValue(old);
-          this.form.participant.plan.budget.cat_13 = this.parseFloatValue(val);      },
+          this.form.participant.plan.budget.total = Math.round((this.form.participant.plan.budget.total + Number.EPSILON) * 100) / 100;
+          //this.form.participant.plan.budget.cat_13 = this.parseFloatValue(val);
+      },
       "form.participant.plan.budget.cat_14": function (val,old){
           this.form.participant.plan.budget.total =   this.parseFloatValue(this.form.participant.plan.budget.total)
               + this.parseFloatValue(val)  - this.parseFloatValue(old);
-          this.form.participant.plan.budget.cat_14 = this.parseFloatValue(val);      },
+          this.form.participant.plan.budget.total = Math.round((this.form.participant.plan.budget.total + Number.EPSILON) * 100) / 100;
+          //this.form.participant.plan.budget.cat_14 = this.parseFloatValue(val);
+      },
       "form.participant.plan.budget.cat_15": function (val,old){
           this.form.participant.plan.budget.total =   this.parseFloatValue(this.form.participant.plan.budget.total)
               + this.parseFloatValue(val)  - this.parseFloatValue(old);
-          this.form.participant.plan.budget.cat_15 = this.parseFloatValue(val);      },
+          this.form.participant.plan.budget.total = Math.round((this.form.participant.plan.budget.total + Number.EPSILON) * 100) / 100;
+          //this.form.participant.plan.budget.cat_15 = this.parseFloatValue(val);
+      },
 
     step(val, old) {
       if (val == this.stepsMap[this.form.role_id]) {

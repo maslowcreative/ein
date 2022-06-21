@@ -88,7 +88,7 @@
                     >More Options</a
                   >
                 </div>
-                <input type="text" class="form-control" disabled v-model="form.budget" placeholder="$180,000" />
+                <input type="text" class="form-control" disabled v-model="form.budget" @change="bugdetChange" placeholder="$180,000" />
                 <div class="invalid-msg" v-if="form.errors.has('budget')" v-html="form.errors.get('budget')" />
               </div>
             </div>
@@ -98,7 +98,7 @@
                     <div class="col-md-6">
                         <div class="mb-4">
                             <label class="form-label">Assistance with Daily Life</label>
-                            <input type="text"   v-model="form.budgets.cat_1" class="form-control" />
+                            <input type="text" v-model="form.budgets.cat_1" class="form-control" />
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -294,6 +294,7 @@ export default {
                 + this.parseFloatValue(this.form.budgets.cat_13)
                 + this.parseFloatValue(this.form.budgets.cat_14)
                 + this.parseFloatValue(this.form.budgets.cat_15);
+            this.form.budget = Math.round((this.form.budget + Number.EPSILON) * 100) / 100;
         },
         "form.budgets.cat_2": function (val,old){
             this.form.budget =
@@ -312,6 +313,7 @@ export default {
                 + this.parseFloatValue(this.form.budgets.cat_13)
                 + this.parseFloatValue(this.form.budgets.cat_14)
                 + this.parseFloatValue(this.form.budgets.cat_15);
+            this.form.budget = Math.round((this.form.budget + Number.EPSILON) * 100) / 100;
         },
         "form.budgets.cat_3": function (val,old){
             this.form.budget =
@@ -330,6 +332,7 @@ export default {
                 + this.parseFloatValue(this.form.budgets.cat_13)
                 + this.parseFloatValue(this.form.budgets.cat_14)
                 + this.parseFloatValue(this.form.budgets.cat_15);
+            this.form.budget = Math.round((this.form.budget + Number.EPSILON) * 100) / 100;
         },
         "form.budgets.cat_4": function (val,old){
             this.form.budget =
@@ -348,6 +351,7 @@ export default {
                 + this.parseFloatValue(this.form.budgets.cat_13)
                 + this.parseFloatValue(this.form.budgets.cat_14)
                 + this.parseFloatValue(this.form.budgets.cat_15);
+            this.form.budget = Math.round((this.form.budget + Number.EPSILON) * 100) / 100;
         },
         "form.budgets.cat_5": function (val,old){
             this.form.budget =
@@ -366,6 +370,7 @@ export default {
                 + this.parseFloatValue(this.form.budgets.cat_13)
                 + this.parseFloatValue(this.form.budgets.cat_14)
                 + this.parseFloatValue(this.form.budgets.cat_15);
+            this.form.budget = Math.round((this.form.budget + Number.EPSILON) * 100) / 100;
         },
         "form.budgets.cat_6": function (val,old){
             this.form.budget =
@@ -384,6 +389,7 @@ export default {
                 + this.parseFloatValue(this.form.budgets.cat_13)
                 + this.parseFloatValue(this.form.budgets.cat_14)
                 + this.parseFloatValue(this.form.budgets.cat_15);
+            this.form.budget = Math.round((this.form.budget + Number.EPSILON) * 100) / 100;
         },
         "form.budgets.cat_7": function (val,old){
             this.form.budget =
@@ -402,6 +408,7 @@ export default {
                 + this.parseFloatValue(this.form.budgets.cat_13)
                 + this.parseFloatValue(this.form.budgets.cat_14)
                 + this.parseFloatValue(this.form.budgets.cat_15);
+            this.form.budget = Math.round((this.form.budget + Number.EPSILON) * 100) / 100;
         },
         "form.budgets.cat_8": function (val,old){
             this.form.budget =
@@ -420,6 +427,7 @@ export default {
                 + this.parseFloatValue(this.form.budgets.cat_13)
                 + this.parseFloatValue(this.form.budgets.cat_14)
                 + this.parseFloatValue(this.form.budgets.cat_15);
+            this.form.budget = Math.round((this.form.budget + Number.EPSILON) * 100) / 100;
         },
         "form.budgets.cat_9": function (val,old){
             this.form.budget =
@@ -438,6 +446,7 @@ export default {
                 + this.parseFloatValue(this.form.budgets.cat_13)
                 + this.parseFloatValue(this.form.budgets.cat_14)
                 + this.parseFloatValue(this.form.budgets.cat_15);
+            this.form.budget = Math.round((this.form.budget + Number.EPSILON) * 100) / 100;
         },
         "form.budgets.cat_10": function (val,old){
             this.form.budget =
@@ -456,6 +465,7 @@ export default {
                 + this.parseFloatValue(this.form.budgets.cat_13)
                 + this.parseFloatValue(this.form.budgets.cat_14)
                 + this.parseFloatValue(this.form.budgets.cat_15);
+            this.form.budget = Math.round((this.form.budget + Number.EPSILON) * 100) / 100;
         },
         "form.budgets.cat_11": function (val,old){
             this.form.budget =
@@ -474,6 +484,7 @@ export default {
                 + this.parseFloatValue(this.form.budgets.cat_13)
                 + this.parseFloatValue(this.form.budgets.cat_14)
                 + this.parseFloatValue(this.form.budgets.cat_15);
+            this.form.budget = Math.round((this.form.budget + Number.EPSILON) * 100) / 100;
         },
         "form.budgets.cat_12": function (val,old){
             this.form.budget =
@@ -492,6 +503,7 @@ export default {
                 + this.parseFloatValue(this.form.budgets.cat_13)
                 + this.parseFloatValue(this.form.budgets.cat_14)
                 + this.parseFloatValue(this.form.budgets.cat_15);
+            this.form.budget = Math.round((this.form.budget + Number.EPSILON) * 100) / 100;
         },
         "form.budgets.cat_13": function (val,old){
             this.form.budget =
@@ -510,6 +522,7 @@ export default {
                 + this.parseFloatValue(val)
                 + this.parseFloatValue(this.form.budgets.cat_14)
                 + this.parseFloatValue(this.form.budgets.cat_15);
+            this.form.budget = Math.round((this.form.budget + Number.EPSILON) * 100) / 100;
         },
         "form.budgets.cat_14": function (val,old){
             this.form.budget =
@@ -528,6 +541,7 @@ export default {
                 + this.parseFloatValue(this.form.budgets.cat_13)
                 + this.parseFloatValue(val)
                 + this.parseFloatValue(this.form.budgets.cat_15);
+            this.form.budget = Math.round((this.form.budget + Number.EPSILON) * 100) / 100;
         },
         "form.budgets.cat_15": function (val,old){
             this.form.budget =
@@ -547,9 +561,9 @@ export default {
                 + this.parseFloatValue(this.form.budgets.cat_14)
                 + this.parseFloatValue(val)
             ;
+            this.form.budget = Math.round((this.form.budget + Number.EPSILON) * 100) / 100;
         },
     },
-
   methods: {
     updatePlan(planId) {
       this.form.file_name = this.plan.file_name
@@ -604,6 +618,9 @@ export default {
       }
       return val;
     },
+    bugdetChange(){
+        alert('ehllo');
+    }
   },
 }
 </script>
