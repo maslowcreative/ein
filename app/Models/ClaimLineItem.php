@@ -40,7 +40,8 @@ class ClaimLineItem extends Model
     ];
 
     protected $appends = [
-        'state'
+        'state',
+        'can_changed'
     ];
 
     const STATUS_PENDING = 0;
@@ -92,6 +93,13 @@ class ClaimLineItem extends Model
     public function getAmountPaidAttribute() {
 
         return round($this->attributes['amount_paid'],2);
+    }
+
+    public function getCanChangedAttribute() {
+        if(in_array($this->status, [Claim::STATUS_APPROVAL_PENDING,Claim::STATUS_APPROVED_BY_REPRESENTATIVE, Claim::STATUS_DENIED_BY_REPRESENTATIVE])){
+            return true;
+        }
+        return false;
     }
 
     /*

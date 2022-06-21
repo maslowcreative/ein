@@ -135,7 +135,7 @@ class ClaimController extends Controller
             return $this->respondForbidden();
         }
 
-        if($claim->status != Claim::STATUS_APPROVAL_PENDING ){
+        if(!in_array($claim->status, [Claim::STATUS_APPROVAL_PENDING,Claim::STATUS_APPROVED_BY_REPRESENTATIVE, Claim::STATUS_DENIED_BY_REPRESENTATIVE])){
             return $this->respondForbidden();
         }
 

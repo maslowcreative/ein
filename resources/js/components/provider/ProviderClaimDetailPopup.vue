@@ -146,9 +146,10 @@
 <!--                            </div>-->
                         </div>
                     </div>
-                    <div v-if="role == 'representative' && (claim.items[0] ? claim.items[0].status : -1) == 0"  class="text-center mt-3 mt-md-5">
-                        <button v-if="!loader"  class="btn btn-light btn-lg py-md-3 px-md-5 mx-2" v-on:click="claimRepresentativeAction((claim.items[0] ? claim.items[0].id : 0),2)">Reject Claim</button>
-                        <button v-if="!loader" class="btn btn-primary btn-lg py-md-3 px-md-5 mx-2" v-on:click="claimRepresentativeAction((claim.items[0] ? claim.items[0].id : 0),1)">Accept Claim</button>
+
+                    <div v-if="role == 'representative' && (claim.items[0] ? claim.items[0].can_changed : false)"  class="text-center mt-3 mt-md-5">
+                        <button v-if="!loader" :class="{ 'btn-primary': claim.items[0].status == 2 , 'btn-light': claim.items[0].status != 2 }"  class="btn  btn-lg py-md-3 px-md-5 mx-2" v-on:click="claimRepresentativeAction((claim.items[0] ? claim.items[0].id : 0),2)">Reject Claim</button>
+                        <button v-if="!loader" :class="{ 'btn-primary': claim.items[0].status == 1 , 'btn-light': claim.items[0].status != 1 }" class="btn btn-lg py-md-3 px-md-5 mx-2" v-on:click="claimRepresentativeAction((claim.items[0] ? claim.items[0].id : 0),1)">Accept Claim</button>
                         <button v-if="loader" class="btn btn-light btn-lg py-md-3 px-md-5 mx-2" disabled="" >
                             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                             Loading...
