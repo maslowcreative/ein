@@ -59,7 +59,7 @@
                         <tr v-for="item in items.data">
                             <td class="not-center">
                                 <div class="fw-bold">
-                                    Claim #{{item.claim_reference}}
+                                    Claim #{{item.claim_reference}} ({{item.claim.claim_reference}})
                                     <span class="d-block text-primary fw-normal" v-if="item.claim.participant">{{item.claim.participant.user.name}}</span>
                                 </div>
                             </td>
