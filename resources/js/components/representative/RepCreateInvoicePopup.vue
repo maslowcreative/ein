@@ -326,7 +326,7 @@
                                                 <div class="col-4">
                                                     <div class="mb-4">
                                                         <label class="form-label">Total</label>
-                                                        <input type="text"  disabled class="form-control" :value="service.hours * service.unit_price" placeholder="$">
+                                                        <input type="text"  disabled class="form-control" :value="Math.round((service.hours * service.unit_price + Number.EPSILON) * 100) / 100" placeholder="$">
                                                     </div>
                                                 </div>
                                             </div>
