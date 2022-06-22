@@ -196,7 +196,7 @@ class User extends Authenticatable
                     $name = '%'.$name.'%';
                     $query->where('first_name','LIKE',$name )
                            ->orWhere('last_name','LIKE',$name );
-                    if(Auth::user()->hasAnyRole('admin','sub-admin')) {
+                    if(Auth::user()->hasAnyRole('admin','sub-admin','representative')) {
                         $query = $query->orWhere('other_name','LIKE',$name);
                     }
 
