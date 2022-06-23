@@ -188,7 +188,7 @@
                                             >
                                                 <div class="me-3"><img :src="providerSelected.avatar_url" width="40" alt="" /></div>
                                                 <div class="participant-name">
-                                                    <h6>{{ providerSelected.name }}</h6>
+                                                    <h6>{{ providerSelected.show_name }}</h6>
                                                     <span class="text-primary">Provider</span>
                                                 </div>
                                                 <div class="ms-auto">
