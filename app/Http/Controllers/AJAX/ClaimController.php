@@ -206,7 +206,7 @@ class ClaimController extends Controller
                 'ParticipantApproved' => '',
                 'GstCode' => $item->gst_code,
                 'InKindFundingProgram' => '',
-                'ClaimType' => $item->claim_type,
+                'ClaimType' => $item->claim_type_proccesed,
                 'CancellationReason' => $item->cancellation_reason,
                 'ABN of Support Provider' => $item->claim->provider_abn,
                 'ServiceBookingNumber' => null
@@ -250,7 +250,7 @@ class ClaimController extends Controller
                 'SupportStartDate' => $item->claim->start_date,
                 'SupportEndDate' => $item->claim->end_date,
                 'FullyPaid' => $item->rec_is_full_paid,
-                'ClaimType' => $item->claim_type,
+                'ClaimType' => $item->claim_type_proccesed,
                 'CancelRsn' => $item->cancellation_reason,
             ];
         });

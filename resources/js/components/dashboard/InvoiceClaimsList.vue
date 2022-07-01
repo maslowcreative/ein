@@ -48,6 +48,7 @@
                         <option value="CANC">Cancellation Charges</option>
                         <option value="REPW">Report Writing Charges</option>
                         <option value="TRAN">Travel Charges</option>
+                        <option value="F2F">Face-To-Face</option>
                         <option value="NF2F">Non-Face to Face Services</option>
                     </select>
                 </div>

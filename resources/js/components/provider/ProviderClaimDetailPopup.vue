@@ -61,8 +61,8 @@
                                         <div class="mb-4">
                                             <label class="form-label">Claim Type</label>
                                             <select disabled class="form-select" :value="item.claim_type" >
-                                                <option value=" ">N/A</option>
-                                                <option value="">Face-To-Face</option>
+                                                <option value="">N/A</option>
+                                                <option value="F2F">Face-To-Face</option>
                                                 <option value="CANC">Cancellation Charges</option>
                                                 <option value="REPW">Report Writing Charges</option>
                                                 <option value="TRAN">Travel Charges</option>

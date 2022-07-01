@@ -182,8 +182,8 @@
                                         <div class="mb-4">
                                             <label class="form-label">Claim Type</label>
                                             <select class="form-select" v-model="service.claim_type"  v-on:change="processCANC(service)">
-                                                <option value=" ">N/A</option>
-                                                <option value="">Face-To-Face</option>
+                                                <option value="">N/A</option>
+                                                <option value="F2F">Face-To-Face</option>
                                                 <option value="CANC">Cancellation Charges</option>
                                                 <option value="REPW">Report Writing Charges</option>
                                                 <option value="TRAN">Travel Charges</option>

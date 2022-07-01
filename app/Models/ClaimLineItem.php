@@ -95,6 +95,13 @@ class ClaimLineItem extends Model
         return round($this->attributes['amount_paid'],2);
     }
 
+    public function getClaimTypeProccesedAttribute() {
+        if($this->attributes['amount_paid'] == Claim::CLAIM_TYPE_F2F)
+        {
+            return ' ';
+        }
+    }
+
     public function getCanChangedAttribute() {
         if(in_array($this->status, [Claim::STATUS_APPROVAL_PENDING,Claim::STATUS_APPROVED_BY_REPRESENTATIVE, Claim::STATUS_DENIED_BY_REPRESENTATIVE])){
             return true;

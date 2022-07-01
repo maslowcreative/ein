@@ -46,6 +46,7 @@ class Claim extends Model
     const CLAIM_TYPE_REPW = 'REPW';
     const CLAIM_TYPE_TRAN = 'TRAN';
     const CLAIM_TYPE_NF2F = 'NF2F';
+    const CLAIM_TYPE_F2F = 'F2F';
 
     const CLAIM_TYPE_THLT = 'THLT';
     const CLAIM_TYPE_IRSS = 'IRSS';
@@ -53,11 +54,11 @@ class Claim extends Model
 
     const CLAIM_TYPES = [
         self::CLAIM_TYPE_NA => 'N/A',
+        self::CLAIM_TYPE_F2F => 'Face-To-Face',
         self::CLAIM_TYPE_CANC => 'Cancellation Charges',
         self::CLAIM_TYPE_REPW => 'Report Writing Charges',
         self::CLAIM_TYPE_TRAN => 'Travel Charges',
         self::CLAIM_TYPE_NF2F => 'Non-Face to Face Services',
-
         self::CLAIM_TYPE_THLT => 'Telehealth',
         self::CLAIM_TYPE_IRSS => 'Irregular SIL Supports',
     ];
