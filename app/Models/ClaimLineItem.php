@@ -96,10 +96,11 @@ class ClaimLineItem extends Model
     }
 
     public function getClaimTypeProccesedAttribute() {
-        if($this->attributes['amount_paid'] == Claim::CLAIM_TYPE_F2F)
+        if($this->attributes['claim_type'] == Claim::CLAIM_TYPE_F2F)
         {
             return ' ';
         }
+        return $this->attributes['claim_type'];
     }
 
     public function getCanChangedAttribute() {
