@@ -9,6 +9,7 @@ use App\Models\Claim;
 use App\Models\ClaimLineItem;
 use App\Models\Participant;
 use App\Models\Provider;
+use App\Traits\ClaimsValidationTrait;
 use Box\Spout\Common\Exception\IOException;
 use Carbon\Carbon;
 use F9Web\ApiResponseHelpers;
@@ -26,7 +27,7 @@ use Rap2hpoutre\FastExcel\FastExcel;
 
 class ClaimController extends Controller
 {
-    use ApiResponseHelpers;
+    use ApiResponseHelpers,ClaimsValidationTrait;
     /**
      * Display a listing of the resource.
      *
@@ -131,6 +132,7 @@ class ClaimController extends Controller
 
     public function approvedByRepresentative(Request $request,ClaimLineItem $claim) {
 
+
         if(!Auth::user()->hasRole('representative')) {
             return $this->respondForbidden();
         }
@@ -140,6 +142,12 @@ class ClaimController extends Controller
         }
 
         $request->validate(['status'=> 'required',Rule::in([Claim::STATUS_APPROVED_BY_REPRESENTATIVE,Claim::STATUS_DENIED_BY_REPRESENTATIVE])]);
+
+        $check = $this->claimValidate($claim);
+
+        if($check){
+            return $this->respondError($check['message']) ;
+        }
 
         $claim->status = $request->status;
         //$claim->rejection_reason = $request->reason;

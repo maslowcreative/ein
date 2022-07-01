@@ -185,8 +185,14 @@ export default {
                 $("#claimDetailPopup").modal('hide');
             })
             .catch(error => {
-                console.log('err',error);
-                this.$toastr.e("Error", "Some thing went wrong.")
+
+                let err = error.response.data.error;
+                if(err){
+                    this.$toastr.e("Error", err);
+                }else {
+                    this.$toastr.e("Error", "Some thing went wrong.")
+                }
+
             })
             .finally(() => {
                 this.loader = false
