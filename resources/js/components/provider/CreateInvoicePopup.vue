@@ -233,7 +233,7 @@
                                                 </div>
                                                 <div class="col-4">
                                                     <div class="mb-4">
-                                                        <label class="form-label">Price</label>
+                                                        <label class="form-label">Unit Price</label>
                                                         <input type="text" v-model="service.unit_price" class="form-control" placeholder="$">
                                                         <div
                                                             class="invalid-msg"

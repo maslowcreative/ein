@@ -62,8 +62,8 @@
                         <thead>
                         <tr>
                             <th scope="col" class="not-center">User</th>
-                            <th scope="col">Plan</th>
-                            <th scope="col">Actions</th>
+                            <th scope="col">Action</th>
+<!--                            <th scope="col">Actions</th>-->
                         </tr>
                         </thead>
                         <tbody>
@@ -100,13 +100,13 @@
                             <td>
                                 <button class="btn btn-primary btn-sm" v-on:click="openCreateInvoiceModal(user)">New Invoice</button>
                             </td>
-                            <td>
-                                <div class="d-inline-flex flex-nowrap align-items-center justify-content-around btn-group fs-lg">
-                                    <button class="btn btn-link p-0 fs-16 mx-1 hover-danger" v-on:click="removeParticipant(user.id)">
-                                        <ion-icon name="remove-circle-outline"></ion-icon>
-                                    </button>
-                                </div>
-                            </td>
+<!--                            <td>-->
+<!--                                <div class="d-inline-flex flex-nowrap align-items-center justify-content-around btn-group fs-lg">-->
+<!--                                    <button class="btn btn-link p-0 fs-16 mx-1 hover-danger" v-on:click="removeParticipant(user.id)">-->
+<!--                                        <ion-icon name="remove-circle-outline"></ion-icon>-->
+<!--                                    </button>-->
+<!--                                </div>-->
+<!--                            </td>-->
                         </tr>
                         </tbody>
                     </table>
