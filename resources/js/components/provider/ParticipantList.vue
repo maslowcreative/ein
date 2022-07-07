@@ -169,13 +169,13 @@ export default {
             data["filter[roles][0]"] = 'participant';
 
             if (this.filters.name) {
-                data["filter[name]"] = name
+                data["filter[name]"] = this.filters.name;
             }
 
             if (this.filters.plan_status && this.filters.plan_status != "all") {
                 data["filter[plan_status][0]"] = this.filters.plan_status
             }
-
+            console.log('Parti filters',this.filters);
             let route = this.laroute.route("ajax.users.index", data)
             axios
                 .get(route)
