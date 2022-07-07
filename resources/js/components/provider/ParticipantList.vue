@@ -161,7 +161,7 @@ export default {
         this.getUsersList()
     },
     methods: {
-        getUsersList(name,page = 1) {
+        getUsersList(page = 1) {
             this.loading = true
             let data = { page: page }
             //Filtering Admin Role.
