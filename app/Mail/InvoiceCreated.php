@@ -21,7 +21,7 @@ class InvoiceCreated extends Mailable
     public function __construct($provider)
     {
         $this->provider = $provider;
-        $providerName = $this->provider->user->name;
+        $providerName = $this->provider->user->other_name;
         $this->subject = "{$providerName} has uploaded an invoice";
     }
 
@@ -34,7 +34,7 @@ class InvoiceCreated extends Mailable
     {
 
         return $this->markdown('emails.invoices.created',[
-            'providerName' => $this->provider->user->name
+            'providerName' => $this->provider->user->other_name
         ]);
     }
 }
