@@ -95,6 +95,7 @@
             />
       </div>
       <admin-permissions-popup v-bind:uid="adminId" v-bind:permissions="permissions"></admin-permissions-popup>
+      <edit-admin-popup></edit-admin-popup>
     </div>
   </div>
 </template>
@@ -136,7 +137,7 @@ export default {
     //Called Whenever admin is added.
     this.$root.$on("ein-admin:added", () => {
       this.getAdminList();
-    })
+    });
   },
   methods: {
     getAdminList(page = 1) {
@@ -180,19 +181,25 @@ export default {
            })
     },
     openPermissionPopup: function (admin){
-        this.permissions = {
-            edit_provider_profiles: false,
-                edit_participants_profiles : false,
-                edit_representatives_profiles: false,
-                approving_claims: false,
-                export_import_documents: false
-        };
-        admin.permissions.forEach((item, index) => {
-            this.permissions[item.name] = true;
-        });
-        this.adminId = admin.id;
-        $("#adminPermissionModal").modal('show');
-    }
+        this.$root.$emit('ein-admin:edit',admin);
+        $("#editAdminModal").modal('show');
+    },
+    // openPermissionPopup: function (admin){
+    //
+    //       this.permissions = {
+    //           edit_provider_profiles: false,
+    //               edit_participants_profiles : false,
+    //               edit_representatives_profiles: false,
+    //               approving_claims: false,
+    //               export_import_documents: false
+    //       };
+    //       admin.permissions.forEach((item, index) => {
+    //           this.permissions[item.name] = true;
+    //       });
+    //       this.adminId = admin.id;
+    //       $("#adminPermissionModal").modal('show');
+    // }
+
   },
 }
 </script>
