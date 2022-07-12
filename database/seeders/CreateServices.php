@@ -21,7 +21,7 @@ class CreateServices extends Seeder
     {
         try {
             $basePath = Storage::path('data');
-            $collection = (new FastExcel())->import("{$basePath}/PB_Support_Catalogue.xlsx");
+            $collection = (new FastExcel())->import("{$basePath}/NDIS_Support_Catalogue_2022-23_v1.0.xlsx");
         }catch (IOException $e){
             $collection = [];
         }
@@ -42,11 +42,11 @@ class CreateServices extends Seeder
                     'SA' => ifEmptyReturnNull($item['SA']),
                     'TAS' => ifEmptyReturnNull($item['TAS']),
                     'VIC' => ifEmptyReturnNull($item['VIC']),
-
+                    'WA' => ifEmptyReturnNull($item['WA']),
                     'unit' => ifEmptyReturnNull($item['Unit']),
                     'quote' => ifEmptyReturnNull($item['Quote']),
-                    'remote' => ifEmptyReturnNull($item['Remote']),
-                    'very_remote' => ifEmptyReturnNull($item['Very Remote']),
+                    'remote' => ifEmptyReturnNull($item['P01']),
+                    'very_remote' => ifEmptyReturnNull($item['P02']),
 
                     'non_face_to_face' => ifEmptyReturnNull($item['Non-Face-to-Face Support Provision']),
                     'provider_travel' => ifEmptyReturnNull($item['Provider Travel']),
