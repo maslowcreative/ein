@@ -737,13 +737,14 @@
                   <div class="row">
                     <div class="col-md-6">
                       <div class="mb-4">
-                        <label for="ndisPlanFile" class="form-label">NDIS File</label>
+                        <label for="ndisPlanFile"  class="form-label">NDIS File</label>
                         <div class="input-group-overlay">
                           <input
                             type="file"
                             class="form-control"
                             id="ndisPlanFile"
                             placeholder="Plan File"
+                            ref="inputPlanFile"
                             v-on:change="onFileChange"
                             accept="application/pdf"
                           />
@@ -1385,7 +1386,7 @@ export default {
         .post(route)
         .then(res => {
           if (res.status == 201) {
-            this.resetForm(0)
+            this.resetUserForm(0)
             this.$root.$emit("ein-user:added")
             this.$toastr.s("Success", "Account created!")
           }
@@ -1532,10 +1533,11 @@ export default {
     },
     closePopup() {
       $("#userModal").modal("hide")
-      this.resetForm()
+      this.resetUserForm()
     },
-    resetForm(step = null) {
-      this.loader = false
+    resetUserForm(step = null) {
+      this.loader = false;
+      this.$refs.inputPlanFile.value=null;
       if (step != null) {
         this.step = step
       } else {
