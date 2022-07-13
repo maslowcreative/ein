@@ -160,10 +160,12 @@ class UserController extends Controller
         }
 
         //Send Password Email:
-        if(Role::ROLE_PARTICIPANT != $role->id)
-            //event(new Registered($user));
+        if(Role::ROLE_PARTICIPANT != $role->id){
+            event(new Registered($user));
+        }
 
         DB::commit();
+
         return $this->respondCreated();
     }
 
