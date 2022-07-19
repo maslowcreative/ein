@@ -101,7 +101,7 @@
             </div>
 
             <view-invoice-popup v-bind:claim="claim"></view-invoice-popup>
-            <provider-claim-detail-popup v-bind:claim="claim" role="provider"></provider-claim-detail-popup>
+            <provider-claim-edit-detail-popup v-bind:claim="claim" role="provider"></provider-claim-edit-detail-popup>
             <create-invoice-popup></create-invoice-popup>
         </div>
     </div>
@@ -113,8 +113,11 @@ import ViewInvoicePopup from "./ViewInvoicePopup";
 import ProviderClaimDetailPopup from "./ProviderClaimDetailPopup";
 import AdvancedLaravelVuePaginate from "advanced-laravel-vue-paginate";
 import "advanced-laravel-vue-paginate/dist/advanced-laravel-vue-paginate.css";
+import ProviderClaimEditDetailPopup from "./ProviderClaimEditDetailPopup";
 export default {
-    components: {ProviderClaimDetailPopup, ViewInvoicePopup, CreateInvoicePopup,AdvancedLaravelVuePaginate},
+    components: {
+        ProviderClaimEditDetailPopup,
+        ProviderClaimDetailPopup, ViewInvoicePopup, CreateInvoicePopup,AdvancedLaravelVuePaginate},
     data() {
     return {
         loader: false,
@@ -160,11 +163,15 @@ export default {
         },
   },
   mounted() {
-    this.getProviderClaimsList();
-    //Called Whenever claim is created.
-    this.$root.$on("ein-claim:created", () => {
-      this.getProviderClaimsList();
-    });
+        this.getProviderClaimsList();
+        //Called Whenever claim is created.
+        this.$root.$on("ein-claim:created", () => {
+          this.getProviderClaimsList();
+        });
+
+      this.$root.$on("ein-admin:claim-updated", () => {
+          this.getProviderClaimsList();
+      });
   },
   methods: {
       getProviderClaimsList(page = 1) {
@@ -194,6 +201,7 @@ export default {
       openViewInvoiceModal(claim,item) {
           this.claim = claim;
           this.claim.items = [item];
+          this.$root.$emit("ein-admin:claim-detail-popup-open", this.claim);
           $("#claimDetailPopup").modal('show');
       },
       openClaimModal(claim,item) {
@@ -202,27 +210,14 @@ export default {
           this.claim.claim_reference = item.claim_reference;
           this.claim.paid = '$' + (item.amount_paid ? item.amount_paid : 0);
           this.claim.total = '$' + item.amount_claimed;
-          //this.claim = claim;
-          // let paid = 0;
-          // let total = 0;
-          // claim.paid = claim.items.reduce(function (paid,item) {
-          //     if(item.status == 1){
-          //         return paid + parseFloat(item.hours * item.unit_price);
-          //     }else {
-          //         return paid + 0;
-          //     }
-          // },0);
-          //
-          // claim.total = claim.items.reduce(function (total,item) {
-          //     return total + parseFloat(item.hours * item.unit_price);
-          // },0);
-
           $("#claimPopup").modal('show');
       },
+
       openCreateInvoicePopup(){
           this.$root.$emit("ein-provider:create-invoice-popup");
           $("#invoicePopup").modal("show");
-      }
+      },
+
   }
 }
 </script>

@@ -123,7 +123,7 @@
     </div>
     <view-invoice-popup v-bind:claim="claim"></view-invoice-popup>
 <!--    <provider-claim-detail-popup   v-bind:claim="claim"></provider-claim-detail-popup>-->
-    <admin-claim-detail-popup  ></admin-claim-detail-popup>
+    <admin-claim-detail-popup   ></admin-claim-detail-popup>
   </div>
 </template>
 

@@ -2,7 +2,7 @@
     <div class="modal" id="claimDetailPopup" tabindex="-1" aria-labelledby="claimDetailPopupTitle"
          aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered"  >
-            <div class="modal-content addUserPopup">
+            <div class="modal-content addUserPopup" v-if="claim">
                 <div class="modal-header">
                     <h4 class="modal-title" id="claimDetailPopupTitle">Claim #{{claim.items[0] ? claim.items[0].claim_reference : ''}}</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -272,8 +272,6 @@ export default {
               'status': item.status,
           });
 
-
-          console.log('ccc',item);
       });
   },
   methods:{
