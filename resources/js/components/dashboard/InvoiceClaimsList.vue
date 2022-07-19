@@ -39,6 +39,7 @@
                         <option value="3">Approved</option>
                         <option value="4">Processing</option>
                         <option value="5">Reconciled</option>
+                        <option value="6">Canceled</option>
                     </select>
                 </div>
                 <div class="">
@@ -121,15 +122,18 @@
       </div>
     </div>
     <view-invoice-popup v-bind:claim="claim"></view-invoice-popup>
-    <provider-claim-detail-popup v-bind:claim="claim"></provider-claim-detail-popup>
+<!--    <provider-claim-detail-popup   v-bind:claim="claim"></provider-claim-detail-popup>-->
+    <admin-claim-detail-popup  ></admin-claim-detail-popup>
   </div>
 </template>
 
 <script>
 import ViewInvoicePopup from "../provider/ViewInvoicePopup";
+import AdminClaimDetailPopup from "../provider/AdminClaimDetailPopup";
+import Form from "vform";
 export default {
     props:["policy"],
-    components: {ViewInvoicePopup},
+    components: {AdminClaimDetailPopup, ViewInvoicePopup},
     data() {
     return {
         loader: false,
@@ -168,6 +172,10 @@ export default {
   },
   mounted() {
       this.getProviderClaimsList();
+
+      this.$root.$on("ein-admin:claim-updated", () => {
+          this.getProviderClaimsList();
+      });
   },
   watch: {
     "filters.claim_status": function(val, old) {
@@ -205,6 +213,7 @@ export default {
       openViewInvoiceModal(claim,item) {
           this.claim = claim;
           this.claim.items = [item];
+          this.$root.$emit("ein-admin:claim-detail-popup-open", this.claim);
           $("#claimDetailPopup").modal('show');
       },
       setFilter(value) {

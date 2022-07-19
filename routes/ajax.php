@@ -33,6 +33,7 @@ Route::get('claims/reconciled-results-file','ClaimController@reconciledResultsFi
 Route::post('claims/upload-reconciled-file','ClaimController@uploadReconciledFile')->name('claims.upload.reconciled.file');
 Route::get('claims/list','ClaimController@index2')->name('claims.list');
 Route::post('claims/admin/approved','ClaimController@approveClaimsByAdmin')->name('claims.admin.approved');
+Route::post('claims/update-claim','ClaimController@updateClaim')->name('claims.update');
 Route::apiResource('claims','ClaimController');
 Route::post('plans/upload','PlanController@uploadPlanFile')->name('plans.upload');
 Route::apiResource('plans','PlanController');

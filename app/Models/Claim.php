@@ -92,6 +92,7 @@ class Claim extends Model
     const STATUS_APPROVED_BY_ADMIN = 3;
     const STATUS_PROCESSED = 4;
     const STATUS_RECONCILATION_DONE = 5;
+    const STATUS_CANCEL = 6;
 
     const STATS = [
         self::STATUS_APPROVAL_PENDING => 'Pending',
@@ -100,6 +101,7 @@ class Claim extends Model
         self::STATUS_APPROVED_BY_ADMIN => 'Approved',
         self::STATUS_PROCESSED => 'Processing',
         self::STATUS_RECONCILATION_DONE => 'Reconciled',
+        self::STATUS_CANCEL => 'Canceled',
     ];
 
 

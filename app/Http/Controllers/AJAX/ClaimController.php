@@ -40,14 +40,16 @@ class ClaimController extends Controller
 
     public function index()
     {
-        $claims = Claim::getClaims();
+        $claims = Claim::getClaims()->where('status','<>', Claim::STATUS_CANCEL);
 
         if(Auth::user()->hasRole('provider')) {
-            $claims->where('provider_id',Auth::user()->id);
+            $claims->where('provider_id',Auth::user()->id)
+                   ->where('status','<>', Claim::STATUS_CANCEL);
         }
 
         if(Auth::user()->hasRole('representative')) {
-            $claims->whereIn('participant_id',Auth::user()->representative->participants()->pluck('user_id'));
+            $claims->whereIn('participant_id',Auth::user()->representative->participants()->pluck('user_id'))
+                    ->where('status','<>', Claim::STATUS_CANCEL) ;
         }
 
         return  $claims->paginate(5);
@@ -60,11 +62,13 @@ class ClaimController extends Controller
                 ->has('claim.participant.user');
 
         if(Auth::user()->hasRole('provider')) {
-            $claims->where('provider_id',Auth::user()->id);
+            $claims->where('provider_id',Auth::user()->id)
+                ->where('status','<>', Claim::STATUS_CANCEL);
         }
 
         if(Auth::user()->hasRole('representative')) {
-            $claims->whereIn('participant_id',Auth::user()->representative->participants()->pluck('user_id'));
+            $claims->whereIn('participant_id',Auth::user()->representative->participants()->pluck('user_id'))
+                ->where('status','<>', Claim::STATUS_CANCEL);
         }
 
         return  $claims->orderBy('created_at','DESC')->paginate(5);
@@ -348,5 +352,26 @@ class ClaimController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function updateClaim(Request $request)
+    {
+        $request->validate([
+            'claim_type' => ['nullable','string',Rule::in(collect(Claim::CLAIM_TYPES)->keys()->toArray())],
+            'hours' => 'required|numeric|min:0.01',
+            'unit_price' => 'required|numeric|min:0.1',
+            'gst_code' => ['required',Rule::in(collect(Claim::TAX_TYPES)->keys()->toArray())],
+            'status' => ['required',Rule::in([
+                                                Claim::STATUS_APPROVAL_PENDING,
+                                                Claim::STATUS_APPROVED_BY_REPRESENTATIVE,
+                                                Claim::STATUS_DENIED_BY_REPRESENTATIVE,
+                                                Claim::STATUS_APPROVED_BY_ADMIN,
+                                                Claim::STATUS_CANCEL
+                                            ])],
+        ]);
+        $item = ClaimLineItem::findOrFail($request->id);
+        $item->fill($request->all());
+        $item->save();
+        return $this->respondOk('Claim updated.');
     }
 }
