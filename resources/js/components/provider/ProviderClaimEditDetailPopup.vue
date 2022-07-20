@@ -75,7 +75,7 @@
                                     <div class="col-md-4">
                                         <div class="mb-4">
                                             <label class="form-label">Item Number</label>
-                                            <input disabled type="text" :value="form.support_item_number" class="form-control" placeholder="134134134134">
+                                            <input disabled type="text" :value="form.item_number" class="form-control" placeholder="134134134134">
                                         </div>
                                     </div>
 
@@ -249,7 +249,7 @@ export default {
           item.amount_claimed = Math.round((item.amount_claimed + Number.EPSILON) * 100) / 100;
           this.form =  new Form({
               'id': item.id,
-              'item_number': item.item_number,
+              'item_number': item.support_item_number,
               'claim_type': item.claim_type,
               'hours' : item.hours,
               'unit_price': item.unit_price,
