@@ -126,6 +126,7 @@ class ClaimLineItem extends Model
             ->allowedFilters([
                 AllowedFilter::exact('claim_status', 'status'),
                 AllowedFilter::exact('claim_type', 'claim_type'),
+                AllowedFilter::partial('claim_number', 'claim_reference'),
             ]);
     }
 

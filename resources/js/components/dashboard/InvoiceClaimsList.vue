@@ -6,7 +6,32 @@
           <h5>Invoices/Claims</h5>
           <small class="text-primary">{{items.total}} Invoices/Claims</small>
         </div>
+
         <div class="card-right-btns">
+          <div class="dropdown">
+                <button
+                    class="btn btn-light btn-icon"
+                    type="button"
+                    id="claimSearchDropdown"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                >
+                    <ion-icon name="search-outline"></ion-icon>
+                </button>
+                <div class="dropdown-menu dropdown-menu-end fs-sm" aria-labelledby="claimSearchDropdown">
+                    <div class="py-2 px-3">
+                        <div class="">
+                            <label class="form-label">Search for a Claim</label>
+                            <input
+                                type="text"
+                                v-model="filters.claim_number"
+                                class="form-control form-control-sm"
+                                placeholder="Enter Claim number"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
           <button class="btn" v-bind:class="[filters.claim_status == 'all' ?  'btn-primary' : 'btn-light']"
             v-on:click="setFilter('all')"
           >
@@ -58,7 +83,8 @@
           </div>
         </div>
       </div>
-      <div class="table-x-scroll">
+      <div class="loader-wrap">
+        <div class="table-x-scroll">
         <table class="table">
           <thead>
             <tr>
@@ -99,7 +125,14 @@
           </tbody>
         </table>
       </div>
-      <div class="mt-4 mt-md-5 card-right-btns justify-content-end">
+          <!-- Loader -->
+          <div v-if="this.loader" class="loader-bg">
+              <div class="spinner-grow text-primary spinner-loder" role="status">
+                  <span class="visually-hidden">Loading...</span>
+              </div>
+          </div>
+      </div>
+        <div class="mt-4 mt-md-5 card-right-btns justify-content-end">
           <span v-if="getPermission('approving_claims')">
           <button v-if="!claimApproveLoader" class="btn btn-light" v-on:click="bulkUploadFile" >Approve Selected</button>
           <button v-else  class="btn btn-light" type="button" disabled>
@@ -166,6 +199,7 @@ export default {
         filters: {
             claim_status: "1",
             claim_type: "all",
+            claim_number: null,
         },
         selectedClaims: []
     }
@@ -184,6 +218,9 @@ export default {
     "filters.claim_type": function(val, old) {
         this.getProviderClaimsList(1)
     },
+    "filters.claim_number":function (val,old){
+        this.getProviderClaimsList(1);
+    }
   },
   methods:{
       getProviderClaimsList(page = 1) {
@@ -197,6 +234,10 @@ export default {
 
           if (this.filters.claim_type && this.filters.claim_type != "all") {
               data["filter[claim_type]"] = this.filters.claim_type
+          }
+
+          if (this.filters.claim_number ) {
+              data["filter[claim_number]"] = this.filters.claim_number;
           }
 
           let route = this.laroute.route("ajax.claims.list",data)
