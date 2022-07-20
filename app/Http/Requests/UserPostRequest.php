@@ -63,7 +63,7 @@ class UserPostRequest extends FormRequest
 
             'participant.plan' => 'required|array',
             'participant.plan.plan_name' => 'string',
-            'participant.plan.file_name' => 'nullable|file',
+            'participant.plan.file_name' => 'nullable|string',
             'participant.plan.start_date' => 'required|string',
             'participant.plan.end_date' => 'required|string',
             'participant.plan.budget.total' => 'required|numeric|min:1',
@@ -73,6 +73,7 @@ class UserPostRequest extends FormRequest
             'representative' => 'exclude_unless:role_id,'.Role::ROLE_REPRESENTATIVE.'|sometimes|array',
             'representative.participants.*' => 'integer|exists:participants,user_id',
         ];
+
     }
 
     /**
