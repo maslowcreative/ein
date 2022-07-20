@@ -156,6 +156,10 @@
         "name": "ajax.claims.admin.approved"
     },
     {
+        "uri": "ajax\/claims\/update-claim",
+        "name": "ajax.claims.update"
+    },
+    {
         "uri": "ajax\/claims",
         "name": "ajax.claims.index"
     },
