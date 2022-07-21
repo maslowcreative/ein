@@ -7,6 +7,40 @@
                     <small class="text-primary">{{items.total}} Submitted Invoices/Claims </small>
                 </div>
                 <div class="card-right-btns">
+                    <div class="dropdown">
+                        <button
+                            class="btn btn-light btn-icon"
+                            type="button"
+                            id="claimSearchDropdown"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                        >
+                            <ion-icon name="search-outline"></ion-icon>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-end fs-sm" aria-labelledby="claimSearchDropdown">
+                            <div class="py-2 px-3">
+                                <div class="">
+                                    <label class="form-label">Claim Number</label>
+                                    <input
+                                        type="text"
+                                        v-model="filters.claim_number"
+                                        class="form-control form-control-sm"
+                                        placeholder="Enter Claim number"
+                                    />
+                                </div>
+                                <div class="">
+                                    <label class="form-label">Invoice Number</label>
+                                    <input
+                                        type="text"
+                                        v-model="filters.invoice_number"
+                                        class="form-control form-control-sm"
+                                        placeholder="Enter Invoice Number"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <button class="btn btn-primary" v-on:click="openCreateInvoicePopup">
                         + New Invoice
                     </button>
@@ -150,6 +184,8 @@ export default {
         },
         filters: {
             claim_status: "all",
+            claim_number: null,
+            invoice_number: null,
             claim_type: "all",
         },
     }
@@ -161,6 +197,12 @@ export default {
         "filters.claim_type": function(val, old) {
             this.getProviderClaimsList(1)
         },
+        "filters.claim_number":function (val,old){
+          this.getProviderClaimsList(1);
+        },
+       "filters.invoice_number":function (val,old){
+          this.getProviderClaimsList(1);
+       }
   },
   mounted() {
         this.getProviderClaimsList();
@@ -185,6 +227,14 @@ export default {
 
           if (this.filters.claim_type && this.filters.claim_type != "all") {
               data["filter[claim_type]"] = this.filters.claim_type
+          }
+
+          if (this.filters.claim_number ) {
+              data["filter[claim_number]"] = this.filters.claim_number;
+          }
+
+          if (this.filters.invoice_number ) {
+              data["filter[invoice_number]"] = this.filters.invoice_number;
           }
 
           let route = this.laroute.route("ajax.claims.list",data)

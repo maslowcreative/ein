@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Query\Builder;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
@@ -127,6 +128,7 @@ class ClaimLineItem extends Model
                 AllowedFilter::exact('claim_status', 'status'),
                 AllowedFilter::exact('claim_type', 'claim_type'),
                 AllowedFilter::partial('claim_number', 'claim_reference'),
+                AllowedFilter::partial('invoice_number', 'claim.claim_reference'),
             ]);
     }
 

@@ -21,12 +21,21 @@
                 <div class="dropdown-menu dropdown-menu-end fs-sm" aria-labelledby="claimSearchDropdown">
                     <div class="py-2 px-3">
                         <div class="">
-                            <label class="form-label">Search for a Claim</label>
+                            <label class="form-label">Claim Number</label>
                             <input
                                 type="text"
                                 v-model="filters.claim_number"
                                 class="form-control form-control-sm"
                                 placeholder="Enter Claim number"
+                            />
+                        </div>
+                        <div class="">
+                            <label class="form-label">Invoice Number</label>
+                            <input
+                                type="text"
+                                v-model="filters.invoice_number"
+                                class="form-control form-control-sm"
+                                placeholder="Enter Invoice Number"
                             />
                         </div>
                     </div>
@@ -220,7 +229,12 @@ export default {
     },
     "filters.claim_number":function (val,old){
         this.getProviderClaimsList(1);
+    },
+    "filters.invoice_number":function (val,old){
+        this.getProviderClaimsList(1);
     }
+
+
   },
   methods:{
       getProviderClaimsList(page = 1) {
@@ -239,6 +253,12 @@ export default {
           if (this.filters.claim_number ) {
               data["filter[claim_number]"] = this.filters.claim_number;
           }
+
+          if (this.filters.invoice_number ) {
+              data["filter[invoice_number]"] = this.filters.invoice_number;
+          }
+
+
 
           let route = this.laroute.route("ajax.claims.list",data)
           axios

@@ -21,6 +21,7 @@ class ClaimPostRequest extends FormRequest
     {
             $provider = optional(auth()->user())->provider;
             if($provider){
+
                 $this->role = 'provider';
                 return true;
             }
@@ -45,10 +46,7 @@ class ClaimPostRequest extends FormRequest
         $rule =  [
             'start_date' => 'required|date|before_or_equal:'.$yesterday,
             'end_date' => 'required|date|after_or_equal:start_date|before_or_equal:'.$yesterday,
-            'invoice_number' => 'required|string|unique:claims,claim_reference,null,null,provider_id,'.auth()->user()->id,
             'file' => 'required|file|mimes:pdf',
-            //required_if:anotherfield,value,...
-
             'service' => 'required|array',
             'service.*.item_number' => 'required|exists:services,support_item_number',
             'service.*.claim_type' => ['nullable','string',Rule::in(collect(Claim::CLAIM_TYPES)->keys()->toArray())],
@@ -58,14 +56,18 @@ class ClaimPostRequest extends FormRequest
             'service.*.gst_code' => ['required',Rule::in(collect(Claim::TAX_TYPES)->keys()->toArray())],
         ];
 
-        if($this->role == 'porvider'){
+        if($this->role == 'provider'){
             $rule['participant_id'] = 'required|exists:provider_participant,participant_id,provider_id,'.auth()->user()->id;
+            $rule['invoice_number'] = 'required|string|unique:claims,claim_reference,null,null,provider_id,'.auth()->user()->id;
         }
 
         if($this->role == 'representative'){
             $rule['participant_id'] = 'required|exists:participants,user_id,representative_id,'.auth()->user()->id;
             $rule['provider_id'] = 'required|exists:provider_participant,provider_id,participant_id,'.request()->participant_id;
+            $rule['invoice_number'] = 'required|string|unique:claims,claim_reference,null,null,provider_id,'.$this->provider_id;
+
         }
+
         return $rule;
     }
 }
