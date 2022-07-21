@@ -250,7 +250,7 @@ export default {
           this.form =  new Form({
               'id': item.id,
               'item_number': item.support_item_number,
-              'claim_type': item.claim_type,
+              'claim_type': item.claim_type == null ? '' :  item.claim_type,
               'hours' : item.hours,
               'unit_price': item.unit_price,
               'amount_claimed': item.amount_claimed,

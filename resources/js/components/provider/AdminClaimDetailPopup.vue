@@ -61,7 +61,7 @@
                                         <div class="mb-4">
                                             <label class="form-label">Claim Type</label>
                                             <select :disabled="isEditable"   class="form-select" v-model="form.claim_type" >
-                                                <option value="">N/A</option>
+                                                <option value="" >N/A</option>
                                                 <option value="F2F">Face-To-Face</option>
                                                 <option value="CANC">Cancellation Charges</option>
                                                 <option value="REPW">Report Writing Charges</option>
@@ -265,7 +265,7 @@ export default {
           this.form =  new Form({
               'id': item.id,
               'item_number': item.support_item_number,
-              'claim_type': item.claim_type,
+              'claim_type': item.claim_type == null ? '' :  item.claim_type,
               'hours' : item.hours,
               'unit_price': item.unit_price,
               'amount_claimed': item.amount_claimed,

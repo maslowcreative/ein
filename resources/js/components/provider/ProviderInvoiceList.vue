@@ -200,6 +200,7 @@ export default {
       },
       openViewInvoiceModal(claim,item) {
           this.claim = claim;
+          item.claim_type = item.claim_type == null ? '' :  item.claim_type;
           this.claim.items = [item];
           this.$root.$emit("ein-admin:claim-detail-popup-open", this.claim);
           $("#claimDetailPopup").modal('show');

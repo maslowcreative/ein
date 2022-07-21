@@ -41,7 +41,7 @@ class Claim extends Model
 
 
     //Claim type of the service provided
-    const CLAIM_TYPE_NA = ' ';
+    const CLAIM_TYPE_NA = '';
     const CLAIM_TYPE_CANC = 'CANC';
     const CLAIM_TYPE_REPW = 'REPW';
     const CLAIM_TYPE_TRAN = 'TRAN';
