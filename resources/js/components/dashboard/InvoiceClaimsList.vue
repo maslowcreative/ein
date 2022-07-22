@@ -38,6 +38,24 @@
                                 placeholder="Enter Invoice Number"
                             />
                         </div>
+                        <div class="">
+                            <label class="form-label">Provider Name</label>
+                            <input
+                                type="text"
+                                v-model="filters.provider_name"
+                                class="form-control form-control-sm"
+                                placeholder="Enter Provider name"
+                            />
+                        </div>
+                        <div class="">
+                            <label class="form-label">Particpant Name</label>
+                            <input
+                                type="text"
+                                v-model="filters.participant_name"
+                                class="form-control form-control-sm"
+                                placeholder="Enter Participant name"
+                            />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -209,6 +227,8 @@ export default {
             claim_status: "1",
             claim_type: "all",
             claim_number: null,
+            provider_name: null,
+            particpant_name: null,
         },
         selectedClaims: []
     }
@@ -232,9 +252,13 @@ export default {
     },
     "filters.invoice_number":function (val,old){
         this.getProviderClaimsList(1);
-    }
-
-
+    },
+    "filters.provider_name":function (val,old){
+        this.getProviderClaimsList(1);
+    },
+    "filters.participant_name":function (val,old){
+        this.getProviderClaimsList(1);
+    },
   },
   methods:{
       getProviderClaimsList(page = 1) {
@@ -256,6 +280,13 @@ export default {
 
           if (this.filters.invoice_number ) {
               data["filter[invoice_number]"] = this.filters.invoice_number;
+          }
+
+          if (this.filters.provider_name ) {
+              data["filter[provider_name]"] = this.filters.provider_name;
+          }
+          if (this.filters.participant_name ) {
+              data["filter[participant_name]"] = this.filters.participant_name;
           }
 
 
