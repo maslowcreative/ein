@@ -107,6 +107,15 @@
                   </div>
                 </div>
               </div>
+              <div class="col-md-12">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <label class="fw-bold">Add / Edit Plans</label>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" v-model="form.permissions.add_edit_plans"  checked />
+                        <label class="form-check-label" for="editOption5"></label>
+                    </div>
+                </div>
+              </div>
               <div class="mw290 mx-auto px-4 mt-3">
                 <button v-if="!loader" class="btn btn-primary btn-lg w-100 py-3">Create Sub-admin</button>
                 <button v-else class="btn btn-primary btn-lg w-100 py-3" type="button" disabled>
@@ -148,7 +157,8 @@ export default {
             edit_participants_profiles : true,
             edit_representatives_profiles: true,
             approving_claims: true,
-            export_import_documents: true
+            export_import_documents: true,
+            add_edit_plans: true
         },
       }),
     }
@@ -188,7 +198,8 @@ export default {
               edit_participants_profiles : true,
               edit_representatives_profiles: true,
               approving_claims: true,
-              export_import_documents: true
+              export_import_documents: true,
+              add_edit_plans: true
           },
       })
     },

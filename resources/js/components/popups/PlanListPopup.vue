@@ -44,7 +44,7 @@
                     </table>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" v-on:click="openPlanCreate()">New Plan</button>
+                    <button v-if="getPermission('add_edit_plans')" type="button" class="btn btn-primary" v-on:click="openPlanCreate()">New Plan</button>
                 </div>
             </div>
         </div>
@@ -56,6 +56,7 @@ import PlanPopup from "./PlanPopup";
 import Form from "vform";
 export default {
     components: {PlanPopup},
+    props: ["policy"],
     data() {
         return {
             loader: true,
@@ -144,6 +145,12 @@ export default {
                 val = 0;
             }
             return val;
+        },
+        getPermission(pName) {
+            if (this.policy.is_supper_admin) {
+                return true
+            }
+            return this.policy.permissions[pName]
         },
     },
 }

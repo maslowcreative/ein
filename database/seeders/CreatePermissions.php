@@ -39,7 +39,32 @@ class CreatePermissions extends Seeder
                 'id' => 5,
                 'name' => 'export_import_documents',
                 'guard_name' => 'web'
-            ]
+            ],
+            [
+                'id' => 6,
+                'name' => 'update-representative',
+                'guard_name' => 'web'
+            ],
+            [
+                'id' => 7,
+                'name' => 'approve-claim',
+                'guard_name' => 'web'
+            ],
+            [
+                'id' => 8,
+                'name' => 'export-document',
+                'guard_name' => 'web'
+            ],
+            [
+                'id' => 9,
+                'name' => 'import-document',
+                'guard_name' => 'web'
+            ],
+            [
+                'id' => 10,
+                'name' => 'add_edit_plans',
+                'guard_name' => 'web'
+            ],
         ];
         Permission::upsert($data,['id'],['name','guard_name']);
     }

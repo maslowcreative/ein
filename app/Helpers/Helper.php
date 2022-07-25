@@ -24,7 +24,8 @@ function getPolicy($user = null) {
         'edit_participants_profiles' => false,
         'edit_representatives_profiles' => false,
         'approving_claims' => false,
-        'export_import_documents' => false
+        'export_import_documents' => false,
+        'add_edit_plans' => false
     ];
     foreach ($user->permissions()->get() as $p){
         $permissions[$p->name] = true;

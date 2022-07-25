@@ -104,7 +104,7 @@
                     class="btn btn-primary btn-sm"
                     type="button"
                     v-on:click="openParticipantPlansListPopup(user)"
-                    v-if="user.roles[0].name == 'participant' && getPermission('is_supper_admin')"
+                    v-if="user.roles[0].name == 'participant'"
                   >
                     Plans
                   </button>
@@ -151,8 +151,8 @@
       <edit-provider-popup v-bind:user="provider"></edit-provider-popup>
       <edit-participant-popup v-bind:user="participant"></edit-participant-popup>
       <edit-representative-popup ></edit-representative-popup>
-      <plan-list-popup></plan-list-popup>
-      <plan-popup></plan-popup>
+      <plan-list-popup :policy="policy"></plan-list-popup>
+      <plan-popup :policy="policy"></plan-popup>
       <create-plan-popup></create-plan-popup>
     </div>
   </div>

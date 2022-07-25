@@ -27,6 +27,7 @@
                   <ion-icon name="push-outline" class="flip-v"></ion-icon>
                 </a>
                 <input
+                 :disabled="!getPermission('add_edit_plans')"
                   type="file"
                   class="form-control"
                   id="ndisPlanFile"
@@ -39,9 +40,9 @@
             </div>
             <div class="col-md-6">
               <div class="mb-4">
-                <label for="enablePlan" class="form-label fw-bold">Edit Plan</label>
+                <label for="enablePlan" class="form-label fw-bold">Status</label>
                 <div class="form-check form-switch">
-                  <input class="form-check-input" type="checkbox" v-model="plan.status" id="enablePlan" />
+                  <input :disabled="!getPermission('add_edit_plans')" class="form-check-input" type="checkbox" v-model="plan.status" id="enablePlan" />
                   <label class="form-check-label" for="enablePlan"></label>
                   <div class="invalid-msg" v-if="form.errors.has('status')" v-html="form.errors.get('status')" />
                 </div>
@@ -50,14 +51,14 @@
             <div class="col-md-6">
               <div class="mb-4">
                 <label class="form-label fw-bold">Start Date</label>
-                <input type="date" class="form-control" v-model="plan.start_date" placeholder="01/01/2021" />
+                <input :disabled="!getPermission('add_edit_plans')" type="date" class="form-control" v-model="plan.start_date" placeholder="01/01/2021" />
                 <div class="invalid-msg" v-if="form.errors.has('start_date')" v-html="form.errors.get('start_date')" />
               </div>
             </div>
             <div class="col-md-6">
               <div class="mb-4">
                 <label class="form-label fw-bold">End Date</label>
-                <input type="date" class="form-control" v-model="plan.end_date" placeholder="01/01/2021" />
+                <input :disabled="!getPermission('add_edit_plans')" type="date" class="form-control" v-model="plan.end_date" placeholder="01/01/2021" />
                 <div class="invalid-msg" v-if="form.errors.has('end_date')" v-html="form.errors.get('end_date')" />
               </div>
             </div>
@@ -88,7 +89,7 @@
                     >More Options</a
                   >
                 </div>
-                <input type="text" class="form-control" disabled v-model="form.budget" @change="bugdetChange" placeholder="$180,000" />
+                <input :disabled="!getPermission('add_edit_plans')" type="text" class="form-control" disabled v-model="form.budget" @change="bugdetChange" placeholder="$180,000" />
                 <div class="invalid-msg" v-if="form.errors.has('budget')" v-html="form.errors.get('budget')" />
               </div>
             </div>
@@ -98,96 +99,96 @@
                     <div class="col-md-6">
                         <div class="mb-4">
                             <label class="form-label">Assistance with Daily Life</label>
-                            <input type="text" v-model="form.budgets.cat_1" class="form-control" />
+                            <input :disabled="!getPermission('add_edit_plans')" type="text" v-model="form.budgets.cat_1" class="form-control" />
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="mb-4">
                             <label class="form-label">Transport</label>
-                            <input type="text"  v-model="form.budgets.cat_2" class="form-control" />
+                            <input :disabled="!getPermission('add_edit_plans')" type="text"  v-model="form.budgets.cat_2" class="form-control" />
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="mb-4">
                             <label class="form-label">Consumables</label>
-                            <input type="text"  v-model="form.budgets.cat_3" class="form-control" />
+                            <input :disabled="!getPermission('add_edit_plans')" type="text"  v-model="form.budgets.cat_3" class="form-control" />
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="mb-4">
                             <label class="form-label">Assistance with Social</label>
-                            <input type="text"  v-model="form.budgets.cat_4" class="form-control" />
+                            <input :disabled="!getPermission('add_edit_plans')" type="text"  v-model="form.budgets.cat_4" class="form-control" />
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="mb-4">
                             <label class="form-label">Assistive Technology</label>
-                            <input type="text"  v-model="form.budgets.cat_5" class="form-control" />
+                            <input :disabled="!getPermission('add_edit_plans')" type="text"  v-model="form.budgets.cat_5" class="form-control" />
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="mb-4">
                             <label class="form-label">Home Modifications</label>
-                            <input type="text"  v-model="form.budgets.cat_6" class="form-control" />
+                            <input :disabled="!getPermission('add_edit_plans')" type="text"  v-model="form.budgets.cat_6" class="form-control" />
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="mb-4">
                             <label class="form-label">Support Coordination</label>
-                            <input type="text" v-model="form.budgets.cat_7" class="form-control" />
+                            <input :disabled="!getPermission('add_edit_plans')" type="text" v-model="form.budgets.cat_7" class="form-control" />
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="mb-4">
                             <label class="form-label">Improved Living Arrangements</label>
-                            <input type="text"  v-model="form.budgets.cat_8" class="form-control" />
+                            <input :disabled="!getPermission('add_edit_plans')" type="text"  v-model="form.budgets.cat_8" class="form-control" />
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="mb-4">
                             <label class="form-label">Increased Social</label>
-                            <input type="text" v-model="form.budgets.cat_9" class="form-control" />
+                            <input :disabled="!getPermission('add_edit_plans')" type="text" v-model="form.budgets.cat_9" class="form-control" />
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="mb-4">
                             <label class="form-label">Finding and Keeping a Job</label>
-                            <input type="text"  v-model="form.budgets.cat_10" class="form-control" />
+                            <input :disabled="!getPermission('add_edit_plans')" type="text"  v-model="form.budgets.cat_10" class="form-control" />
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="mb-4">
                             <label class="form-label">Improved Relationships</label>
-                            <input type="text"  v-model="form.budgets.cat_11" class="form-control" />
+                            <input :disabled="!getPermission('add_edit_plans')" type="text"  v-model="form.budgets.cat_11" class="form-control" />
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="mb-4">
                             <label class="form-label">Improved Health and Wellbeing</label>
-                            <input type="text"  v-model="form.budgets.cat_12" class="form-control" />
+                            <input :disabled="!getPermission('add_edit_plans')" type="text"  v-model="form.budgets.cat_12" class="form-control" />
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="mb-4">
                             <label class="form-label">Improved Learning</label>
-                            <input type="text"  v-model="form.budgets.cat_13" class="form-control" />
+                            <input :disabled="!getPermission('add_edit_plans')" type="text"  v-model="form.budgets.cat_13" class="form-control" />
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="mb-4">
                             <label class="form-label">Improved Life Choices</label>
-                            <input type="text"  v-model="form.budgets.cat_14" class="form-control" />
+                            <input :disabled="!getPermission('add_edit_plans')" type="text"  v-model="form.budgets.cat_14" class="form-control" />
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="mb-4">
                             <label class="form-label">Improved Daily Living Skills</label>
-                            <input type="text"  v-model="form.budgets.cat_15" class="form-control" />
+                            <input :disabled="!getPermission('add_edit_plans')" type="text"  v-model="form.budgets.cat_15" class="form-control" />
                         </div>
                     </div>
                 </div>
             </div>
-          <div class="mw290 mx-auto px-4 mt-3">
+          <div class="mw290 mx-auto px-4 mt-3" v-if="getPermission('add_edit_plans')">
             <button v-if="!loader" class="btn btn-primary btn-lg w-100 py-3" v-on:click="updatePlan(plan.id)">
               Update Plan
             </button>
@@ -205,6 +206,7 @@
 import Form from "vform"
 
 export default {
+  props: ["policy"],
   data() {
     return {
       loader: false,
@@ -620,7 +622,13 @@ export default {
     },
     bugdetChange(){
         alert('ehllo');
-    }
+    },
+    getPermission(pName) {
+      if (this.policy.is_supper_admin) {
+          return true
+      }
+      return this.policy.permissions[pName]
+    },
   },
 }
 </script>
