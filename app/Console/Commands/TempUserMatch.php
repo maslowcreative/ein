@@ -55,8 +55,18 @@ class TempUserMatch extends Command
 
         foreach ($participants as $participant){
             $names = explode(' ',$participant->sheet_name);
-            $p = \App\Models\User::where('first_name',$names[0])
-                ->where('last_name',$names[1])
+
+            if ( count($names) == 1 ){
+                $first_name = $names[0];
+                $last_name = '';
+            }else {
+                $first_name = $names[0];
+                unset($names[0]);
+                $last_name = implode(' ',$names);
+            }
+
+            $p = \App\Models\User::where('first_name',$first_name)
+                ->where('last_name',$last_name)
                 ->whereHas('participant')->first();
             if($p){
                 DB::table('temp_user')->where('id',$participant->id)->update([
