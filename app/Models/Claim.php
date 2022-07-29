@@ -47,7 +47,6 @@ class Claim extends Model
     const CLAIM_TYPE_TRAN = 'TRAN';
     const CLAIM_TYPE_NF2F = 'NF2F';
     const CLAIM_TYPE_F2F = 'F2F';
-
     const CLAIM_TYPE_THLT = 'THLT';
     const CLAIM_TYPE_IRSS = 'IRSS';
 
