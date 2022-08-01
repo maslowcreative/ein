@@ -42,9 +42,9 @@ class ExpireParticipantPlans extends Command
     {
         $tomrrow = Carbon::now();
 
-//        Plan::where('end_date','<',$tomrrow->toDateString())
-//             ->where('status',1)
-//             ->update(['status' => 0]);
+        Plan::where('end_date','<',$tomrrow->toDateString())
+             ->where('status',1)
+             ->update(['status' => 0]);
 
         Log::info('EIN:plan-expire Plan Expired Script ran today at '.$tomrrow->toDateTimeString());
         $this->info("Plans Expired script compeleted succesfuly.");
