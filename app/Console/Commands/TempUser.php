@@ -47,7 +47,7 @@ class TempUser extends Command
 
             DB::table('temp_user')->truncate();
             //$collection = (new FastExcel())->import("{$basePath}/Genius to ClaimMaster 23 to 30SEP21.csv");
-            $collection = (new FastExcel())->import("{$basePath}/All Old Claims.xlsx");
+            $collection = (new FastExcel())->import("{$basePath}/New All Claims Sheet.xlsx");
 
             $providerNames =  $collection->pluck('ProviderMaster_ID')
                                         ->unique();
