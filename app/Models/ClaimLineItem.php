@@ -99,7 +99,7 @@ class ClaimLineItem extends Model
     public function getClaimTypeProccesedAttribute() {
         if($this->attributes['claim_type'] == Claim::CLAIM_TYPE_F2F)
         {
-            return ' ';
+            return '';
         }
         return $this->attributes['claim_type'];
     }
