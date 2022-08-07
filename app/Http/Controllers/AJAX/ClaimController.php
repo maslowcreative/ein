@@ -358,6 +358,7 @@ class ClaimController extends Controller
     {
         $request->validate([
             'claim_type' => ['nullable','string',Rule::in(collect(Claim::CLAIM_TYPES)->keys()->toArray())],
+            'cancellation_reason' => ['exclude_unless:claim_type,CANC','required',Rule::in(collect(Claim::CANCELLATION_REASONS)->keys()->toArray())],
             'hours' => 'required|numeric|min:0.01',
             'unit_price' => 'required|numeric|min:0.1',
             'gst_code' => ['required',Rule::in(collect(Claim::TAX_TYPES)->keys()->toArray())],
@@ -368,6 +369,7 @@ class ClaimController extends Controller
                                                 Claim::STATUS_APPROVED_BY_ADMIN,
                                                 Claim::STATUS_CANCEL
                                             ])],
+
         ]);
         $item = ClaimLineItem::findOrFail($request->id);
         $item->fill($request->all());

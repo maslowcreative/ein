@@ -78,6 +78,25 @@
                                             <input disabled type="text" :value="form.item_number" class="form-control" placeholder="134134134134">
                                         </div>
                                     </div>
+                                </div>
+                                <div class="row" v-if="form.claim_type == 'CANC'">
+                                    <div class="col-md-8">
+                                        <div class="mb-4">
+                                            <label class="form-label">Cancellation Reason</label>
+                                            <select :disabled="isEditable" class="form-select" v-model="form.cancellation_reason">
+                                                <option value="NSDH">No show due to health reason.</option>
+                                                <option value="NSDF">No show due to family issues.</option>
+                                                <option value="NSDT">No show due to unavailability of transport.</option>
+                                                <option value="NSDO">Other.</option>
+                                            </select>
+                                            <div
+                                                class="invalid-msg"
+                                                v-if="form.errors.has('cancellation_reason')"
+                                                v-html="form.errors.get('cancellation_reason')"
+                                            />
+
+                                        </div>
+                                    </div>
 
                                 </div>
                                 <div class="row">
@@ -217,7 +236,7 @@ export default {
         claim : null,
         form: new Form({
             'item_number': null,
-            'claim_type': " ",
+            'claim_type': "",
             'hours' : null,
             'unit_price': null,
             'gst_code': null,
@@ -261,11 +280,12 @@ export default {
           item.hours = Math.round((item.hours + Number.EPSILON) * 100) / 100;
           item.unit_price = Math.round((item.unit_price + Number.EPSILON) * 100) / 100;
           item.amount_claimed = Math.round((item.amount_claimed + Number.EPSILON) * 100) / 100;
-          console.log('item',item.support_item_number);
+
           this.form =  new Form({
               'id': item.id,
               'item_number': item.support_item_number,
               'claim_type': item.claim_type == null ? '' :  item.claim_type,
+              'cancellation_reason': item.cancellation_reason,
               'hours' : item.hours,
               'unit_price': item.unit_price,
               'amount_claimed': item.amount_claimed,
