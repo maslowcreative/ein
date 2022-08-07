@@ -521,6 +521,9 @@ export default {
           this.participantSerachResult= [];
           this.participantSelected= null;
           this.servicesItemsResult= [];
+          this.providerSerachName = null;
+          this.providerSerachResult =[];
+          this.providerSelected = null;
       },
       createClaim() {
           this.loader = true;
