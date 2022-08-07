@@ -32,7 +32,8 @@ class Claim extends Model
         'status',
         'rejection_reason',
         //Mutator
-        'invoice_number'
+        'invoice_number',
+        'old_claim_id'
     ];
     protected $appends = [
       'invoice_url',
