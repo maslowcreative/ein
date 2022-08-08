@@ -53,7 +53,7 @@ class TempUser extends Command
                                         ->unique();
             foreach ($providerNames as $name){
                 DB::table('temp_user')->insert([
-                    'sheet_name' => $name,
+                    'sheet_name' => trim($name),
                     'type' => 'provider'
                 ]);
             }
@@ -63,7 +63,7 @@ class TempUser extends Command
 
             foreach ($participantNames as $name){
                 DB::table('temp_user')->insert([
-                    'sheet_name' => $name,
+                    'sheet_name' => trim($name),
                     'type' => 'participant'
                 ]);
             }
@@ -73,6 +73,6 @@ class TempUser extends Command
         }catch (IOException $e){
             $collection = [];
         }
-        return 0;
+
     }
 }

@@ -37,7 +37,8 @@ class ClaimLineItem extends Model
         'rec_payment_request_status',
         'rec_payment_request_number',
         'rec_capped_price',
-        'rec_date'
+        'rec_date',
+        'old_claim_id'
     ];
 
     protected $appends = [

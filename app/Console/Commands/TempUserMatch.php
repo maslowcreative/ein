@@ -64,9 +64,8 @@ class TempUserMatch extends Command
                 unset($names[0]);
                 $last_name = implode(' ',$names);
             }
-
-            $p = \App\Models\User::where('first_name',$first_name)
-                ->where('last_name',$last_name)
+            $name = trim($first_name .' '.$last_name);
+            $p = \App\Models\User::whereRaw('concat(first_name," ",last_name) = ?', [$name])
                 ->whereHas('participant')->first();
             if($p){
                 DB::table('temp_user')->where('id',$participant->id)->update([

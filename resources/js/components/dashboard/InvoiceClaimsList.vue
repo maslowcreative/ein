@@ -129,8 +129,8 @@
               </td>
               <td class="not-center">
                 <div class="fw-bold">
-                  Claim #{{item.claim_reference}} ({{item.claim.claim_reference}})
-                  <span class="d-block text-primary fw-normal">{{item.claim.participant.user.name}} </span>
+                  Claim #{{item.claim_reference}}{{item.old_claim_ref ? '|'+ item.old_claim_ref:''}} ({{item.claim.claim_reference}})
+                    <span class="d-block text-primary fw-normal">{{item.claim.participant.user.name}} </span>
                   <span class="d-block text-primary fw-normal" v-if="item.claim.participant.user.othername">{{item.claim.participant.user.othername}}</span>
                 </div>
               </td>
