@@ -18,7 +18,7 @@ class CleanClaimPostRequest
     public function handle(Request $request, Closure $next)
     {
         if($request->hasFile('file')){
-            $chunks = array_chunk($request->service,6);
+            $chunks = array_chunk($request->service,7);
             $service = [];
 
             foreach ($chunks as $chunk) {

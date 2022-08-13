@@ -228,9 +228,13 @@
                                                 :clear-on-select="true"
                                                 :close-on-select="true"
                                                 :options-limit="50" :limit="15"
+                                                @input="itemNumberSelected"
                                                 @search-change="asyncFindItemNumber"
                                             >
                                             </multiselect>
+                                            <span v-if="service.item_name">
+                                                {{service.item_name}}
+                                            </span>
                                             <div
                                                 class="invalid-msg"
                                                 v-if="form.errors.has('service.'+index+'.item_number')"
@@ -401,6 +405,7 @@ export default {
                     'unit_price': null,
                     'gst_code': 'P2',
                     'cancellation_reason': null,
+                    'item_name': null,
                 }
             ]
         }),
@@ -411,6 +416,7 @@ export default {
         providerSerachResult: [],
         providerSelected: null,
         servicesItemsResult: [],
+        servicesItemsOrginal : []
 
     }
   },
@@ -514,6 +520,7 @@ export default {
                       'unit_price': null,
                       'gst_code': 'P2',
                       'cancellation_reason': null,
+                      'item_name': null,
                   }
               ]
           });
@@ -524,6 +531,7 @@ export default {
           this.providerSerachName = null;
           this.providerSerachResult =[];
           this.providerSelected = null;
+          this.servicesItemsOrginal = [];
       },
       createClaim() {
           this.loader = true;
@@ -545,6 +553,21 @@ export default {
                   this.loader = false
               });
 
+      },
+      itemNumberSelected(query){
+          let service = [];
+          let servicesItemsOrginal = [];
+          servicesItemsOrginal = this.servicesItemsOrginal;
+          this.form.service.forEach(function (item,index){
+              let cat = servicesItemsOrginal.filter(function (v){
+                  return v.support_item_number == item.item_number;
+              });
+              if(cat.length > 0){
+                  item.item_name = cat[0].support_item_name;
+              }else {
+                  item.item_name = null;
+              }
+          });
       },
       asyncFind(query, type = "participant") {
           this.loader = true;
@@ -607,6 +630,7 @@ export default {
                       return obj.support_item_number;
                   });
                   this.servicesItemsResult= data;
+                  this.servicesItemsOrginal =  res.data.data;
               })
               .catch(error => {
                   if(error.response.status == 422){
