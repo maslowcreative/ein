@@ -94,9 +94,9 @@ class ClaimController extends Controller
             $provider = Provider::find($request->provider_id);
         }
 
-        $participant = Participant::find($request->participant_id);
-       // dd($request->all());
-       $claimExist =  Claim::where('start_date','>=',$request->start_date)
+       $participant = Participant::find($request->participant_id);
+
+        $claimExist =  Claim::where('start_date','>=',$request->start_date)
                          ->where('end_date','<=',$request->end_date)
                          ->where('participant_id',$participant->id)
                          ->first();
@@ -306,8 +306,13 @@ class ClaimController extends Controller
             {
                 foreach ($collection as $claim) {
                     $claimItem = ClaimLineItem::where('claim_reference', substr($claim['ClaimReference'],1) )->first();
+                    $paidAmount = 0;
+                    if( trim($claim['Payment Request Status']) == 'SUCCESSFUL'){
+                        $paidAmount = is_numeric( $claim['PaidTotalAmount'] )? $claim['PaidTotalAmount'] : 0;
+                    }
+
                     if($claimItem){
-                        $claimItem->amount_paid = is_numeric( $claim['PaidTotalAmount'] )? $claim['PaidTotalAmount'] : null;
+                        $claimItem->amount_paid = $paidAmount;
                         $claimItem->rec_is_full_paid = abs($claimItem->amount_claimed - $claimItem->amount_paid) <= 1   ? true: false;
                         $claimItem->rec_payment_request_status = $claim['Payment Request Status'];
                         $claimItem->rec_payment_request_number = $claim['Payment Request Number'];
