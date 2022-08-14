@@ -45,21 +45,73 @@
               <div class="col-md-6">
                 <div class="mb-4">
                   <label class="form-label">Enter Password</label>
-                  <input
-                    type="password"
-                    class="form-control"
-                    v-model="form.password"
-
-                    placeholder="*********************"
-                  />
+                  <div class="input-group-overlay">
+                        <div class="input-group-prepend-overlay">
+                            <span class="input-group-text text-primary"><ion-icon name="lock-open-outline"></ion-icon></span>
+                        </div>
+                        <input
+                            v-if="showPassword"
+                            id="password"
+                            type="password"
+                            v-model="form.password"
+                            class="form-control prepended-form-control"
+                            name="password"
+                            required
+                            autocomplete="current-password"
+                        />
+                          <input
+                              v-else
+                              type="text"
+                              v-model="form.password"
+                              class="form-control prepended-form-control"
+                              name="password"
+                              required
+                              autocomplete="current-password"
+                          />
+                        <div class="input-group-append-overlay">
+                            <button type="button" class="input-group-text text-primary">
+                                <ion-icon v-if="showPassword" v-on:click="showPasswordToggle('password',false)" name="eye-off-outline"></ion-icon>
+                                <ion-icon v-else v-on:click="showPasswordToggle('password',true)" name="eye-outline"></ion-icon>
+                            </button>
+                        </div>
+                  </div>
                   <div class="invalid-msg" v-if="form.errors.has('password')" v-html="form.errors.get('password')" />
                 </div>
               </div>
+
               <div class="col-md-6">
                 <div class="mb-4">
                   <label  class="form-label">Confirm Password</label>
-                  <input type="password" v-model="form.password_confirmation" class="form-control"  placeholder="*********************" />
-                  <div class="invalid-msg" v-if="form.errors.has('password_confirmation')" v-html="form.errors.get('password_confirmation')" />
+                    <div class="input-group-overlay">
+                        <div class="input-group-prepend-overlay">
+                            <span class="input-group-text text-primary"><ion-icon name="lock-open-outline"></ion-icon></span>
+                        </div>
+                        <input
+                            v-if="showConfirmPassword"
+                            type="password"
+                            v-model="form.password_confirmation"
+                            class="form-control prepended-form-control"
+                            name="password"
+                            required
+                            autocomplete="current-password"
+                        />
+                        <input
+                            v-else
+                            type="text"
+                            v-model="form.password_confirmation"
+                            class="form-control prepended-form-control"
+                            name="password"
+                            required
+                            autocomplete="current-password"
+                        />
+                        <div class="input-group-append-overlay">
+                            <button type="button" class="input-group-text text-primary">
+                                <ion-icon v-if="showConfirmPassword" v-on:click="showPasswordToggle('confirm_password',false)" name="eye-off-outline"></ion-icon>
+                                <ion-icon v-else v-on:click="showPasswordToggle('confirm_password',true)" name="eye-outline"></ion-icon>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="invalid-msg" v-if="form.errors.has('password_confirmation')" v-html="form.errors.get('password_confirmation')" />
                 </div>
               </div>
               <div class="col-md-12">
@@ -144,6 +196,8 @@ export default {
   data() {
     return {
       loader: false,
+      showPassword: true,
+      showConfirmPassword: true,
       form: new Form({
         first_name: null,
         last_name: null,
@@ -183,6 +237,18 @@ export default {
         .finally(() => {
           this.loader = false
         })
+    },
+    showPasswordToggle(type,status){
+
+        if(type =='password') {
+
+            this.showPassword = status;
+        }
+
+        if(type =='confirm_password') {
+
+            this.showConfirmPassword = status;
+        }
     },
     resetForm() {
       this.form = new Form({
