@@ -95,6 +95,21 @@ class ClaimController extends Controller
         }
 
         $participant = Participant::find($request->participant_id);
+       // dd($request->all());
+       $claimExist =  Claim::where('start_date','>=',$request->start_date)
+                         ->where('end_date','<=',$request->end_date)
+                         ->where('participant_id',$participant->id)
+                         ->first();
+
+       if(!$claimExist){
+           return response([
+               'message' => "The given data was invalid.",
+               'errors' => [
+                   'start_date' => 'No plan exist in given date range',
+                   'end_date' => 'No plan exist in given date range'
+               ]
+           ],422);
+       }
 
         DB::beginTransaction();
 
