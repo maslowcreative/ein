@@ -76,6 +76,9 @@
                                         <div class="mb-4">
                                             <label class="form-label">Item Number</label>
                                             <input disabled type="text" :value="form.item_number" class="form-control" placeholder="134134134134">
+                                            <span >
+                                                {{itemName}}
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
@@ -232,6 +235,7 @@ export default {
         loader : false,
         isEditable : true,
         isStatusEditable : false,
+        itemName : null,
         reason : null,
         claim : null,
         form: new Form({
@@ -250,6 +254,7 @@ export default {
 
           let item = this.claim.items[0];
           this.isEditable = true;
+          this.itemName = claim.service.support_item_name;
           this.isStatusEditable = false;
           switch(item.status) {
               case 0:

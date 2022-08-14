@@ -121,10 +121,14 @@ class ClaimLineItem extends Model
         return $this->belongsTo(Claim::class,'claim_id');
     }
 
+    public function Service() {
+        return $this->hasOne(Service::class,'support_item_number','support_item_number');
+    }
+
 
     public static function getClaims() {
         return QueryBuilder::for(self::class)
-            ->with(['claim','claim.provider.user','claim.participant.user'])
+            ->with(['claim','claim.provider.user','claim.participant.user','service'])
             ->allowedFilters([
                 AllowedFilter::exact('claim_status', 'status'),
                 AllowedFilter::exact('claim_type', 'claim_type'),

@@ -304,6 +304,7 @@ export default {
       },
       openViewInvoiceModal(claim,item) {
           this.claim = claim;
+          this.claim.service = item.service;
           this.claim.items = [item];
           this.$root.$emit("ein-admin:claim-detail-popup-open", this.claim);
           $("#claimDetailPopup").modal('show');

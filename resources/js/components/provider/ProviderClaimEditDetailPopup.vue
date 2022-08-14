@@ -76,6 +76,9 @@
                                         <div class="mb-4">
                                             <label class="form-label">Item Number</label>
                                             <input disabled type="text" :value="form.item_number" class="form-control" placeholder="134134134134">
+                                            <span >
+                                                {{itemName}}
+                                            </span>
                                         </div>
                                     </div>
 
@@ -199,6 +202,7 @@ export default {
         loader : false,
         isEditable : true,
         isStatusEditable : false,
+        itemName : null,
         reason : null,
         claim : null,
         form: new Form({
@@ -214,8 +218,8 @@ export default {
   mounted() {
       this.$root.$on("ein-admin:claim-detail-popup-open", (claim) => {
           this.claim = claim;
-
           let item = this.claim.items[0];
+          this.itemName = claim.service.support_item_name;
           this.isEditable = true;
           this.isStatusEditable = false;
           switch(item.status) {
@@ -247,6 +251,7 @@ export default {
           item.hours = Math.round((item.hours + Number.EPSILON) * 100) / 100;
           item.unit_price = Math.round((item.unit_price + Number.EPSILON) * 100) / 100;
           item.amount_claimed = Math.round((item.amount_claimed + Number.EPSILON) * 100) / 100;
+
           this.form =  new Form({
               'id': item.id,
               'item_number': item.support_item_number,
