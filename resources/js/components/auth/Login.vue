@@ -32,15 +32,36 @@
               <div class="input-group-prepend-overlay">
                 <span class="input-group-text text-primary"><ion-icon name="lock-open-outline"></ion-icon></span>
               </div>
-              <input
-                id="password"
-                type="password"
-                v-model="form.password"
-                class="form-control prepended-form-control"
-                name="password"
-                required
-                autocomplete="current-password"
-              />
+              <div class="input-group-overlay">
+                    <div class="input-group-prepend-overlay">
+                        <span class="input-group-text text-primary"><ion-icon name="lock-open-outline"></ion-icon></span>
+                    </div>
+                    <input
+                        v-if="showPassword"
+                        id="password"
+                        type="password"
+                        v-model="form.password"
+                        class="form-control prepended-form-control"
+                        name="password"
+                        required
+                        autocomplete="current-password"
+                    />
+                    <input
+                        v-else
+                        type="text"
+                        v-model="form.password"
+                        class="form-control prepended-form-control"
+                        name="password"
+                        required
+                        autocomplete="current-password"
+                    />
+                    <div class="input-group-append-overlay">
+                        <button type="button" class="input-group-text text-primary">
+                            <ion-icon v-if="showPassword" v-on:click="showPasswordToggle('password',false)" name="eye-off-outline"></ion-icon>
+                            <ion-icon v-else v-on:click="showPasswordToggle('password',true)" name="eye-outline"></ion-icon>
+                        </button>
+                    </div>
+                </div>
             </div>
             <div class="invalid-msg" v-if="form.errors.has('password')" v-html="form.errors.get('password')" />
           </div>
@@ -66,6 +87,7 @@ export default {
   data() {
     return {
       loader: false,
+      showPassword: true,
       homeUrl: null,
       passwordRequestUrl: null,
       form: new Form({
@@ -90,6 +112,18 @@ export default {
           }
         })
         .catch(error => {})
+    },
+    showPasswordToggle(type,status){
+
+          if(type =='password') {
+
+              this.showPassword = status;
+          }
+
+          if(type =='confirm_password') {
+
+              this.showConfirmPassword = status;
+          }
     },
   },
 }
