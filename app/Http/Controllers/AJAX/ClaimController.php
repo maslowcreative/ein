@@ -94,10 +94,10 @@ class ClaimController extends Controller
             $provider = Provider::find($request->provider_id);
         }
 
-       $participant = Participant::find($request->participant_id);
-
-        $claimExist =  Claim::where('start_date','>=',$request->start_date)
-                         ->where('end_date','<=',$request->end_date)
+        $participant = Participant::find($request->participant_id);
+        dd($request->start_date,$request->end_date);
+        $claimExist =  Claim::where('start_date','<=',$request->start_date)
+                         ->where('end_date','>=',$request->end_date)
                          ->where('participant_id',$participant->id)
                          ->first();
 
