@@ -8,6 +8,7 @@ use App\Mail\InvoiceCreated;
 use App\Models\Claim;
 use App\Models\ClaimLineItem;
 use App\Models\Participant;
+use App\Models\Plan;
 use App\Models\Provider;
 use App\Traits\ClaimsValidationTrait;
 use Box\Spout\Common\Exception\IOException;
@@ -95,13 +96,13 @@ class ClaimController extends Controller
         }
 
         $participant = Participant::find($request->participant_id);
-        dd($request->start_date,$request->end_date);
-        $claimExist =  Claim::where('start_date','<=',$request->start_date)
+
+        $planExist =  Plan::where('start_date','<=',$request->start_date)
                          ->where('end_date','>=',$request->end_date)
                          ->where('participant_id',$participant->id)
                          ->first();
 
-       if(!$claimExist){
+       if(!$planExist){
            return response([
                'message' => "The given data was invalid.",
                'errors' => [
