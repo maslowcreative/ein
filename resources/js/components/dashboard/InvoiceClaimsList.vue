@@ -29,6 +29,16 @@
                                 placeholder="Enter Claim number"
                             />
                         </div>
+
+                        <div class="">
+                            <label class="form-label">Old Claim Number</label>
+                            <input
+                                type="text"
+                                v-model="filters.old_claim_ref"
+                                class="form-control form-control-sm"
+                                placeholder="Enter Claim number"
+                            />
+                        </div>
                         <div class="">
                             <label class="form-label">Invoice Number</label>
                             <input
@@ -38,6 +48,7 @@
                                 placeholder="Enter Invoice Number"
                             />
                         </div>
+
                         <div class="">
                             <label class="form-label">Provider Name</label>
                             <input
@@ -227,6 +238,7 @@ export default {
             claim_status: "1",
             claim_type: "all",
             claim_number: null,
+            old_claim_ref: null,
             provider_name: null,
             particpant_name: null,
         },
@@ -259,6 +271,9 @@ export default {
     "filters.participant_name":function (val,old){
         this.getProviderClaimsList(1);
     },
+    "filters.old_claim_ref":function (val,old){
+          this.getProviderClaimsList(1);
+    },
   },
   methods:{
       getProviderClaimsList(page = 1) {
@@ -289,7 +304,9 @@ export default {
               data["filter[participant_name]"] = this.filters.participant_name;
           }
 
-
+          if (this.filters.old_claim_ref ) {
+              data["filter[old_claim_ref]"] = this.filters.old_claim_ref;
+          }
 
           let route = this.laroute.route("ajax.claims.list",data)
           axios
