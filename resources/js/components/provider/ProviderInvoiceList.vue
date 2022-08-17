@@ -28,6 +28,15 @@
                                         placeholder="Enter Claim number"
                                     />
                                 </div>
+<!--                                <div class="">-->
+<!--                                    <label class="form-label">Old Claim Number</label>-->
+<!--                                    <input-->
+<!--                                        type="text"-->
+<!--                                        v-model="filters.old_claim_ref"-->
+<!--                                        class="form-control form-control-sm"-->
+<!--                                        placeholder="Enter Claim number"-->
+<!--                                    />-->
+<!--                                </div>-->
                                 <div class="">
                                     <label class="form-label">Invoice Number</label>
                                     <input
@@ -185,6 +194,7 @@ export default {
         filters: {
             claim_status: "all",
             claim_number: null,
+            old_claim_ref: null,
             invoice_number: null,
             claim_type: "all",
         },
@@ -202,7 +212,10 @@ export default {
         },
        "filters.invoice_number":function (val,old){
           this.getProviderClaimsList(1);
-       }
+       },
+      "filters.old_claim_ref":function (val,old){
+          this.getProviderClaimsList(1);
+      },
   },
   mounted() {
         this.getProviderClaimsList();
@@ -235,6 +248,11 @@ export default {
 
           if (this.filters.invoice_number ) {
               data["filter[invoice_number]"] = this.filters.invoice_number;
+          }
+
+
+          if (this.filters.old_claim_ref ) {
+              data["filter[old_claim_ref]"] = this.filters.old_claim_ref;
           }
 
           let route = this.laroute.route("ajax.claims.list",data)

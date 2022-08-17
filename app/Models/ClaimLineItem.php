@@ -133,6 +133,7 @@ class ClaimLineItem extends Model
                 AllowedFilter::exact('claim_status', 'status'),
                 AllowedFilter::exact('claim_type', 'claim_type'),
                 AllowedFilter::partial('claim_number', 'claim_reference'),
+                AllowedFilter::partial('old_claim_ref', 'old_claim_ref'),
                 AllowedFilter::partial('invoice_number', 'claim.claim_reference'),
                 AllowedFilter::partial('provider_name', 'claim.provider.user.other_name'),
                 AllowedFilter::partial('participant_name', 'claim.participant.user.other_name'),
