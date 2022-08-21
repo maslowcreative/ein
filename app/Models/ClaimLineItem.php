@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\Builder;
+use Illuminate\Support\Facades\Auth;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
@@ -132,7 +133,11 @@ class ClaimLineItem extends Model
             ->allowedFilters([
                 AllowedFilter::exact('claim_status', 'status'),
                 AllowedFilter::exact('claim_type', 'claim_type'),
-                AllowedFilter::partial('claim_number', 'claim_reference'),
+                AllowedFilter::callback('claim_number', function (\Illuminate\Database\Eloquent\Builder $query, $claim_number){
+                    $claimReference = '%'.$claim_number.'%';
+                    $query->where('claim_reference','LIKE',$claimReference )
+                          ->orWhere('old_claim_ref','LIKE',$claimReference );
+                }),
                 AllowedFilter::partial('old_claim_ref', 'old_claim_ref'),
                 AllowedFilter::partial('invoice_number', 'claim.claim_reference'),
                 AllowedFilter::partial('provider_name', 'claim.provider.user.other_name'),
