@@ -20,21 +20,21 @@
                         <div class="dropdown-menu dropdown-menu-end fs-sm" aria-labelledby="claimSearchDropdown">
                             <div class="py-2 px-3">
                                 <div class="">
-                                    <label class="form-label">Claim Number</label>
-                                    <input
-                                        type="text"
-                                        v-model="filters.claim_number"
-                                        class="form-control form-control-sm"
-                                        placeholder="Enter Claim number"
-                                    />
-                                </div>
-                                <div class="">
                                     <label class="form-label">Invoice Number</label>
                                     <input
                                         type="text"
                                         v-model="filters.invoice_number"
                                         class="form-control form-control-sm"
                                         placeholder="Enter Invoice Number"
+                                    />
+                                </div>
+                                <div class="">
+                                    <label class="form-label">Provider Name</label>
+                                    <input
+                                        type="text"
+                                        v-model="filters.provider_name"
+                                        class="form-control form-control-sm"
+                                        placeholder="Enter Provider name"
                                     />
                                 </div>
                             </div>
@@ -192,18 +192,27 @@ export default {
     });
   },
   watch: {
-        "filters.claim_status": function(val, old) {
-            this.getProviderClaimsList(1)
-        },
-        "filters.claim_type": function(val, old) {
-            this.getProviderClaimsList(1)
-        },
-       "filters.claim_number":function (val,old){
+      "filters.claim_status": function(val, old) {
+          this.getProviderClaimsList(1)
+      },
+      "filters.claim_type": function(val, old) {
+          this.getProviderClaimsList(1)
+      },
+      "filters.claim_number":function (val,old){
           this.getProviderClaimsList(1);
-       },
-       "filters.invoice_number":function (val,old){
+      },
+      "filters.invoice_number":function (val,old){
           this.getProviderClaimsList(1);
-       }
+      },
+      "filters.provider_name":function (val,old){
+          this.getProviderClaimsList(1);
+      },
+      "filters.participant_name":function (val,old){
+          this.getProviderClaimsList(1);
+      },
+      "filters.old_claim_ref":function (val,old){
+          this.getProviderClaimsList(1);
+      },
   },
   methods: {
       getProviderClaimsList(page = 1) {
@@ -217,13 +226,24 @@ export default {
           if (this.filters.claim_type && this.filters.claim_type != "all") {
               data["filter[claim_type]"] = this.filters.claim_type
           }
-          
+
           if (this.filters.claim_number ) {
               data["filter[claim_number]"] = this.filters.claim_number;
           }
 
           if (this.filters.invoice_number ) {
               data["filter[invoice_number]"] = this.filters.invoice_number;
+          }
+
+          if (this.filters.provider_name ) {
+              data["filter[provider_name]"] = this.filters.provider_name;
+          }
+          if (this.filters.participant_name ) {
+              data["filter[participant_name]"] = this.filters.participant_name;
+          }
+
+          if (this.filters.old_claim_ref ) {
+              data["filter[old_claim_ref]"] = this.filters.old_claim_ref;
           }
 
 
