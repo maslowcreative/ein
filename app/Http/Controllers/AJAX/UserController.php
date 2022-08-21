@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UserPostRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\Mail\BankInformationUpdated;
+use App\Mail\UserEmailUpdated;
 use App\Models\Participant;
 use App\Models\Provider;
 use App\Models\ProviderItems;
@@ -261,7 +262,22 @@ class UserController extends Controller
 
         ]);
 
-        $user->fill($request->all())->save();
+        $user->fill($request->all());
+
+        $emailChanged = false;
+        if(trim($user->getOriginal('email')) != trim($user->email)){
+            $oldEmail = $user->getOriginal('email');
+            $emailChanged = true;
+        }
+
+        $user->save();
+
+        if($emailChanged){
+            $toEmail = config('app.ein_notify_email');
+            Mail::to($toEmail)
+                ->send(new UserEmailUpdated($user,$oldEmail));
+        }
+
 
         return $this->respondWithSuccess();
     }
