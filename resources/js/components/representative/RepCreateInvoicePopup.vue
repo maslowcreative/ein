@@ -427,6 +427,10 @@ export default {
           } else {
               this.lastStep = false
           }
+
+          if(val == 2){
+              this.asyncFindItemNumber('');
+          }
       },
       participantSerachName(val, old) {
           if (val) {
