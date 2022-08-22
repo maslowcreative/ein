@@ -365,6 +365,10 @@ export default {
           } else {
               this.lastStep = false
           }
+
+          if(val == 2){
+              this.asyncFindItemNumber('');
+          }
       },
       participantSerachName(val, old) {
           if (val) {
@@ -547,7 +551,9 @@ export default {
             }
         });
       },
+
       asyncFindItemNumber(query) {
+
           this.servicesItemsResult = [];
           let data = {
               "filter[item_number]": query,

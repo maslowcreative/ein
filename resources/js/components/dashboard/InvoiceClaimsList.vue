@@ -30,15 +30,15 @@
                             />
                         </div>
 
-                        <div class="">
-                            <label class="form-label">Old Claim Number</label>
-                            <input
-                                type="text"
-                                v-model="filters.old_claim_ref"
-                                class="form-control form-control-sm"
-                                placeholder="Enter Claim number"
-                            />
-                        </div>
+<!--                        <div class="">-->
+<!--                            <label class="form-label">Old Claim Number</label>-->
+<!--                            <input-->
+<!--                                type="text"-->
+<!--                                v-model="filters.old_claim_ref"-->
+<!--                                class="form-control form-control-sm"-->
+<!--                                placeholder="Enter Claim number"-->
+<!--                            />-->
+<!--                        </div>-->
                         <div class="">
                             <label class="form-label">Invoice Number</label>
                             <input

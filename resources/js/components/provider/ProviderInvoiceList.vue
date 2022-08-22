@@ -19,15 +19,15 @@
                         </button>
                         <div class="dropdown-menu dropdown-menu-end fs-sm" aria-labelledby="claimSearchDropdown">
                             <div class="py-2 px-3">
-                                <div class="">
-                                    <label class="form-label">Claim Number</label>
-                                    <input
-                                        type="text"
-                                        v-model="filters.claim_number"
-                                        class="form-control form-control-sm"
-                                        placeholder="Enter Claim number"
-                                    />
-                                </div>
+<!--                                <div class="">-->
+<!--                                    <label class="form-label">Claim Number</label>-->
+<!--                                    <input-->
+<!--                                        type="text"-->
+<!--                                        v-model="filters.claim_number"-->
+<!--                                        class="form-control form-control-sm"-->
+<!--                                        placeholder="Enter Claim number"-->
+<!--                                    />-->
+<!--                                </div>-->
 <!--                                <div class="">-->
 <!--                                    <label class="form-label">Old Claim Number</label>-->
 <!--                                    <input-->
@@ -44,6 +44,15 @@
                                         v-model="filters.invoice_number"
                                         class="form-control form-control-sm"
                                         placeholder="Enter Invoice Number"
+                                    />
+                                </div>
+                                <div class="">
+                                    <label class="form-label">Particpant Name</label>
+                                    <input
+                                        type="text"
+                                        v-model="filters.participant_name"
+                                        class="form-control form-control-sm"
+                                        placeholder="Enter Participant name"
                                     />
                                 </div>
                             </div>
@@ -192,27 +201,34 @@ export default {
             items: [],
         },
         filters: {
-            claim_status: "all",
+            claim_status: "1",
+            claim_type: "all",
             claim_number: null,
             old_claim_ref: null,
-            invoice_number: null,
-            claim_type: "all",
+            provider_name: null,
+            particpant_name: null,
         },
     }
   },
   watch: {
-        "filters.claim_status": function(val, old) {
-            this.getProviderClaimsList(1)
-        },
-        "filters.claim_type": function(val, old) {
-            this.getProviderClaimsList(1)
-        },
-        "filters.claim_number":function (val,old){
+      "filters.claim_status": function(val, old) {
+          this.getProviderClaimsList(1)
+      },
+      "filters.claim_type": function(val, old) {
+          this.getProviderClaimsList(1)
+      },
+      "filters.claim_number":function (val,old){
           this.getProviderClaimsList(1);
-        },
-       "filters.invoice_number":function (val,old){
+      },
+      "filters.invoice_number":function (val,old){
           this.getProviderClaimsList(1);
-       },
+      },
+      "filters.provider_name":function (val,old){
+          this.getProviderClaimsList(1);
+      },
+      "filters.participant_name":function (val,old){
+          this.getProviderClaimsList(1);
+      },
       "filters.old_claim_ref":function (val,old){
           this.getProviderClaimsList(1);
       },
@@ -250,6 +266,12 @@ export default {
               data["filter[invoice_number]"] = this.filters.invoice_number;
           }
 
+          if (this.filters.provider_name ) {
+              data["filter[provider_name]"] = this.filters.provider_name;
+          }
+          if (this.filters.participant_name ) {
+              data["filter[participant_name]"] = this.filters.participant_name;
+          }
 
           if (this.filters.old_claim_ref ) {
               data["filter[old_claim_ref]"] = this.filters.old_claim_ref;
