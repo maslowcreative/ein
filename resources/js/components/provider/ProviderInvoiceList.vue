@@ -201,7 +201,7 @@ export default {
             items: [],
         },
         filters: {
-            claim_status: "1",
+            claim_status: "all",
             claim_type: "all",
             claim_number: null,
             old_claim_ref: null,

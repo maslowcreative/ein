@@ -177,7 +177,7 @@ export default {
             items: [],
         },
         filters: {
-            claim_status: "all",
+            claim_status: "0",
             claim_number: null,
             invoice_number: null,
             claim_type: "all",
