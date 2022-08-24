@@ -63,6 +63,10 @@ class UpdateUserIds extends Command
         DB::table('temp_claims')->where('paid_date','NO PAY')->update(['status' =>'no_pay']);
         DB::table('temp_claims')->where('claim_date','CANCELLED')->update(['status' =>'CANCELLED']);
 
+
+        DB::table('temp_claims')->where('service_end_date','2022-020-15')->update(['service_end_date' =>'2022-02-15']);
+        DB::table('temp_claims')->where('service_end_date','20222-02-05')->update(['service_end_date' =>'2022-02-05']);
+
         $temClaims = DB::table('temp_claims')->whereNull('status','')->get();
 
         foreach ($temClaims as $claim){
