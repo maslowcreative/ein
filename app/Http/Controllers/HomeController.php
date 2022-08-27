@@ -67,4 +67,9 @@ class HomeController extends Controller
     public function planFileDownload($fileName){
         return Storage::download('plans/'.$fileName);
     }
+
+    public function analytics()
+    {
+        return view('analytics');
+    }
 }
