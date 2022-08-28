@@ -1,7 +1,38 @@
 <template>
-  <div class="card">
-    <div class="card-body">
-      <div>
+  <div>
+    <div class="card p-3 p-md-5">
+      <h5>Filters</h5>
+      <div class="grid filters">
+        <div class="">
+          <label>Filters</label>
+          <input type="email" class="form-control" />
+        </div>
+        <div class="">
+          <label>Filters</label>
+          <input type="email" class="form-control" />
+        </div>
+        <div class="">
+          <label>Filters</label>
+          <select class="form-select">
+            <option selected>Open this select menu</option>
+            <option value="1">One</option>
+            <option value="2">Two</option>
+            <option value="3">Three</option>
+          </select>
+        </div>
+        <div class="">
+          <label>Filters</label>
+          <input type="email" class="form-control" />
+        </div>
+        <div class="">
+          <label>Filters</label>
+          <input type="email" class="form-control" />
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
         <Bar
           :chart-options="chartOptions"
           :chart-data="chartData"
@@ -13,6 +44,32 @@
           :width="width"
           :height="height"
         />
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <h5>Table Title</h5>
+        <div class="loader-wrap">
+          <div class="table-x-scroll">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col" class="not-center">Col Title</th>
+                  <th scope="col" class="not-center">Col Title</th>
+                  <th scope="col">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="not-center">data</td>
+                  <td class="not-center">data</td>
+                  <td>data</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     </div>
   </div>
