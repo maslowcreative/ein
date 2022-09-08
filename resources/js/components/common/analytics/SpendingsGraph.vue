@@ -1,35 +1,35 @@
 <template>
   <div>
-    <div class="card p-3 p-md-5">
-      <h5>Filters</h5>
-      <div class="grid filters">
-        <div class="">
-          <label>Filters</label>
-          <input type="email" class="form-control" />
-        </div>
-        <div class="">
-          <label>Filters</label>
-          <input type="email" class="form-control" />
-        </div>
-        <div class="">
-          <label>Filters</label>
-          <select class="form-select">
-            <option selected>Open this select menu</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
-          </select>
-        </div>
-        <div class="">
-          <label>Filters</label>
-          <input type="email" class="form-control" />
-        </div>
-        <div class="">
-          <label>Filters</label>
-          <input type="email" class="form-control" />
-        </div>
-      </div>
-    </div>
+<!--    <div class="card p-3 p-md-5">-->
+<!--      <h5>Filters</h5>-->
+<!--      <div class="grid filters">-->
+<!--        <div class="">-->
+<!--          <label>Filters</label>-->
+<!--          <input type="email" class="form-control" />-->
+<!--        </div>-->
+<!--        <div class="">-->
+<!--          <label>Filters</label>-->
+<!--          <input type="email" class="form-control" />-->
+<!--        </div>-->
+<!--        <div class="">-->
+<!--          <label>Filters</label>-->
+<!--          <select class="form-select">-->
+<!--            <option selected>Open this select menu</option>-->
+<!--            <option value="1">One</option>-->
+<!--            <option value="2">Two</option>-->
+<!--            <option value="3">Three</option>-->
+<!--          </select>-->
+<!--        </div>-->
+<!--        <div class="">-->
+<!--          <label>Filters</label>-->
+<!--          <input type="email" class="form-control" />-->
+<!--        </div>-->
+<!--        <div class="">-->
+<!--          <label>Filters</label>-->
+<!--          <input type="email" class="form-control" />-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
 
     <div class="card">
       <div class="card-body">
@@ -121,21 +121,21 @@ export default {
     return {
       chartData: {
         labels: [
-          "Assistance with Daily Life",
-          "Assistance with Social, Economic and Community Participation",
-          "Assistive Technology",
-          "Consumables",
-          "Finding and Keeping a Job",
-          "Home Modifications and Specialised Disability Accommodation (SDA)",
-          "Improved Daily Living Skills",
-          "Improved Health and Wellbeing",
-          "Improved Learning",
-          "Improved Life Choices",
-          "Improved Living Arrangements",
-          "Improved Relationships",
-          "Increased Social and Community Participation",
-          "Support Coordination",
-          "Transport",
+            "Daily Life",
+            "Transport",
+            "Consumables",
+            "Community Participation",
+            "AT",
+            "HM and SDA",
+            "Support Coordination",
+            "ILA",
+            "Increased Social",
+            "Job",
+            "Improved Relationships",
+            "Improved Health",
+            "Improved Learning",
+            "Plan Management",
+            "Therapy"
         ],
         datasets: [
           {
