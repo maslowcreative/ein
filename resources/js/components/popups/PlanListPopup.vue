@@ -23,8 +23,8 @@
                         </thead>
                         <tbody>
                         <tr v-if="plans"  v-for="plan in plans"  >
-                            <td class="not-center">{{ plan.start_date }}</td>
-                            <td class="not-center">{{ plan.end_date }}</td>
+                            <td class="not-center">{{ plan.start_date_formatted }}</td>
+                            <td class="not-center">{{ plan.end_date_formatted }}</td>
                             <td>
                                 <span v-if="!plan.status" class="badge rounded-pill bg-danger mx-1">Inactive</span>
                                 <span v-if="plan.status" class="badge rounded-pill bg-primary mx-1">Active</span>
