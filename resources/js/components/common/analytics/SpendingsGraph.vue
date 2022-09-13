@@ -163,8 +163,8 @@ export default {
   },
   mounted() {
     var ctx = document.getElementById("myChart")
-    this.canvas = new Chart(ctx, {
-      type: "line",
+    this.canvas = new ChartJS(ctx, {
+      type: "bar",
       data: this.data,
       options: {},
     })
