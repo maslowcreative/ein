@@ -23,7 +23,7 @@ class PlanController extends Controller
 
         $plans = Plan::where('participant_id',$participantId)
             ->with('budgets')
-            ->orderBy('status', 'desc')
+            ->orderBy('start_date', 'desc')
             ->get();
 
         return $plans;

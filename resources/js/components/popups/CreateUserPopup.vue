@@ -996,7 +996,6 @@
                               v-model="form.password"
                               class="form-control prepended-form-control"
                               name="password"
-                              required
                               autocomplete="current-password"
                           />
                           <input
@@ -1006,7 +1005,6 @@
                               v-model="form.password"
                               class="form-control prepended-form-control"
                               name="password"
-                              required
                               autocomplete="current-password"
                           />
                           <div class="input-group-append-overlay">
@@ -1031,7 +1029,6 @@
                               v-model="form.password_confirmation"
                               class="form-control prepended-form-control"
                               name="password"
-                              required
                               autocomplete="current-password"
                           />
                           <input
@@ -1041,7 +1038,6 @@
                               v-model="form.password_confirmation"
                               class="form-control prepended-form-control"
                               name="password"
-                              required
                               autocomplete="current-password"
                           />
                           <div class="input-group-append-overlay">

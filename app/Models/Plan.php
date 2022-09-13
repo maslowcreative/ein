@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -27,6 +28,11 @@ class Plan extends Model
 
     protected $guarded = [];
 
+    protected $appends = [
+        'start_date_formatted',
+        'end_date_formatted'
+    ];
+
     public function scopeActive($query)
     {
         return $query->where('status',1);
@@ -40,6 +46,16 @@ class Plan extends Model
     public function getBudgetAttribute() {
 
         return round($this->attributes['budget'],2);
+    }
+
+    public function getStartDateFormattedAttribute()
+    {
+        return Carbon::parse($this->start_date)->format('d/m/y');
+    }
+
+    public function getEndDateFormattedAttribute()
+    {
+        return Carbon::parse($this->end_date)->format('d/m/y');
     }
 
     public function budgets(){
