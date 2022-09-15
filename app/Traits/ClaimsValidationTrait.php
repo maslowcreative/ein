@@ -39,6 +39,7 @@ trait ClaimsValidationTrait
                          ->where('start_date','<=',$claim->start_date)
                          ->where('end_date','>=',$claim->end_date)
                          ->first();
+        //dd($partPlans->toArray());
 
         if (!$partPlans){
             return [
@@ -46,13 +47,15 @@ trait ClaimsValidationTrait
                 'message' => 'Participant plan for specified date range does not exist.'
             ];
         }
+
         $totalCatBudget = 0;
         $catBudget = PlanBudget::where('plan_id',$partPlans->id)
                               ->where('category_id',$category->id)
                               ->first();
+
         if($catBudget)
         {
-            $totalCatBudget = $catBudget->amount;
+            $totalCatBudget = $catBudget->balance;
         }
 
         if($totalCatBudget == 0){
@@ -62,52 +65,18 @@ trait ClaimsValidationTrait
             ];
         }
 
-        $transactions = Transaction::where('plan_category_id',$category->id)
-                                    ->where('plan_id',$partPlans->id)
-                                    ->where('claim_item_id', '<>',$claimItem->id)
-                                    ->active()
-                                    ->get();
-
-        if($transactions->isEmpty() &&  $claimItem->amount_claimed > $totalCatBudget ){
+        if ($claimItem->amount_claimed > $totalCatBudget ){
             return [
                 'status' => false,
                 'message' => 'Participant does not have sufficient budget against category.'
             ];
         }
 
-        if( !$transactions->isEmpty() )
-        {
-            $totalCatConsumedAmount = $transactions->sum('amount_paid');
-            $totalCatBudget = $totalCatBudget - $totalCatConsumedAmount;
-        }
+        return [
+            'status' => true,
+            'catBudget' => $catBudget,
+        ];
 
-        if(!$transactions->isEmpty() && $claimItem->amount_claimed > $totalCatBudget ){
-            return [
-                'status' => false,
-                'message' => 'Participant does not have sufficient budget against category.'
-            ];
-        }
-
-
-        Transaction::where('plan_category_id',$category->id)
-            ->where('plan_id',$partPlans->id)
-            ->where('claim_item_id',$claimItem->id)
-            ->active()
-            ->get();
-
-        /*
-            $table->unsignedInteger('claim_id');
-            $table->unsignedInteger('claim_item_id');
-            $table->unsignedInteger('plan_id');
-            $table->unsignedInteger('plan_category_id');
-            $table->unsignedInteger('participant_id');
-            $table->unsignedInteger('provider_id');
-            $table->smallInteger('status');
-            $table->float('claimed_amount');
-            $table->float('paid_amount');
-        */
-        //Transaction::
-        //dd($claim->start_date,$claim->end_date,$partPlans->toArray(),$category->name);
     }
 
 }

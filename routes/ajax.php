@@ -36,7 +36,10 @@ Route::post('claims/admin/approved','ClaimController@approveClaimsByAdmin')->nam
 Route::post('claims/update-claim','ClaimController@updateClaim')->name('claims.update');
 Route::apiResource('claims','ClaimController');
 Route::post('plans/upload','PlanController@uploadPlanFile')->name('plans.upload');
+Route::get('plans/spending-data','PlanController@getSpendingData')->name('plans.spending.data');
 Route::apiResource('plans','PlanController');
+
+
 
 Route::apiResource('services','ServiceController');
 Route::post('admin/update-permissions','AdminController@updatePermissions')->name('admins.update.permission');

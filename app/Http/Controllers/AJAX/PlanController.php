@@ -7,7 +7,9 @@ use App\Models\Plan;
 use App\Models\PlanBudget;
 use F9Web\ApiResponseHelpers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 
 class PlanController extends Controller
 {
@@ -165,5 +167,56 @@ class PlanController extends Controller
         $path = $request->file('file')->store('plans');
         $file_name = explode('/',$path)[1];
         return $this->respondWithSuccess(compact('file_name'));
+    }
+
+    public function getSpendingData(Request $request)
+    {
+        $user = Auth::user();
+
+        if($user->hasRole('representative')) {
+            $repId = $user->id;
+            $request->validate([
+                'participant_id' => [
+                    'required',
+                    Rule::exists('participants','user_id')->where(function ($query) use ($repId) {
+                        return $query->where('representative_id', $repId);
+                    }),
+                ]
+            ]);
+        }else
+        {
+            return $this->respondForbidden();
+        }
+
+        $plan = Plan::where('participant_id',$request->participant_id)->active()->first();
+
+        if(!$plan)
+        {
+            return $this->respondError('No active plan exists for this participant');
+        }
+
+        $planBugets = PlanBudget::where('plan_id',$plan->id)
+                                ->where('amount' ,'>',0)
+                                ->with('category')
+                                ->orderBy('category_id')
+                                ->get();
+
+        if(!$planBugets->count())
+        {
+            return $this->respondError('No plan category exists with plan budget');
+        }
+
+        $spendingData = [
+            'graph' => [
+                    'labels' => $planBugets->pluck('category.short_name')->toArray(),
+                    'amount' => $planBugets->pluck('amount')->toArray(),
+                    'balance' => $planBugets->pluck('balance')->toArray(),
+                    'pending' => $planBugets->pluck('pending')->toArray(),
+                    'spent' => $planBugets->pluck('spent')->toArray(),
+                ],
+            'table' => $planBugets->toArray(),
+        ];
+
+        return $this->respondWithSuccess($spendingData);
     }
 }

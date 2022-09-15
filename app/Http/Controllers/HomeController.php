@@ -67,4 +67,14 @@ class HomeController extends Controller
     public function planFileDownload($fileName){
         return Storage::download('plans/'.$fileName);
     }
+
+    public function analytics()
+    {
+        if( auth()->user()->hasRole('representative') ){
+            return view('analytics');
+        }else{
+            return redirect()->route('home');
+        }
+
+    }
 }

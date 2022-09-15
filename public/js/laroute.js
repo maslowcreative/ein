@@ -52,6 +52,10 @@
         "name": "my.account"
     },
     {
+        "uri": "analytics",
+        "name": "analytics"
+    },
+    {
         "uri": "calim\/{claim}\/invoice\/download",
         "name": "claim.invoice.download"
     },
@@ -182,6 +186,10 @@
     {
         "uri": "ajax\/plans\/upload",
         "name": "ajax.plans.upload"
+    },
+    {
+        "uri": "ajax\/plans\/spending-data",
+        "name": "ajax.plans.spending.data"
     },
     {
         "uri": "ajax\/plans",
