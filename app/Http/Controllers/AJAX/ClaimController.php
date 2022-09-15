@@ -354,6 +354,31 @@ class ClaimController extends Controller
                         $claimItem->rec_date = $now;
                         $claimItem->status = Claim::STATUS_RECONCILATION_DONE;
                         $claimItem->save();
+
+                        $catBudget = PlanBudget::where('plan_id',$claimItem->plan_id)
+                            ->where('category_id',$claimItem->category_id)
+                            ->first();
+
+                        if($catBudget && $claimItem->rec_payment_request_status == 'SUCCESSFUL' && $claimItem->rec_is_full_paid)
+                        {
+                            $catBudget->pending = $catBudget->pending - $claimItem->amount_claimed;
+                            $catBudget->spent = $catBudget->spent + $claimItem->amount_claimed;
+
+                        }elseif ($catBudget && $claimItem->rec_payment_request_status == 'SUCCESSFUL' && !$claimItem->rec_is_full_paid)
+                        {
+                            $catBudget->pending = $catBudget->pending - $claimItem->amount_claimed;
+                            $catBudget->balance = ($catBudget->balance + $claimItem->amount_claimed) - $claimItem->amount_paid;
+                            $catBudget->spent = $catBudget->spent + $claimItem->amount_paid;
+
+                        }elseif($catBudget)
+                        {
+                            $catBudget->pending = $catBudget->pending - $claimItem->amount_claimed;
+                            $catBudget->balance = $catBudget->balance + $claimItem->amount_claimed;
+                        }
+
+                        if($catBudget){
+                            $catBudget->save();
+                        }
                     }
                 }
             }
@@ -448,7 +473,10 @@ class ClaimController extends Controller
 
                 DB::transaction(function () use ($item,$catBudget){
                     $item->save();
-                    $catBudget->save();
+                    if($catBudget){
+                        $catBudget->save();
+                    }
+
                 });
             }
         }
