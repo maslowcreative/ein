@@ -20,4 +20,10 @@ class PlanBudget extends Model
     public function getAmountAttribute() {
         return round($this->attributes['amount'],2);
     }
+
+    public function Category()
+    {
+        return $this->belongsTo(ServiceCategory::class,'category_id');
+
+    }
 }

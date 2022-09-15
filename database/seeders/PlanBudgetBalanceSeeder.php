@@ -16,10 +16,12 @@ class PlanBudgetBalanceSeeder extends Seeder
     {
         $budgets = PlanBudget::all();
         foreach ($budgets as $budget){
-            if($budget->balance == 0){
+            //if($budget->balance == 0){
                 $budget->balance = $budget->amount;
+                $budget->pending = 0;
+                $budget->spent = 0;
                 $budget->save();
-            }
+            //}
         }
 
     }

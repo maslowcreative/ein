@@ -1,74 +1,73 @@
 <template>
   <div>
-<!--    <div class="card p-3 p-md-5">-->
-<!--      <h5>Filters</h5>-->
-<!--      <div class="grid filters">-->
-<!--        <div class="">-->
-<!--          <label>Filters</label>-->
-<!--          <input type="email" class="form-control" />-->
-<!--        </div>-->
-<!--        <div class="">-->
-<!--          <label>Filters</label>-->
-<!--          <input type="email" class="form-control" />-->
-<!--        </div>-->
-<!--        <div class="">-->
-<!--          <label>Filters</label>-->
-<!--          <select class="form-select">-->
-<!--            <option selected>Open this select menu</option>-->
-<!--            <option value="1">One</option>-->
-<!--            <option value="2">Two</option>-->
-<!--            <option value="3">Three</option>-->
-<!--          </select>-->
-<!--        </div>-->
-<!--        <div class="">-->
-<!--          <label>Filters</label>-->
-<!--          <input type="email" class="form-control" />-->
-<!--        </div>-->
-<!--        <div class="">-->
-<!--          <label>Filters</label>-->
-<!--          <input type="email" class="form-control" />-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
+    <div class="card p-3 p-md-5">
+
+      <div class="row justify-content-end">
+        <div class="col-md-3">
+<!--            <label>Participant</label>-->
+            <multiselect v-model="selectedParticipant" :options="prticipantOptions"  placeholder="Select participant" label="show_name" track-by="id"></multiselect>
+        </div>
+      </div>
+
+    </div>
 
     <div class="card">
       <div class="card-body">
-        <Bar
-          :chart-options="chartOptions"
-          :chart-data="chartData"
-          :chart-id="chartId"
-          :dataset-id-key="datasetIdKey"
-          :plugins="plugins"
-          :css-classes="cssClasses"
-          :styles="styles"
-          :width="width"
-          :height="height"
-        />
+        <h5>SPENDING VS BUDGET</h5>
+        <div class="loader-wrap">
+            <Bar
+              :chart-options="chartOptions"
+              :chart-data="chartData"
+              :chart-id="chartId"
+              :dataset-id-key="datasetIdKey"
+              :plugins="plugins"
+              :css-classes="cssClasses"
+              :styles="styles"
+              :width="width"
+              :height="height"
+            />
+            <!-- Loader -->
+            <div  v-if="this.loader.graph" class="loader-bg">
+                <div class="spinner-grow text-primary spinner-loder" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        </div>
       </div>
     </div>
 
     <div class="card">
       <div class="card-body">
-        <h5>Table Title</h5>
+        <h5>Plan Budget</h5>
         <div class="loader-wrap">
           <div class="table-x-scroll">
             <table class="table">
               <thead>
                 <tr>
-                  <th scope="col" class="not-center">Col Title</th>
-                  <th scope="col" class="not-center">Col Title</th>
-                  <th scope="col">Actions</th>
+                  <th scope="col" class="not-center">Support Category</th>
+                  <th scope="col" class="not-center">Budget</th>
+                  <th scope="col" class="not-center">Spent</th>
+                  <th scope="col" class="not-center">Pending</th>
+                  <th scope="col" class="not-center">Balance</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td class="not-center">data</td>
-                  <td class="not-center">data</td>
-                  <td>data</td>
+                <tr v-for="row in tableData">
+                  <td class="not-center">{{row.category.short_name}}</td>
+                  <td class="not-center">${{row.amount}}</td>
+                  <td class="not-center">${{row.spent}}</td>
+                  <td class="not-center">${{row.pending}}</td>
+                  <td class="not-center">${{row.balance}}</td>
                 </tr>
               </tbody>
             </table>
           </div>
+            <!-- Loader -->
+            <div  v-if="this.loader.table" class="loader-bg">
+                <div class="spinner-grow text-primary spinner-loder" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
         </div>
       </div>
     </div>
@@ -76,6 +75,7 @@
 </template>
 
 <script>
+import Multiselect from "vue-multiselect"
 import { Bar } from "vue-chartjs/legacy"
 
 import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from "chart.js"
@@ -86,6 +86,7 @@ export default {
   name: "BarChart",
   components: {
     Bar,
+    Multiselect
   },
   props: {
     chartId: {
@@ -117,44 +118,70 @@ export default {
       default: () => [],
     },
   },
+  watch: {
+      "selectedParticipant": function (val,old){
+          if(val){
+              this.getSpendingData(val.id);
+          }else {
+              this.getSpendingData(0);
+          }
+       },
+  },
   data() {
     return {
+      loader:{
+            graph: false,
+            table: false,
+      },
+      selectedParticipant: {},
+      prticipantOptions: [],
       chartData: {
+
         labels: [
-            "Daily Life",
-            "Transport",
-            "Consumables",
-            "Community Participation",
-            "AT",
-            "HM and SDA",
-            "Support Coordination",
-            "ILA",
-            "Increased Social",
-            "Job",
-            "Improved Relationships",
-            "Improved Health",
-            "Improved Learning",
-            "Plan Management",
-            "Therapy"
+            // "Daily Life",
+            // "Transport",
+            // "Consumables",
+            // "Community Participation",
+            // "AT",
+            // "HM and SDA",
+            // "Support Coordination",
+            // "ILA",
+            // "Increased Social",
+            // "Job",
+            // "Improved Relationships",
+            // "Improved Health",
+            // "Improved Learning",
+            // "Plan Management",
+            // "Therapy"
         ],
         datasets: [
           {
             label: "Spent",
             backgroundColor: "#36a2eb",
-            data: [40, 20, 12, 39, 10, 40, 39, 80, 40, 20, 12, 11, 13, 14, 15],
+            //backgroundColor: "red",
+            data: [
+               // 40, 20, 12, 39, 10, 40, 39, 80, 40, 20, 12, 11, 13, 14, 15
+            ],
           },
           {
             label: "Pending",
             backgroundColor: "#ff6484",
-            data: [5, 6, 7, 8, 9, 10, 15, 14, 13, 12, 11, 1, 2, 3, 4, 5],
+            //backgroundColor: "blue",
+            data: [
+               //5, 6, 7, 8, 9, 10, 15, 14, 13, 12, 11, 1, 2, 3, 4, 5
+            ],
           },
           {
             label: "Balance",
-            backgroundColor: "#f87979",
-            data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 14, 15],
+            //backgroundColor: "yellow",
+            backgroundColor: "green",
+            data: [
+               //1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 14, 15
+            ],
           },
         ],
       },
+      tableData: [],
       chartOptions: {
         responsive: true,
         maintainAspectRatio: false,
@@ -162,17 +189,51 @@ export default {
     }
   },
   mounted() {
-    var ctx = document.getElementById("myChart")
-    this.canvas = new ChartJS(ctx, {
-      type: "bar",
-      data: this.data,
-      options: {},
-    })
-    // console.log('chuchu',this.config);
-    // this.canvas = new Chart(ctx, this.config);
-    //this.canvas.update();
+     this.getUsersList();
   },
 
-  methods: {},
+  methods: {
+      getSpendingData(participantId){
+          let route = this.laroute.route("ajax.plans.spending.data",{'participant_id': participantId})
+          this.loader.graph = true;
+          this.loader.table = true;
+          axios
+              .get(route)
+              .then(res => {
+                  let graphData = res.data.graph;
+                  this.chartData.labels = graphData.labels;
+                  this.chartData.datasets[0].data = graphData.spent; //spent
+                  this.chartData.datasets[1].data = graphData.pending; //spent
+                  this.chartData.datasets[2].data = graphData.balance; //spent
+                  this.tableData = res.data.table;
+              })
+              .catch(error => {
+                  console.log(error)
+              })
+              .finally(() => {
+                  this.loader.graph = false;
+                  this.loader.table = false;
+              })
+      },
+
+      getUsersList(page = 1) {
+          let data = { page: page }
+          //Filtering Admin Role.
+          data["filter[not_in][0]"] = 1;
+          data["filter[roles][0]"] = 'participant';
+          let route = this.laroute.route("ajax.users.index", data)
+
+          axios
+              .get(route)
+              .then(res => {
+                  this.prticipantOptions = res.data.data;
+                  this.selectedParticipant = this.prticipantOptions[0];
+              })
+              .catch(error => {
+                  console.log(error)
+              });
+      },
+  },
 }
 </script>
+

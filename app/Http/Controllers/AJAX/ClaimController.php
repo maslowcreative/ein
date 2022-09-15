@@ -9,6 +9,7 @@ use App\Models\Claim;
 use App\Models\ClaimLineItem;
 use App\Models\Participant;
 use App\Models\Plan;
+use App\Models\PlanBudget;
 use App\Models\Provider;
 use App\Traits\ClaimsValidationTrait;
 use Box\Spout\Common\Exception\IOException;
@@ -152,7 +153,6 @@ class ClaimController extends Controller
 
     public function approvedByRepresentative(Request $request,ClaimLineItem $claim) {
 
-
         if(!Auth::user()->hasRole('representative')) {
             return $this->respondForbidden();
         }
@@ -163,16 +163,49 @@ class ClaimController extends Controller
 
         $request->validate(['status'=> 'required',Rule::in([Claim::STATUS_APPROVED_BY_REPRESENTATIVE,Claim::STATUS_DENIED_BY_REPRESENTATIVE])]);
 
-        $check = $this->claimValidate($claim);
-
-        if($check){
-            return $this->respondError($check['message']) ;
+        if($request->status == $claim->status ){
+            return $this->respondError('Cannot select same option twice.');
         }
 
         $claim->status = $request->status;
-        //$claim->rejection_reason = $request->reason;
-        $claim->save();
 
+        if($request->status == Claim::STATUS_APPROVED_BY_REPRESENTATIVE){
+            $claimData = $this->claimValidate($claim);
+
+            if(!$claimData['status']){
+                return $this->respondError($claimData['message']) ;
+            }
+
+            DB::transaction(function () use ($claim,$claimData) {
+                $catBudget = $claimData['catBudget'];
+                $catBudget->balance = $catBudget->balance - $claim->amount_claimed;
+                $catBudget->pending = $catBudget->pending + $claim->amount_claimed;
+                $catBudget->save();
+                $claim->plan_id = $catBudget->plan_id;
+                $claim->category_id = $catBudget->category_id;
+                $claim->save();
+            });
+
+        }elseif ($request->status == Claim::STATUS_DENIED_BY_REPRESENTATIVE)
+        {
+            $catBudget =  PlanBudget::where('plan_id',$claim->plan_id)
+                                      ->where('category_id',$claim->category_id)
+                                      ->first();
+
+            if($catBudget){
+                $catBudget->pending = $catBudget->pending - $claim->amount_claimed;
+                $catBudget->balance = $catBudget->balance +  $claim->amount_claimed;
+
+            }
+            $claim->plan_id = null;
+            $claim->category_id = null;
+
+            DB::transaction(function () use ($claim,$catBudget){
+                $claim->save();
+                $catBudget->save();
+            });
+
+        }
         return $this->respondWithSuccess();
     }
 
@@ -393,8 +426,38 @@ class ClaimController extends Controller
 
         ]);
         $item = ClaimLineItem::findOrFail($request->id);
+        $oldStatus = $item->status;
+        $status = $request->status;
         $item->fill($request->all());
-        $item->save();
+        if($status != $oldStatus )
+        {
+
+            if($status == Claim::STATUS_APPROVAL_PENDING || $status == Claim::STATUS_DENIED_BY_REPRESENTATIVE || $status == Claim::STATUS_CANCEL)
+            {
+                $catBudget =  PlanBudget::where('plan_id',$item->plan_id)
+                    ->where('category_id',$item->category_id)
+                    ->first();
+
+                if($catBudget){
+                    $catBudget->pending = $catBudget->pending - $item->amount_claimed;
+                    $catBudget->balance = $catBudget->balance +  $item->amount_claimed;
+                }
+
+                $item->plan_id = null;
+                $item->category_id = null;
+
+                DB::transaction(function () use ($item,$catBudget){
+                    $item->save();
+                    $catBudget->save();
+                });
+            }
+        }
+        else
+        {
+          $item->save();
+        }
+
+
         return $this->respondOk('Claim updated.');
     }
 }

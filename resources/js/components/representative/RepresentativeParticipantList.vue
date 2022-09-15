@@ -6,6 +6,12 @@
                     <h5>Your Participants</h5>
                     <small class="text-primary">{{ items.total }} Participants</small>
                 </div>
+                <div class="card-right-btns">
+                    <a class="btn btn-primary" href="/analytics">
+                         Plan Analytics
+                    </a>
+
+                </div>
             </div>
             <div class="loader-wrap">
                 <div class="table-x-scroll">
