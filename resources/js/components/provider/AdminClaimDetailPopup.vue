@@ -344,7 +344,12 @@ export default {
 
             })
             .catch(error => {
-                this.$toastr.e("Error", "Some thing went wrong.")
+                let err = error.response.data.error;
+                if(err){
+                    this.$toastr.e("Error", err);
+                }else {
+                    this.$toastr.e("Error", "Some thing went wrong.")
+                }
             })
             .finally(() => {
                 this.loader = false;

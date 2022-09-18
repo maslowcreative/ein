@@ -450,41 +450,71 @@ class ClaimController extends Controller
                                             ])],
 
         ]);
-        $item = ClaimLineItem::findOrFail($request->id);
-        $oldStatus = $item->status;
+        $claim = ClaimLineItem::findOrFail($request->id);
         $status = $request->status;
         $request->merge(['amount_claimed' => $request->hours * $request->unit_price]);
-        $item->fill($request->all());
-        if($status != $oldStatus )
+        $claim->fill($request->all());
+
+        if($status == Claim::STATUS_APPROVAL_PENDING || $status == Claim::STATUS_DENIED_BY_REPRESENTATIVE || $status == Claim::STATUS_CANCEL)
         {
-            if($status == Claim::STATUS_APPROVAL_PENDING || $status == Claim::STATUS_DENIED_BY_REPRESENTATIVE || $status == Claim::STATUS_CANCEL)
-            {
-                $catBudget =  PlanBudget::where('plan_id',$item->plan_id)
-                    ->where('category_id',$item->category_id)
-                    ->first();
+            $catBudget =  PlanBudget::where('plan_id',$claim->plan_id)
+                ->where('category_id',$claim->category_id)
+                ->first();
+
+            if($catBudget){
+                $catBudget->pending = $catBudget->pending - $claim->amount_claimed;
+                $catBudget->balance = $catBudget->balance +  $claim->amount_claimed;
+            }
+
+            $claim->plan_id = null;
+            $claim->category_id = null;
+            $var = DB::transaction(function () use ($claim,$catBudget){
+                $claim->save();
 
                 if($catBudget){
-                    $catBudget->pending = $catBudget->pending - $item->amount_claimed;
-                    $catBudget->balance = $catBudget->balance +  $item->amount_claimed;
+                    $catBudget->save();
                 }
 
-                $item->plan_id = null;
-                $item->category_id = null;
-
-                DB::transaction(function () use ($item,$catBudget){
-                    $item->save();
-                    if($catBudget){
-                        $catBudget->save();
-                    }
-
-                });
-            }
-        }
-        else
+            });
+        }else
         {
-          $item->save();
-        }
+            if($claim->plan_id)
+            {
+                $claimData = $this->claimValidate($claim,[
+                    'plan_id' => $claim->plan_id,
+                    'category_id' => $claim->category_id,
+                ]);
+            }else
+            {
+                $claimData = $this->claimValidate($claim);
+            }
 
+
+            if(!$claimData['status']){
+                return $this->respondError($claimData['message']) ;
+            }
+            DB::transaction(function () use ($claim,$claimData) {
+                $catBudget = $claimData['catBudget'];
+
+                if($claim->plan_id  && $claim->isDirty('amount_claimed'))
+                {
+                    $catBudget->balance = $catBudget->balance + $claim->getOriginal('amount_claimed');
+                    $catBudget->pending = $catBudget->pending - $claim->getOriginal('amount_claimed');
+                    $catBudget->balance = $catBudget->balance - $claim->amount_claimed;
+                    $catBudget->pending = $catBudget->pending + $claim->amount_claimed;
+                    $catBudget->save();
+                    $claim->save();
+                }elseif(!$claim->plan_id)
+                {
+                    $catBudget->balance = $catBudget->balance - $claim->amount_claimed;
+                    $catBudget->pending = $catBudget->pending + $claim->amount_claimed;
+                    $catBudget->save();
+                    $claim->plan_id = $catBudget->plan_id;
+                    $claim->category_id = $catBudget->category_id;
+                    $claim->save();
+                }
+            });
+        }
 
         return $this->respondOk('Claim updated.');
     }
