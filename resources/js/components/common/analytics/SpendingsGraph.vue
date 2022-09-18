@@ -1,10 +1,10 @@
 <template>
   <div>
     <div class="card p-3 p-md-5">
-
-      <div class="row justify-content-end">
+     <h6 v-if="plan">Plan: {{plan.start_date}} to {{plan.end_date}}</h6>
+     <div class="row justify-content-end">
         <div class="col-md-3">
-<!--            <label>Participant</label>-->
+<!--            <label>Plan: {{plan.start_date}} to {{plan.end_date}}</label>-->
             <multiselect v-model="selectedParticipant" :options="prticipantOptions"  placeholder="Select participant" label="show_name" track-by="id"></multiselect>
         </div>
       </div>
@@ -47,7 +47,7 @@
                   <th scope="col" class="not-center">Support Category</th>
                   <th scope="col" class="not-center">Budget</th>
                   <th scope="col" class="not-center">Spent</th>
-                  <th scope="col" class="not-center">Pending</th>
+                  <th scope="col" class="not-center">Processing</th>
                   <th scope="col" class="not-center">Balance</th>
                 </tr>
               </thead>
@@ -133,51 +133,26 @@ export default {
             graph: false,
             table: false,
       },
+      plan: null,
       selectedParticipant: {},
       prticipantOptions: [],
       chartData: {
-
-        labels: [
-            // "Daily Life",
-            // "Transport",
-            // "Consumables",
-            // "Community Participation",
-            // "AT",
-            // "HM and SDA",
-            // "Support Coordination",
-            // "ILA",
-            // "Increased Social",
-            // "Job",
-            // "Improved Relationships",
-            // "Improved Health",
-            // "Improved Learning",
-            // "Plan Management",
-            // "Therapy"
-        ],
+        labels: [],
         datasets: [
           {
             label: "Spent",
             backgroundColor: "#36a2eb",
-            //backgroundColor: "red",
-            data: [
-               // 40, 20, 12, 39, 10, 40, 39, 80, 40, 20, 12, 11, 13, 14, 15
-            ],
+            data: [],
           },
           {
-            label: "Pending",
+            label: "Processing",
             backgroundColor: "#ff6484",
-            //backgroundColor: "blue",
-            data: [
-               //5, 6, 7, 8, 9, 10, 15, 14, 13, 12, 11, 1, 2, 3, 4, 5
-            ],
+            data: [],
           },
           {
             label: "Balance",
-            //backgroundColor: "yellow",
             backgroundColor: "green",
-            data: [
-               //1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 14, 15
-            ],
+            data: [],
           },
         ],
       },
@@ -205,6 +180,7 @@ export default {
                   this.chartData.datasets[0].data = graphData.spent; //spent
                   this.chartData.datasets[1].data = graphData.pending; //spent
                   this.chartData.datasets[2].data = graphData.balance; //spent
+                  this.plan = res.data.plan;
                   this.tableData = res.data.table;
               })
               .catch(error => {

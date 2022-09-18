@@ -205,16 +205,21 @@ class PlanController extends Controller
         {
             return $this->respondError('No plan category exists with plan budget');
         }
-
+        $planBugetsFiltered  = $planBugets->where('category.short_name' ,'<>','Plan Management');
         $spendingData = [
             'graph' => [
-                    'labels' => $planBugets->pluck('category.short_name')->toArray(),
-                    'amount' => $planBugets->pluck('amount')->toArray(),
-                    'balance' => $planBugets->pluck('balance')->toArray(),
-                    'pending' => $planBugets->pluck('pending')->toArray(),
-                    'spent' => $planBugets->pluck('spent')->toArray(),
+                    'labels' => $planBugetsFiltered->pluck('category.short_name')->toArray(),
+                    'amount' => $planBugetsFiltered->pluck('amount')->toArray(),
+                    'balance' => $planBugetsFiltered->pluck('balance')->toArray(),
+                    'pending' => $planBugetsFiltered->pluck('pending')->toArray(),
+                    'spent' => $planBugetsFiltered->pluck('spent')->toArray(),
                 ],
             'table' => $planBugets->toArray(),
+            'plan' => [
+                'start_date' => $plan->start_date_formatted,
+                'end_date' => $plan->end_date_formatted,
+                'status' => $plan->status,
+            ]
         ];
 
         return $this->respondWithSuccess($spendingData);

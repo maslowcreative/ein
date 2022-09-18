@@ -8,7 +8,7 @@
                 </div>
                 <div class="card-right-btns">
                     <a class="btn btn-primary" href="/analytics">
-                         Plan Analytics
+                        View Plan
                     </a>
 
                 </div>
