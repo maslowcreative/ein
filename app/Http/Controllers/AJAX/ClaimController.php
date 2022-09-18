@@ -453,10 +453,10 @@ class ClaimController extends Controller
         $item = ClaimLineItem::findOrFail($request->id);
         $oldStatus = $item->status;
         $status = $request->status;
+        $request->merge(['amount_claimed' => $request->hours * $request->unit_price]);
         $item->fill($request->all());
         if($status != $oldStatus )
         {
-
             if($status == Claim::STATUS_APPROVAL_PENDING || $status == Claim::STATUS_DENIED_BY_REPRESENTATIVE || $status == Claim::STATUS_CANCEL)
             {
                 $catBudget =  PlanBudget::where('plan_id',$item->plan_id)
