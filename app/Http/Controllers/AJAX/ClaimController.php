@@ -489,11 +489,10 @@ class ClaimController extends Controller
                 $claimData = $this->claimValidate($claim);
             }
 
-
             if(!$claimData['status']){
                 return $this->respondError($claimData['message']) ;
             }
-            DB::transaction(function () use ($claim,$claimData) {
+            $var = DB::transaction(function () use ($claim,$claimData) {
                 $catBudget = $claimData['catBudget'];
 
                 if($claim->plan_id  && $claim->isDirty('amount_claimed'))
@@ -504,7 +503,10 @@ class ClaimController extends Controller
                     $catBudget->pending = $catBudget->pending + $claim->amount_claimed;
                     $catBudget->save();
                     $claim->save();
-                }elseif(!$claim->plan_id)
+                }elseif($claim->plan_id && !$claim->isDirty('amount_claimed'))
+                {
+                    $claim->save();
+                }else
                 {
                     $catBudget->balance = $catBudget->balance - $claim->amount_claimed;
                     $catBudget->pending = $catBudget->pending + $claim->amount_claimed;
