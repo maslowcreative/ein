@@ -39,7 +39,6 @@ class PlanController extends Controller
      */
     public function store(Request $request)
     {
-
         $request->validate([
             'file_name' => 'nullable|string',
             'status' => 'required|boolean',
@@ -48,6 +47,7 @@ class PlanController extends Controller
             'participant_id' => 'required|numeric',
             'budget' => 'required|numeric|min:1',
         ]);
+
         if($request->status == 1){
             $plans = Plan::where('participant_id',$request->participant_id)
                 ->where('status',1)
@@ -76,6 +76,9 @@ class PlanController extends Controller
                     [
                         'category_id' => $cat[1],
                         'amount' => $val,
+                        'balance' => $val,
+                        'pending' => 0,
+                        'spent' => 0,
                     ]
                 );
             }
