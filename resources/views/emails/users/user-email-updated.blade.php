@@ -1,6 +1,7 @@
 @component('mail::message')
-    # {{$role}} has upated its email.
+    # {{$role}} has updated its email.
     Name: {{$name}}
+    Business Name: {{$business_name}}
     New Email: {{$email}}
     OLD Email: {{$old_email}}
 

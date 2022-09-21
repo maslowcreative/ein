@@ -43,12 +43,13 @@ class UserEmailUpdated extends Mailable
         $data = [
             'role' => ucfirst($role->name),
             'name' => $this->user->name,
+            'business_name' => $this->user->other_name,
             'email' => $this->user->email,
             'old_email' => $this->oldEmail,
             'url' => route('home')
         ];
 
-        $this->subject = $data['name']. " (". $data['role'] . ") updated email!";
+        $this->subject = $data['business_name']. " (". $data['role'] . ") updated email!";
 
         return $this->markdown('emails.users.user-email-updated',$data);
     }
