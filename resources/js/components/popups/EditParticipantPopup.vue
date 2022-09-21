@@ -32,8 +32,8 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-4">
-                                    <label  class="form-label">Other Name</label>
-                                    <input type="text" v-model="user.other_name"  class="form-control"  placeholder="Other Name of the participant" />
+                                    <label  class="form-label">Name</label>
+                                    <input type="text" v-model="user.other_name"  class="form-control"  placeholder=") of the participant" />
                                     <div class="invalid-msg" v-if="form.errors.has('other_name')" v-html="form.errors.get('other_name')" />
                                 </div>
                             </div>

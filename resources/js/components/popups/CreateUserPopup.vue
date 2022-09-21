@@ -199,12 +199,12 @@
                     </div>
                     <div class="col-md-6" v-if="form.role_id == 2">
                       <div class="mb-4">
-                        <label class="form-label">Other Name</label>
+                        <label class="form-label">Name</label>
                         <input
                           type="text"
                           class="form-control"
                           v-model="form.other_name"
-                          placeholder="Other name of the user"
+                          placeholder="name of the user"
                         />
                         <div
                           class="invalid-msg"
@@ -317,12 +317,12 @@
                     </div>
                     <div class="col-md-6" v-if="form.role_id == 4">
                       <div class="mb-4">
-                        <label class="form-label">Other Name </label>
+                        <label class="form-label">Name </label>
                         <input
                           type="text"
                           class="form-control"
                           v-model="form.other_name"
-                          placeholder="Other name of the user"
+                          placeholder="name of the user"
                         />
                         <div
                           class="invalid-msg"
