@@ -59,7 +59,7 @@
                             />
                         </div>
                         <div class="">
-                            <label class="form-label">Particpant Name</label>
+                            <label class="form-label">Participant Name</label>
                             <input
                                 type="text"
                                 v-model="filters.participant_name"

@@ -573,7 +573,7 @@ export default {
               .catch(error => {
 
                   if(error.response.status == 422){
-                      this.$toastr.e("Error", "Please select particpant first.");
+                      this.$toastr.e("Error", "Please select participant first.");
                   }else {
                       this.$toastr.e("Error", "Some thing went wrong.");
                   }
