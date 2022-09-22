@@ -114,7 +114,114 @@ class PlanController extends Controller
             'budget' => 'required|numeric',
             'status' => 'required|boolean',
             'start_date' => 'required',
-            'end_date' => 'required'
+            'end_date' => 'required',
+            'budgets' => 'required|array',
+            'budgets.cat_1' => ['numeric',function ($attribute, $value, $fail) use ($plan){
+                $budget = PlanBudget::where('category_id',1)->where('plan_id',$plan->id)->first();
+                if($budget && $value < $budget->amount)
+                {
+                    $fail('New value cannot be less than the old value.');
+                }
+            }],
+            'budgets.cat_2' => ['numeric',function ($attribute, $value, $fail) use ($plan){
+                $budget = PlanBudget::where('category_id',2)->where('plan_id',$plan->id)->first();
+                if($budget && $value < $budget->amount)
+                {
+                    $fail('New value cannot be less than the old value.');
+                }
+            }],
+            'budgets.cat_3' => ['numeric',function ($attribute, $value, $fail) use ($plan){
+                $budget = PlanBudget::where('category_id',3)->where('plan_id',$plan->id)->first();
+                if($budget && $value < $budget->amount)
+                {
+                    $fail('New value cannot be less than the old value.');
+                }
+            }],
+            'budgets.cat_4' => ['numeric',function ($attribute, $value, $fail) use ($plan){
+                $budget = PlanBudget::where('category_id',4)->where('plan_id',$plan->id)->first();
+                if($budget && $value < $budget->amount)
+                {
+                    $fail('New value cannot be less than the old value.');
+                }
+            }],
+            'budgets.cat_5' => ['numeric',function ($attribute, $value, $fail) use ($plan){
+                $budget = PlanBudget::where('category_id',5)->where('plan_id',$plan->id)->first();
+                if($budget && $value < $budget->amount)
+                {
+                    $fail('New value cannot be less than the old value.');
+                }
+            }],
+            'budgets.cat_6' => ['numeric',function ($attribute, $value, $fail) use ($plan){
+                $budget = PlanBudget::where('category_id',6)->where('plan_id',$plan->id)->first();
+                if($budget && $value < $budget->amount)
+                {
+                    $fail('New value cannot be less than the old value.');
+                }
+            }],
+            'budgets.cat_7' => ['numeric',function ($attribute, $value, $fail) use ($plan){
+                $budget = PlanBudget::where('category_id',7)->where('plan_id',$plan->id)->first();
+                if($budget && $value < $budget->amount)
+                {
+                    $fail('New value cannot be less than the old value.');
+                }
+            }],
+            'budgets.cat_8' => ['numeric',function ($attribute, $value, $fail) use ($plan){
+                $budget = PlanBudget::where('category_id',8)->where('plan_id',$plan->id)->first();
+                if($budget && $value < $budget->amount)
+                {
+                    $fail('New value cannot be less than the old value.');
+                }
+            }],
+            'budgets.cat_9' => ['numeric',function ($attribute, $value, $fail) use ($plan){
+                $budget = PlanBudget::where('category_id',9)->where('plan_id',$plan->id)->first();
+                if($budget && $value < $budget->amount)
+                {
+                    $fail('New value cannot be less than the old value.');
+                }
+            }],
+            'budgets.cat_10' => ['numeric',function ($attribute, $value, $fail) use ($plan){
+                $budget = PlanBudget::where('category_id',10)->where('plan_id',$plan->id)->first();
+                if($budget && $value < $budget->amount)
+                {
+                    $fail('New value cannot be less than the old value.');
+                }
+            }],
+            'budgets.cat_11' => ['numeric',function ($attribute, $value, $fail) use ($plan){
+                $budget = PlanBudget::where('category_id',11)->where('plan_id',$plan->id)->first();
+                if($budget && $value < $budget->amount)
+                {
+                    $fail('New value cannot be less than the old value.');
+                }
+            }],
+            'budgets.cat_12' => ['numeric',function ($attribute, $value, $fail) use ($plan){
+                $budget = PlanBudget::where('category_id',12)->where('plan_id',$plan->id)->first();
+                if($budget && $value < $budget->amount)
+                {
+                    $fail('New value cannot be less than the old value.');
+                }
+            }],
+            'budgets.cat_13' => ['numeric',function ($attribute, $value, $fail) use ($plan){
+                $budget = PlanBudget::where('category_id',13)->where('plan_id',$plan->id)->first();
+                if($budget && $value < $budget->amount)
+                {
+                    $fail('New value cannot be less than the old value.');
+                }
+            }],
+            'budgets.cat_14' => ['numeric',function ($attribute, $value, $fail) use ($plan){
+                $budget = PlanBudget::where('category_id',14)->where('plan_id',$plan->id)->first();
+                if($budget && $value < $budget->amount)
+                {
+                    $fail('New value cannot be less than the old value.');
+                }
+            }],
+            'budgets.cat_15' => ['numeric',function ($attribute, $value, $fail) use ($plan){
+                $budget = PlanBudget::where('category_id',15)->where('plan_id',$plan->id)->first();
+
+                if($budget && $value < $budget->amount)
+                {
+                    $fail('New value cannot be less than the old value.');
+                }
+            }],
         ]);
 
         if($request->status == 1){
@@ -142,6 +249,7 @@ class PlanController extends Controller
                     $buget->plan_id = $plan->id;
                 }
                 $buget->amount = $val;
+                $buget->balance =  $buget->amount - ( $buget->spent + $buget->pending );
                 $buget->save();
             }
         }

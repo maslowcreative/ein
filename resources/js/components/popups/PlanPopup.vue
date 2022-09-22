@@ -100,90 +100,119 @@
                         <div class="mb-4">
                             <label class="form-label">Assistance with Daily Life</label>
                             <input :disabled="!getPermission('add_edit_plans')" type="text" v-model="form.budgets.cat_1" class="form-control" />
+                            <div class="invalid-msg" v-if="form.errors.has('budgets.cat_1')" v-html="form.errors.get('budgets.cat_1').replace('budgets.cat 1','value')" />
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="mb-4">
                             <label class="form-label">Transport</label>
                             <input :disabled="!getPermission('add_edit_plans')" type="text"  v-model="form.budgets.cat_2" class="form-control" />
+                            <div class="invalid-msg" v-if="form.errors.has('budgets.cat_2')" v-html="form.errors.get('budgets.cat_2').replace('budgets.cat 2','value')" />
+
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="mb-4">
                             <label class="form-label">Consumables</label>
                             <input :disabled="!getPermission('add_edit_plans')" type="text"  v-model="form.budgets.cat_3" class="form-control" />
+                            <div class="invalid-msg" v-if="form.errors.has('budgets.cat_3')" v-html="form.errors.get('budgets.cat_3').replace('budgets.cat 3','value')" />
+
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="mb-4">
                             <label class="form-label">Assistance with Social</label>
                             <input :disabled="!getPermission('add_edit_plans')" type="text"  v-model="form.budgets.cat_4" class="form-control" />
+                            <div class="invalid-msg" v-if="form.errors.has('budgets.cat_4')" v-html="form.errors.get('budgets.cat_4').replace('budgets.cat 4','value')" />
+
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="mb-4">
                             <label class="form-label">Assistive Technology</label>
                             <input :disabled="!getPermission('add_edit_plans')" type="text"  v-model="form.budgets.cat_5" class="form-control" />
+                            <div class="invalid-msg" v-if="form.errors.has('budgets.cat_5')" v-html="form.errors.get('budgets.cat_5').replace('budgets.cat 5','value')" />
+
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="mb-4">
                             <label class="form-label">Home Modifications</label>
                             <input :disabled="!getPermission('add_edit_plans')" type="text"  v-model="form.budgets.cat_6" class="form-control" />
+                            <div class="invalid-msg" v-if="form.errors.has('budgets.cat_6')" v-html="form.errors.get('budgets.cat_6').replace('budgets.cat 6','value')" />
+
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="mb-4">
                             <label class="form-label">Support Coordination</label>
                             <input :disabled="!getPermission('add_edit_plans')" type="text" v-model="form.budgets.cat_7" class="form-control" />
+                            <div class="invalid-msg" v-if="form.errors.has('budgets.cat_7')" v-html="form.errors.get('budgets.cat_7').replace('budgets.cat 7','value')" />
+
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="mb-4">
                             <label class="form-label">Improved Living Arrangements</label>
                             <input :disabled="!getPermission('add_edit_plans')" type="text"  v-model="form.budgets.cat_8" class="form-control" />
+                            <div class="invalid-msg" v-if="form.errors.has('budgets.cat_8')" v-html="form.errors.get('budgets.cat_8').replace('budgets.cat 8','value')" />
+
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="mb-4">
                             <label class="form-label">Increased Social</label>
                             <input :disabled="!getPermission('add_edit_plans')" type="text" v-model="form.budgets.cat_9" class="form-control" />
+                            <div class="invalid-msg" v-if="form.errors.has('budgets.cat_9')" v-html="form.errors.get('budgets.cat_9').replace('budgets.cat 9','value')" />
+
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="mb-4">
                             <label class="form-label">Finding and Keeping a Job</label>
                             <input :disabled="!getPermission('add_edit_plans')" type="text"  v-model="form.budgets.cat_10" class="form-control" />
+                            <div class="invalid-msg" v-if="form.errors.has('budgets.cat_10')" v-html="form.errors.get('budgets.cat_10').replace('budgets.cat 10','value')" />
+
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="mb-4">
                             <label class="form-label">Improved Relationships</label>
                             <input :disabled="!getPermission('add_edit_plans')" type="text"  v-model="form.budgets.cat_11" class="form-control" />
+                            <div class="invalid-msg" v-if="form.errors.has('budgets.cat_11')" v-html="form.errors.get('budgets.cat_11').replace('budgets.cat 11','value')" />
+
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="mb-4">
                             <label class="form-label">Improved Health and Wellbeing</label>
                             <input :disabled="!getPermission('add_edit_plans')" type="text"  v-model="form.budgets.cat_12" class="form-control" />
+                            <div class="invalid-msg" v-if="form.errors.has('budgets.cat_12')" v-html="form.errors.get('budgets.cat_12').replace('budgets.cat 12','value')" />
+
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="mb-4">
                             <label class="form-label">Improved Learning</label>
                             <input :disabled="!getPermission('add_edit_plans')" type="text"  v-model="form.budgets.cat_13" class="form-control" />
+                            <div class="invalid-msg" v-if="form.errors.has('budgets.cat_13')" v-html="form.errors.get('budgets.cat_13').replace('budgets.cat 13','value')" />
+
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="mb-4">
                             <label class="form-label">Improved Life Choices</label>
                             <input :disabled="!getPermission('add_edit_plans')" type="text"  v-model="form.budgets.cat_14" class="form-control" />
+                            <div class="invalid-msg" v-if="form.errors.has('budgets.cat_14')" v-html="form.errors.get('budgets.cat_14').replace('budgets.cat 14','value')" />
+
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="mb-4">
                             <label class="form-label">Improved Daily Living Skills</label>
                             <input :disabled="!getPermission('add_edit_plans')" type="text"  v-model="form.budgets.cat_15" class="form-control" />
+                            <div class="invalid-msg" v-if="form.errors.has('budgets.cat_15')" v-html="form.errors.get('budgets.cat_15').replace('budgets.cat 15','value')" />
+
                         </div>
                     </div>
                 </div>
