@@ -202,7 +202,11 @@ class ClaimController extends Controller
 
             DB::transaction(function () use ($claim,$catBudget){
                 $claim->save();
-                $catBudget->save();
+                if($catBudget)
+                {
+                    $catBudget->save();
+                }
+
             });
 
         }
@@ -243,7 +247,7 @@ class ClaimController extends Controller
 
         $name = Carbon::now()->format('YmdHi'). '.csv';
 
-        return (new FastExcel($items))->download($name, function ($item) {
+            return (new FastExcel($items))->download($name, function ($item) {
             return [
                 'RegistrationNumber' => env('EIN_REGISTRATION_NUMBER','N/A'),
                 'NdisNumber' => (string) $item->claim->ndis_number,
