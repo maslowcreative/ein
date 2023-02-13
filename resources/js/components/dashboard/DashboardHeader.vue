@@ -5,18 +5,19 @@
 <!--      <h1 class="h2 mb-4 fw-bold pb-2">Dashboard</h1>-->
       <h4 class="fw-bold">Dashboard</h4>
       <div class="grid options-grid">
-        <a v-if="getPermission('is_supper_admin')" href="#" class="option-item" data-bs-toggle="modal" data-bs-target="#userModal">
-          <ion-icon name="person-add-outline" class="option-item-icon"></ion-icon>
-          Add New User
+        <a v-if="getPermission('is_supper_admin')" href="#" class="option-item" data-bs-toggle="modal" data-bs-target="#adminProviderInvoicePopup">
+<!--          <ion-icon name="person-add-outline" class="option-item-icon"></ion-icon>-->
+          <ion-icon name="receipt-outline" class="option-item-icon"></ion-icon>
+          + New Invoice
         </a>
-        <a  v-if="getPermission('is_supper_admin')" href="#" class="option-item" data-bs-toggle="modal" data-bs-target="#adminModal">
+        <a  v-if="getPermission('is_supper_admin')" href="#" class="option-item" data-bs-toggle="modal" data-bs-target="#adminRepReceiptPopup">
           <span class="option-item-icon">
             <span class="admin-icon">
-              <ion-icon name="person-add-outline" class=""></ion-icon>
-              <ion-icon name="cog-outline" class="icon-cog"></ion-icon>
+              <ion-icon name="newspaper-outline" class="option-item-icon"></ion-icon>
+
             </span>
           </span>
-          Add New Admin
+            + New Receipt
         </a>
         <a v-if="getPermission('export_import_documents')" href="#" class="option-item" data-bs-toggle="modal" data-bs-target="#fileUpload">
           <ion-icon name="push-outline" class="option-item-icon"></ion-icon>

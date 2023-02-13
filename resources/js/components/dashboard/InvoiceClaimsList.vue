@@ -195,6 +195,8 @@
     <view-invoice-popup v-bind:claim="claim"></view-invoice-popup>
 <!--    <provider-claim-detail-popup   v-bind:claim="claim"></provider-claim-detail-popup>-->
     <admin-claim-detail-popup   ></admin-claim-detail-popup>
+    <admin-provider-create-invoice-popup></admin-provider-create-invoice-popup>
+    <admin-rep-create-receipt-popup></admin-rep-create-receipt-popup>
   </div>
 </template>
 
@@ -202,9 +204,11 @@
 import ViewInvoicePopup from "../provider/ViewInvoicePopup";
 import AdminClaimDetailPopup from "../provider/AdminClaimDetailPopup";
 import Form from "vform";
+import AdminProviderCreateInvoicePopup from "../popups/AdminProviderCreateInvoicePopup";
+import AdminRepCreateReceiptPopup from "../popups/AdminRepCreateReceiptPopup";
 export default {
     props:["policy"],
-    components: {AdminClaimDetailPopup, ViewInvoicePopup},
+    components: {AdminRepCreateReceiptPopup, AdminProviderCreateInvoicePopup, AdminClaimDetailPopup, ViewInvoicePopup},
     data() {
     return {
         loader: false,
