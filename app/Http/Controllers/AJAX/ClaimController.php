@@ -11,6 +11,7 @@ use App\Models\Participant;
 use App\Models\Plan;
 use App\Models\PlanBudget;
 use App\Models\Provider;
+use App\Models\Representative;
 use App\Traits\ClaimsValidationTrait;
 use Box\Spout\Common\Exception\IOException;
 use Carbon\Carbon;
@@ -37,7 +38,7 @@ class ClaimController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('claim.service.clean')->only('store');
+        $this->middleware('claim.service.clean')->only('store','storeAdmin');
     }
 
     public function index()
@@ -88,6 +89,7 @@ class ClaimController extends Controller
         $provider = optional(\auth()->user())->provider;
         $isRepresentative = false;
         if(!$provider){
+            dd('asasd');
             $representative = optional(\auth()->user())->representative;
             if(!$representative){
                 return $this->respondNotFound(__('record.not_found',['model'=>'Provider']));
@@ -123,6 +125,85 @@ class ClaimController extends Controller
                 'provider_abn' => $isRepresentative ? 'REIMB' : $provider->abn ,
                 'status' =>  $isRepresentative ? Claim::STATUS_APPROVED_BY_REPRESENTATIVE : Claim::STATUS_APPROVAL_PENDING,
                 'invoice_path' => $path
+            ])
+        );
+
+        foreach ($request->service as $index => $item) {
+            $key = $index + 1;
+            $item = array_merge($item,[
+                'status' =>  $isRepresentative ? Claim::STATUS_APPROVED_BY_REPRESENTATIVE : Claim::STATUS_APPROVAL_PENDING,
+                'claim_reference' => "{$claim->id}_{$key}",
+                'provider_id' => $provider->user_id,
+                'participant_id' => $participant->user_id,
+                'amount_claimed' => $item['hours'] * $item['unit_price']
+            ]);
+            $claim->items()->create($item);
+        }
+        DB::commit();
+
+        if(!$isRepresentative && $participant){
+            $toEmail = optional($participant->representative)->email;
+            if($toEmail) {
+                Mail::to($toEmail)
+                    ->send(new InvoiceCreated($provider));
+            }
+        }
+
+        return $this->respondCreated();
+
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeAdmin(ClaimPostRequest $request)
+    {
+        $provider = null;
+        if($request->action_role == 'provider'){
+            $provider = Provider::findOrFail($request->provider_id);
+        }
+
+        $isRepresentative = false;
+        $participant = Participant::findOrFail($request->participant_id);
+
+        if(!$provider && $request->action_role == 'representative'){
+            $representative =  Representative::find($participant->representative_id);
+            if(!$representative){
+                return $this->respondNotFound(__('record.not_found',['model'=>'Provider']));
+            }
+            $isRepresentative = true;
+            $provider = Provider::find($request->provider_id);
+        }
+
+        $planExist =  Plan::where('start_date','<=',$request->start_date)
+            ->where('end_date','>=',$request->end_date)
+            ->where('participant_id',$participant->id)
+            ->first();
+
+        if(!$planExist){
+            return response([
+                'message' => "The given data was invalid.",
+                'errors' => [
+                    'start_date' => 'No plan exist in given date range',
+                    'end_date' => 'No plan exist in given date range'
+                ]
+            ],422);
+        }
+
+        DB::beginTransaction();
+
+        $path = $request->file('file')->store('claims');
+
+        $claim = $provider->claims()->create(
+            array_merge($request->all(),[
+                'ndis_number' => $participant->ndis_number,
+                'provider_abn' => $isRepresentative ? 'REIMB' : $provider->abn ,
+                'status' =>  $isRepresentative ? Claim::STATUS_APPROVED_BY_REPRESENTATIVE : Claim::STATUS_APPROVAL_PENDING,
+                'invoice_path' => $path,
+                'admin_id' => \auth()->user()->id
             ])
         );
 

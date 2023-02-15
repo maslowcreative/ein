@@ -136,6 +136,10 @@
         "name": "ajax."
     },
     {
+        "uri": "ajax\/claims\/admin-store",
+        "name": "ajax.claims.store.admin"
+    },
+    {
         "uri": "ajax\/claims\/{claim}\/representative-action",
         "name": "ajax.claims.representative.action"
     },

@@ -27,6 +27,7 @@ Route::post('providers/remove-participants','ProviderController@removeParticipan
 
 Route::apiResource('providers','ProviderController');
 Route::get('claims/store','ClaimController@store');
+Route::post('claims/admin-store','ClaimController@storeAdmin')->name('claims.store.admin');
 Route::post('claims/{claim}/representative-action','ClaimController@approvedByRepresentative')->name('claims.representative.action');
 Route::match(['get', 'post'],'claims/bulk-upload-file','ClaimController@bulkUploadFile')->name('claims.bulk.upload.file');
 Route::get('claims/reconciled-results-file','ClaimController@reconciledResultsFile')->name('claims.reconciled.results.file');

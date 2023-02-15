@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Models\Claim;
+use App\Models\Participant;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
@@ -11,6 +12,7 @@ use Illuminate\Validation\Rule;
 class ClaimPostRequest extends FormRequest
 {
     private $role;
+    private $is_admin;
 
     /**
      * Determine if the user is authorized to make this request.
@@ -19,6 +21,7 @@ class ClaimPostRequest extends FormRequest
      */
     public function authorize()
     {
+            $this->this_admin = false;
             $provider = optional(auth()->user())->provider;
             if($provider){
 
@@ -31,6 +34,13 @@ class ClaimPostRequest extends FormRequest
                 $this->role = 'representative';
                 return true;
             }
+
+            $this->is_admin = optional(auth()->user()->hasRole('admin'));
+            if($this->is_admin){
+                $this->role = $this->request->get('action_role');
+                return true;
+            }
+
             return false;
     }
 
@@ -56,16 +66,24 @@ class ClaimPostRequest extends FormRequest
             'service.*.gst_code' => ['required',Rule::in(collect(Claim::TAX_TYPES)->keys()->toArray())],
         ];
 
-        if($this->role == 'provider'){
-            $rule['participant_id'] = 'required|exists:provider_participant,participant_id,provider_id,'.auth()->user()->id;
-            $rule['invoice_number'] = 'required|string|unique:claims,claim_reference,null,null,provider_id,'.auth()->user()->id;
+        if(!$this->is_admin)
+        {
+            if($this->role == 'provider'){
+                $rule['participant_id'] = 'required|exists:provider_participant,participant_id,provider_id,'.auth()->user()->id;
+                $rule['invoice_number'] = 'required|string|unique:claims,claim_reference,null,null,provider_id,'.auth()->user()->id;
+            }
+
+            if($this->role == 'representative'){
+                $rule['participant_id'] = 'required|exists:participants,user_id,representative_id,'.auth()->user()->id;
+                $rule['provider_id'] = 'required|exists:provider_participant,provider_id,participant_id,'.request()->participant_id;
+                $rule['invoice_number'] = 'required|string|unique:claims,claim_reference,null,null,provider_id,'.$this->provider_id;
+            }
         }
-
-        if($this->role == 'representative'){
-            $rule['participant_id'] = 'required|exists:participants,user_id,representative_id,'.auth()->user()->id;
-            $rule['provider_id'] = 'required|exists:provider_participant,provider_id,participant_id,'.request()->participant_id;
+        else
+        {
+            $rule['participant_id'] = 'required|exists:participants,user_id';
+            $rule['provider_id'] = 'required|exists:provider_participant,provider_id,participant_id,'.$this->participant_id;
             $rule['invoice_number'] = 'required|string|unique:claims,claim_reference,null,null,provider_id,'.$this->provider_id;
-
         }
 
         return $rule;

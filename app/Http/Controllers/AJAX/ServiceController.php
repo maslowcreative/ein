@@ -33,7 +33,7 @@ class ServiceController extends Controller
             $items = $items->whereIn('support_item_number',$providerItems);
         }
 
-        if(Auth::user()->hasRole('representative')) {
+        if(Auth::user()->hasRole('representative') || \request()->is_admin) {
 
             \request()->validate([
                 'participant_id' => 'required|integer',

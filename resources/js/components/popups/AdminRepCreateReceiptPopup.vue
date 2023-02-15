@@ -538,24 +538,27 @@ export default {
           this.servicesItemsOrginal = [];
       },
       createClaim() {
-          // this.loader = true;
-          // let route = this.laroute.route("ajax.claims.store");
-          // this.form
-          //     .post(route)
-          //     .then(res => {
-          //         console.log('res',res);
-          //         if ((res.status = 201)) {
-          //             this.$root.$emit("ein-claim:created");
-          //             this.$toastr.s("Success", "Claim created!");
-          //             this.closePopup();
-          //         }
-          //     })
-          //     .catch(error => {
-          //         this.$toastr.e("Error", "Some thing went wrong.")
-          //     })
-          //     .finally(() => {
-          //         this.loader = false
-          //     });
+          this.loader = true;
+          let route = this.laroute.route("ajax.claims.store.admin");
+          this.form.is_admin = true;
+          this.form.action_role = 'representative';
+          console.log(this.form.data());
+          this.form
+              .post(route)
+              .then(res => {
+                  console.log('res',res);
+                  if ((res.status = 201)) {
+                      this.$root.$emit("ein-claim:created");
+                      this.$toastr.s("Success", "Claim created!");
+                      this.closePopup();
+                  }
+              })
+              .catch(error => {
+                  this.$toastr.e("Error", "Some thing went wrong.")
+              })
+              .finally(() => {
+                  this.loader = false
+              });
 
       },
       itemNumberSelected(query){
@@ -624,6 +627,7 @@ export default {
               "filter[item_number]": query,
               'participant_id': this.form.participant_id,
               'provider_id' : this.form.provider_id,
+              'is_admin' : true
           }
 
           let route = this.laroute.route("ajax.services.index", data)
