@@ -341,6 +341,9 @@
                                     </div>
                                 </div>
                             </div>
+                            <div v-if="form.service.length > 0" class="pt-4 mt-4 border-top" style="text-align: center">
+                                <span  class="w-100 py-3 "><span class="form-label">Total Cost :</span> ${{totalCost}} </span>
+                            </div>
                             <div class="pt-4 mt-4 border-top">
                                 <button type="button" class="btn btn-light btn-lg w-100 py-3" v-on:click="addService()">+ Add New Service</button>
                             </div>
@@ -390,6 +393,7 @@ export default {
         maxDate : null,
         step: 1,
         lastStep: false,
+        totalCost: 0,
         form: new Form({
             'start_date': null,
             'end_date': null,
@@ -445,6 +449,22 @@ export default {
           } else {
               this.providerSerachResult = [];
           }
+      },
+      "form.service": {
+          handler: function (val, old) {
+              let totalCost = 0;
+              if (val.length > 0) {
+                  val.forEach(function (service) {
+                      let cost = Math.round((service.hours * service.unit_price + Number.EPSILON) * 100) / 100;
+                      totalCost = Math.round((totalCost + cost) * 100) / 100;
+                  });
+              } else {
+                  totalCost = 0;
+              }
+
+              this.totalCost = Math.round((totalCost) * 100) / 100;
+          },
+          deep: true
       }
   },
   mounted() {
@@ -509,6 +529,7 @@ export default {
           this.loader = false;
           this.step= 1;
           this.lastStep= false;
+          this.totalCost = 0 ;
           this.$refs.inputFile.value=null;
           this.form = new Form({
               'start_date': null,
