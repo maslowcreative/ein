@@ -524,6 +524,11 @@ export default {
               this.participantSelected = null;
               this.form.participant_id = null;
           }
+          if($key === "provider")
+          {
+              this.providerSelected = null;
+              this.form.provider_id = null;
+          }
       },
       resetForm(){
           this.loader = false;
@@ -601,6 +606,9 @@ export default {
           let data = {
               "filter[name]": query,
               "filter[roles][0]": type,
+              "is_admin_claim": true,
+              "participant_id" : this.participantSelected ? this.participantSelected.id : null,
+              "provider_id" : this.providerSelected ? this.providerSelected.id : null
           };
 
           let route = this.laroute.route("ajax.users.index", data)

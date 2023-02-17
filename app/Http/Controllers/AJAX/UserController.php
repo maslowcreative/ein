@@ -42,14 +42,40 @@ class UserController extends Controller
      */
     public function index()
     {
+
         $users = User::getUsers()
                      ->whereNotInRoles(['admin','sub-admin']);
 
-        if(Auth::user()->hasRole('admin')) {
+        if(Auth::user()->hasRole('admin') && !\request()->is_admin_claim) {
             $users = $users->with('plan');
         }
 
-        if(Auth::user()->hasRole('provider')) {
+        if(Auth::user()->hasRole('representative') || \request()->is_admin_claim) {
+
+            if(\request()->filter['roles'][0] == 'participant'){
+
+                $provider = Provider::find(\request()->provider_id);
+                if($provider)
+                {
+                    $participantIds = $provider->participants()->pluck('user_id');
+                    $users = $users->whereIn('id',$participantIds)->with('participant');
+                }
+
+            }
+            elseif (\request()->filter['roles'][0] == 'provider') {
+
+                 $participant = Participant::find(\request()->participant_id);
+                 if($participant)
+                 {
+                     $providerIds = $participant->providers()->pluck('provider_id');
+                     $users = $users->whereIn('id',$providerIds);
+                 }
+
+            }
+        }
+
+
+        if(Auth::user()->hasRole('provider') ) {
             $participantsIds = Auth::user()->provider->participants()->pluck('participant_id');
             $users = $users->whereIn('id',$participantsIds)->with('participant.representative');
         }
