@@ -89,7 +89,6 @@ class ClaimController extends Controller
         $provider = optional(\auth()->user())->provider;
         $isRepresentative = false;
         if(!$provider){
-            dd('asasd');
             $representative = optional(\auth()->user())->representative;
             if(!$representative){
                 return $this->respondNotFound(__('record.not_found',['model'=>'Provider']));
