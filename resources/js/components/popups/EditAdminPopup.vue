@@ -96,6 +96,16 @@
                   </div>
                 </div>
               </div>
+              <div class="col-md-12">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <label class="fw-bold">Add Invoices/Receipts</label>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" v-model="form.permissions.add_invoices_receipts"  checked />
+                        <label class="form-check-label" ></label>
+                    </div>
+                </div>
+              </div>
+
               <div class="mw290 mx-auto px-4 mt-3">
                 <button v-if="!loader" class="btn btn-primary btn-lg w-100 py-3">Update Sub-admin</button>
                 <button v-else class="btn btn-primary btn-lg w-100 py-3" type="button" disabled>
@@ -139,7 +149,8 @@ export default {
             edit_representatives_profiles: true,
             approving_claims: true,
             export_import_documents: true,
-            add_edit_plans: true
+            add_edit_plans: true,
+            add_invoices_receipts: true
         },
       }),
     }
@@ -159,7 +170,9 @@ export default {
                   edit_representatives_profiles: false,
                   approving_claims: false,
                   export_import_documents: false,
-                  add_edit_plans: false
+                  add_edit_plans: false,
+                  add_invoices_receipts: false,
+
           };
 
           admin.permissions.forEach((item, index) => {
@@ -203,7 +216,8 @@ export default {
               edit_representatives_profiles: true,
               approving_claims: true,
               export_import_documents: true,
-              add_edit_plans: true
+              add_edit_plans: true,
+              add_invoices_receipts: false,
           },
       })
     },

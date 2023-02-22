@@ -65,6 +65,12 @@ class CreatePermissions extends Seeder
                 'name' => 'add_edit_plans',
                 'guard_name' => 'web'
             ],
+            [
+                'id' => 11,
+                'name' => 'add_invoices_receipts',
+                'guard_name' => 'web'
+            ],
+
         ];
         Permission::upsert($data,['id'],['name','guard_name']);
     }
