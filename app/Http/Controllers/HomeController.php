@@ -70,7 +70,7 @@ class HomeController extends Controller
 
     public function analytics()
     {
-        if( auth()->user()->hasRole('representative') ){
+        if( auth()->user()->hasRole('representative') || auth()->user()->hasRole('admin') ){
             return view('analytics');
         }else{
             return redirect()->route('home');

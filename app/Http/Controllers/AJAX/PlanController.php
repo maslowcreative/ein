@@ -296,7 +296,11 @@ class PlanController extends Controller
             ]);
         }else
         {
-            return $this->respondForbidden();
+            if(!$user->hasRole('admin'))
+            {
+                return $this->respondForbidden();
+            }
+
         }
 
         $plan = Plan::where('participant_id',$request->participant_id)->active()->first();
