@@ -61,6 +61,7 @@
               </td>
               <td>
                 <div class="d-inline-block">
+                    
                   <div class="form-check form-switch">
                     <input class="form-check-input" v-on:change="onChange($event,admin.id)" type="checkbox" v-model="admin.status" id="flexSwitchCheckDefault" />
                     <label class="form-check-label" for="flexSwitchCheckDefault"></label>
