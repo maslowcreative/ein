@@ -284,7 +284,7 @@ class PlanController extends Controller
     {
         $user = Auth::user();
 
-        if($user->hasRole('representative')) {
+         if($user->hasRole('representative')) {
             $repId = $user->id;
             $request->validate([
                 'participant_id' => [
@@ -294,7 +294,8 @@ class PlanController extends Controller
                     }),
                 ]
             ]);
-        }else
+        }
+        else
         {
             if(!$user->hasRole('admin'))
             {
@@ -303,7 +304,9 @@ class PlanController extends Controller
 
         }
 
-        $plan = Plan::where('participant_id',$request->participant_id)->active()->first();
+        $plan = Plan::where('participant_id',$request->participant_id)
+                    ->where('id',$request->plan_id)
+                    ->first();
 
         if(!$plan)
         {

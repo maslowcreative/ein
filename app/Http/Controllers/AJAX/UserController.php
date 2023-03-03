@@ -42,7 +42,6 @@ class UserController extends Controller
      */
     public function index()
     {
-
         $users = User::getUsers()
                      ->whereNotInRoles(['admin','sub-admin']);
 
@@ -96,6 +95,35 @@ class UserController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function participantIndex()
+    {
+        $users = User::getUsers()
+                     ->whereNotInRoles(['admin','sub-admin']);
+
+        if(Auth::user()->hasRole('admin')) {
+            if(\request()->filter['roles'][0] == 'participant'){
+                $participantIds = Participant::all()->pluck('user_id');
+                $users = $users->whereIn('id',$participantIds)->with('participant.plans');
+            }
+        }
+
+        if(Auth::user()->hasRole('representative')) {
+            if(\request()->filter['roles'][0] == 'participant'){
+                $participantIds = Auth::user()->representative->participants()->pluck('user_id');
+                $users = $users->whereIn('id',$participantIds)->with('participant.plans');
+            }
+        }
+
+        $users = $users->paginate(5);
+        return $users;
+    }
+
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -122,7 +150,6 @@ class UserController extends Controller
               }
               $provider->items()->createMany($items);
           }
-
 
         }
         //Participant Role:

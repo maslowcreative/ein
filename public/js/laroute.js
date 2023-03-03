@@ -88,6 +88,10 @@
         "name": "ajax.users.upload.avatar"
     },
     {
+        "uri": "ajax\/users\/participant",
+        "name": "ajax.participants.index"
+    },
+    {
         "uri": "ajax\/users",
         "name": "ajax.users.index"
     },

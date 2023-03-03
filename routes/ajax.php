@@ -20,6 +20,7 @@ Route::put('users/{user}/basic-info','UserController@updateBasicInfo')->name('us
 Route::put('users/{user}/bank-info','UserController@updateBankInfo')->name('users.update.bank.info');
 Route::post('users/status-toggle','UserController@statusToggle')->name('user.status.toggle');
 Route::post('users/{user}/upload-avatar','UserController@uploadAvatar')->name('users.upload.avatar');
+Route::get('users/participant','UserController@participantIndex')->name('participants.index');
 Route::apiResource('users','UserController');
 
 Route::post('providers/remove-participants','ProviderController@removeParticipant')

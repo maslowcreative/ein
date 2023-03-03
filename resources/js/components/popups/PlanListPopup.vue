@@ -31,12 +31,12 @@
                             </td>
                             <td>
                                 <div class="d-inline-flex flex-nowrap align-items-center justify-content-around btn-group fs-lg">
+                                    <button class="btn btn-link p-0 mx-1">
+                                        <ion-icon name="eye-outline" v-on:click="openPlanAnalytics(plan)"></ion-icon>
+                                    </button>
                                     <button class="btn btn-link p-0 mx-1" v-on:click="openPlanEdit(plan)">
                                         <ion-icon name="create-outline"></ion-icon>
                                     </button>
-<!--                                    <button class="btn btn-link p-0 mx-1">-->
-<!--                                        <ion-icon name="trash-outline"></ion-icon>-->
-<!--                                    </button>-->
                                 </div>
                             </td>
                         </tr>
@@ -85,6 +85,11 @@ export default {
                     console.log(error)
                 })
                 .finally(() => (this.loader = false))
+        },
+        openPlanAnalytics(plan)
+        {
+           let  url = '/analytics?plan_id='+ plan.id + '&participant_id=' + plan.participant_id;
+            window.open(url);
         },
         openPlanEdit(plan) {
             let form = new Form({

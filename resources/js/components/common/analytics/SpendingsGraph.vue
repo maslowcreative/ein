@@ -1,14 +1,31 @@
 <template>
   <div>
     <div class="card p-3 p-md-5">
-     <h6 v-if="plan">Plan: {{plan.start_date}} to {{plan.end_date}}</h6>
-     <div class="row justify-content-end">
-        <div class="col-md-3">
-<!--            <label>Plan: {{plan.start_date}} to {{plan.end_date}}</label>-->
-            <multiselect v-model="selectedParticipant" :options="prticipantOptions"  placeholder="Select participant" label="show_name" track-by="id"></multiselect>
-        </div>
-      </div>
-
+        <h6 v-if="selectedPlan.id">Plan Status: {{selectedPlan.status ? 'Active' : 'In Active'}}</h6>
+         <div class="row justify-content-end">
+            <div class="col-md-3">
+                <label>Participant: </label>
+                <multiselect
+                    v-model="selectedParticipant"
+                    placeholder="Select participant"
+                    label="show_name"
+                    track-by="id"
+                    :options="prticipantOptions"
+                    :multiple="false"
+                    :taggable="false"
+                    :searchable="true"
+                    :loading="participantLoader"
+                    :internal-search="false"
+                    :clear-on-select="true"
+                    :close-on-select="true"
+                    :options-limit="50" :limit="15"
+                    @input="participantSelected"
+                    @search-change="searchParticipantName">
+                </multiselect>
+                <label>Plan: </label>
+                <multiselect v-model="selectedPlan" :options="plansOptions"  track-by="id"  placeholder="Select Plan" label="plans_range" @input="planSelected"></multiselect>
+              </div>
+         </div>
     </div>
 
     <div class="card">
@@ -120,15 +137,20 @@ export default {
   },
   watch: {
       "selectedParticipant": function (val,old){
-          if(val){
-              this.getSpendingData(val.id);
-          }else {
-              this.getSpendingData(0);
-          }
+          this.chartData.labels = [];
+          this.chartData.datasets[0].data = []; //spent
+          this.chartData.datasets[1].data = []; //spent
+          this.chartData.datasets[2].data = []; //spent
+          this.plan = null;
+          this.tableData = [];
        },
+
   },
   data() {
     return {
+      participantLoader: false,
+      paramParticipantId: null,
+      paramPlanId: null,
       loader:{
             graph: false,
             table: false,
@@ -136,6 +158,8 @@ export default {
       plan: null,
       selectedParticipant: {},
       prticipantOptions: [],
+      selectedPlan: {},
+      plansOptions: [],
       chartData: {
         labels: [],
         datasets: [
@@ -164,12 +188,33 @@ export default {
     }
   },
   mounted() {
-     this.getUsersList();
+      let queryString = window.location.search;
+      let urlParams = new URLSearchParams(queryString);
+
+      if( urlParams.has('plan_id')  &&  urlParams.has('participant_id')){
+          this.paramParticipantId = urlParams.get('participant_id');
+          this.paramPlanId = urlParams.get('plan_id');
+          this.getUsersList(1,null);
+      }
   },
 
   methods: {
-      getSpendingData(participantId){
-          let route = this.laroute.route("ajax.plans.spending.data",{'participant_id': participantId})
+      getSpendingData(participantId,planId = null){
+
+          let route = null;
+
+          if( participantId == null || planId == null ) {
+              this.$toastr.e("Error", 'Select articipant & Plans both.');
+              return false;
+          }
+
+
+          if(planId){
+              route = this.laroute.route("ajax.plans.spending.data",{'participant_id': participantId, 'plan_id':planId});
+          }else {
+              route = this.laroute.route("ajax.plans.spending.data",{'participant_id': participantId});
+          }
+
           this.loader.graph = true;
           this.loader.table = true;
           axios
@@ -184,7 +229,13 @@ export default {
                   this.tableData = res.data.table;
               })
               .catch(error => {
-                  console.log(error)
+                  this.$toastr.e("Error", error.response.data.error);
+                  this.chartData.labels = [];
+                  this.chartData.datasets[0].data = []; //spent
+                  this.chartData.datasets[1].data = []; //spent
+                  this.chartData.datasets[2].data = []; //spent
+                  this.plan = null;
+                  this.tableData = [];
               })
               .finally(() => {
                   this.loader.graph = false;
@@ -192,22 +243,71 @@ export default {
               })
       },
 
-      getUsersList(page = 1) {
+      getUsersList(page = 1,query = null) {
+
+          this.participantLoader = true;
           let data = { page: page }
           //Filtering Admin Role.
           data["filter[not_in][0]"] = 1;
+
+          if(query)
+          {
+              data["filter[name]"] = query;
+          }
+
+          if(this.paramParticipantId){
+              data["filter[id]"] = this.paramParticipantId;
+          }
+
           data["filter[roles][0]"] = 'participant';
-          let route = this.laroute.route("ajax.users.index", data)
+          let route = this.laroute.route("ajax.participants.index", data);
 
           axios
               .get(route)
               .then(res => {
                   this.prticipantOptions = res.data.data;
                   this.selectedParticipant = this.prticipantOptions[0];
+                  if(this.selectedParticipant){
+                      this.plansOptions = this.selectedParticipant.participant.plans;
+
+                      if(this.paramPlanId)
+                      {
+                          this.selectedPlan = this.plansOptions.filter((plan) =>{
+                              if(plan.id == this.paramPlanId)  {
+                                  return plan;
+                              }
+                          });
+                          this.getSpendingData(this.paramParticipantId,this.paramPlanId);
+                      }
+                  }
+
+                  this.participantLoader = false;
+                  this.paramPlanId = null;
+                  this.paramParticipantId = null;
               })
               .catch(error => {
-                  console.log(error)
+                  console.log(error);
+                  this.participantLoader = false;
+                  this.paramPlanId = null;
+                  this.paramParticipantId = null;
               });
+      },
+      participantSelected(query){
+          this.selectedPlan = {};
+          this.plansOptions = [];
+          if(this.selectedParticipant){
+              this.plansOptions = this.selectedParticipant.participant.plans;
+          }
+         // console.log('participant selected name',this.plansOptions);
+
+      },
+      searchParticipantName(query) {
+          this.getUsersList(1,query);
+      },
+      planSelected(plan) {
+          this.selectedPlan = plan;
+          this.getSpendingData(this.selectedParticipant.id,this.selectedPlan.id);
+
       },
   },
 }

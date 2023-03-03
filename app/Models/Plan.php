@@ -30,7 +30,8 @@ class Plan extends Model
 
     protected $appends = [
         'start_date_formatted',
-        'end_date_formatted'
+        'end_date_formatted',
+        'plans_range'
     ];
 
     public function scopeActive($query)
@@ -56,6 +57,11 @@ class Plan extends Model
     public function getEndDateFormattedAttribute()
     {
         return Carbon::parse($this->end_date)->format('d/m/y');
+    }
+
+    public function getPlansRangeAttribute()
+    {
+        return   $this->start_date_formatted .' to '. $this->end_date_formatted;
     }
 
     public function budgets(){
