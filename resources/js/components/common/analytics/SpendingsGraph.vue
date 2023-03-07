@@ -1,12 +1,12 @@
+<script src="../../../../../../../Desktop/valorant.service.ts"></script>
 <template>
   <div>
     <div class="card p-3 p-md-5">
-        <h6 v-if="selectedPlan.id">Plan Status: {{selectedPlan.status ? 'Active' : 'In Active'}}</h6>
+        <h6 v-if="selectedPlan.id">Plan Status: </h6>
          <div class="row justify-content-end">
             <div class="col-md-3">
-                <label>Participant: </label>
                 <multiselect
-                    v-model="selectedParticipant"
+                    v-model="selectedParticipantNew"
                     placeholder="Select participant"
                     label="show_name"
                     track-by="id"
@@ -136,7 +136,7 @@ export default {
     },
   },
   watch: {
-      "selectedParticipant": function (val,old){
+      "selectedParticipantNew": function (val,old){
           this.chartData.labels = [];
           this.chartData.datasets[0].data = []; //spent
           this.chartData.datasets[1].data = []; //spent
@@ -156,7 +156,7 @@ export default {
             table: false,
       },
       plan: null,
-      selectedParticipant: {},
+      selectedParticipantNew: null,
       prticipantOptions: [],
       selectedPlan: {},
       plansOptions: [],
@@ -266,12 +266,13 @@ export default {
               .get(route)
               .then(res => {
                   this.prticipantOptions = res.data.data;
-                  this.selectedParticipant = this.prticipantOptions[0];
-                  if(this.selectedParticipant){
-                      this.plansOptions = this.selectedParticipant.participant.plans;
+
+                  if(this.prticipantOptions){
 
                       if(this.paramPlanId)
                       {
+                          this.selectedParticipantNew = this.prticipantOptions[0];
+                          this.plansOptions = this.selectedParticipantNew.participant.plans;
                           this.selectedPlan = this.plansOptions.filter((plan) =>{
                               if(plan.id == this.paramPlanId)  {
                                   return plan;
@@ -292,11 +293,12 @@ export default {
                   this.paramParticipantId = null;
               });
       },
-      participantSelected(query){
+      participantSelected(participant){
+
           this.selectedPlan = {};
           this.plansOptions = [];
-          if(this.selectedParticipant){
-              this.plansOptions = this.selectedParticipant.participant.plans;
+          if(this.selectedParticipantNew){
+              this.plansOptions = this.selectedParticipantNew.participant.plans;
           }
          // console.log('participant selected name',this.plansOptions);
 
@@ -306,7 +308,7 @@ export default {
       },
       planSelected(plan) {
           this.selectedPlan = plan;
-          this.getSpendingData(this.selectedParticipant.id,this.selectedPlan.id);
+          this.getSpendingData(this.selectedParticipantNew.id,this.selectedPlan.id);
 
       },
   },
