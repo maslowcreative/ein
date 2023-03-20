@@ -359,9 +359,19 @@
                             </div>
                         </div>
                         <div class="mw290 mx-auto px-4 mt-4 mt-md-5">
-                            <button v-if="!lastStep" class="btn btn-primary btn-lg w-100 py-3 mb-3" @click.prevent="next()">
+                            <button v-if="!lastStep && !loader" class="btn btn-primary btn-lg w-100 py-3 mb-3" @click.prevent="next()">
                                 Next
                             </button>
+                            <button
+                                v-else-if="!lastStep && loader"
+                                class="btn btn-primary btn-lg w-100 py-3 mb-3"
+                                type="button"
+                                disabled
+                            >
+                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                Waitt...
+                            </button>
+
                             <button v-if="lastStep && !loader" type="submit" class="btn btn-primary btn-lg w-100 py-3 mb-3">
                                 Submit
                             </button>
@@ -497,11 +507,88 @@ export default {
       prev() {
           this.step--;
       },
-      next() {
-          if (this.step < 3) {
-              this.step++
-          }
-      },
+	      next() {
+	          if (this.step < 3) {
+	              if(this.step == 1 || this.step == 2){
+
+	                  this.loader = true;
+	                  let route = this.laroute.route("ajax.claims.store.admin");
+	                  this.form.is_admin = true;
+	                  this.form.action_role = 'provider';
+	                  this.form
+	                      .post(route)
+	                      .then(res => {
+	                          if ((res.status = 201)) {
+
+	                          }
+	                      })
+	                      .catch(error => {
+
+	                      })
+	                      .finally(() => {
+
+	                          let servcieError = false;
+	                          Object.keys(this.form.errors.errors).filter(item =>  {
+	                              if(item.split('.') [0] == 'service'){
+	                                  servcieError = true;
+	                              }
+	                          });
+
+	                          if(this.step == 1 && (this.form.errors.has('start_date') || this.form.errors.has('end_date') || this.form.errors.has('invoice_number') ||   this.form.errors.has('participant_id') || this.form.errors.has('provider_id')))
+	                          {
+	                              Object.keys(this.form.errors.errors).filter(item =>  {
+	                                  if( !(
+	                                      item == 'start_date' ||
+	                                      item == 'end_date' ||
+	                                      item == 'invoice_number' ||
+	                                      item == 'participant_id' ||
+	                                      item == 'provider_id'
+	                                      )
+	                                  ){
+	                                     this.form.errors.clear(item);
+	                                  }
+	                              });
+
+	                             this.step = 1;
+
+	                          }
+	                          else if(this.step == 2 && (this.form.errors.has('start_date') || this.form.errors.has('end_date') || this.form.errors.has('invoice_number') ||   this.form.errors.has('participant_id') || this.form.errors.has('provider_id')))
+	                          {
+	                              console.log('Case2');
+
+	                              Object.keys(this.form.errors.errors).filter(item =>  {
+	                                  if( !(
+	                                      item == 'start_date' ||
+	                                      item == 'end_date' ||
+	                                      item == 'invoice_number' ||
+	                                      item == 'participant_id' ||
+	                                      item == 'provider_id'
+	                                  )
+	                                  ){
+	                                      this.form.errors.clear(item);
+	                                  }
+	                              });
+
+	                             this.step = 1;
+
+	                          }else if(this.step == 2 || servcieError)
+	                          {
+	                              console.log('Case22');
+	                              this.form.errors.clear('file');
+	                              this.step = 2;
+	                          }
+	                          else {
+	                              console.log('Case3');
+	                              this.step ++;
+	                          }
+
+	                          this.loader = false;
+	                      });
+	              }
+
+
+	          }
+	      },
       selectItem(id, $role) {
           if ($role === "participant") {
               let participant = this.participantSerachResult.filter(participant => participant.id == id);
@@ -541,6 +628,7 @@ export default {
               'end_date': null,
               'invoice_number': null,
               'participant_id': null,
+              'provider_id': null,
               'file': null,
               'service': [
                   {
@@ -568,7 +656,6 @@ export default {
           let route = this.laroute.route("ajax.claims.store.admin");
           this.form.is_admin = true;
           this.form.action_role = 'provider';
-          console.log(this.form.data());
           this.form
               .post(route)
               .then(res => {
@@ -579,7 +666,25 @@ export default {
                   }
               })
               .catch(error => {
-                  this.$toastr.e("Error", "Some thing went wrong.")
+                  this.$toastr.e("Error", "Some thing went wrong.");
+
+                  let servcieError = false;
+                  Object.keys(this.form.errors.errors).filter(item =>  {
+                      if(item.split('.') [0] == 'service'){
+                          servcieError = true;
+                      }
+                  });
+
+                  if(this.form.errors.has('start_date') || this.form.errors.has('end_date') || this.form.errors.has('invoice_number') ||   this.form.errors.has('participant_id') || this.form.errors.has('provider_id'))
+                  {
+                      this.step = 1;
+                  }else if(servcieError){
+                      this.step = 2;
+                  }else {
+                      this.step = 3;
+                  }
+
+
               })
               .finally(() => {
                   this.loader = false
