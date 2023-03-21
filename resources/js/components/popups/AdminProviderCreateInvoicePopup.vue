@@ -571,7 +571,7 @@ export default {
 
 	                             this.step = 1;
 
-	                          }else if(this.step == 2 || servcieError)
+	                          }else if(this.step == 2 && servcieError)
 	                          {
 	                              console.log('Case22');
 	                              this.form.errors.clear('file');
@@ -579,6 +579,9 @@ export default {
 	                          }
 	                          else {
 	                              console.log('Case3');
+                                  Object.keys(this.form.errors.errors).filter(item =>  {
+                                      this.form.errors.clear(item);
+                                  });
 	                              this.step ++;
 	                          }
 
