@@ -573,7 +573,7 @@ export default {
 
 	                          }else if(this.step == 2 && servcieError)
 	                          {
-	                              console.log('Case22');
+	                              console.log('Case22',console.log(this.step,servcieError));
 	                              this.form.errors.clear('file');
 	                              this.step = 2;
 	                          }
