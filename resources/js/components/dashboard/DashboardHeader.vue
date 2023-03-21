@@ -3,7 +3,7 @@
 
     <div class="qo-section bg-primary text-white">
 <!--      <h1 class="h2 mb-4 fw-bold pb-2">Dashboard</h1>-->
-      <h4 class="fw-bold">Dashboard</h4>
+      <h4 class="fw-bold">Dashboard-- </h4>
       <div class="grid options-grid">
         <a v-if="getPermission('add_invoices_receipts')" href="#" class="option-item" data-bs-toggle="modal" data-bs-target="#adminProviderInvoicePopup">
 <!--          <ion-icon name="person-add-outline" class="option-item-icon"></ion-icon>-->
