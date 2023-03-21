@@ -84,6 +84,10 @@
         "name": "ajax.user.status.toggle"
     },
     {
+        "uri": "ajax\/users\/{user}\/representative\/update-auto-approval",
+        "name": "ajax.user.representative.approval"
+    },
+    {
         "uri": "ajax\/users\/{user}\/upload-avatar",
         "name": "ajax.users.upload.avatar"
     },

@@ -3,7 +3,7 @@
     <div class="container-fluid">
 <!--      <auth-logo class="nav-logo"></auth-logo>-->
         <div class="login-box-logo text-center">
-            <img :src="userData.avatar_url" width="50" height="50" alt="" />
+            <img v-if="userData" :src="userData.avatar_url" width="50" height="50" alt="" />
         </div>
       <button
         class="navbar-toggler"

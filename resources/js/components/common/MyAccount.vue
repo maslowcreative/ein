@@ -214,6 +214,41 @@
                         </div>
                     </div>
                 </div>
+
+                <h3 v-if="this.userRole == 'representative'" class="border-bottom pb-4 mb-5">Configuration</h3>
+                <div v-if="this.userRole == 'representative'"  class="row">
+                    <div class="col-lg-3">
+                    </div>
+                    <div class="col-lg-9">
+                        <div class="row">
+                            <div class="col-md-4 col-sm-6">
+                                <div class="mb-4">
+                                    <label  class="form-label">Approval Days</label>
+                                    <div class="input-group-overlay">
+                                        <select class="form-control" v-model="approvalForm.auto_approval_days">
+                                            <option value="1">1 Day</option>
+                                            <option value="2">2 Day</option>
+                                            <option value="3">3 Day</option>
+                                            <option value="4">4 Day</option>
+                                            <option value="5">5 Day</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 col-sm-6">
+                                <button v-if="!autoApprovalLoader" class="btn btn-primary btn-lg w-100 py-3" v-on:click="updateAutoApprovalDays" >Update Information</button>
+                                <button v-else class="btn btn-primary btn-lg w-100 py-3" type="button" disabled>
+                                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                    Loading...
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
@@ -227,6 +262,7 @@ export default {
         return {
             loader: false,
             bankinfoLoader: false,
+            autoApprovalLoader: false,
             showPassword: true,
             showConfirmPassword: true,
             avatar: null,
@@ -246,6 +282,9 @@ export default {
                 account_name: null,
                 account_number: null,
                 bsb: null,
+            }),
+            approvalForm: new Form({
+                auto_approval_days: null
             })
         }
     },
@@ -256,6 +295,12 @@ export default {
         this.bankForm.account_name = this.user.account_name;
         this.bankForm.account_number = this.user.account_number;
         this.bankForm.bsb = this.user.bsb;
+
+        if(this.role == 'representative')
+        {
+            this.approvalForm.auto_approval_days = this.user.representative.auto_approval_days;
+        }
+
 
     },
     methods:{
@@ -344,6 +389,21 @@ export default {
                     this.$toastr.e("Error", "Some thing went wrong.")
                 })
                 .finally(() => (this.bankinfoLoader = false))
+        },
+        updateAutoApprovalDays() {
+            this.autoApprovalLoader = true;
+
+            let route = this.laroute.route("ajax.user.representative.approval",{ 'user' : this.user.id});
+
+            this.approvalForm
+                .post(route)
+                .then(res => {
+                    this.$toastr.s("Success", "User bank info updated!");
+                })
+                .catch(error => {
+                    this.$toastr.e("Error", "Some thing went wrong.")
+                })
+                .finally(() => (this.autoApprovalLoader = false))
         },
     }
 }

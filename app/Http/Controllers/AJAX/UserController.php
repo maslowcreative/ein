@@ -427,4 +427,16 @@ class UserController extends Controller
         $avatar_url = asset("storage/avatars/{$avatar}");
         return compact('avatar','avatar_url');
     }
+
+    public function updateAutoApproval(Request $request, $userId)
+    {
+        $request->validate([
+            'auto_approval_days' => 'required|in:1,2,3,4',
+        ]);
+
+        $rep = Representative::findOrFail($userId);
+        $rep->auto_approval_days = $request->auto_approval_days;
+        $rep->save();
+        return $this->respondWithSuccess();
+    }
 }
