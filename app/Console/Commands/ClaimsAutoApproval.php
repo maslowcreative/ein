@@ -9,6 +9,7 @@ use App\Traits\ClaimsValidationTrait;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 class ClaimsAutoApproval extends Command
@@ -45,9 +46,12 @@ class ClaimsAutoApproval extends Command
      */
     public function handle()
     {
+        Log::debug('Check Message: An informational message.');
+        return 1;
+
         $items = DB::table('claim_line_items as cli')
                               ->where('status',Claim::STATUS_APPROVAL_PENDING)
-                              ->whereRaw("DATEDIFF(NOW(),cli.created_at) >= r.auto_approval_days")
+                              ->whereRaw("NOW() >= DATE_ADD(cli.created_at , INTERVAL (r.auto_approval_days * 24)  HOUR)")
                               ->select('p.representative_id','r.auto_approval_days')
                               ->join('participants as p','p.user_id','=','cli.participant_id')
                               ->join('representatives as r','r.user_id','=','p.representative_id')

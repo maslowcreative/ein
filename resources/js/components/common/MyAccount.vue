@@ -215,7 +215,7 @@
                     </div>
                 </div>
 
-                <h3 v-if="this.userRole == 'representative'" class="border-bottom pb-4 mb-5">Configuration</h3>
+                <h3 v-if="this.userRole == 'representative'" class="border-bottom pb-4 mb-5">Automatic Invoice Approval</h3>
                 <div v-if="this.userRole == 'representative'"  class="row">
                     <div class="col-lg-3">
                     </div>
@@ -223,13 +223,13 @@
                         <div class="row">
                             <div class="col-md-4 col-sm-6">
                                 <div class="mb-4">
-                                    <label  class="form-label">Approval Days</label>
+                                    <label  class="form-label">Time From Upload</label>
                                     <div class="input-group-overlay">
                                         <select class="form-control" v-model="approvalForm.auto_approval_days">
                                             <option value="1">1 Day</option>
-                                            <option value="2">2 Day</option>
-                                            <option value="3">3 Day</option>
-                                            <option value="4">4 Day</option>
+                                            <option value="2">2 Days</option>
+                                            <option value="3">3 Days</option>
+                                            <option value="4">4 Days</option>
                                         </select>
                                     </div>
                                 </div>
