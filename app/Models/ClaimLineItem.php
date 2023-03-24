@@ -39,7 +39,10 @@ class ClaimLineItem extends Model
         'rec_payment_request_number',
         'rec_capped_price',
         'rec_date',
-        'old_claim_id'
+        'old_claim_id',
+        'auto_approval_process_counter',
+        'auto_approval_status',
+        'last_auto_approval_process_date'
     ];
 
     protected $appends = [

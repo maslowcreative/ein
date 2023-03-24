@@ -251,7 +251,6 @@ class ClaimController extends Controller
 
         if($request->status == Claim::STATUS_APPROVED_BY_REPRESENTATIVE){
             $claimData = $this->claimValidate($claim);
-
             if(!$claimData['status']){
                 return $this->respondError($claimData['message']) ;
             }

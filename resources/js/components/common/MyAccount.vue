@@ -230,7 +230,6 @@
                                             <option value="2">2 Day</option>
                                             <option value="3">3 Day</option>
                                             <option value="4">4 Day</option>
-                                            <option value="5">5 Day</option>
                                         </select>
                                     </div>
                                 </div>

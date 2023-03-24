@@ -1,5 +1,5 @@
 @component('mail::message')
-    # {{$role}} has updated its email.
+    # Following are the claims auto approved today.
     Name: {{$name}}
     Business Name: {{$business_name}}
     New Email: {{$email}}
