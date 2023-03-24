@@ -369,7 +369,7 @@
                                 disabled
                             >
                                 <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                                Waitt...
+                                Wait...
                             </button>
 
                             <button v-if="lastStep && !loader" type="submit" class="btn btn-primary btn-lg w-100 py-3 mb-3">

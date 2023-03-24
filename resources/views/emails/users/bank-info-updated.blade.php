@@ -1,5 +1,5 @@
 @component('mail::message')
-    # {{$role}} has upated its banking information.
+    # {{$role}} has updated its banking information.
     Name: {{$name}}
     Account Name: {{$account_name}}
     Account Number: {{$account_number}}
