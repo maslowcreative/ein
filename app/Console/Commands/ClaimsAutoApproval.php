@@ -9,7 +9,6 @@ use App\Traits\ClaimsValidationTrait;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 class ClaimsAutoApproval extends Command
@@ -46,8 +45,6 @@ class ClaimsAutoApproval extends Command
      */
     public function handle()
     {
-        Log::debug('Check Message: An informational message.');
-        return 1;
 
         $items = DB::table('claim_line_items as cli')
                               ->where('status',Claim::STATUS_APPROVAL_PENDING)
