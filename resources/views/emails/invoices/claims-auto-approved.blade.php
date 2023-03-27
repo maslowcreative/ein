@@ -1,10 +1,9 @@
 @component('mail::message')
-    # Following are auto approve claims  stats.
+    # Automatically Accepted Claims:
 
     @foreach ($data as $item)
       {{$item['claim_reference']}} | {{$item['reason']}}
     @endforeach
 
-    Thanks,
     {{ config('app.name') }}
 @endcomponent

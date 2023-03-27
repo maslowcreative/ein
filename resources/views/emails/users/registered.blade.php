@@ -1,6 +1,6 @@
 @component('mail::message')
 # Introduction
-Name: {{$name}}
+Name: {{strip_tags($name)}}
 Password: {{$password}}
 @component('mail::button', ['url' => route('login')])
 Login

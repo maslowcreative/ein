@@ -1,8 +1,8 @@
 @component('mail::message')
     # {{$role}} has updated its banking information.
-    Name: {{$name}}
-    Account Name: {{$account_name}}
-    Account Number: {{$account_number}}
+    Name: {{strip_tags( $name )}}
+    Account Name: {{strip_tags( $account_name)}}
+    Account Number: {{strip_tags($account_number)}}
     BSB: {{$bsb}}
 @if($is_provider)
 ABN: {{$abn}}
