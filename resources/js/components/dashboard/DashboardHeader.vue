@@ -62,8 +62,7 @@
 
             <div>
               <div class="text-center text-primary">
-                <ion-icon name="checkmark" role="img" class="md hydrated" aria-label="checkmark"></ion-icon> File
-                Uploaded!
+<!--                <ion-icon name="checkmark" role="img" class="md hydrated" aria-label="checkmark"></ion-icon> FileUploaded!-->
               </div>
             </div>
             <div class="mw290 mx-auto px-4 mt-3 mb-4">
