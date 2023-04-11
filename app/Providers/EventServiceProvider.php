@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use App\Listeners\SendPasswordEmail;
+use App\Models\PlanBudget;
+use App\Observers\PlanBudgetObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -19,9 +21,9 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
             SendPasswordEmail::class,
-
         ],
     ];
+
 
     /**
      * Register any events for your application.
@@ -30,6 +32,6 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        PlanBudget::observe(PlanBudgetObserver::class);
     }
 }
