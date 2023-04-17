@@ -29,7 +29,7 @@ class PlanBudgetObserver
      */
     public function updated(PlanBudget $planBudget)
     {
-       //if( $planBudget->getOriginal('pending') > 0 &&  $planBudget->pending < 0)
+       if( $planBudget->getOriginal('pending') >= 0 &&  $planBudget->pending < 0)
        {
            $request = request();
            $user = optional($request)->user();
