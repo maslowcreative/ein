@@ -125,7 +125,34 @@
                                     </multiselect>
                                 </div>
                             </div>
-
+                            <div class="col-md-6">
+                                <div class="mb-4">
+                                    <label  class="form-label">Account Name</label>
+                                    <div class="input-group-overlay">
+                                        <input type="text"  class="form-control"  v-model="user.account_name" placeholder="Account name" />
+                                        <div class="invalid-msg" v-if="form.errors.has('account_name')" v-html="form.errors.get('account_name')" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-4">
+                                    <label  class="form-label fw-bold">BSB</label>
+                                    <input
+                                        type="tel"
+                                        class="form-control"
+                                        placeholder="0000000000"
+                                        v-model="user.bsb"
+                                    />
+                                    <div class="invalid-msg" v-if="form.errors.has('bsb')" v-html="form.errors.get('bsb')" />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-4">
+                                    <label class="form-label fw-bold">Account Number</label>
+                                    <input type="email" placeholder="Account Number" v-model="user.account_number" class="form-control appended-form-control">
+                                    <div class="invalid-msg" v-if="form.errors.has('account_number')" v-html="form.errors.get('account_number')" />
+                                </div>
+                            </div>
                         </div>
                     </form>
                     <div class="mw290 mx-auto px-4 mt-3">
@@ -159,6 +186,9 @@ export default {
                 email: null,
                 phone: null,
                 address: null,
+                account_name: null,
+                bsb: null,
+                account_number: null,
                 provider: {
                     abn: null,
                     business_name: null,
@@ -204,6 +234,11 @@ export default {
             this.form.address = this.user.address;
             this.form.provider.abn = this.user.provider.abn;
             this.form.provider.business_name = this.user.provider.business_name;
+
+            this.form.account_name = this.user.account_name;
+            this.form.bsb = this.user.bsb;
+            this.form.account_number = this.user.account_number;
+
             let participants = [];
             this.participantItemsResultSelected.forEach(function (item){
                 participants.push(item.id);

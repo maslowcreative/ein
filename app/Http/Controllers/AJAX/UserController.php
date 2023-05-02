@@ -245,10 +245,16 @@ class UserController extends Controller
      */
     public function update(UserUpdateRequest $request, $userId)
     {
-        $user = User::findOrFail($userId);
 
+        $user = User::findOrFail($userId);
+        $isDirty = false;
         DB::beginTransaction();
-            $user->fill($request->all())->save();
+            $user->fill($request->all());
+            if($user->isDirty(['account_name', 'bsb','account_number']))
+            {
+                $isDirty = true;
+            }
+            $user->save();
 
             if($user->hasRole('provider') && $request->role_id == Role::ROLE_PROVIDER) {
                 $user->provider->fill($request->provider)->save();
@@ -286,7 +292,13 @@ class UserController extends Controller
                     }
                 }
             }
-
+        if($isDirty)
+        {
+            $toEmail = config('app.ein_notify_email');
+            Mail::to($toEmail)
+                ->send(new BankInformationUpdated($user));
+        }
+        
         DB::commit();
 
         return $this->respondWithSuccess();

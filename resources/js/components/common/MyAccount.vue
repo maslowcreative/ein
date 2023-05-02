@@ -214,7 +214,7 @@
                         </div>
                     </div>
                 </div>
-
+                <br><br>
                 <h3 v-if="this.userRole == 'representative'" class="border-bottom pb-4 mb-5">Automatic Invoice Approval</h3>
                 <div v-if="this.userRole == 'representative'"  class="row">
                     <div class="col-lg-3">
