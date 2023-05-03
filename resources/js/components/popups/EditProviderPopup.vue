@@ -10,7 +10,7 @@
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content addUserPopup">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="adminModalTitle">Edit Provider Profile</h4>
+                    <h4 class="modal-title" id="adminModalTitle">Edit Provider Profile --</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div v-if="user" class="modal-body">
