@@ -75,11 +75,11 @@
                                 <div class="col-md-6">
                                     <div class="mb-4">
                                         <div class="dropdownWrap">
-                                            <label for="linkAParticipant" class="form-label">Link a Participant</label>
+                                            <label  class="form-label">Link a Participant</label>
                                             <input
                                                 type="text"
                                                 class="form-control"
-                                                id="linkAParticipant"
+
                                                 placeholder="Participant’s Name"
                                                 v-model="participantSerachName"
                                             />

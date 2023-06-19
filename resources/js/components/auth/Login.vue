@@ -38,7 +38,6 @@
                     </div>
                     <input
                         v-if="showPassword"
-                        id="password"
                         type="password"
                         v-model="form.password"
                         class="form-control prepended-form-control"

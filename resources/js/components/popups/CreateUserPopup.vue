@@ -216,12 +216,12 @@
                     <div class="col-md-6">
                       <div class="mb-4">
                         <div class="dropdownWrap">
-                          <label for="linkAParticipant" class="form-label">Link a Participant</label>
+                          <label  class="form-label">Link a Participant</label>
                           <input
                             type="text"
                             autocomplete="off"
                             class="form-control"
-                            id="linkAParticipant"
+
                             placeholder="Participant’s Name"
                             v-model="participantSerachName"
                           />
@@ -369,7 +369,7 @@
                     <div class="col-md-6">
                       <div class="mb-4">
                         <div class="dropdownWrap">
-                          <label for="linkAParticipant" class="form-label">Link a Representative</label>
+                          <label  class="form-label">Link a Representative</label>
                           <input
                             type="text"
                             class="form-control"
@@ -443,12 +443,11 @@
                     <div class="col-md-6">
                       <div class="mb-4">
                         <div class="dropdownWrap">
-                          <label for="linkAProvider" class="form-label">Link a Provider</label>
+                          <label  class="form-label">Link a Provider</label>
                           <input
                             type="text"
                             class="form-control"
                             autocomplete="off"
-                            id="linkAProvider"
                             placeholder="Provider’s Name"
                             v-model="providerSerachName"
                           />
@@ -566,12 +565,11 @@
                     <div class="col-md-6">
                       <div class="mb-4">
                         <div class="dropdownWrap">
-                          <label for="linkAParticipant2" class="form-label">Link a Participant</label>
+                          <label  class="form-label">Link a Participant</label>
                           <input
                             type="text"
                             autocomplete="off"
                             class="form-control"
-                            id="linkAParticipant2"
                             placeholder="Participant’s Name"
                             v-model="participantSerachName"
                           />
@@ -991,7 +989,6 @@
                           <input
                               :disabled="form.random_password"
                               v-if="showPassword"
-                              id="password"
                               type="password"
                               v-model="form.password"
                               class="form-control prepended-form-control"
