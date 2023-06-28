@@ -21,7 +21,7 @@
                         <div class="col-md-6"><label class="form-label fw-bold">Remaining Budget</label>: ${{remainingBudget}}</div>
                     </div>
 
-                    <div class="grid align-items-end mb-3" v-for="(provider,index) in providersCollection"  :key="index" style="--template: 1fr 1fr 60px">
+                    <div class="grid align-items-end mb-3" v-for="(provider,index) in form.providers_collection"  :key="index" style="--template: 1fr 1fr 60px">
                         <div>
                             <label class="form-label fw-bold">Provider</label>
                             <multiselect
@@ -42,11 +42,13 @@
                                 @search-change="(name) => getProviderList(name,provider)"
                             >
                             </multiselect>
-                            <!-- <div class="invalid-msg" v-if="form.errors.has('participant.representative_id')" v-html="form.errors.get('participant.representative_id').replace('participant.representative id','representative')" />-->
+                             <div class="invalid-msg" v-if="form.errors.has('providers_collection.'+index+'.providerItemsResultSelected.id')" v-html="form.errors.get('providers_collection.'+index+'.providerItemsResultSelected.id').replace('providers_collection.'+index+'.providerItemsResultSelected.id','provider')" />
                         </div>
                         <div>
                             <label>Budget</label>
                             <input class="form-control" type="number"  v-model="provider.budget" />
+                            <div class="invalid-msg" v-if="form.errors.has('providers_collection.'+index+'.budget')" v-html="form.errors.get('providers_collection.'+index+'.budget').replace('providers_collection.'+index+'.budget','budget')" />
+
                         </div>
                         <div>
                             <button class="btn btn-danger" v-on:click="deleteProvider(index)">
@@ -59,8 +61,9 @@
                             <ion-icon name="add-outline"></ion-icon> Add provider
                         </button>
 
-                        <button class="btn btn-primary" v-on:click="addProviderToBudget()">
-                            <ion-icon name="add-outline"></ion-icon> Update
+                        <button class="btn btn-primary" v-on:click="updateProviderBudgetAllocation()">
+                            <ion-icon name="save-outline"></ion-icon> Update
+
                         </button>
                     </div>
 
@@ -72,6 +75,7 @@
 
 <script>
 import Multiselect from 'vue-multiselect'
+import Form from "vform"
 export default {
     components: { Multiselect },
     data() {
@@ -79,29 +83,35 @@ export default {
             loader: false,
             user: null,
             plan: null,
-            form: null,
             catName : null,
             budget : null,
             remainingBudget : 0,
-            providersCollection : [],
-
+            form: new Form({
+                plan_id : null,
+                category_id : null,
+                participant_id : null,
+                providers_collection : [],
+            }),
         }
     },
     mounted() {
         this.$root.$on("ein:provider-budget-allocation-popup-open", (data) => {
             this.user = data.user;
             this.plan = data.plan;
-            this.form = data.form;
+            //this.form = data.form;
             this.catName = data.catName;
             this.budget = data.budget;
-
-            this.remainingBudget = 0,
-            this.providersCollection =  [];
+            this.form.category_id = data.catId;
+            this.form.plan_id = data.plan.id;
+            this.form.participant_id = this.user.id;
+            // this.remainingBudget = 0,
+            //console.log('this is plan data',data.plan);
         });
     },
     watch:{
-        providersCollection: {
+        "form.providers_collection": {
             handler(newVal, oldVal) {
+                //alert('asssa');
                 let usedBudet = 0;
                 newVal.forEach((provider, index) => {
                     usedBudet = this.parseFloatValue(usedBudet) +  this.parseFloatValue(provider.budget) ;
@@ -115,7 +125,7 @@ export default {
     methods: {
         addProviderToBudget()
         {
-            this.providersCollection.push({
+            this.form.providers_collection.push({
                 providerItemsResultSelected : null,
                 providerItemsResult: [],
                 budget: 0,
@@ -165,14 +175,31 @@ export default {
             return val;
         },
         deleteProvider(index){
-            this.providersCollection.splice(index, 1);
+            this.form.providers_collection.splice(index, 1);
 
             let usedBudet = 0;
-            this.providersCollection.forEach((provider, index) => {
+            this.form.providers_collection.forEach((provider, index) => {
                 usedBudet = this.parseFloatValue(usedBudet) +  this.parseFloatValue(provider.budget) ;
             });
             this.remainingBudget = this.budget - this.parseFloatValue(usedBudet);
+        },
+        updateProviderBudgetAllocation(){
+            let route = this.laroute.route("ajax.budget.allocation", { })
+            this.form
+                .post(route)
+                .then(res => {
+                    if ((res.status = 200)) {
+                        this.$toastr.s("Success", "Record Updated!");
+                    }
+                })
+                .catch(error => {
+                    this.$toastr.e("Error", error.response.data.error);
+                })
+                .finally(() => {
+                    this.loader = false
+                })
         }
     },
+
 }
 </script>

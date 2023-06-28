@@ -17,6 +17,7 @@ class CreateProviderBudgetAllocationTable extends Migration
             $table->id();
 
             $table->unsignedInteger('provider_id');
+            $table->unsignedInteger('plan_id');
             $table->unsignedInteger('plan_budget_id');
             $table->unsignedInteger('category_id');
 

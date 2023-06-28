@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\AJAX;
 
+use App\Console\Commands\BudgetBalancing;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ProviderBudgetAllocationRequest;
 use App\Models\Plan;
 use App\Models\PlanBudget;
+use App\Models\ProviderBudget;
 use F9Web\ApiResponseHelpers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -342,4 +345,79 @@ class PlanController extends Controller
 
         return $this->respondWithSuccess($spendingData);
     }
+
+    /**
+     * @param Request $request
+     * @return void
+     */
+    public function updateProviderBudgetAllocation(ProviderBudgetAllocationRequest $request)
+    {
+        $planBudget = PlanBudget::where('plan_id',$request->plan_id)->where('category_id',$request->category_id)->firstOrFail();
+
+        $providersCollection = $request->providers_collection;
+
+        $totalAmount = collect($providersCollection)->sum(function ($item) {
+            return $item['budget'];
+        });
+
+        if($totalAmount > $planBudget->amount){
+            return  $this->respondError('Total amount exceeded.');
+        }
+
+        $budgets = collect([]);
+
+
+        foreach ($providersCollection as $provider){
+
+            $providerBudget = ProviderBudget::where('provider_id',$provider['providerItemsResultSelected']['id'])
+                                             ->where('category_id',$request->category_id)
+                                             ->where('plan_id',$request->plan_id)
+                                             ->where('plan_budget_id',$planBudget->id)
+                                             ->first();
+            if(!$providerBudget){
+                $providerBudget = new ProviderBudget();
+                $providerBudget->provider_id = $provider['providerItemsResultSelected']['id'];
+                $providerBudget->category_id = $request->category_id;
+                $providerBudget->plan_id = $request->plan_id;
+                $providerBudget->plan_budget_id = $planBudget->id;
+                $providerBudget->amount = $provider['budget'];
+                $providerBudget->balance = $provider['budget'];
+                $providerBudget->pending = 0;
+                $providerBudget->spent = 0;
+            }else
+            {
+                if($provider['budget'] < $providerBudget->amount )
+                {
+                    return  $this->respondError('New value cannot be less than the old value.');
+
+                }else
+                {
+                    $providerBudget->balance = $provider['budget'] - $providerBudget->amount;
+                    $providerBudget->amount = $provider['budget'];
+                }
+            }
+            $budgets->push($providerBudget);
+
+        }
+
+        foreach ($budgets as $budget)
+        {
+            $budget->save();
+        }
+        $ids = $budgets->pluck('id');
+
+        $objs = ProviderBudget::where('category_id',$request->category_id)
+                             ->where('plan_id',$request->plan_id)
+                             ->where('plan_budget_id',$planBudget->id)
+                             ->whereNotIn('id', $ids)
+                             ->get();
+
+        foreach ($objs as $obj)
+        {
+            $obj->delete();
+        }
+
+        return $this->respondWithSuccess();
+    }
+
 }
