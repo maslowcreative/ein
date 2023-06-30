@@ -26,9 +26,9 @@ class Kernel extends ConsoleKernel
     {
          $schedule->command('plans:expire')
                   ->dailyAt('00:10');
-         /*$schedule->command('plan:balance-budget')
+         $schedule->command('plan:balance-budget')
                  ->timezone('Australia/Sydney')
-                 ->dailyAt('05:00');*/
+                 ->dailyAt('05:00');
          $schedule->command('claims:auto-approve')
                   ->timezone('Australia/Sydney')
                   ->dailyAt('16:00');
