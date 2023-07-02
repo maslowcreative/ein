@@ -41,7 +41,7 @@ Route::apiResource('claims','ClaimController');
 Route::post('plans/upload','PlanController@uploadPlanFile')->name('plans.upload');
 Route::get('plans/spending-data','PlanController@getSpendingData')->name('plans.spending.data');
 Route::post('plans/provider-budget-allocation','PlanController@updateProviderBudgetAllocation')->name('budget.allocation');
-//Route::get('plans/provider-budget-allocation','PlanController@getProviderBudgetAllocation')->name('get.budget.allocation');
+Route::get('plans/provider-budget-allocation','PlanController@getProviderBudgetAllocation')->name('get.budget.allocation');
 Route::apiResource('plans','PlanController');
 
 

@@ -208,6 +208,10 @@
         "name": "ajax.budget.allocation"
     },
     {
+        "uri": "ajax\/plans\/provider-budget-allocation",
+        "name": "ajax.get.budget.allocation"
+    },
+    {
         "uri": "ajax\/plans",
         "name": "ajax.plans.index"
     },

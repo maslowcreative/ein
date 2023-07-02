@@ -389,7 +389,6 @@ class PlanController extends Controller
                 if($provider['budget'] < $providerBudget->amount )
                 {
                     return  $this->respondError('New value cannot be less than the old value.');
-
                 }else
                 {
                     $providerBudget->balance = $provider['budget'] - $providerBudget->amount;
@@ -407,10 +406,10 @@ class PlanController extends Controller
         $ids = $budgets->pluck('id');
 
         $objs = ProviderBudget::where('category_id',$request->category_id)
-                             ->where('plan_id',$request->plan_id)
-                             ->where('plan_budget_id',$planBudget->id)
-                             ->whereNotIn('id', $ids)
-                             ->get();
+                              ->where('plan_id',$request->plan_id)
+                              ->where('plan_budget_id',$planBudget->id)
+                              ->whereNotIn('id', $ids)
+                              ->get();
 
         foreach ($objs as $obj)
         {
@@ -418,6 +417,19 @@ class PlanController extends Controller
         }
 
         return $this->respondWithSuccess();
+    }
+
+    public function getProviderBudgetAllocation(Request $request)
+    {
+        $planBudget = PlanBudget::where('plan_id',$request->plan_id)->where('category_id',$request->category_id)->firstOrFail();
+
+        $providerBudget = ProviderBudget::where('category_id',$request->category_id)
+                                        ->where('plan_id',$request->plan_id)
+                                        ->where('plan_budget_id',$planBudget->id)
+                                        ->with('user.roles')
+                                        ->get();
+        return  $providerBudget;
+
     }
 
 }

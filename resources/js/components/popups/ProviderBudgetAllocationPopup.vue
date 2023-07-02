@@ -86,6 +86,7 @@ export default {
             catName : null,
             budget : null,
             remainingBudget : 0,
+            backform:null,
             form: new Form({
                 plan_id : null,
                 category_id : null,
@@ -96,14 +97,50 @@ export default {
     },
     mounted() {
         this.$root.$on("ein:provider-budget-allocation-popup-open", (data) => {
+            this.form =  new Form({
+                plan_id : null,
+                category_id : null,
+                participant_id : null,
+                providers_collection : [],
+            });
+
             this.user = data.user;
             this.plan = data.plan;
-            //this.form = data.form;
+            this.backform = data.form;
             this.catName = data.catName;
             this.budget = data.budget;
             this.form.category_id = data.catId;
             this.form.plan_id = data.plan.id;
             this.form.participant_id = this.user.id;
+
+            let dataApi = {
+                category_id: data.catId,
+                plan_id: data.plan.id,
+            };
+
+
+            let route = this.laroute.route("ajax.get.budget.allocation", dataApi)
+            axios
+                .get(route)
+                .then(res => {
+                    let d = res.data;
+
+                    d.forEach((item, index) => {
+                        this.form.providers_collection.push({
+                            providerItemsResultSelected : item.user,
+                            providerItemsResult: [],
+                            budget: item.amount,
+                            loading: false,
+                        });
+                    });
+
+
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+                .finally(() => (this.loader = false))
+
             // this.remainingBudget = 0,
             //console.log('this is plan data',data.plan);
         });
@@ -161,7 +198,7 @@ export default {
             $("#providerBudgetAllocationPopup").modal("hide");
             let data = {
                 plan: this.plan,
-                form : this.form,
+                form : this.backform,
                 user : this.user
             }
             this.$root.$emit("ein:participant-plan-edit-popup-open", data);
@@ -199,6 +236,7 @@ export default {
                     this.loader = false
                 })
         }
+
     },
 
 }

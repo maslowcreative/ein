@@ -10,4 +10,9 @@ class ProviderBudget extends Model
     use HasFactory;
     protected $table = 'provider_budget_allocation';
     protected $guarded = [];
+
+
+    public function user() {
+        return $this->belongsTo(User::class,'provider_id');
+    }
 }
