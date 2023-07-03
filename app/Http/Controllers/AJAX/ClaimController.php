@@ -11,6 +11,7 @@ use App\Models\Participant;
 use App\Models\Plan;
 use App\Models\PlanBudget;
 use App\Models\Provider;
+use App\Models\ProviderBudget;
 use App\Models\Representative;
 use App\Traits\ClaimsValidationTrait;
 use Box\Spout\Common\Exception\IOException;
@@ -249,17 +250,28 @@ class ClaimController extends Controller
 
         $claim->status = $request->status;
 
+        //Approve by Representative
         if($request->status == Claim::STATUS_APPROVED_BY_REPRESENTATIVE){
-            $claimData = $this->claimValidate($claim);
+            $claimData = $this->claimValidateNew($claim);
+
             if(!$claimData['status']){
                 return $this->respondError($claimData['message']) ;
             }
 
+            //Cleared ProvCat
             DB::transaction(function () use ($claim,$claimData) {
                 $catBudget = $claimData['catBudget'];
+                $providerCatBudget = $claimData['providerCatBudget'];
+
                 $catBudget->balance = $catBudget->balance - $claim->amount_claimed;
+                $providerCatBudget->balance = $providerCatBudget->balance - $claim->amount_claimed;
+
                 $catBudget->pending = $catBudget->pending + $claim->amount_claimed;
+                $providerCatBudget->pending = $providerCatBudget->pending + $claim->amount_claimed;
+
                 $catBudget->save();
+                $providerCatBudget->save();
+
                 $claim->plan_id = $catBudget->plan_id;
                 $claim->category_id = $catBudget->category_id;
                 $claim->save();
@@ -268,22 +280,39 @@ class ClaimController extends Controller
         }elseif ($request->status == Claim::STATUS_DENIED_BY_REPRESENTATIVE)
         {
             $catBudget =  PlanBudget::where('plan_id',$claim->plan_id)
-                                      ->where('category_id',$claim->category_id)
-                                      ->first();
+                                    ->where('category_id',$claim->category_id)
+                                    ->first();
 
+            $providerCatBudget = null;
+            if($catBudget){
+                $providerCatBudget = ProviderBudget::where('category_id',$catBudget->category_id)
+                    ->where('plan_id',$catBudget->plan_id)
+                    ->where('plan_budget_id',$catBudget->id)
+                    ->first();
+            }
+            //Cleared ProvCat
             if($catBudget){
                 $catBudget->pending = $catBudget->pending - $claim->amount_claimed;
                 $catBudget->balance = $catBudget->balance +  $claim->amount_claimed;
-
             }
+
+            if($providerCatBudget){
+                $providerCatBudget->pending = $providerCatBudget->pending - $claim->amount_claimed;
+                $providerCatBudget->balance = $providerCatBudget->balance +  $claim->amount_claimed;
+            }
+
             $claim->plan_id = null;
             $claim->category_id = null;
 
-            DB::transaction(function () use ($claim,$catBudget){
+            DB::transaction(function () use ($claim,$catBudget,$providerCatBudget){
                 $claim->save();
                 if($catBudget)
                 {
                     $catBudget->save();
+                }
+                if($providerCatBudget)
+                {
+                    $providerCatBudget->save();
                 }
 
             });
@@ -438,6 +467,7 @@ class ClaimController extends Controller
                         $claimItem->status = Claim::STATUS_RECONCILATION_DONE;
                         $claimItem->save();
 
+                        // Category Budget Clearing
                         $catBudget = PlanBudget::where('plan_id',$claimItem->plan_id)
                             ->where('category_id',$claimItem->category_id)
                             ->first();
@@ -462,6 +492,38 @@ class ClaimController extends Controller
                         if($catBudget){
                             $catBudget->save();
                         }
+                        //Cleared ProvCat
+                        //Provider Category Budget Clearing
+                        $providerCatBudget = null;
+                        if($catBudget){
+                            $providerCatBudget = ProviderBudget::where('category_id',$catBudget->category_id)
+                                ->where('plan_id',$catBudget->plan_id)
+                                ->where('plan_budget_id',$catBudget->id)
+                                ->first();
+                        }
+
+                        if($providerCatBudget && $claimItem->rec_payment_request_status == 'SUCCESSFUL' && $claimItem->rec_is_full_paid)
+                        {
+                            $providerCatBudget->pending = $providerCatBudget->pending - $claimItem->amount_claimed;
+                            $providerCatBudget->spent = $providerCatBudget->spent + $claimItem->amount_claimed;
+
+                        }elseif ($providerCatBudget && $claimItem->rec_payment_request_status == 'SUCCESSFUL' && !$claimItem->rec_is_full_paid)
+                        {
+                            $providerCatBudget->pending = $providerCatBudget->pending - $claimItem->amount_claimed;
+                            $providerCatBudget->balance = ($providerCatBudget->balance + $claimItem->amount_claimed) - $claimItem->amount_paid;
+                            $providerCatBudget->spent = $providerCatBudget->spent + $claimItem->amount_paid;
+
+                        }elseif($providerCatBudget)
+                        {
+                            $providerCatBudget->pending = $providerCatBudget->pending - $claimItem->amount_claimed;
+                            $providerCatBudget->balance = $providerCatBudget->balance + $claimItem->amount_claimed;
+                        }
+
+                        if($providerCatBudget){
+                            $providerCatBudget->save();
+                        }
+
+
                     }
                 }
             }
@@ -548,14 +610,26 @@ class ClaimController extends Controller
                 $catBudget->pending = $catBudget->pending - $claim->amount_claimed;
                 $catBudget->balance = $catBudget->balance +  $claim->amount_claimed;
             }
+            //Cleared ProvCat
+            $providerCatBudget = null;
+            if($catBudget){
+                $providerCatBudget = ProviderBudget::where('category_id',$catBudget->category_id)
+                    ->where('plan_id',$catBudget->plan_id)
+                    ->where('plan_budget_id',$catBudget->id)
+                    ->first();
+            }
 
             $claim->plan_id = null;
             $claim->category_id = null;
-            $var = DB::transaction(function () use ($claim,$catBudget){
+            $var = DB::transaction(function () use ($claim,$catBudget,$providerCatBudget){
                 $claim->save();
 
                 if($catBudget){
                     $catBudget->save();
+                }
+
+                if($providerCatBudget){
+                    $providerCatBudget->save();
                 }
 
             });
@@ -563,13 +637,15 @@ class ClaimController extends Controller
         {
             if($claim->plan_id)
             {
-                $claimData = $this->claimValidate($claim,[
+                $claimData = $this->claimValidateNew($claim,[
                     'plan_id' => $claim->plan_id,
                     'category_id' => $claim->category_id,
                 ]);
-            }else
+            }
+            //By Approve by Admin
+            else
             {
-                $claimData = $this->claimValidate($claim);
+                $claimData = $this->claimValidateNew($claim);
             }
 
             if(!$claimData['status']){
@@ -577,23 +653,43 @@ class ClaimController extends Controller
             }
             $var = DB::transaction(function () use ($claim,$claimData) {
                 $catBudget = $claimData['catBudget'];
+                $providerCatBudget = $claimData['providerCatBudget'];
 
                 if($claim->plan_id  && $claim->isDirty('amount_claimed'))
                 {
+                    //Cleared ProvCat
                     $catBudget->balance = $catBudget->balance + $claim->getOriginal('amount_claimed');
+                    $providerCatBudget->balance = $providerCatBudget->balance + $claim->getOriginal('amount_claimed');
+
                     $catBudget->pending = $catBudget->pending - $claim->getOriginal('amount_claimed');
+                    $providerCatBudget->pending = $providerCatBudget->pending - $claim->getOriginal('amount_claimed');
+
                     $catBudget->balance = $catBudget->balance - $claim->amount_claimed;
+                    $providerCatBudget->balance = $providerCatBudget->balance - $claim->amount_claimed;
+
                     $catBudget->pending = $catBudget->pending + $claim->amount_claimed;
+                    $providerCatBudget->pending = $providerCatBudget->pending + $claim->amount_claimed;
+
                     $catBudget->save();
+                    $providerCatBudget->save();
+
                     $claim->save();
                 }elseif($claim->plan_id && !$claim->isDirty('amount_claimed'))
                 {
                     $claim->save();
                 }else
                 {
+                    //Cleared ProvCat
                     $catBudget->balance = $catBudget->balance - $claim->amount_claimed;
+                    $providerCatBudget->balance = $providerCatBudget->balance - $claim->amount_claimed;
+
+
                     $catBudget->pending = $catBudget->pending + $claim->amount_claimed;
+                    $providerCatBudget->pending = $providerCatBudget->pending + $claim->amount_claimed;
+
                     $catBudget->save();
+                    $providerCatBudget->save();
+
                     $claim->plan_id = $catBudget->plan_id;
                     $claim->category_id = $catBudget->category_id;
                     $claim->save();

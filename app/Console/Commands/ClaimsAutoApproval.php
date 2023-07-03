@@ -81,9 +81,16 @@ class ClaimsAutoApproval extends Command
 
             DB::transaction(function () use ($claim,$claimData,&$data) {
                 $catBudget = $claimData['catBudget'];
+                $providerCatBudget = $claimData['providerCatBudget'];
+
                 $catBudget->balance = $catBudget->balance - $claim->amount_claimed;
                 $catBudget->pending = $catBudget->pending + $claim->amount_claimed;
                 $catBudget->save();
+
+                $providerCatBudget->balance = $providerCatBudget->balance - $claim->amount_claimed;
+                $providerCatBudget->pending = $providerCatBudget->pending + $claim->amount_claimed;
+                $providerCatBudget->save();
+
                 $claim->plan_id = $catBudget->plan_id;
                 $claim->category_id = $catBudget->category_id;
                 $claim->status = Claim::STATUS_APPROVED_BY_REPRESENTATIVE;
