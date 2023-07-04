@@ -619,6 +619,11 @@ class ClaimController extends Controller
                     ->first();
             }
 
+            if($providerCatBudget){
+                $providerCatBudget->pending = $providerCatBudget->pending - $claim->amount_claimed;
+                $providerCatBudget->balance = $providerCatBudget->balance +  $claim->amount_claimed;
+            }
+
             $claim->plan_id = null;
             $claim->category_id = null;
             $var = DB::transaction(function () use ($claim,$catBudget,$providerCatBudget){

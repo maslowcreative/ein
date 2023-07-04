@@ -152,7 +152,7 @@ trait ClaimsValidationTrait
                 ->first();
         }
 
-        //Provider Submit CAse
+        //Provider Submit Case
         if($providerCatBudget && $catBudget && !$data )
         {
             $totalCatBudget = $catBudget->balance;
@@ -161,6 +161,7 @@ trait ClaimsValidationTrait
         }elseif($catBudget && $data)
         {
             $totalCatBudget = $catBudget->balance + $claimItem->getOriginal('amount_claimed');
+            $totalProviderCatBudget = $providerCatBudget->balance + $claimItem->getOriginal('amount_claimed');
         }
 
 
