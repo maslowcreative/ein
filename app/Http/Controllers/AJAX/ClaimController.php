@@ -451,13 +451,16 @@ class ClaimController extends Controller
             if($collection->isNotEmpty())
             {
                 foreach ($collection as $claim) {
-                    $claimItem = ClaimLineItem::where('claim_reference', substr($claim['ClaimReference'],1) )->first();
+                    $claimItem = ClaimLineItem::where('claim_reference', substr($claim['ClaimReference'],1) )
+                                                ->where('status',Claim::STATUS_PROCESSED)
+                                                ->first();
                     $paidAmount = 0;
                     if( trim($claim['Payment Request Status']) == 'SUCCESSFUL'){
                         $paidAmount = is_numeric( $claim['PaidTotalAmount'] )? $claim['PaidTotalAmount'] : 0;
                     }
 
                     if($claimItem){
+
                         $claimItem->amount_paid = $paidAmount;
                         $claimItem->rec_is_full_paid = abs($claimItem->amount_claimed - $claimItem->amount_paid) <= 1   ? true: false;
                         $claimItem->rec_payment_request_status = $claim['Payment Request Status'];
@@ -467,7 +470,7 @@ class ClaimController extends Controller
                         $claimItem->status = Claim::STATUS_RECONCILATION_DONE;
                         $claimItem->save();
 
-                        // Category Budget Clearing
+                        //Category Budget Clearing
                         $catBudget = PlanBudget::where('plan_id',$claimItem->plan_id)
                             ->where('category_id',$claimItem->category_id)
                             ->first();
