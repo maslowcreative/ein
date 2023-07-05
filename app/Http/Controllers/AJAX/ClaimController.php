@@ -137,7 +137,33 @@ class ClaimController extends Controller
                 'participant_id' => $participant->user_id,
                 'amount_claimed' => $item['hours'] * $item['unit_price']
             ]);
-            $claim->items()->create($item);
+            $claimItem = $claim->items()->create($item);
+
+            $claimData = $this->claimPreValidate($claimItem);
+
+            if(!$claimData['status']){
+                DB::rollBack();
+                return $this->respondError($claimData['message']) ;
+            }else
+            {
+                $catBudget = $claimData['catBudget'];
+
+                $providerCatBudget = $claimData['providerCatBudget'];
+
+                $catBudget->balance = $catBudget->balance - $claimItem->amount_claimed;
+                $providerCatBudget->balance = $providerCatBudget->balance - $claimItem->amount_claimed;
+
+                $catBudget->pending = $catBudget->pending + $claimItem->amount_claimed;
+                $providerCatBudget->pending = $providerCatBudget->pending + $claimItem->amount_claimed;
+
+                $catBudget->save();
+                $providerCatBudget->save();
+
+                $claimItem->plan_id = $catBudget->plan_id;
+                $claimItem->category_id = $catBudget->category_id;
+                $claimItem->save();
+            }
+
         }
         DB::commit();
 
@@ -179,9 +205,9 @@ class ClaimController extends Controller
         }
 
         $planExist =  Plan::where('start_date','<=',$request->start_date)
-            ->where('end_date','>=',$request->end_date)
-            ->where('participant_id',$participant->id)
-            ->first();
+                            ->where('end_date','>=',$request->end_date)
+                            ->where('participant_id',$participant->id)
+                            ->first();
 
         if(!$planExist){
             return response([
@@ -216,8 +242,35 @@ class ClaimController extends Controller
                 'participant_id' => $participant->user_id,
                 'amount_claimed' => $item['hours'] * $item['unit_price']
             ]);
-            $claim->items()->create($item);
+            $claimItem =  $claim->items()->create($item);
+
+            $claimData = $this->claimPreValidate($claimItem);
+
+            if(!$claimData['status']){
+                DB::rollBack();
+                return $this->respondError($claimData['message']) ;
+            }else
+            {
+                $catBudget = $claimData['catBudget'];
+
+                $providerCatBudget = $claimData['providerCatBudget'];
+
+                $catBudget->balance = $catBudget->balance - $claimItem->amount_claimed;
+                $providerCatBudget->balance = $providerCatBudget->balance - $claimItem->amount_claimed;
+
+                $catBudget->pending = $catBudget->pending + $claimItem->amount_claimed;
+                $providerCatBudget->pending = $providerCatBudget->pending + $claimItem->amount_claimed;
+
+                $catBudget->save();
+                $providerCatBudget->save();
+
+                $claimItem->plan_id = $catBudget->plan_id;
+                $claimItem->category_id = $catBudget->category_id;
+                $claimItem->save();
+            }
         }
+
+
         DB::commit();
 
         if(!$isRepresentative && $participant){
@@ -251,8 +304,10 @@ class ClaimController extends Controller
         $claim->status = $request->status;
 
         //Approve by Representative
-        if($request->status == Claim::STATUS_APPROVED_BY_REPRESENTATIVE){
-            $claimData = $this->claimValidateNew($claim);
+        if($request->status == Claim::STATUS_APPROVED_BY_REPRESENTATIVE)
+        {
+            $claim->save();
+              $claimData = $this->claimValidateNew($claim);
 
             if(!$claimData['status']){
                 return $this->respondError($claimData['message']) ;
@@ -277,7 +332,9 @@ class ClaimController extends Controller
                 $claim->save();
             });
 
-        }elseif ($request->status == Claim::STATUS_DENIED_BY_REPRESENTATIVE)
+
+        }
+        elseif ($request->status == Claim::STATUS_DENIED_BY_REPRESENTATIVE)
         {
             $catBudget =  PlanBudget::where('plan_id',$claim->plan_id)
                                     ->where('category_id',$claim->category_id)
@@ -603,7 +660,7 @@ class ClaimController extends Controller
         $request->merge(['amount_claimed' => $request->hours * $request->unit_price]);
         $claim->fill($request->all());
 
-        if($status == Claim::STATUS_APPROVAL_PENDING || $status == Claim::STATUS_DENIED_BY_REPRESENTATIVE || $status == Claim::STATUS_CANCEL)
+        if( $status == Claim::STATUS_DENIED_BY_REPRESENTATIVE || $status == Claim::STATUS_CANCEL)
         {
             $catBudget =  PlanBudget::where('plan_id',$claim->plan_id)
                 ->where('category_id',$claim->category_id)
