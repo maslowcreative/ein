@@ -304,34 +304,48 @@ class ClaimController extends Controller
         $claim->status = $request->status;
 
         //Approve by Representative
-        if($request->status == Claim::STATUS_APPROVED_BY_REPRESENTATIVE)
-        {
-            $claim->save();
-              $claimData = $this->claimValidateNew($claim);
+        if($request->status == Claim::STATUS_APPROVED_BY_REPRESENTATIVE){
 
-            if(!$claimData['status']){
-                return $this->respondError($claimData['message']) ;
-            }
+            if($claim->plan_id)
+            {
+                $claimData = $this->claimValidateNew($claim,[
+                    'plan_id' => $claim->plan_id,
+                    'category_id' => $claim->category_id,
+                ]);
 
-            //Cleared ProvCat
-            DB::transaction(function () use ($claim,$claimData) {
-                $catBudget = $claimData['catBudget'];
-                $providerCatBudget = $claimData['providerCatBudget'];
-
-                $catBudget->balance = $catBudget->balance - $claim->amount_claimed;
-                $providerCatBudget->balance = $providerCatBudget->balance - $claim->amount_claimed;
-
-                $catBudget->pending = $catBudget->pending + $claim->amount_claimed;
-                $providerCatBudget->pending = $providerCatBudget->pending + $claim->amount_claimed;
-
-                $catBudget->save();
-                $providerCatBudget->save();
-
-                $claim->plan_id = $catBudget->plan_id;
-                $claim->category_id = $catBudget->category_id;
+                if(!$claimData['status']){
+                    return $this->respondError($claimData['message']) ;
+                }
                 $claim->save();
-            });
+            }
+            else
+            {
+                //OLD
+                $claimData = $this->claimValidateNew($claim);
 
+                if(!$claimData['status']){
+                    return $this->respondError($claimData['message']) ;
+                }
+
+                //Cleared ProvCat
+                DB::transaction(function () use ($claim,$claimData) {
+                    $catBudget = $claimData['catBudget'];
+                    $providerCatBudget = $claimData['providerCatBudget'];
+
+                    $catBudget->balance = $catBudget->balance - $claim->amount_claimed;
+                    $providerCatBudget->balance = $providerCatBudget->balance - $claim->amount_claimed;
+
+                    $catBudget->pending = $catBudget->pending + $claim->amount_claimed;
+                    $providerCatBudget->pending = $providerCatBudget->pending + $claim->amount_claimed;
+
+                    $catBudget->save();
+                    $providerCatBudget->save();
+
+                    $claim->plan_id = $catBudget->plan_id;
+                    $claim->category_id = $catBudget->category_id;
+                    $claim->save();
+                });
+            }
 
         }
         elseif ($request->status == Claim::STATUS_DENIED_BY_REPRESENTATIVE)

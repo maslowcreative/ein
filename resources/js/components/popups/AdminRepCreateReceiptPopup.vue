@@ -668,8 +668,11 @@ export default {
                   }
               })
               .catch(error => {
-                  this.$toastr.e("Error", "Some thing went wrong.");
-
+                  if(error.response.status == 400){
+                      this.$toastr.e("Error", error.response.data.error);
+                  }else {
+                      this.$toastr.e("Error", "Some thing went wrong.");
+                  }
 
                   let servcieError = false;
                   Object.keys(this.form.errors.errors).filter(item =>  {
