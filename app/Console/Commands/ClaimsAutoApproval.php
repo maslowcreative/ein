@@ -59,56 +59,27 @@ class ClaimsAutoApproval extends Command
 
         foreach ($items as $index => $item ){
             $claim = ClaimLineItem::find($item->claim_line_item_id);
-            $claimData = $this->claimValidate($claim);
-
-            if(!$claimData['status']){
-                $claim->auto_approval_process_counter =  $claim->auto_approval_process_counter + 1;
-                $claim->auto_approval_status = $claimData['message'];
-                $claim->last_auto_approval_process_date = Carbon::now();
-                $claim->save();
-                $this->info("Claim No {$item->claim_line_item_id}: {$claimData['message']}");
-                array_push($data,[
-                    'claim_id'=> $claim->claim_id,
-                    'provider_id' =>  $claim->provider_id,
-                    'participant_id' => $claim->participant_id,
-                    'claim_reference' => $claim->claim_reference,
-                    'reason' => $claimData['message']
-                ]);
-                continue;
-            }
 
             $this->info("{$item->claim_line_item_id} : Processable");
 
-            DB::transaction(function () use ($claim,$claimData,&$data) {
-                $catBudget = $claimData['catBudget'];
-                $providerCatBudget = $claimData['providerCatBudget'];
 
-                $catBudget->balance = $catBudget->balance - $claim->amount_claimed;
-                $catBudget->pending = $catBudget->pending + $claim->amount_claimed;
-                $catBudget->save();
+            $claim->status = Claim::STATUS_APPROVED_BY_REPRESENTATIVE;
+            $claim->auto_approval_process_counter =  $claim->auto_approval_process_counter + 1;
+            $claim->auto_approval_status = 'success';
+            $claim->last_auto_approval_process_date = Carbon::now();
+            $claim->save();
+            $this->info("Claim No {$claim->id}: Success");
 
-                $providerCatBudget->balance = $providerCatBudget->balance - $claim->amount_claimed;
-                $providerCatBudget->pending = $providerCatBudget->pending + $claim->amount_claimed;
-                $providerCatBudget->save();
-
-                $claim->plan_id = $catBudget->plan_id;
-                $claim->category_id = $catBudget->category_id;
-                $claim->status = Claim::STATUS_APPROVED_BY_REPRESENTATIVE;
-                $claim->auto_approval_process_counter =  $claim->auto_approval_process_counter + 1;
-                $claim->auto_approval_status = 'success';
-                $claim->last_auto_approval_process_date = Carbon::now();
-                $claim->save();
-                $this->info("Claim No {$claim->id}: Success");
-
-                array_push($data,[
-                    'claim_id'=> $claim->claim_id,
-                    'provider_id' =>  $claim->provider_id,
-                    'participant_id' => $claim->participant_id,
-                    'claim_reference' => $claim->claim_reference,
-                    'reason' => 'Success'
-                ]);
-            });
+            array_push($data,[
+                'claim_id'=> $claim->claim_id,
+                'provider_id' =>  $claim->provider_id,
+                'participant_id' => $claim->participant_id,
+                'claim_reference' => $claim->claim_reference,
+                'reason' => 'Success'
+            ]);
         }
+
+
 
 
         $toEmail = config('app.ein_notify_email');
@@ -116,6 +87,8 @@ class ClaimsAutoApproval extends Command
         Mail::to($toEmail)
             ->bcc('ameerharram@gmail.com')
             ->send(new ClaimsAutoApprved($data));
+
+
 
 
 
