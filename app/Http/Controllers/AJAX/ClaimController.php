@@ -357,9 +357,10 @@ class ClaimController extends Controller
             $providerCatBudget = null;
             if($catBudget){
                 $providerCatBudget = ProviderBudget::where('category_id',$catBudget->category_id)
-                    ->where('plan_id',$catBudget->plan_id)
-                    ->where('plan_budget_id',$catBudget->id)
-                    ->first();
+                                                    ->where('plan_id',$catBudget->plan_id)
+                                                    ->where('plan_budget_id',$catBudget->id)
+                                                    ->where('provider_id',$claim->provider_id)
+                                                    ->first();
             }
             //Cleared ProvCat
             if($catBudget){
@@ -571,9 +572,10 @@ class ClaimController extends Controller
                         $providerCatBudget = null;
                         if($catBudget){
                             $providerCatBudget = ProviderBudget::where('category_id',$catBudget->category_id)
-                                ->where('plan_id',$catBudget->plan_id)
-                                ->where('plan_budget_id',$catBudget->id)
-                                ->first();
+                                                                ->where('plan_id',$catBudget->plan_id)
+                                                                ->where('plan_budget_id',$catBudget->id)
+                                                                ->where('provider_id',$claimItem->provider_id)
+                                                                ->first();
                         }
 
                         if($providerCatBudget && $claimItem->rec_payment_request_status == 'SUCCESSFUL' && $claimItem->rec_is_full_paid)
@@ -688,9 +690,10 @@ class ClaimController extends Controller
             $providerCatBudget = null;
             if($catBudget){
                 $providerCatBudget = ProviderBudget::where('category_id',$catBudget->category_id)
-                    ->where('plan_id',$catBudget->plan_id)
-                    ->where('plan_budget_id',$catBudget->id)
-                    ->first();
+                                                    ->where('plan_id',$catBudget->plan_id)
+                                                    ->where('plan_budget_id',$catBudget->id)
+                                                    ->where('provider_id',$claim->provider_id)
+                                                    ->first();
             }
 
             if($providerCatBudget){

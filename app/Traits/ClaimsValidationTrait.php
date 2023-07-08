@@ -148,6 +148,7 @@ trait ClaimsValidationTrait
             $providerCatBudget = ProviderBudget::where('category_id',$catBudget->category_id)
                 ->where('plan_id',$catBudget->plan_id)
                 ->where('plan_budget_id',$catBudget->id)
+                ->where('provider_id',$claimItem->provider_id)
                 ->first();
         }
 
@@ -233,6 +234,7 @@ trait ClaimsValidationTrait
             $providerCatBudget = ProviderBudget::where('category_id',$catBudget->category_id)
                 ->where('plan_id',$catBudget->plan_id)
                 ->where('plan_budget_id',$catBudget->id)
+                ->where('provider_id',$claimItem->provider_id)
                 ->first();
         }
 
