@@ -28,7 +28,8 @@ class ProviderBudgetAllocationRequest extends FormRequest
             'category_id' => 'required',
             'participant_id' => 'required',
             'providers_collection' => 'bail|required|array',
-            'providers_collection.*.providerItemsResultSelected.id' => 'bail|required|distinct|exists:provider_participant,provider_id,participant_id,'.$this->participant_id,
+            //'providers_collection.*.providerItemsResultSelected.id' => 'bail|required|distinct|exists:provider_participant,provider_id,participant_id,'.$this->participant_id,
+            'providers_collection.*.providerItemsResultSelected.id' => 'bail|required|distinct',
             'providers_collection.*.budget' => 'required',
         ];
     }

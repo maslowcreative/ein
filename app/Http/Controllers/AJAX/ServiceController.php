@@ -19,6 +19,7 @@ class ServiceController extends Controller
     public function index()
     {
         $items =  Service::getServices()
+                         ->where('is_deleted',0)
                         ->select('support_item_number','support_item_name','reg_group_number','reg_group_name','support_category_number','support_category_name');
 
         if(Auth::user()->hasRole('provider')) {

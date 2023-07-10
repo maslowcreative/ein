@@ -7,6 +7,7 @@ use App\Models\ServiceGroup;
 use App\Models\ServiceSupportCategory;
 use Box\Spout\Common\Exception\IOException;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Rap2hpoutre\FastExcel\FastExcel;
 
@@ -19,6 +20,7 @@ class CreateServices extends Seeder
      */
     public function run()
     {
+        Service::truncate();
         try {
             $basePath = Storage::path('data');
             $collection = (new FastExcel())->import("{$basePath}/NDIS_Support_Catalogue_2023-24.xlsx");
@@ -57,6 +59,14 @@ class CreateServices extends Seeder
                 ]
             );
         }
+
+        $deletedItems = Service::rightJoin('services_old', 'services.support_item_number', '=', 'services_old.support_item_number')
+            ->where('services.support_item_number',null)
+            ->select('services_old.*',DB::raw('1 as is_deleted,  null as created_at, null as updated_at'))
+            ->get()
+
+            ->toArray();
+        DB::table('services')->insert($deletedItems);
 
     }
 }
