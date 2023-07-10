@@ -98,14 +98,14 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="mb-4">
-                            <label class="form-label">Assistance with Daily Life</label>
+                            <a href="#" v-on:click="openBudegtAllocationPopup('Assistance with Daily Life',form.budgets.cat_1,1)"><label class="form-label">Assistance with Daily Life</label></a>
                             <input :disabled="!getPermission('add_edit_plans')" type="text" v-model="form.budgets.cat_1" class="form-control" />
                             <div class="invalid-msg" v-if="form.errors.has('budgets.cat_1')" v-html="form.errors.get('budgets.cat_1').replace('budgets.cat 1','value')" />
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="mb-4">
-                            <label class="form-label">Transport</label>
+                            <a href="#" v-on:click="openBudegtAllocationPopup('Transport',form.budgets.cat_2,2)" ><label class="form-label">Transport</label></a>
                             <input :disabled="!getPermission('add_edit_plans')" type="text"  v-model="form.budgets.cat_2" class="form-control" />
                             <div class="invalid-msg" v-if="form.errors.has('budgets.cat_2')" v-html="form.errors.get('budgets.cat_2').replace('budgets.cat 2','value')" />
 
@@ -113,7 +113,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="mb-4">
-                            <label class="form-label">Consumables</label>
+                            <a href="#" v-on:click="openBudegtAllocationPopup('Consumables',form.budgets.cat_3,3)" ><label class="form-label">Consumables</label></a>
                             <input :disabled="!getPermission('add_edit_plans')" type="text"  v-model="form.budgets.cat_3" class="form-control" />
                             <div class="invalid-msg" v-if="form.errors.has('budgets.cat_3')" v-html="form.errors.get('budgets.cat_3').replace('budgets.cat 3','value')" />
 
@@ -121,7 +121,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="mb-4">
-                            <label class="form-label">Assistance with Social</label>
+                            <a href="#" v-on:click="openBudegtAllocationPopup('Assistance with Social',form.budgets.cat_4,4)" > <label class="form-label">Assistance with Social</label></a>
                             <input :disabled="!getPermission('add_edit_plans')" type="text"  v-model="form.budgets.cat_4" class="form-control" />
                             <div class="invalid-msg" v-if="form.errors.has('budgets.cat_4')" v-html="form.errors.get('budgets.cat_4').replace('budgets.cat 4','value')" />
 
@@ -129,7 +129,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="mb-4">
-                            <label class="form-label">Assistive Technology</label>
+                            <a href="#" v-on:click="openBudegtAllocationPopup('Assistive Technology',form.budgets.cat_5,5)" > <label class="form-label">Assistive Technology</label></a>
                             <input :disabled="!getPermission('add_edit_plans')" type="text"  v-model="form.budgets.cat_5" class="form-control" />
                             <div class="invalid-msg" v-if="form.errors.has('budgets.cat_5')" v-html="form.errors.get('budgets.cat_5').replace('budgets.cat 5','value')" />
 
@@ -137,7 +137,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="mb-4">
-                            <label class="form-label">Home Modifications</label>
+                            <a href="#" v-on:click="openBudegtAllocationPopup('Home Modifications',form.budgets.cat_6,6)" ><label class="form-label">Home Modifications</label></a>
                             <input :disabled="!getPermission('add_edit_plans')" type="text"  v-model="form.budgets.cat_6" class="form-control" />
                             <div class="invalid-msg" v-if="form.errors.has('budgets.cat_6')" v-html="form.errors.get('budgets.cat_6').replace('budgets.cat 6','value')" />
 
@@ -145,7 +145,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="mb-4">
-                            <label class="form-label">Support Coordination</label>
+                            <a href="#" v-on:click="openBudegtAllocationPopup('Support Coordination',form.budgets.cat_7,7)" ><label class="form-label">Support Coordination</label></a>
                             <input :disabled="!getPermission('add_edit_plans')" type="text" v-model="form.budgets.cat_7" class="form-control" />
                             <div class="invalid-msg" v-if="form.errors.has('budgets.cat_7')" v-html="form.errors.get('budgets.cat_7').replace('budgets.cat 7','value')" />
 
@@ -153,7 +153,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="mb-4">
-                            <label class="form-label">Improved Living Arrangements</label>
+                            <a href="#" v-on:click="openBudegtAllocationPopup('Improved Living Arrangements',form.budgets.cat_8,8)" ><label class="form-label">Improved Living Arrangements</label></a>
                             <input :disabled="!getPermission('add_edit_plans')" type="text"  v-model="form.budgets.cat_8" class="form-control" />
                             <div class="invalid-msg" v-if="form.errors.has('budgets.cat_8')" v-html="form.errors.get('budgets.cat_8').replace('budgets.cat 8','value')" />
 
@@ -161,7 +161,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="mb-4">
-                            <label class="form-label">Increased Social</label>
+                            <a href="#" v-on:click="openBudegtAllocationPopup('Increased Social',form.budgets.cat_9,9)" ><label class="form-label">Increased Social</label></a>
                             <input :disabled="!getPermission('add_edit_plans')" type="text" v-model="form.budgets.cat_9" class="form-control" />
                             <div class="invalid-msg" v-if="form.errors.has('budgets.cat_9')" v-html="form.errors.get('budgets.cat_9').replace('budgets.cat 9','value')" />
 
@@ -169,7 +169,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="mb-4">
-                            <label class="form-label">Finding and Keeping a Job</label>
+                            <a href="#" v-on:click="openBudegtAllocationPopup('Finding and Keeping a Job',form.budgets.cat_10,10)" ><label class="form-label">Finding and Keeping a Job</label></a>
                             <input :disabled="!getPermission('add_edit_plans')" type="text"  v-model="form.budgets.cat_10" class="form-control" />
                             <div class="invalid-msg" v-if="form.errors.has('budgets.cat_10')" v-html="form.errors.get('budgets.cat_10').replace('budgets.cat 10','value')" />
 
@@ -177,7 +177,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="mb-4">
-                            <label class="form-label">Improved Relationships</label>
+                            <a href="#" v-on:click="openBudegtAllocationPopup('Improved Relationships',form.budgets.cat_11,11)" ><label class="form-label">Improved Relationships</label></a>
                             <input :disabled="!getPermission('add_edit_plans')" type="text"  v-model="form.budgets.cat_11" class="form-control" />
                             <div class="invalid-msg" v-if="form.errors.has('budgets.cat_11')" v-html="form.errors.get('budgets.cat_11').replace('budgets.cat 11','value')" />
 
@@ -185,7 +185,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="mb-4">
-                            <label class="form-label">Improved Health and Wellbeing</label>
+                            <a href="#" v-on:click="openBudegtAllocationPopup('Improved Health and Wellbeing',form.budgets.cat_12,12)" ><label class="form-label">Improved Health and Wellbeing</label></a>
                             <input :disabled="!getPermission('add_edit_plans')" type="text"  v-model="form.budgets.cat_12" class="form-control" />
                             <div class="invalid-msg" v-if="form.errors.has('budgets.cat_12')" v-html="form.errors.get('budgets.cat_12').replace('budgets.cat 12','value')" />
 
@@ -193,7 +193,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="mb-4">
-                            <label class="form-label">Improved Learning</label>
+                            <a href="#" v-on:click="openBudegtAllocationPopup('Improved Learning',form.budgets.cat_13,13)" ><label class="form-label">Improved Learning</label></a>
                             <input :disabled="!getPermission('add_edit_plans')" type="text"  v-model="form.budgets.cat_13" class="form-control" />
                             <div class="invalid-msg" v-if="form.errors.has('budgets.cat_13')" v-html="form.errors.get('budgets.cat_13').replace('budgets.cat 13','value')" />
 
@@ -201,7 +201,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="mb-4">
-                            <label class="form-label">Improved Life Choices</label>
+                            <a href="#" v-on:click="openBudegtAllocationPopup('Improved Life Choices',form.budgets.cat_14,14)" ><label class="form-label">Improved Life Choices</label></a>
                             <input :disabled="!getPermission('add_edit_plans')" type="text"  v-model="form.budgets.cat_14" class="form-control" />
                             <div class="invalid-msg" v-if="form.errors.has('budgets.cat_14')" v-html="form.errors.get('budgets.cat_14').replace('budgets.cat 14','value')" />
 
@@ -209,7 +209,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="mb-4">
-                            <label class="form-label">Improved Daily Living Skills</label>
+                            <a href="#" v-on:click="openBudegtAllocationPopup('Improved Daily Living Skills',form.budgets.cat_15,15)" ><label class="form-label">Improved Daily Living Skills</label></a>
                             <input :disabled="!getPermission('add_edit_plans')" type="text"  v-model="form.budgets.cat_15" class="form-control" />
                             <div class="invalid-msg" v-if="form.errors.has('budgets.cat_15')" v-html="form.errors.get('budgets.cat_15').replace('budgets.cat 15','value')" />
 
@@ -275,6 +275,7 @@ export default {
           this.plan = data.plan;
           this.form = data.form;
           this.user = data.user;
+
           // this.form.file_name = this.plan.name;
           // this.form.start_date = this.plan.start_date;
           // this.form.end_date = this.plan.end_date;
@@ -658,6 +659,19 @@ export default {
       }
       return this.policy.permissions[pName]
     },
+    openBudegtAllocationPopup(catName,catBudget,catId){
+        let data = {};
+        data.user = this.user;
+        data.plan = this.plan;
+        data.form = this.form;
+        data.catName = catName;
+        data.budget = catBudget;
+        data.catId = catId;
+        $("#editPlanModal").modal("hide");
+        this.$root.$emit("ein:provider-budget-allocation-popup-open", data);
+        $("#providerBudgetAllocationPopup").modal("show");
+    }
+
   },
 }
 </script>

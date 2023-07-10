@@ -154,6 +154,7 @@
       <plan-list-popup :policy="policy"></plan-list-popup>
       <plan-popup :policy="policy"></plan-popup>
       <create-plan-popup></create-plan-popup>
+      <provider-budget-allocation-popup></provider-budget-allocation-popup>
     </div>
   </div>
 </template>
@@ -163,9 +164,10 @@ import AdvancedLaravelVuePaginate from "advanced-laravel-vue-paginate"
 import "advanced-laravel-vue-paginate/dist/advanced-laravel-vue-paginate.css"
 import PlanPopup from "../popups/PlanPopup"
 import Form from "vform"
+import ProviderBudgetAllocationPopup from "../popups/ProviderBudgetAllocationPopup";
 
 export default {
-  components: { AdvancedLaravelVuePaginate },
+  components: {ProviderBudgetAllocationPopup, AdvancedLaravelVuePaginate },
   props: ["policy"],
   data() {
     return {

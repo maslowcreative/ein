@@ -1,4 +1,9 @@
-<script src="../../../../../../../Desktop/valorant.service.ts"></script>
+<script>
+import ProviderBudgetAllocationListPopup from "../../popups/ProviderBudgetAllocationListPopup";
+export default {
+    components: {ProviderBudgetAllocationListPopup}
+}
+</script>
 <template>
   <div>
     <div class="card p-3 p-md-5">
@@ -70,7 +75,7 @@
               </thead>
               <tbody>
                 <tr v-for="row in tableData">
-                  <td class="not-center">{{row.category.short_name}}</td>
+                  <td class="not-center"><a href="#" v-on:click="openProvidersAllocation(row.plan_id,row.category_id,row.category.short_name)">{{row.category.short_name}}</a></td>
                   <td class="not-center">${{row.amount}}</td>
                   <td class="not-center">${{row.spent}}</td>
                   <td class="not-center">${{row.pending}}</td>
@@ -86,9 +91,13 @@
                 </div>
             </div>
         </div>
+
       </div>
     </div>
+      <provider-budget-allocation-list-popup></provider-budget-allocation-list-popup>
   </div>
+
+
 </template>
 
 <script>
@@ -311,6 +320,19 @@ export default {
           this.getSpendingData(this.selectedParticipantNew.id,this.selectedPlan.id);
 
       },
+      openProvidersAllocation(planId,catId,catName){
+
+          let data = {
+              category_id: catId,
+              category_name : catName,
+              plan_id: planId,
+
+          };
+
+          this.$root.$emit("ein:provider-budget-allocation-list-popup-open", data);
+          $("#providerBudgetAllocationListPopup").modal("show");
+
+      }
   },
 }
 </script>

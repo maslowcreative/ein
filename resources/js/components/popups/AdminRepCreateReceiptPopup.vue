@@ -77,11 +77,11 @@
                                 <div class="col-md-6">
                                     <div class="mb-4">
                                         <div class="dropdownWrap">
-                                            <label for="linkAParticipant" class="form-label">Link a Participant</label>
+                                            <label  class="form-label">Link a Participant</label>
                                             <input
                                                 type="text"
                                                 class="form-control"
-                                                id="linkAParticipant"
+
                                                 placeholder="Participant’s Name"
                                                 v-model="participantSerachName"
                                                 autocomplete="off"
@@ -145,11 +145,10 @@
                                 <div class="col-md-6">
                                     <div class="mb-4">
                                         <div class="dropdownWrap">
-                                            <label for="linkAProvider" class="form-label">Link a Provider</label>
+                                            <label  class="form-label">Link a Provider</label>
                                             <input
                                                 type="text"
                                                 class="form-control"
-                                                id="linkAProvider"
                                                 placeholder="Provider’s Name"
                                                 v-model="providerSerachName"
                                                 autocomplete="off"
@@ -669,8 +668,11 @@ export default {
                   }
               })
               .catch(error => {
-                  this.$toastr.e("Error", "Some thing went wrong.");
-
+                  if(error.response.status == 400){
+                      this.$toastr.e("Error", error.response.data.error);
+                  }else {
+                      this.$toastr.e("Error", "Some thing went wrong.");
+                  }
 
                   let servcieError = false;
                   Object.keys(this.form.errors.errors).filter(item =>  {
