@@ -168,14 +168,14 @@ trait ClaimsValidationTrait
         if($totalCatBudget == 0 || $totalProviderCatBudget == 0){
             return [
                 'status' => false,
-                'message' => 'Participant does not have budget against category.'
+                'message' => 'Insufficient funding allocated.'
             ];
         }
 
         if ($claimItem->amount_claimed > $totalCatBudget || $claimItem->amount_claimed > $totalProviderCatBudget ){
             return [
                 'status' => false,
-                'message' => 'Participant does not have sufficient budget against category for provider.'
+                'message' => 'Insufficient funding allocated.'
             ];
         }
 
@@ -251,14 +251,14 @@ trait ClaimsValidationTrait
         if($totalCatBudget == 0 || $totalProviderCatBudget == 0){
             return [
                 'status' => false,
-                'message' => 'Participant does not have budget against category.'
+                'message' => 'Insufficient funding allocated.'
             ];
         }
 
         if ($claimItem->amount_claimed > $totalCatBudget || $claimItem->amount_claimed > $totalProviderCatBudget ){
             return [
                 'status' => false,
-                'message' => 'Participant does not have sufficient budget against category for provider.'
+                'message' => 'Insufficient funding allocated.'
             ];
         }
 

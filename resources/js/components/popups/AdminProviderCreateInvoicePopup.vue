@@ -667,18 +667,19 @@ export default {
                   }
               })
               .catch(error => {
-                  if(error.response.status == 400){
-                      this.$toastr.e("Error", error.response.data.error);
-                  }else {
-                      this.$toastr.e("Error", "Some thing went wrong.");
-                  }
-
                   let servcieError = false;
                   Object.keys(this.form.errors.errors).filter(item =>  {
                       if(item.split('.') [0] == 'service'){
                           servcieError = true;
                       }
                   });
+
+                  if(error.response.status == 400){
+                      this.$toastr.e("Error", error.response.data.error);
+                      servcieError = true;
+                  }else {
+                      this.$toastr.e("Error", "Some thing went wrong.");
+                  }
 
                   if(this.form.errors.has('start_date') || this.form.errors.has('end_date') || this.form.errors.has('invoice_number') ||   this.form.errors.has('participant_id') || this.form.errors.has('provider_id'))
                   {
