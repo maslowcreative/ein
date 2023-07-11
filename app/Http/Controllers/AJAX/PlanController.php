@@ -426,8 +426,10 @@ class PlanController extends Controller
         $providerBudget = ProviderBudget::where('category_id',$request->category_id)
                                         ->where('plan_id',$request->plan_id)
                                         ->where('plan_budget_id',$planBudget->id)
-                                        ->with('user.roles')
-                                        ->withTrashed()
+                                        ->with(['user' => function ($query) {
+                                            $query->withTrashed();
+                                            $query->with('roles');
+                                        }])
                                         ->get();
         return  $providerBudget;
 
