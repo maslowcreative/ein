@@ -58,7 +58,7 @@ class ProviderOldDataCapture extends Command
                                 Claim::STATUS_PROCESSED,
                                 Claim::STATUS_RECONCILATION_DONE
                             ])
-                            ->select('plan_id','category_id','provider_id','participant_id',DB::raw("IFNULL( sum(amount_claimed),0) as amount_claimed, IFNULL( sum(amount_paid),0) as amount_paid, status"))
+                            ->select('plan_id','category_id','provider_id','participant_id',DB::raw("sum(IF(status = 5 , 0 , IFNULL(amount_claimed,0) ) ) as amount_claimed, sum(IF(status <> 5 , 0 , IFNULL(amount_paid,0) ) ) as amount_paid, status"))
                             ->groupBy('plan_id','provider_id','category_id','participant_id')
                             ->get();
             if($lineItems->count()> 0){
@@ -69,8 +69,8 @@ class ProviderOldDataCapture extends Command
                     $planBudget = PlanBudget::where('plan_id',$item->plan_id)->where('category_id',$item->category_id)->first();
                     if($planBudget){
 
-                        $amount = $item->amount_claimed;
-                        $pending = $item->amount_claimed - $item->amount_paid;
+                        $amount = $item->amount_claimed + $item->amount_paid;
+                        $pending = $item->amount_claimed;
                         $spent = $item->amount_paid;
 
                         $providerBudget = ProviderBudget::where('provider_id',$item->provider_id)
@@ -88,7 +88,7 @@ class ProviderOldDataCapture extends Command
                         }
                         $providerBudget->pending = $pending;
                         $providerBudget->spent = $spent;
-                        $providerBudget->balance = $providerBudget->amount - ($pending + $spent);
+                        $providerBudget->balance = 0;
 
                         $providerBudget->provider_id = $item->provider_id;
                         $providerBudget->plan_id = $item->plan_id;
