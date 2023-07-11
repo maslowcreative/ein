@@ -43,7 +43,7 @@ class ProviderOldDataCapture extends Command
      */
     public function handle()
     {
-        $plans = Plan::where('status',0)->get()->toArray();
+        $plans = Plan::get()->toArray();
         config(['database.connections.mysql.strict' => false]);
         DB::reconnect();
 
