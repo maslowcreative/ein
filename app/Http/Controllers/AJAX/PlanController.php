@@ -427,6 +427,7 @@ class PlanController extends Controller
                                         ->where('plan_id',$request->plan_id)
                                         ->where('plan_budget_id',$planBudget->id)
                                         ->with('user.roles')
+                                        ->withTrashed()
                                         ->get();
         return  $providerBudget;
 
