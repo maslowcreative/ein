@@ -52,7 +52,7 @@ class ProviderOldDataCapture extends Command
         foreach ($plans as $plan){
 
             $lineItems = DB::table('claim_line_items')->where('plan_id',$plan['id'])->whereIn('status',[
-                                //Claim::STATUS_APPROVAL_PENDING,
+                                Claim::STATUS_APPROVAL_PENDING,
                                 Claim::STATUS_APPROVED_BY_REPRESENTATIVE,
                                 Claim::STATUS_APPROVED_BY_ADMIN,
                                 Claim::STATUS_PROCESSED,
