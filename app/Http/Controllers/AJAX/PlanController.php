@@ -391,7 +391,7 @@ class PlanController extends Controller
                     return  $this->respondError('New value cannot be less than the old value.');
                 }else
                 {
-                    $providerBudget->balance = $provider['budget'] - $providerBudget->amount;
+                    $providerBudget->balance = $providerBudget->balance + ($provider['budget'] - $providerBudget->amount);
                     $providerBudget->amount = $provider['budget'];
                 }
             }
