@@ -143,6 +143,10 @@ class ClaimController extends Controller
 
             if(!$claimData['status']){
                 DB::rollBack();
+
+                $maxId = DB::table('claims')->max('id');
+                DB::statement("ALTER TABLE claims AUTO_INCREMENT=$maxId");
+
                 return $this->respondError($claimData['message']) ;
             }else
             {
@@ -248,6 +252,10 @@ class ClaimController extends Controller
 
             if(!$claimData['status']){
                 DB::rollBack();
+
+                $maxId = DB::table('claims')->max('id');
+                DB::statement("ALTER TABLE claims AUTO_INCREMENT=$maxId");
+
                 return $this->respondError($claimData['message']) ;
             }else
             {
