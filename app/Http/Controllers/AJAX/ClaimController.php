@@ -5,6 +5,7 @@ namespace App\Http\Controllers\AJAX;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ClaimPostRequest;
 use App\Mail\InvoiceCreated;
+use App\Mail\ProviderBudgetExceeded;
 use App\Models\Claim;
 use App\Models\ClaimLineItem;
 use App\Models\Participant;
@@ -528,6 +529,8 @@ class ClaimController extends Controller
             $fullPath = Storage::path($path);
             $collection = (new FastExcel)->import($fullPath);
             $now = Carbon::now();
+
+            $emailsData = [];
             if($collection->isNotEmpty())
             {
                 foreach ($collection as $claim) {
@@ -605,13 +608,21 @@ class ClaimController extends Controller
 
                         if($providerCatBudget){
                             $providerCatBudget->save();
+                            $percentage = ($providerCatBudget->spent / $providerCatBudget->amount) * 100;
+                            if($percentage>= 80)
+                            {
+                                $data = [
+                                    'participant_id' => $claimItem->participant_id,
+                                    'percentage_exceeded' => $percentage,
+                                    'providerCatBudget' =>$providerCatBudget
+                                ];
+                                Mail::to(env('EIN_ADMIN_EMAIL'))
+                                    ->send(new ProviderBudgetExceeded($data));
+                            }
                         }
-
-
                     }
                 }
             }
-
 
         } catch (IOException $e) {
             dd($e->getMessage());
