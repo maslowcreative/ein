@@ -608,17 +608,17 @@ class ClaimController extends Controller
 
                         if($providerCatBudget){
                             $providerCatBudget->save();
-//                            $percentage = ($providerCatBudget->spent / $providerCatBudget->amount) * 100;
-//                            if($percentage>= 80)
-//                            {
-//                                $data = [
-//                                    'participant_id' => $claimItem->participant_id,
-//                                    'percentage_exceeded' => $percentage,
-//                                    'providerCatBudget' =>$providerCatBudget
-//                                ];
-//                                Mail::to(env('EIN_ADMIN_EMAIL'))
-//                                    ->send(new ProviderBudgetExceeded($data));
-//                            }
+                            $percentage = ($providerCatBudget->spent / $providerCatBudget->amount) * 100;
+                            if($percentage>= 80)
+                            {
+                                $data = [
+                                    'participant_id' => $claimItem->participant_id,
+                                    'percentage_exceeded' => $percentage,
+                                    'providerCatBudget' =>$providerCatBudget
+                                ];
+                                Mail::to(env('EIN_ADMIN_EMAIL'))
+                                    ->send(new ProviderBudgetExceeded($data));
+                            }
                         }
                     }
                 }
