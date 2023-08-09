@@ -24,3 +24,4 @@ Route::get('/my-account', [App\Http\Controllers\HomeController::class, 'myAccoun
 Route::get('/analytics', [App\Http\Controllers\HomeController::class, 'analytics'])->name('analytics');
 Route::get('/calim/{claim}/invoice/download', [App\Http\Controllers\HomeController::class, 'claimInvoiceDownload'])->name('claim.invoice.download');
 Route::get('/plan/{file_name}', [App\Http\Controllers\HomeController::class, 'planFileDownload'])->name('plan.file.download');
+Route::get('/job-test', [App\Http\Controllers\HomeController::class, 'jobTest'])->name('job.test');

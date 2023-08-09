@@ -15,4 +15,14 @@ class ProviderBudget extends Model
     public function user() {
         return $this->belongsTo(User::class,'provider_id');
     }
+
+    public function plan()
+    {
+        return $this->belongsTo(Plan::class,'plan_id');
+    }
+
+    public function planBudget()
+    {
+        return $this->belongsTo(PlanBudget::class,'plan_budget_id');
+    }
 }

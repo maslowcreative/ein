@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ProviderBudgetExceeded;
 use App\Models\Claim;
+use App\Models\ProviderBudget;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
 class HomeController extends Controller
@@ -76,5 +79,30 @@ class HomeController extends Controller
             return redirect()->route('home');
         }
 
+    }
+
+    public function jobTest()
+    {
+       $providerBudgets =  ProviderBudget::with('plan','planBudget')
+                                        ->orderBy('id','desc')
+                                        ->get()
+                                        ->take(15);
+
+       foreach ($providerBudgets as $providerBudget){
+           $percentage = ($providerBudget->spent / $providerBudget->amount) * 100;
+           if($percentage>= 80)
+           {
+                $data = [
+                    'participant_id' => $providerBudget->plan->participant_id,
+                    'percentage_exceeded' => $percentage,
+                    'providerCatBudget' =>$providerBudget
+                ];
+
+                Mail::to(env('EIN_ADMIN_EMAIL'))
+                    ->send(new ProviderBudgetExceeded($data));
+           }
+       }
+       return 'Mail sent.';
+       
     }
 }
