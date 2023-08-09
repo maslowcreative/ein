@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\Process80BudgetExceeded;
 use App\Mail\ProviderBudgetExceeded;
 use App\Models\Claim;
 use App\Models\ProviderBudget;
@@ -87,7 +88,7 @@ class HomeController extends Controller
                                         ->orderBy('id','desc')
                                         ->get()
                                         ->take(15);
-
+       $array = [];
        foreach ($providerBudgets as $providerBudget){
            $percentage = ($providerBudget->spent / $providerBudget->amount) * 100;
            if($percentage>= 80)
@@ -97,12 +98,17 @@ class HomeController extends Controller
                     'percentage_exceeded' => $percentage,
                     'providerCatBudget' =>$providerBudget
                 ];
+//               Mail::to(env('EIN_ADMIN_EMAIL'))
+//                   ->send(new ProviderBudgetExceeded($data));
+                array_push($array,$data);
 
-                Mail::to(env('EIN_ADMIN_EMAIL'))
-                    ->send(new ProviderBudgetExceeded($data));
            }
        }
+
+        Process80BudgetExceeded::dispatch($array);
+
+
        return 'Mail sent.';
-       
+
     }
 }

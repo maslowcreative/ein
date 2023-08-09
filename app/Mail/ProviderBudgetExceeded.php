@@ -10,7 +10,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\View;
 
-class ProviderBudgetExceeded extends Mailable
+class ProviderBudgetExceeded extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
     private $data;
