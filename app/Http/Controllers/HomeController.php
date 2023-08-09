@@ -98,14 +98,14 @@ class HomeController extends Controller
                     'percentage_exceeded' => $percentage,
                     'providerCatBudget' =>$providerBudget
                 ];
-//               Mail::to(env('EIN_ADMIN_EMAIL'))
-//                   ->send(new ProviderBudgetExceeded($data));
+               Mail::to(env('EIN_ADMIN_EMAIL'))
+                   ->send(new ProviderBudgetExceeded($data));
                 array_push($array,$data);
 
            }
        }
 
-        Process80BudgetExceeded::dispatch($array);
+        //Process80BudgetExceeded::dispatch($array);
 
 
        return 'Mail sent.';
