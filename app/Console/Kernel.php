@@ -24,7 +24,21 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+         $schedule->command('plans:expire')
+                  ->dailyAt('00:10');
+         $schedule->command('plan:balance-budget')
+                 ->timezone('Australia/Sydney')
+                 ->dailyAt('05:00');
+
+         $schedule->command('claims:auto-approve')
+                  ->timezone('Australia/Sydney')
+                  ->dailyAt('12:30');
+
+         $schedule->command('claims:auto-approve')
+                ->timezone('Australia/Sydney')
+                ->dailyAt('17:30');
+
+
     }
 
     /**

@@ -33,13 +33,12 @@
           </div>
 
           <div class="mb-4">
-            <label for="password" class="col-form-label">Password</label>
+            <label  class="col-form-label">Password</label>
             <div class="input-group-overlay">
               <div class="input-group-prepend-overlay">
                 <span class="input-group-text text-primary"><i class="fas fa-lock-open"></i></span>
               </div>
               <input
-                id="password"
                 type="password"
                 v-model="form.password"
                 class="form-control prepended-form-control"
@@ -52,13 +51,12 @@
           </div>
 
           <div class="mb-4">
-            <label for="password" class="col-form-label">Password</label>
+            <label  class="col-form-label">Password</label>
             <div class="input-group-overlay">
               <div class="input-group-prepend-overlay">
                 <span class="input-group-text text-primary"><i class="fas fa-lock-open"></i></span>
               </div>
               <input
-                id="password"
                 type="password"
                 name="password_confirmation"
                 v-model="form.password_confirmation"
@@ -112,7 +110,10 @@ export default {
       this.form
         .post(route)
         .then(res => {
-          if ((res.status = 200)) this.message = res.data.message
+          if ((res.status = 200)){
+              this.message = res.data.message;
+              window.location.reload();
+          }
         })
         .catch(error => {})
     },

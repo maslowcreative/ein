@@ -2,6 +2,7 @@
   &-wrap {
     min-height: 100vh;
     place-content: center;
+    background-color: #fff;
   }
 
   max-width: 640px;
@@ -9,7 +10,7 @@
   width: 100%;
 
   &-from {
-    box-shadow: 3px 0px 22px 0px rgba(#000, 0.05);
+    box-shadow: $box-shadow;
     padding: 2.5rem;
     margin-block: 2.5rem;
 

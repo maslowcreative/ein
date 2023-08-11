@@ -46,6 +46,234 @@
     {
         "uri": "home",
         "name": "home"
+    },
+    {
+        "uri": "my-account",
+        "name": "my.account"
+    },
+    {
+        "uri": "analytics",
+        "name": "analytics"
+    },
+    {
+        "uri": "calim\/{claim}\/invoice\/download",
+        "name": "claim.invoice.download"
+    },
+    {
+        "uri": "plan\/{file_name}",
+        "name": "plan.file.download"
+    },
+    {
+        "uri": "ajax\/users\/store",
+        "name": "ajax."
+    },
+    {
+        "uri": "ajax\/users\/representative\/{representative}\/participants",
+        "name": "ajax.users.representative.participants"
+    },
+    {
+        "uri": "ajax\/users\/{user}\/basic-info",
+        "name": "ajax.users.update.basic.info"
+    },
+    {
+        "uri": "ajax\/users\/{user}\/bank-info",
+        "name": "ajax.users.update.bank.info"
+    },
+    {
+        "uri": "ajax\/users\/status-toggle",
+        "name": "ajax.user.status.toggle"
+    },
+    {
+        "uri": "ajax\/users\/{user}\/representative\/update-auto-approval",
+        "name": "ajax.user.representative.approval"
+    },
+    {
+        "uri": "ajax\/users\/{user}\/upload-avatar",
+        "name": "ajax.users.upload.avatar"
+    },
+    {
+        "uri": "ajax\/users\/participant",
+        "name": "ajax.participants.index"
+    },
+    {
+        "uri": "ajax\/users",
+        "name": "ajax.users.index"
+    },
+    {
+        "uri": "ajax\/users",
+        "name": "ajax.users.store"
+    },
+    {
+        "uri": "ajax\/users\/{user}",
+        "name": "ajax.users.show"
+    },
+    {
+        "uri": "ajax\/users\/{user}",
+        "name": "ajax.users.update"
+    },
+    {
+        "uri": "ajax\/users\/{user}",
+        "name": "ajax.users.destroy"
+    },
+    {
+        "uri": "ajax\/providers\/remove-participants",
+        "name": "ajax.providers.remove.participants"
+    },
+    {
+        "uri": "ajax\/providers",
+        "name": "ajax.providers.index"
+    },
+    {
+        "uri": "ajax\/providers",
+        "name": "ajax.providers.store"
+    },
+    {
+        "uri": "ajax\/providers\/{provider}",
+        "name": "ajax.providers.show"
+    },
+    {
+        "uri": "ajax\/providers\/{provider}",
+        "name": "ajax.providers.update"
+    },
+    {
+        "uri": "ajax\/providers\/{provider}",
+        "name": "ajax.providers.destroy"
+    },
+    {
+        "uri": "ajax\/claims\/store",
+        "name": "ajax."
+    },
+    {
+        "uri": "ajax\/claims\/admin-store",
+        "name": "ajax.claims.store.admin"
+    },
+    {
+        "uri": "ajax\/claims\/{claim}\/representative-action",
+        "name": "ajax.claims.representative.action"
+    },
+    {
+        "uri": "ajax\/claims\/bulk-upload-file",
+        "name": "ajax.claims.bulk.upload.file"
+    },
+    {
+        "uri": "ajax\/claims\/reconciled-results-file",
+        "name": "ajax.claims.reconciled.results.file"
+    },
+    {
+        "uri": "ajax\/claims\/upload-reconciled-file",
+        "name": "ajax.claims.upload.reconciled.file"
+    },
+    {
+        "uri": "ajax\/claims\/list",
+        "name": "ajax.claims.list"
+    },
+    {
+        "uri": "ajax\/claims\/admin\/approved",
+        "name": "ajax.claims.admin.approved"
+    },
+    {
+        "uri": "ajax\/claims\/update-claim",
+        "name": "ajax.claims.update"
+    },
+    {
+        "uri": "ajax\/claims",
+        "name": "ajax.claims.index"
+    },
+    {
+        "uri": "ajax\/claims",
+        "name": "ajax.claims.store"
+    },
+    {
+        "uri": "ajax\/claims\/{claim}",
+        "name": "ajax.claims.show"
+    },
+    {
+        "uri": "ajax\/claims\/{claim}",
+        "name": "ajax.claims.update"
+    },
+    {
+        "uri": "ajax\/claims\/{claim}",
+        "name": "ajax.claims.destroy"
+    },
+    {
+        "uri": "ajax\/plans\/upload",
+        "name": "ajax.plans.upload"
+    },
+    {
+        "uri": "ajax\/plans\/spending-data",
+        "name": "ajax.plans.spending.data"
+    },
+    {
+        "uri": "ajax\/plans\/provider-budget-allocation",
+        "name": "ajax.budget.allocation"
+    },
+    {
+        "uri": "ajax\/plans\/provider-budget-allocation",
+        "name": "ajax.get.budget.allocation"
+    },
+    {
+        "uri": "ajax\/plans",
+        "name": "ajax.plans.index"
+    },
+    {
+        "uri": "ajax\/plans",
+        "name": "ajax.plans.store"
+    },
+    {
+        "uri": "ajax\/plans\/{plan}",
+        "name": "ajax.plans.show"
+    },
+    {
+        "uri": "ajax\/plans\/{plan}",
+        "name": "ajax.plans.update"
+    },
+    {
+        "uri": "ajax\/plans\/{plan}",
+        "name": "ajax.plans.destroy"
+    },
+    {
+        "uri": "ajax\/services",
+        "name": "ajax.services.index"
+    },
+    {
+        "uri": "ajax\/services",
+        "name": "ajax.services.store"
+    },
+    {
+        "uri": "ajax\/services\/{service}",
+        "name": "ajax.services.show"
+    },
+    {
+        "uri": "ajax\/services\/{service}",
+        "name": "ajax.services.update"
+    },
+    {
+        "uri": "ajax\/services\/{service}",
+        "name": "ajax.services.destroy"
+    },
+    {
+        "uri": "ajax\/admin\/update-permissions",
+        "name": "ajax.admins.update.permission"
+    },
+    {
+        "uri": "ajax\/admins",
+        "name": "ajax.admins.index"
+    },
+    {
+        "uri": "ajax\/admins",
+        "name": "ajax.admins.store"
+    },
+    {
+        "uri": "ajax\/admins\/{admin}",
+        "name": "ajax.admins.show"
+    },
+    {
+        "uri": "ajax\/admins\/{admin}",
+        "name": "ajax.admins.update"
+    },
+    {
+        "uri": "ajax\/admins\/{admin}",
+        "name": "ajax.admins.destroy"
     }
 ],
             prefix: '',

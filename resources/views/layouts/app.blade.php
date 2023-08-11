@@ -24,13 +24,17 @@
 <body>
 	<div id="app">
 		@if(auth()->check())
-		<nav-bar user="{{auth()->user()}}"></nav-bar>
+        <nav-bar user="{{auth()->user()}}"></nav-bar>
 		@endif
 
-		<main class="main">
-			@yield('content')
-		</main>
+		@yield('content')
+
+		@if(auth()->check())
+		@include('partial.footer')
+		@endif
+
 	</div>
+	<script type="module" src="https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js"></script>
 </body>
 
 </html>

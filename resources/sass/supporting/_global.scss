@@ -1,19 +1,111 @@
 .btn {
+  white-space: nowrap;
+
   &-primary {
     color: $white;
 
-    &:hover {
+    &:hover,
+    &:active,
+    .btn-check:focus + &,
+    .btn-check:checked + &,
+    .btn-check:active + &,
+    &:focus {
       color: $white;
       border-color: $secondary;
       background-color: $secondary;
     }
   }
+
+  &-light {
+    color: $primary;
+
+    &:hover,
+    &:active,
+    .btn-check:focus + &,
+    .btn-check:checked + &,
+    .btn-check:active + &,
+    &:focus {
+      color: var(--bs-white);
+      border-color: var(--bs-secondary);
+      background-color: var(--bs-secondary);
+    }
+  }
+
+  &.btn-icon {
+    display: inline-flex;
+    align-items: center;
+    line-height: 1;
+    padding-block: 0.67rem;
+  }
+
+  &.hover-danger {
+    &:hover,
+    &:active,
+    .btn-check:focus + &,
+    .btn-check:checked + &,
+    .btn-check:active + &,
+    &:focus {
+      color: var(--bs-danger);
+    }
+  }
+}
+
+//
+.flip-h {
+  transform: scaleX(-1);
+}
+
+.flip-v {
+  transform: scaleY(-1);
+}
+//
+
+.fs-sm {
+  --bs-body-font-size: 0.75rem;
+
+  font-size: var(--bs-body-font-size);
+}
+
+.fs-lg {
+  --bs-body-font-size: 1.25rem;
+
+  font-size: var(--bs-body-font-size);
+
+  &.btn,
+  .btn {
+    font-size: var(--bs-body-font-size);
+  }
 }
 
 //
 
-.form-control:not(.form-control-sm):not(.form-control-lg) {
+.badge {
+  font-weight: 600;
+}
+
+//
+
+.form-label {
+  font-weight: bold;
+}
+
+//
+
+.form-control:not(.form-control-sm):not(.form-control-lg),
+.form-select:not(.form-select-sm):not(.form-select-lg) {
   min-height: 3.25rem;
+}
+
+.form-switch .form-check-input {
+  width: 4.375em;
+  height: 2.125em;
+  border-radius: 50px;
+  box-shadow: $box-shadow;
+  background-color: var(--bs-gray-300);
+
+  &:checked {
+    background-color: var(--bs-primary);
+  }
 }
 
 .invalid-msg {
@@ -23,11 +115,179 @@
   color: $danger;
 }
 
+.badge-alrt {
+  padding: 0.3125rem;
+}
+
 //
 
+.dropdown-menu {
+  box-shadow: $box-shadow;
+}
+
+//
 .grid {
   display: grid;
   gap: var(--gap, 32px);
   grid-template-columns: var(--template, minmax(0, 1fr));
   grid-auto-rows: minmax(0, max-content);
 }
+
+.card {
+  box-shadow: $box-shadow;
+  border: none;
+
+  .card-body {
+    @include media-breakpoint-up(xxl) {
+      padding: 4.625rem;
+    }
+  }
+}
+
+.table-x-scroll {
+  overflow-x: auto;
+  margin-top: 2rem;
+
+  // @include media-breakpoint-up(xxl) {
+  //   margin-top: 3.75rem;
+  // }
+}
+
+.table {
+  font-size: 14px;
+
+  > :not(:last-child) > :last-child > * {
+    border-bottom-color: #e5e5e5;
+  }
+
+  th {
+    padding-bottom: 0.5rem;
+  }
+
+  th:not(.not-center),
+  td:not(.not-center) {
+    text-align: center;
+  }
+}
+
+//
+
+.card-right-btns {
+  @extend .d-flex, .align-items-center;
+
+  > * + * {
+    margin-left: 1.5rem;
+  }
+}
+
+//
+
+.scroll-y,
+.scroll-x {
+  --border-radius: 4px;
+
+  position: relative;
+  // scrollbar-color: #0a4c95 #c2d2e4;
+
+  &::-webkit-scrollbar {
+    width: 0.25rem;
+    background-color: rgba(#c4c4c4, 15%);
+    border-radius: var(--border-radius);
+    outline: none;
+  }
+
+  &::-webkit-scrollbar-track {
+    border-radius: var(--border-radius);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #c4c4c4;
+    border-radius: var(--border-radius);
+  }
+}
+
+.scroll-y {
+  --box-height: 100%;
+
+  max-height: var(--box-height);
+  overflow-y: auto;
+}
+
+.scroll-x {
+  --box-width: 100%;
+
+  max-width: var(--box-width);
+  overflow-x: auto;
+}
+
+//
+
+.dropdownWrap {
+  position: relative;
+
+  .dropdownSec {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    margin-top: 0.5rem;
+    background-color: #fff;
+    z-index: 10;
+  }
+}
+
+//
+
+.main {
+  .multiselect {
+    &__tags {
+      border: none;
+      background-color: #fafafa;
+      min-height: 3.25rem;
+      border-radius: 0;
+    }
+
+    &__single {
+      background: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    &__option {
+      padding: 0;
+    }
+  }
+}
+
+//
+
+.pagination {
+  .page-item {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+  }
+}
+
+//
+
+.loader-wrap {
+  position: relative;
+
+  .loader-bg {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-content: center;
+    background-color: rgba(#fff, 0.5);
+  }
+
+  .spinner-loder {
+    width: 3rem;
+    height: 3rem;
+  }
+}
+
+//

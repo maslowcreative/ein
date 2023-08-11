@@ -9,7 +9,7 @@ require('./bootstrap');
 window.Vue = require('vue').default;
 
 
-//Routes
+// Routes
 import VueLaroute from 'vue-laroute';
 import routes from '../../public/js/laroute.js';
 
@@ -18,6 +18,18 @@ Vue.use(VueLaroute, {
     accessor: 'laroute', // Optional: the global variable for accessing the router
 });
 
+// Register Event global
+window.VueEvents = new Vue({});
+
+// import plugin
+import VueToastr from "vue-toastr";
+// use plugin
+Vue.use(VueToastr, {
+    defaultTimeout: 2000,
+    defaultPosition: "toast-top-right",
+});
+// configure Icon setting
+Vue.config.ignoredElements = [/^ion-/]
 
 /**
  * The following block of code may be used to automatically register your
