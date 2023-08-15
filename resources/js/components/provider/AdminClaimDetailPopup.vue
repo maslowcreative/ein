@@ -163,6 +163,8 @@
                                             <option value="1">Accepted</option>
                                             <option value="2">Rejected</option>
                                             <option value="3">Approved</option>
+                                            <option value="4">Processed</option>
+                                            <option value="5">Reconciled</option>
                                             <option value="6">Cancel</option>
                                         </select>
                                         <div
@@ -272,6 +274,15 @@ export default {
                   break;
               case 3:
                   this.isEditable = false;
+                  this.isStatusEditable = true;
+                  break;
+
+              case 4:
+                  this.isEditable = true;
+                  this.isStatusEditable = true;
+                  break;
+              case 5:
+                  this.isEditable = true;
                   this.isStatusEditable = true;
                   break;
               case 6:
