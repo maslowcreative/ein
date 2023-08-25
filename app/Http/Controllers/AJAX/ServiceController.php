@@ -20,7 +20,17 @@ class ServiceController extends Controller
     {
         $items =  Service::getServices()
                          ->where('is_deleted',0)
-                        ->select('support_item_number','support_item_name','reg_group_number','reg_group_name','support_category_number','support_category_name');
+                        ->select('support_item_number','support_item_name','reg_group_number','reg_group_name','support_category_number','support_category_name',
+                            'ACT',
+                            'NSW',
+                            'NT',
+                            'QLD',
+                            'SA',
+                            'TAS',
+                            'VIC',
+                            'WA'
+
+                        );
 
         if(Auth::user()->hasRole('provider')) {
             \request()->validate([
