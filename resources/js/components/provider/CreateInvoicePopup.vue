@@ -171,7 +171,7 @@
                                                 Please select participant first.
                                             </div>
                                             <span v-if="service.item_name">
-                                                {{service.item_name}} <span v-if="service.max_unit_price"></span>
+                                                {{service.item_name}}
                                             </span>
 
                                             <div
