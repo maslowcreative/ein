@@ -60,6 +60,26 @@ class PlanController extends Controller
             }
 
         }
+
+        $plansCheck = Plan::where('participant_id',$request->participant_id)
+                        ->where(function ($query) use ($request){
+                            $query->where(function ($query) use ($request){
+                                $query->whereDate('start_date', '<=', $request->start_date)
+                                    ->whereDate('end_date', '>=', $request->start_date);
+                            })
+                            ->orWhere(function ($query) use ($request){
+                                $query->whereDate('start_date', '<=', $request->end_date)
+                                    ->whereDate('end_date', '>=', $request->end_date);
+                            });
+                        })
+                        ->get();
+
+        if(count($plansCheck) > 0)
+        {
+            return $this->respondError(__('Overlapping date exist.'));
+        }
+
+
         DB::beginTransaction();
         $plan = new Plan();
         $plan->file_name = $request->file_name;
@@ -226,6 +246,26 @@ class PlanController extends Controller
                 }
             }],
         ]);
+
+
+        $plansCheck = Plan::where('participant_id',$plan->participant_id)
+            ->where('id','<>',$plan->id)
+            ->where(function ($query) use ($request){
+                $query->where(function ($query) use ($request){
+                    $query->whereDate('start_date', '<=', $request->start_date)
+                        ->whereDate('end_date', '>=', $request->start_date);
+                })
+                    ->orWhere(function ($query) use ($request){
+                        $query->whereDate('start_date', '<=', $request->end_date)
+                            ->whereDate('end_date', '>=', $request->end_date);
+                    });
+            })
+            ->get();
+
+        if(count($plansCheck) > 0)
+        {
+            return $this->respondError(__('Overlapping date exist.'));
+        }
 
         if($request->status == 1){
             $plans = Plan::where('participant_id',$plan->participant_id)
