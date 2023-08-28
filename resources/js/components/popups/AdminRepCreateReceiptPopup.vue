@@ -299,7 +299,7 @@
                                                 <div class="col-4">
                                                     <div class="mb-4">
                                                         <label class="form-label">Unit Price</label>
-                                                        <input type="text" v-model="service.unit_price" class="form-control" placeholder="$">
+                                                        <input type="text" v-model="service.unit_price" class="form-control" :placeholder="service.max_unit_price !== '' ? '$' + service.max_unit_price : ''" >
                                                         <div
                                                             class="invalid-msg"
                                                             v-if="form.errors.has('service.'+index+'.unit_price')"
@@ -418,6 +418,7 @@ export default {
                     'gst_code': 'P2',
                     'cancellation_reason': null,
                     'item_name': null,
+                    'max_unit_price' : '',
                 }
             ]
         }),
@@ -639,6 +640,7 @@ export default {
                       'gst_code': 'P2',
                       'cancellation_reason': null,
                       'item_name': null,
+                      'max_unit_price' : '',
                   }
               ]
           });
@@ -700,14 +702,26 @@ export default {
           let service = [];
           let servicesItemsOrginal = [];
           servicesItemsOrginal = this.servicesItemsOrginal;
-          this.form.service.forEach(function (item,index){
+
+          this.form.service.forEach( (item,index) => {
               let cat = servicesItemsOrginal.filter(function (v){
                   return v.support_item_number == item.item_number;
               });
               if(cat.length > 0){
-                  item.item_name = cat[0].support_item_name;
+                  let serviceObnj = cat[0];
+                  item.item_name = serviceObnj.support_item_name;
+                  if(this.participantSelected && this.participantSelected.state)
+                  {
+
+                      let state = this.participantSelected.state;
+                      if(serviceObnj.hasOwnProperty(state)){
+                          item.max_unit_price =  serviceObnj[state];
+                      }
+                  }
+
               }else {
                   item.item_name = null;
+                  item.max_unit_price = '';
               }
           });
       },
@@ -746,6 +760,8 @@ export default {
                   'unit_price': null,
                   'gst_code': null,
                   'cancellation_reason': null,
+                  'item_name': null,
+                  'max_unit_price' : '',
               }
           );
       },

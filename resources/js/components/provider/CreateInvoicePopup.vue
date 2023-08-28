@@ -351,7 +351,7 @@ export default {
                     'gst_code': 'P2',
                     'cancellation_reason': null,
                     'item_name': null,
-                    'max_unit_price' : null,
+                    'max_unit_price' : '',
                 }
             ]
         }),
@@ -470,7 +470,7 @@ export default {
                       'gst_code': 'P2',
                       'cancellation_reason': null,
                       'item_name': null,
-                      'max_unit_price' : null,
+                      'max_unit_price' : '',
 
                   }
               ]
@@ -531,10 +531,10 @@ export default {
                   'claim_type': "",
                   'hours' : null,
                   'unit_price': null,
-                  'gst_code': 'P2',
+                  'gst_code': null,
                   'cancellation_reason': null,
                   'item_name': null,
-                  'max_unit_price' : null,
+                  'max_unit_price' : '',
               }
           );
       },
@@ -570,7 +570,7 @@ export default {
 
             }else {
                 item.item_name = null;
-                item.max_unit_price = null;
+                item.max_unit_price = '';
             }
         });
       },

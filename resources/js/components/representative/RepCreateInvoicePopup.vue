@@ -299,7 +299,7 @@
                                                 <div class="col-4">
                                                     <div class="mb-4">
                                                         <label class="form-label">Unit Price</label>
-                                                        <input type="text" v-model="service.unit_price" class="form-control" placeholder="$">
+                                                        <input type="text" v-model="service.unit_price" class="form-control" :placeholder="service.max_unit_price !== null ? '$' + service.max_unit_price : ''" >
                                                         <div
                                                             class="invalid-msg"
                                                             v-if="form.errors.has('service.'+index+'.unit_price')"
@@ -385,310 +385,326 @@ import 'vue-select/dist/vue-select.css';
 import Form from "vform";
 import Multiselect from 'vue-multiselect'
 export default {
-  components: { Multiselect },
-  data() {
-    return {
-        loader: false,
-        maxDate : null,
-        step: 1,
-        lastStep: false,
-        totalCost: 0,
-        form: new Form({
-            'start_date': null,
-            'end_date': null,
-            'invoice_number': null,
-            'participant_id': null,
-            'provider_id': null,
-            'file': {},
-            'service': [
+    components: { Multiselect },
+    data() {
+        return {
+            loader: false,
+            maxDate : null,
+            step: 1,
+            lastStep: false,
+            totalCost: 0,
+            form: new Form({
+                'start_date': null,
+                'end_date': null,
+                'invoice_number': null,
+                'participant_id': null,
+                'provider_id': null,
+                'file': {},
+                'service': [
+                    {
+                        'item_number': null,
+                        'claim_type': " ",
+                        'hours' : null,
+                        'unit_price': null,
+                        'gst_code': 'P2',
+                        'cancellation_reason': null,
+                        'item_name': null,
+                        'max_unit_price' : '',
+                    }
+                ]
+            }),
+            participantSerachName: null,
+            participantSerachResult: [],
+            participantSelected: null,
+            providerSerachName: null,
+            providerSerachResult: [],
+            providerSelected: null,
+            servicesItemsResult: [],
+            servicesItemsOrginal : []
+
+        }
+    },
+    watch: {
+        step(val, old) {
+            if (val == 3) {
+                this.lastStep = true
+            } else {
+                this.lastStep = false
+            }
+
+            if(val == 2){
+                this.asyncFindItemNumber('');
+            }
+        },
+        participantSerachName(val, old) {
+            if (val) {
+                this.asyncFind(val, "participant");
+            } else {
+                this.participantSerachResult = [];
+            }
+        },
+        providerSerachName(val,old) {
+            if (val) {
+                this.asyncFind(val, "provider");
+            } else {
+                this.providerSerachResult = [];
+            }
+        },
+        "form.service": {
+            handler: function (val, old) {
+                let totalCost = 0;
+                if (val.length > 0) {
+                    val.forEach(function (service) {
+                        let cost = Math.round((service.hours * service.unit_price + Number.EPSILON) * 100) / 100;
+                        totalCost = Math.round((totalCost + cost) * 100) / 100;
+                    });
+                } else {
+                    totalCost = 0;
+                }
+
+                this.totalCost = Math.round((totalCost) * 100) / 100;
+            },
+            deep: true
+        }
+    },
+    mounted() {
+        this.$root.$on('ein-representative:create-invoice-popup', () => {
+            this.form.reset();
+            this.resetForm();
+            this.$refs.inputFile.value=null;
+
+            let today = new Date();
+            var month = this.pad2(today.getMonth()+1);//months (0-11)
+            var day = this.pad2(today.getDate());//day (1-31)
+            var year= today.getFullYear();
+
+            var formattedDate =  year+"-"+month+"-"+day;
+            this.maxDate = formattedDate;
+        });
+
+        this.$root.$on('ein-provider:participant-selected-to-invoice', (participant) => {
+            this.participantSelected = participant;
+            this.form.participant_id = participant.id;
+        });
+    },
+    methods: {
+        pad2(n) {
+            return (n < 10 ? '0' : '') + n;
+        },
+        current(value) {
+            this.step = value;
+        },
+        prev() {
+            this.step--;
+        },
+        next() {
+            if (this.step < 3) {
+                this.step++
+            }
+        },
+        selectItem(id, $role) {
+            if ($role === "participant") {
+                let participant = this.participantSerachResult.filter(participant => participant.id == id);
+                this.participantSelected = participant[0];
+                this.form.participant_id = this.participantSelected.id;
+                this.participantSerachName = null;
+                this.participantSerachResult = [];
+            }
+
+            if ($role === "provider") {
+                let provider = this.providerSerachResult.filter(provider => provider.id == id);
+                this.providerSelected = provider[0];
+                this.form.provider_id = this.providerSelected.id;
+                this.providerSerachName = null;
+                this.providerSerachResult = [];
+            }
+        },
+        removeItem(id, $key) {
+            if ($key === "participant") {
+                this.participantSelected = null;
+                this.form.participant_id = null;
+            }
+        },
+        resetForm(){
+            this.loader = false;
+            this.step= 1;
+            this.lastStep= false;
+            this.totalCost = 0 ;
+            this.$refs.inputFile.value=null;
+            this.form = new Form({
+                'start_date': null,
+                'end_date': null,
+                'invoice_number': null,
+                'participant_id': null,
+                'file': null,
+                'service': [
+                    {
+                        'item_number': null,
+                        'claim_type': "",
+                        'hours' : null,
+                        'unit_price': null,
+                        'gst_code': 'P2',
+                        'cancellation_reason': null,
+                        'item_name': null,
+                        'max_unit_price' : '',
+
+                    }
+                ]
+            });
+            this.participantSerachName= null;
+            this.participantSerachResult= [];
+            this.participantSelected= null;
+            this.servicesItemsResult= [];
+            this.providerSerachName = null;
+            this.providerSerachResult =[];
+            this.providerSelected = null;
+            this.servicesItemsOrginal = [];
+        },
+        createClaim() {
+            this.loader = true;
+            let route = this.laroute.route("ajax.claims.store");
+            this.form
+                .post(route)
+                .then(res => {
+                    console.log('res',res);
+                    if ((res.status = 201)) {
+                        this.$root.$emit("ein-claim:created");
+                        this.$toastr.s("Success", "Claim created!");
+                        this.closePopup();
+                    }
+                })
+                .catch(error => {
+                    if(error.response.status == 400){
+                        this.$toastr.e("Error", error.response.data.error);
+                    }else {
+                        this.$toastr.e("Error", "Some thing went wrong.");
+                    }
+                })
+                .finally(() => {
+                    this.loader = false
+                });
+
+        },
+        itemNumberSelected(query){
+            let service = [];
+            let servicesItemsOrginal = [];
+            servicesItemsOrginal = this.servicesItemsOrginal;
+            this.form.service.forEach( (item,index) => {
+                let cat = servicesItemsOrginal.filter(function (v){
+                    return v.support_item_number == item.item_number;
+                });
+                if(cat.length > 0){
+                    let serviceObnj = cat[0];
+                    item.item_name = serviceObnj.support_item_name;
+                    if(this.participantSelected && this.participantSelected.state)
+                    {
+
+                        let state = this.participantSelected.state;
+                        if(serviceObnj.hasOwnProperty(state)){
+                            item.max_unit_price =  serviceObnj[state];
+                        }
+                    }
+
+                }else {
+                    item.item_name = null;
+                    item.max_unit_price = '';
+                }
+            });
+        },
+        asyncFind(query, type = "participant") {
+            this.loader = true;
+            let data = {
+                "filter[name]": query,
+                "filter[roles][0]": type,
+            };
+
+            let route = this.laroute.route("ajax.users.index", data)
+            axios
+                .get(route)
+                .then(res => {
+                    if(type == "participant") {
+                        this.participantSerachResult = res.data.data;
+                    }
+                    if(type == "provider") {
+                        this.providerSerachResult = res.data.data;
+                    }
+                })
+                .catch(error => {
+                    this.$toastr.e("Error", "Some thing went wrong.")
+                })
+                .finally(() => (this.loader = false))
+        },
+        addService(){
+            this.form.service.push(
                 {
                     'item_number': null,
-                    'claim_type': " ",
+                    'claim_type': "",
                     'hours' : null,
                     'unit_price': null,
-                    'gst_code': 'P2',
+                    'gst_code': null,
                     'cancellation_reason': null,
                     'item_name': null,
+                    'max_unit_price' : '',
                 }
-            ]
-        }),
-        participantSerachName: null,
-        participantSerachResult: [],
-        participantSelected: null,
-        providerSerachName: null,
-        providerSerachResult: [],
-        providerSelected: null,
-        servicesItemsResult: [],
-        servicesItemsOrginal : []
+            );
+        },
+        removeService(pos) {
+            let service = [];
+            this.form.service.forEach(function (item,index){
+                if(pos != index){
+                    service.push(item);
+                }
+            });
+            this.form.service = service;
+
+        },
+        asyncFindItemNumber(query) {
+            this.servicesItemsResult = [];
+            let data = {
+                "filter[item_number]": query,
+                'participant_id': this.form.participant_id,
+                'provider_id' : this.form.provider_id,
+            }
+
+            let route = this.laroute.route("ajax.services.index", data)
+            axios
+                .get(route)
+                .then(res => {
+                    var data = res.data.data.map(function (obj) {
+                        return obj.support_item_number;
+                    });
+                    this.servicesItemsResult= data;
+                    this.servicesItemsOrginal =  res.data.data;
+                })
+                .catch(error => {
+                    if(error.response.status == 422){
+                        this.$toastr.e("Error", "Please select participant & provider first.");
+                    }else {
+                        this.$toastr.e("Error", "Some thing went wrong.");
+                    }
+
+                })
+                .finally(() => {
+                    this.loader = false
+                });
+        },
+        closePopup() {
+            this.resetForm();
+            $("#invoicePopup").modal('hide');
+        },
+
+        onFileChange(e) {
+            var files = e.target.files || e.dataTransfer.files;
+            if (!files.length)
+                return;
+            this.form.file = files[0];
+        },
+        processCANC(service) {
+            if(service.claim_type != 'CANC') {
+                service.cancellation_reason = null;
+            }
+        }
 
     }
-  },
-  watch: {
-      step(val, old) {
-          if (val == 3) {
-              this.lastStep = true
-          } else {
-              this.lastStep = false
-          }
-
-          if(val == 2){
-              this.asyncFindItemNumber('');
-          }
-      },
-      participantSerachName(val, old) {
-          if (val) {
-              this.asyncFind(val, "participant");
-          } else {
-              this.participantSerachResult = [];
-          }
-      },
-      providerSerachName(val,old) {
-          if (val) {
-              this.asyncFind(val, "provider");
-          } else {
-              this.providerSerachResult = [];
-          }
-      },
-      "form.service": {
-          handler: function (val, old) {
-              let totalCost = 0;
-              if (val.length > 0) {
-                  val.forEach(function (service) {
-                      let cost = Math.round((service.hours * service.unit_price + Number.EPSILON) * 100) / 100;
-                      totalCost = Math.round((totalCost + cost) * 100) / 100;
-                  });
-              } else {
-                  totalCost = 0;
-              }
-
-              this.totalCost = Math.round((totalCost) * 100) / 100;
-          },
-          deep: true
-      }
-  },
-  mounted() {
-      this.$root.$on('ein-representative:create-invoice-popup', () => {
-          this.form.reset();
-          this.resetForm();
-          this.$refs.inputFile.value=null;
-
-          let today = new Date();
-          var month = this.pad2(today.getMonth()+1);//months (0-11)
-          var day = this.pad2(today.getDate());//day (1-31)
-          var year= today.getFullYear();
-
-          var formattedDate =  year+"-"+month+"-"+day;
-          this.maxDate = formattedDate;
-      });
-
-      this.$root.$on('ein-provider:participant-selected-to-invoice', (participant) => {
-          this.participantSelected = participant;
-          this.form.participant_id = participant.id;
-      });
-  },
-  methods: {
-      pad2(n) {
-          return (n < 10 ? '0' : '') + n;
-      },
-      current(value) {
-          this.step = value;
-      },
-      prev() {
-          this.step--;
-      },
-      next() {
-          if (this.step < 3) {
-              this.step++
-          }
-      },
-      selectItem(id, $role) {
-          if ($role === "participant") {
-              let participant = this.participantSerachResult.filter(participant => participant.id == id);
-              this.participantSelected = participant[0];
-              this.form.participant_id = this.participantSelected.id;
-              this.participantSerachName = null;
-              this.participantSerachResult = [];
-          }
-
-          if ($role === "provider") {
-              let provider = this.providerSerachResult.filter(provider => provider.id == id);
-              this.providerSelected = provider[0];
-              this.form.provider_id = this.providerSelected.id;
-              this.providerSerachName = null;
-              this.providerSerachResult = [];
-          }
-      },
-      removeItem(id, $key) {
-          if ($key === "participant") {
-              this.participantSelected = null;
-              this.form.participant_id = null;
-          }
-      },
-      resetForm(){
-          this.loader = false;
-          this.step= 1;
-          this.lastStep= false;
-          this.totalCost = 0 ;
-          this.$refs.inputFile.value=null;
-          this.form = new Form({
-              'start_date': null,
-              'end_date': null,
-              'invoice_number': null,
-              'participant_id': null,
-              'file': null,
-              'service': [
-                  {
-                      'item_number': null,
-                      'claim_type': "",
-                      'hours' : null,
-                      'unit_price': null,
-                      'gst_code': 'P2',
-                      'cancellation_reason': null,
-                      'item_name': null,
-                  }
-              ]
-          });
-          this.participantSerachName= null;
-          this.participantSerachResult= [];
-          this.participantSelected= null;
-          this.servicesItemsResult= [];
-          this.providerSerachName = null;
-          this.providerSerachResult =[];
-          this.providerSelected = null;
-          this.servicesItemsOrginal = [];
-      },
-      createClaim() {
-          this.loader = true;
-          let route = this.laroute.route("ajax.claims.store");
-          this.form
-              .post(route)
-              .then(res => {
-                  console.log('res',res);
-                  if ((res.status = 201)) {
-                      this.$root.$emit("ein-claim:created");
-                      this.$toastr.s("Success", "Claim created!");
-                      this.closePopup();
-                  }
-              })
-              .catch(error => {
-                  if(error.response.status == 400){
-                      this.$toastr.e("Error", error.response.data.error);
-                  }else {
-                      this.$toastr.e("Error", "Some thing went wrong.");
-                  }
-              })
-              .finally(() => {
-                  this.loader = false
-              });
-
-      },
-      itemNumberSelected(query){
-          let service = [];
-          let servicesItemsOrginal = [];
-          servicesItemsOrginal = this.servicesItemsOrginal;
-          this.form.service.forEach(function (item,index){
-              let cat = servicesItemsOrginal.filter(function (v){
-                  return v.support_item_number == item.item_number;
-              });
-              if(cat.length > 0){
-                  item.item_name = cat[0].support_item_name;
-              }else {
-                  item.item_name = null;
-              }
-          });
-      },
-      asyncFind(query, type = "participant") {
-          this.loader = true;
-          let data = {
-              "filter[name]": query,
-              "filter[roles][0]": type,
-          };
-
-          let route = this.laroute.route("ajax.users.index", data)
-          axios
-              .get(route)
-              .then(res => {
-                  if(type == "participant") {
-                      this.participantSerachResult = res.data.data;
-                  }
-                  if(type == "provider") {
-                      this.providerSerachResult = res.data.data;
-                  }
-              })
-              .catch(error => {
-                  this.$toastr.e("Error", "Some thing went wrong.")
-              })
-              .finally(() => (this.loader = false))
-      },
-      addService(){
-          this.form.service.push(
-              {
-                  'item_number': null,
-                  'claim_type': "",
-                  'hours' : null,
-                  'unit_price': null,
-                  'gst_code': null,
-                  'cancellation_reason': null,
-              }
-          );
-      },
-      removeService(pos) {
-          let service = [];
-          this.form.service.forEach(function (item,index){
-              if(pos != index){
-                  service.push(item);
-              }
-          });
-          this.form.service = service;
-
-      },
-      asyncFindItemNumber(query) {
-          this.servicesItemsResult = [];
-          let data = {
-              "filter[item_number]": query,
-              'participant_id': this.form.participant_id,
-              'provider_id' : this.form.provider_id,
-          }
-
-          let route = this.laroute.route("ajax.services.index", data)
-          axios
-              .get(route)
-              .then(res => {
-                  var data = res.data.data.map(function (obj) {
-                      return obj.support_item_number;
-                  });
-                  this.servicesItemsResult= data;
-                  this.servicesItemsOrginal =  res.data.data;
-              })
-              .catch(error => {
-                  if(error.response.status == 422){
-                      this.$toastr.e("Error", "Please select participant & provider first.");
-                  }else {
-                      this.$toastr.e("Error", "Some thing went wrong.");
-                  }
-
-              })
-              .finally(() => {
-                  this.loader = false
-              });
-      },
-      closePopup() {
-          this.resetForm();
-          $("#invoicePopup").modal('hide');
-      },
-
-      onFileChange(e) {
-          var files = e.target.files || e.dataTransfer.files;
-          if (!files.length)
-              return;
-          this.form.file = files[0];
-      },
-      processCANC(service) {
-          if(service.claim_type != 'CANC') {
-             service.cancellation_reason = null;
-          }
-      }
-
-  }
 }
 </script>
