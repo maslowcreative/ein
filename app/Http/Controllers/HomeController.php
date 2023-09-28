@@ -82,6 +82,15 @@ class HomeController extends Controller
 
     }
 
+    public function providerBudgetAllocations()
+    {
+        if( auth()->user()->hasRole('provider')){
+            return view('provider-plan-budget');
+        }else{
+            return redirect()->route('home');
+        }
+    }
+
     public function jobTest()
     {
        $providerBudgets =  ProviderBudget::with('plan','planBudget')
@@ -106,9 +115,6 @@ class HomeController extends Controller
        }
 
         //Process80BudgetExceeded::dispatch($array);
-
-
        return 'Mail sent.';
-
     }
 }

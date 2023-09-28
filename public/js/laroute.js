@@ -56,12 +56,20 @@
         "name": "analytics"
     },
     {
+        "uri": "plan-budget-allocations",
+        "name": "provider.budget.allocation"
+    },
+    {
         "uri": "calim\/{claim}\/invoice\/download",
         "name": "claim.invoice.download"
     },
     {
         "uri": "plan\/{file_name}",
         "name": "plan.file.download"
+    },
+    {
+        "uri": "job-test",
+        "name": "job.test"
     },
     {
         "uri": "ajax\/users\/store",
@@ -202,6 +210,10 @@
     {
         "uri": "ajax\/plans\/spending-data",
         "name": "ajax.plans.spending.data"
+    },
+    {
+        "uri": "ajax\/plans\/provider-spending-data",
+        "name": "ajax.plans.provider.spending.data"
     },
     {
         "uri": "ajax\/plans\/provider-budget-allocation",

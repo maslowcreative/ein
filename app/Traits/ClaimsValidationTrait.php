@@ -41,7 +41,8 @@ trait ClaimsValidationTrait
             $partPlans = Plan::where('participant_id',$claimItem->participant_id)
                 ->where('start_date','<=',$claim->start_date)
                 ->where('end_date','>=',$claim->end_date)
-                ->where('status',1)
+                //->where('status',1)
+                ->orderBy('status', 'DESC')
                 ->first();
 
             if (!$partPlans){
@@ -122,6 +123,7 @@ trait ClaimsValidationTrait
                                 ->where('start_date','<=',$claim->start_date)
                                 ->where('end_date','>=',$claim->end_date)
                                 //->where('status',1)
+                                ->orderBy('status', 'DESC')
                                 ->first();
 
             if (!$partPlans){
@@ -216,6 +218,7 @@ trait ClaimsValidationTrait
                 ->where('start_date','<=',$claim->start_date)
                 ->where('end_date','>=',$claim->end_date)
                 //->where('status',1)
+                ->orderBy('status', 'DESC')
                 ->first();
 
             if (!$partPlans){

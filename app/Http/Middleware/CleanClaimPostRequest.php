@@ -18,9 +18,9 @@ class CleanClaimPostRequest
     public function handle(Request $request, Closure $next)
     {
         if($request->hasFile('file')){
-            $chunks = array_chunk($request->service,7);
-            $service = [];
 
+            $chunks = array_chunk($request->service,8);
+            $service = [];
             foreach ($chunks as $chunk) {
                 $dot = Arr::dot($chunk);
                 array_push($service,[
@@ -30,6 +30,8 @@ class CleanClaimPostRequest
                     'unit_price' => $dot['3.unit_price'],
                     'gst_code' => $dot['4.gst_code'],
                     'cancellation_reason' => $dot['5.cancellation_reason'],
+                    //'item_name' => $dot['6.item_name'],
+                    //'max_unit_price' => $dot['7.max_unit_price'],
                 ]);
             }
             $input = $request->all();

@@ -686,25 +686,47 @@ class ClaimController extends Controller
                                                 Claim::STATUS_APPROVED_BY_REPRESENTATIVE,
                                                 Claim::STATUS_DENIED_BY_REPRESENTATIVE,
                                                 Claim::STATUS_APPROVED_BY_ADMIN,
+                                                Claim::STATUS_PROCESSED,
+                                                Claim::STATUS_RECONCILATION_DONE,
                                                 Claim::STATUS_CANCEL
                                             ])],
 
         ]);
+
         $claim = ClaimLineItem::findOrFail($request->id);
         $status = $request->status;
         $request->merge(['amount_claimed' => $request->hours * $request->unit_price]);
         $claim->fill($request->all());
 
-        if( $status == Claim::STATUS_DENIED_BY_REPRESENTATIVE || $status == Claim::STATUS_CANCEL)
+        if($claim->getOriginal('status') <> Claim::STATUS_RECONCILATION_DONE && $status == Claim::STATUS_RECONCILATION_DONE){
+            return $this->respondError('This state cannot be selected.') ;
+        }
+
+        $isReconcilled = false;
+        if($claim->getOriginal('status') == Claim::STATUS_RECONCILATION_DONE && $status <> Claim::STATUS_RECONCILATION_DONE )
+        {
+            $isReconcilled = true;
+        }
+
+        if($status == Claim::STATUS_DENIED_BY_REPRESENTATIVE || $status == Claim::STATUS_CANCEL)
         {
             $catBudget =  PlanBudget::where('plan_id',$claim->plan_id)
                 ->where('category_id',$claim->category_id)
                 ->first();
 
-            if($catBudget){
+            if($catBudget && !$isReconcilled){
                 $catBudget->pending = $catBudget->pending - $claim->amount_claimed;
                 $catBudget->balance = $catBudget->balance +  $claim->amount_claimed;
             }
+            elseif ($catBudget && $isReconcilled)
+            {
+                if($claim->rec_payment_request_status == 'SUCCESSFUL')
+                {
+                    $catBudget->spent = $catBudget->spent - $claim->amount_claimed;
+                    $catBudget->balance = $catBudget->balance +  $claim->amount_claimed;
+                }
+            }
+
             //Cleared ProvCat
             $providerCatBudget = null;
             if($catBudget){
@@ -715,9 +737,27 @@ class ClaimController extends Controller
                                                     ->first();
             }
 
-            if($providerCatBudget){
+            if($providerCatBudget && !$isReconcilled){
                 $providerCatBudget->pending = $providerCatBudget->pending - $claim->amount_claimed;
                 $providerCatBudget->balance = $providerCatBudget->balance +  $claim->amount_claimed;
+            }
+            elseif ($providerCatBudget && $isReconcilled)
+            {
+                if($claim->rec_payment_request_status == 'SUCCESSFUL')
+                {
+                    $providerCatBudget->spent = $providerCatBudget->spent - $claim->amount_claimed;
+                    $providerCatBudget->balance = $providerCatBudget->balance +  $claim->amount_claimed;
+                }
+            }
+
+            if($isReconcilled)
+            {
+                $claim->amount_paid = null;
+                $claim->rec_is_full_paid = null;
+                $claim->rec_payment_request_status = null;
+                $claim->rec_payment_request_number = null;
+                $claim->rec_capped_price = null;
+                $claim->rec_date = null;
             }
 
             $claim->plan_id = null;
@@ -734,7 +774,8 @@ class ClaimController extends Controller
                 }
 
             });
-        }else
+        }
+        else
         {
             if($claim->plan_id)
             {
@@ -775,24 +816,30 @@ class ClaimController extends Controller
                     $providerCatBudget->save();
 
                     $claim->save();
-                }elseif($claim->plan_id && !$claim->isDirty('amount_claimed'))
+                }
+                elseif($claim->plan_id && !$claim->isDirty('amount_claimed'))
                 {
                     $claim->save();
-                }else
+                }
+                else
                 {
-                    //Cleared ProvCat
-                    $catBudget->balance = $catBudget->balance - $claim->amount_claimed;
-                    $providerCatBudget->balance = $providerCatBudget->balance - $claim->amount_claimed;
+                    if($claim->getOriginal('status') != Claim::STATUS_RECONCILATION_DONE)
+                    {
+                        //Cleared ProvCat
+                        $catBudget->balance = $catBudget->balance - $claim->amount_claimed;
+                        $providerCatBudget->balance = $providerCatBudget->balance - $claim->amount_claimed;
 
 
-                    $catBudget->pending = $catBudget->pending + $claim->amount_claimed;
-                    $providerCatBudget->pending = $providerCatBudget->pending + $claim->amount_claimed;
+                        $catBudget->pending = $catBudget->pending + $claim->amount_claimed;
+                        $providerCatBudget->pending = $providerCatBudget->pending + $claim->amount_claimed;
 
-                    $catBudget->save();
-                    $providerCatBudget->save();
+                        $catBudget->save();
+                        $providerCatBudget->save();
 
-                    $claim->plan_id = $catBudget->plan_id;
-                    $claim->category_id = $catBudget->category_id;
+                        $claim->plan_id = $catBudget->plan_id;
+                        $claim->category_id = $catBudget->category_id;
+                    }
+
                     $claim->save();
                 }
             });
