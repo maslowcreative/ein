@@ -386,6 +386,63 @@ class PlanController extends Controller
         return $this->respondWithSuccess($spendingData);
     }
 
+    public function getProviderSpendingData(Request $request)
+    {
+        //return $request->all();
+        $user = Auth::user();
+        if($user->hasRole('provider')) {
+            $repId = $user->id;
+            $request->validate([
+                'participant_id' => [
+                    'required',
+//                    Rule::exists('participants','user_id')->where(function ($query) use ($repId) {
+//                        return $query->where('representative_id', $repId);
+//                    }),
+                ]
+            ]);
+        }
+        else
+        {
+           return $this->respondForbidden();
+        }
+
+
+
+        $plan = Plan::where('participant_id',$request->participant_id)
+            ->where('id',$request->plan_id)
+            ->first();
+
+        if(!$plan)
+        {
+            return $this->respondError('No active plan exists for this participant');
+        }
+
+
+        $providerPlanBugets  = ProviderBudget::where('plan_id',$plan->id)
+                                                ->where('provider_id',$user->id)
+                                                ->where('amount' ,'>',0)
+                                                ->with('category')
+                                                ->orderBy('category_id')
+                                                ->get();
+        if(!$providerPlanBugets->count())
+        {
+            return $this->respondError('No plan category exists with plan budget');
+        }
+
+
+
+        $spendingData = [
+            'table' => $providerPlanBugets->toArray(),
+            'plan' => [
+                'start_date' => $plan->start_date_formatted,
+                'end_date' => $plan->end_date_formatted,
+                'status' => $plan->status,
+            ]
+        ];
+
+        return $this->respondWithSuccess($spendingData);
+    }
+
     /**
      * @param Request $request
      * @return void

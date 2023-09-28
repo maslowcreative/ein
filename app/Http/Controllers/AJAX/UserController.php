@@ -48,7 +48,6 @@ class UserController extends Controller
         if(Auth::user()->hasRole('admin') && !\request()->is_admin_claim) {
             $users = $users->with('plan');
         }
-
         if(Auth::user()->hasRole('representative') || \request()->is_admin_claim) {
 
             if(\request()->filter['roles'][0] == 'participant'){
@@ -76,7 +75,12 @@ class UserController extends Controller
 
         if(Auth::user()->hasRole('provider') ) {
             $participantsIds = Auth::user()->provider->participants()->pluck('participant_id');
-            $users = $users->whereIn('id',$participantsIds)->with('participant.representative');
+            //$users = $users->whereIn('id',$participantsIds)->with('participant.representative','participant.plans');
+            $users->whereIn('id', $participantsIds)
+                ->with(['participant.representative', 'participant.plans' => function ($query) {
+                    $query->orderBy('status', 'desc'); // or 'desc' for descending order
+                }])
+                ->get();
         }
 
         if(Auth::user()->hasRole('representative')) {
@@ -114,6 +118,13 @@ class UserController extends Controller
         if(Auth::user()->hasRole('representative')) {
             if(\request()->filter['roles'][0] == 'participant'){
                 $participantIds = Auth::user()->representative->participants()->pluck('user_id');
+                $users = $users->whereIn('id',$participantIds)->with('participant.plans');
+            }
+        }
+
+        if(Auth::user()->hasRole('provider')) {
+            if(\request()->filter['roles'][0] == 'participant'){
+                $participantIds = Auth::user()->provider->participants()->pluck('user_id');
                 $users = $users->whereIn('id',$participantIds)->with('participant.plans');
             }
         }
@@ -298,7 +309,7 @@ class UserController extends Controller
             Mail::to($toEmail)
                 ->send(new BankInformationUpdated($user));
         }
-        
+
         DB::commit();
 
         return $this->respondWithSuccess();

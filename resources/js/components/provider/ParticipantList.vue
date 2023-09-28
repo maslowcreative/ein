@@ -99,7 +99,15 @@
 
                             <td>
                                 <button class="btn btn-primary btn-sm" v-on:click="openCreateInvoiceModal(user)">New Invoice</button>
+                                <button
+                                    class="btn btn-primary btn-sm"
+                                    type="button"
+                                    v-on:click="openProviderPlanBudget(user.participant.plans)"
+                                >
+                                    Plans
+                                </button>
                             </td>
+
 <!--                            <td>-->
 <!--                                <div class="d-inline-flex flex-nowrap align-items-center justify-content-around btn-group fs-lg">-->
 <!--                                    <button class="btn btn-link p-0 fs-16 mx-1 hover-danger" v-on:click="removeParticipant(user.id)">-->
@@ -204,7 +212,18 @@ export default {
         openCreateInvoiceModal(participant) {
             this.$root.$emit('ein-provider:participant-selected-to-invoice',participant)
             $("#invoicePopup").modal('show');
-        }
+        },
+        openProviderPlanBudget(plans)
+        {
+            if (plans == null) {
+                this.$toastr.e("Error", "No plan found.");
+                return false;
+            }
+            let plan = plans[0];
+
+            let  url = '/plan-budget-allocations?plan_id='+ plan.id + '&participant_id=' + plan.participant_id;
+            window.open(url);
+        },
 
     },
 }
