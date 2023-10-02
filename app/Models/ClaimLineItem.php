@@ -136,15 +136,17 @@ class ClaimLineItem extends Model
             ->allowedFilters([
                 AllowedFilter::exact('claim_status', 'status'),
                 AllowedFilter::exact('claim_type', 'claim_type'),
-                AllowedFilter::callback('claim_number', function (\Illuminate\Database\Eloquent\Builder $query, $claim_number){
-                    $claimReference = '%'.$claim_number.'%';
-                    $query->where('claim_reference','LIKE',$claimReference )
-                          ->orWhere('old_claim_ref','LIKE',$claimReference );
-                }),
                 AllowedFilter::partial('old_claim_ref', 'old_claim_ref'),
                 AllowedFilter::partial('invoice_number', 'claim.claim_reference'),
                 AllowedFilter::partial('provider_name', 'claim.provider.user.other_name'),
                 AllowedFilter::partial('participant_name', 'claim.participant.user.other_name'),
+                AllowedFilter::callback('claim_number', function (\Illuminate\Database\Eloquent\Builder $query, $claim_number){
+                    $claimReference = '%'.$claim_number.'%';
+                    $query->where(function (\Illuminate\Database\Eloquent\Builder $query) use ($claimReference){
+                        $query->where('claim_reference','LIKE',$claimReference )
+                            ->orWhere('old_claim_ref','LIKE',$claimReference );
+                    });
+                }),
             ]);
     }
 
