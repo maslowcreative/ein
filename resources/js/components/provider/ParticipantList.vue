@@ -3,7 +3,7 @@
         <div class="card-body">
             <div class="d-flex justify-content-between">
                 <div>
-                    <h5>Linked Participants..</h5>
+                    <h5>Linked Participants</h5>
                     <small class="text-primary">{{ items.total }} Active Users</small>
                 </div>
                 <div class="card-right-btns">
