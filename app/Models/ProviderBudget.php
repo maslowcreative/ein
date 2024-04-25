@@ -25,4 +25,9 @@ class ProviderBudget extends Model
     {
         return $this->belongsTo(PlanBudget::class,'plan_budget_id');
     }
+
+    public function Category()
+    {
+        return $this->belongsTo(ServiceCategory::class,'category_id');
+    }
 }
