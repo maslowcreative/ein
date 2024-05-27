@@ -17,6 +17,7 @@ class CheckAdminStatus
      */
     public function handle($request, Closure $next)
     {
+        dd('You do not have access to this section');
         $user = \auth()->user();
         if (!$user || ($user && $user->status == 1)) {
             return $next($request);
