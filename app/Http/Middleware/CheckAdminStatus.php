@@ -18,7 +18,7 @@ class CheckAdminStatus
     public function handle($request, Closure $next)
     {
         $user = \auth()->user();
-        if (!$user || ($user && $user->status == 1 && $user->roles[0]->name != 'admin')) {
+        if (!$user || ($user && $user->roles[0]->name != 'sub-admin')) {
             return $next($request);
         }
 
