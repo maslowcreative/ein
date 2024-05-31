@@ -17,12 +17,19 @@ class CheckAdminStatus
      */
     public function handle($request, Closure $next)
     {
-        dd('You do not have access to this section');
         $user = \auth()->user();
-        if (!$user || ($user && $user->status == 1)) {
+        if (!$user || ($user && $user->status == 1 && $user->roles[0]->name != 'admin')) {
             return $next($request);
         }
-        \auth()->logout();
+
+        if ( $user && $user->status != 1 && $user->roles[0]->name == 'sub-admin') {
+            \auth()->logout();
+        }else
+        {
+            return $next($request);
+        }
+
+
 
         // You can customize the response for unauthorized access
         return redirect('login')->with('error', 'You do not have access to this section');
