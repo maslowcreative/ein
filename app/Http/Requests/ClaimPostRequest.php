@@ -56,7 +56,7 @@ class ClaimPostRequest extends FormRequest
         $rule =  [
             'start_date' => 'required|date|before_or_equal:'.$yesterday,
             'end_date' => 'required|date|after_or_equal:start_date|before_or_equal:'.$yesterday,
-            'file' => 'required|file|mimes:pdf',
+            'file' => 'required|file|mimes:pdf|max:3072',
             'service' => 'required|array',
             'service.*.item_number' => 'required|exists:services,support_item_number',
             'service.*.claim_type' => ['nullable','string',Rule::in(collect(Claim::CLAIM_TYPES)->keys()->toArray())],
