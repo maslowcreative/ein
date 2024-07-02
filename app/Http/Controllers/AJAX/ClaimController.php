@@ -29,6 +29,8 @@ use Illuminate\Validation\Rule;
 use phpDocumentor\Reflection\Types\Collection;
 use PHPUnit\Exception;
 use Rap2hpoutre\FastExcel\FastExcel;
+use Symfony\Component\HttpFoundation\StreamedResponse;
+
 
 class ClaimController extends Controller
 {
