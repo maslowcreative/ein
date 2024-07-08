@@ -5,6 +5,7 @@ namespace App\Http\Controllers\AJAX;
 use App\Console\Commands\BudgetBalancing;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProviderBudgetAllocationRequest;
+use App\Models\User;
 use App\Models\Plan;
 use App\Models\PlanBudget;
 use App\Models\ProviderBudget;
@@ -485,7 +486,26 @@ class PlanController extends Controller
             {
                 if($provider['budget'] < $providerBudget->amount )
                 {
-                    return  $this->respondError('New value cannot be less than the old value.');
+                    $providerBudgetTotal = $providerBudget->balance + $providerBudget->pending + $providerBudget->spent;
+                
+                    if($providerBudget->amount !=  $providerBudgetTotal)
+                    {
+                        $userProvider = User::where('id',$providerBudget->provider_id)->first();
+                        return  $this->respondError("Allocated Budget for provider $userProvider->name is incorrect.");
+
+                    }
+                    
+                    $usedAmount = $providerBudget->pending + $providerBudget->spent;   
+                    if($provider['budget'] < $usedAmount)
+                    {
+                        $userProvider = User::where('id',$providerBudget->provider_id)->first();
+                        return  $this->respondError("New value can't be less $$usedAmount for $userProvider->name.");
+
+                    }else
+                    {
+                        $providerBudget->amount = $provider['budget'];
+                        $providerBudget->balance = $provider['budget'] - $usedAmount;
+                    }
                 }else
                 {
                     $providerBudget->balance = $providerBudget->balance + ($provider['budget'] - $providerBudget->amount);
