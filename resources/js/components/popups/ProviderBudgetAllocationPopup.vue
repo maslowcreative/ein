@@ -18,7 +18,7 @@
                         <div class="col-md-6" v-if="catName && budget">
                             <label class="form-label fw-bold">{{ catName }}</label> : ${{ budget }}
                         </div>
-                        <div class="col-md-6"><label class="form-label fw-bold">Remaining Budget</label>: ${{remainingBudget}}</div>
+                        <div class="col-md-6"><label class="form-label fw-bold">Remaining Budget </label>: ${{roundedRemainingBudget}}</div>
                     </div>
 
                     <div class="grid align-items-end mb-3" v-for="(provider,index) in form.providers_collection"  :key="index" style="--template: 1fr 1fr 60px">
@@ -46,7 +46,12 @@
                         </div>
                         <div>
                             <label>Budget</label>
-                            <input class="form-control" type="number"  v-model="provider.budget" />
+                            <input 
+                                class="form-control" 
+                                type="number"  
+                                v-model="provider.budget" 
+                                @input="limitDecimalPlaces(provider, index)"
+                            />
                             <div class="invalid-msg" v-if="form.errors.has('providers_collection.'+index+'.budget')" v-html="form.errors.get('providers_collection.'+index+'.budget').replace('providers_collection.'+index+'.budget','budget')" />
 
                         </div>
@@ -159,7 +164,26 @@ export default {
             deep: true
         },
     },
+    computed: {
+        roundedRemainingBudget() {
+            try {
+                return this.remainingBudget.toFixed(2);
+            } catch (e) {
+                console.error("Error rounding remaining budget:", e);
+                return this.remainingBudget;
+            }
+        }
+    },
     methods: {
+        limitDecimalPlaces(provider, index) {
+            let value = provider.budget.toString();
+            if (value.includes('.')) {
+                let parts = value.split('.');
+                if (parts[1].length > 2) {
+                    provider.budget = parseFloat(parts[0] + '.' + parts[1].substring(0, 2));
+                }
+            }
+        },
         addProviderToBudget()
         {
             this.form.providers_collection.push({
