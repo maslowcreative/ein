@@ -341,7 +341,8 @@ class PlanController extends Controller
         }
         else
         {
-            if(!$user->hasRole('admin'))
+  
+            if(!$user->hasRole('admin') && !($user->hasRole('sub-admin') && $user->hasPermissionTo('add_edit_plans')) )
             {
                 return $this->respondForbidden();
             }

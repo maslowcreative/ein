@@ -108,7 +108,7 @@ class UserController extends Controller
         $users = User::getUsers()
                      ->whereNotInRoles(['admin','sub-admin']);
 
-        if(Auth::user()->hasRole('admin')) {
+        if( Auth::user()->hasRole('admin') || ( Auth::user()->hasRole('sub-admin') && Auth::user()->hasPermissionTo('add_edit_plans') ) ) {
             if(\request()->filter['roles'][0] == 'participant'){
                 $participantIds = Participant::all()->pluck('user_id');
                 $users = $users->whereIn('id',$participantIds)->with('participant.plans');

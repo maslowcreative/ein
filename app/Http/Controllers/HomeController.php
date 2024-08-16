@@ -76,7 +76,11 @@ class HomeController extends Controller
     {
         if( auth()->user()->hasRole('representative') || auth()->user()->hasRole('admin') ){
             return view('analytics');
-        }else{
+        }if( auth()->user()->hasRole('sub-admin') && auth()->user()->hasPermissionTo('add_edit_plans')){           
+            return view('analytics');
+        }
+        else{
+        
             return redirect()->route('home');
         }
 
