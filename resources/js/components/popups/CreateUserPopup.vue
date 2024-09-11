@@ -1453,10 +1453,12 @@ export default {
 
         if (this.form.role_id == 2) {
           this.form.provider.participants.push(id)
+          this.participantSerachResult = [];
         }
 
         if (this.form.role_id == 3) {
-          this.form.representative.participants.push(id)
+          this.form.representative.participants.push(id);
+          this.participantSerachResult = [];
         }
       } else if ($role === "provider") {
         let provider = this.providerSerachResult.filter(provider => provider.id == id)
@@ -1580,7 +1582,9 @@ export default {
     },
     resetUserForm(step = null) {
       this.loader = false;
-      this.$refs.inputPlanFile.value=null;
+      if (this.$refs.inputPlanFile && this.$refs.inputPlanFile.value) {
+        this.$refs.inputPlanFile.value = null;
+      }
       if (step != null) {
         this.step = step
       } else {
