@@ -328,7 +328,7 @@ export default {
                     this.$toastr.s("Success", "User updated!");
                 })
                 .catch(error => {
-                    this.$toastr.e("Error", "Some thing went wrong.")
+                    this.$toastr.e("Error", "Something went wrong.")
                     console.log(error)
                 })
                 .finally(() => (this.loader = false))
@@ -366,7 +366,7 @@ export default {
                 })
                 .catch(error => {
                     this.avatar = null;
-                    this.$toastr.e("Error", "Some thing went wrong while file upload.");
+                    this.$toastr.e("Error", "Something went wrong while file upload.");
                     this.loader = false;
                 })
                 .finally(() => {
@@ -384,7 +384,7 @@ export default {
                     this.$toastr.s("Success", "User bank info updated!");
                 })
                 .catch(error => {
-                    this.$toastr.e("Error", "Some thing went wrong.")
+                    this.$toastr.e("Error", "Something went wrong.")
                 })
                 .finally(() => (this.bankinfoLoader = false))
         },
@@ -399,7 +399,7 @@ export default {
                     this.$toastr.s("Success", "User bank info updated!");
                 })
                 .catch(error => {
-                    this.$toastr.e("Error", "Some thing went wrong.")
+                    this.$toastr.e("Error", "Something went wrong.")
                 })
                 .finally(() => (this.autoApprovalLoader = false))
         },

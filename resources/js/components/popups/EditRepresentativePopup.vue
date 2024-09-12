@@ -242,7 +242,7 @@ export default {
                     this.$toastr.s("Success", "User updated!");
                 })
                 .catch(error => {
-                    this.$toastr.e("Error", "Some thing went wrong.")
+                    this.$toastr.e("Error", "Something went wrong.")
                     console.log(error)
                 })
                 .finally(() => (this.loader = false))

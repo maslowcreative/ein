@@ -137,7 +137,7 @@ export default {
                   this.$toastr.s('Success','Reconciled file proccessed succesfully');
               })
               .catch(error => {
-                  this.$toastr.e("Error", "Some thing went wrong.")
+                  this.$toastr.e("Error", "Something went wrong.")
               })
               .finally(() => {
                   this.loader = false;

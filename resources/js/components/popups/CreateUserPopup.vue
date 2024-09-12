@@ -1435,7 +1435,7 @@ export default {
           }
         })
         .catch(error => {
-          this.$toastr.e("Error", "Some thing went wrong.")
+          this.$toastr.e("Error", "Something went wrong.")
         })
         .finally(() => {
           this.loader = false
@@ -1551,7 +1551,7 @@ export default {
           }
         })
         .catch(error => {
-          this.$toastr.e("Error", "Some thing went wrong.")
+          this.$toastr.e("Error", "Something went wrong.")
         })
         .finally(() => {
           this.loader = false
@@ -1570,7 +1570,7 @@ export default {
           this.servicesItemsResult = res.data.data
         })
         .catch(error => {
-          this.$toastr.e("Error", "Some thing went wrong.")
+          this.$toastr.e("Error", "Something went wrong.")
         })
         .finally(() => {
           this.loader = false
@@ -1686,7 +1686,7 @@ export default {
         })
         .catch(error => {
           this.form.participant.plan.file_name = null
-          this.$toastr.e("Error", "Some thing went wrong while file upload.")
+          this.$toastr.e("Error", "Something went wrong while file upload.")
           this.loader = false
         })
         .finally(() => {

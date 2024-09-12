@@ -176,7 +176,7 @@ export default {
               this.$toastr.s("Success", "User "+status+ " successfully!")
            })
            .catch(error => {
-               this.$toastr.e("Error", "Some thing went wrong.")
+               this.$toastr.e("Error", "Something went wrong.")
            })
            .finally(() => {
            })

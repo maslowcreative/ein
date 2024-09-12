@@ -289,7 +289,7 @@ export default {
                 if(err){
                     this.$toastr.e("Error", err);
                 }else {
-                    this.$toastr.e("Error", "Some thing went wrong.")
+                    this.$toastr.e("Error", "Something went wrong.")
                 }
 
             })
@@ -311,7 +311,7 @@ export default {
 
             })
             .catch(error => {
-                this.$toastr.e("Error", "Some thing went wrong.")
+                this.$toastr.e("Error", "Something went wrong.")
             })
             .finally(() => {
                 this.loader = false;

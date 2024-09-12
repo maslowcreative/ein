@@ -561,7 +561,7 @@ export default {
         })
         .catch(error => {
           this.form.file_name = null
-          this.$toastr.e("Error", "Some thing went wrong while file upload.")
+          this.$toastr.e("Error", "Something went wrong while file upload.")
           this.loader = false
         })
         .finally(() => {

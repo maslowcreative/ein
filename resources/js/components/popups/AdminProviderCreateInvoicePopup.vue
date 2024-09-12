@@ -680,7 +680,7 @@ export default {
                       this.$toastr.e("Error", error.response.data.error);
                       servcieError = true;
                   }else {
-                      this.$toastr.e("Error", "Some thing went wrong.");
+                      this.$toastr.e("Error", "Something went wrong.");
                   }
 
                   if(this.form.errors.has('start_date') || this.form.errors.has('end_date') || this.form.errors.has('invoice_number') ||   this.form.errors.has('participant_id') || this.form.errors.has('provider_id'))
@@ -747,7 +747,7 @@ export default {
                   }
               })
               .catch(error => {
-                  this.$toastr.e("Error", "Some thing went wrong.")
+                  this.$toastr.e("Error", "Something went wrong.")
               })
               .finally(() => (this.loader = false))
       },
@@ -798,7 +798,7 @@ export default {
                   if(error.response.status == 422){
                       this.$toastr.e("Error", "Please select participant & provider first.");
                   }else {
-                      this.$toastr.e("Error", "Some thing went wrong.");
+                      this.$toastr.e("Error", "Something went wrong.");
                   }
 
               })

@@ -497,7 +497,7 @@ export default {
                   if(error.response.status == 400){
                       this.$toastr.e("Error", error.response.data.error);
                   }else {
-                      this.$toastr.e("Error", "Some thing went wrong.");
+                      this.$toastr.e("Error", "Something went wrong.");
                   }
               })
               .finally(() => {
@@ -519,7 +519,7 @@ export default {
                   this.participantSerachResult = res.data.data;
               })
               .catch(error => {
-                  this.$toastr.e("Error", "Some thing went wrong.")
+                  this.$toastr.e("Error", "Something went wrong.")
                   console.log(error)
               })
               .finally(() => (this.loader = false))
@@ -598,7 +598,7 @@ export default {
                   if(error.response.status == 422){
                       this.$toastr.e("Error", "Please select participant first.");
                   }else {
-                      this.$toastr.e("Error", "Some thing went wrong.");
+                      this.$toastr.e("Error", "Something went wrong.");
                   }
               })
               .finally(() => {

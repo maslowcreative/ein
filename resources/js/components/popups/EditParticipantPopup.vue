@@ -299,7 +299,7 @@ export default {
                     this.$toastr.s("Success", "User updated!");
                 })
                 .catch(error => {
-                    this.$toastr.e("Error", "Some thing went wrong.")
+                    this.$toastr.e("Error", "Something went wrong.")
                 })
                 .finally(() => (this.loader = false))
         },
@@ -365,7 +365,7 @@ export default {
                     this.servicesItemsResult = res.data.data;
                 })
                 .catch(error => {
-                    this.$toastr.e("Error", "Some thing went wrong.")
+                    this.$toastr.e("Error", "Something went wrong.")
                 })
                 .finally(() => {
                     this.loader = false

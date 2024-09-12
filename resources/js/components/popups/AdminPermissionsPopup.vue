@@ -108,7 +108,7 @@ export default {
             this.$toastr.s("Success", "Permissions updated!")
         })
         .catch(error => {
-          this.$toastr.e("Error", "Some thing went wrong.")
+          this.$toastr.e("Error", "Something went wrong.")
         })
         .finally(() => {
           this.loader = false
