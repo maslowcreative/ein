@@ -487,13 +487,13 @@ class PlanController extends Controller
             {
                 if($provider['budget'] < $providerBudget->amount )
                 {
+                    $epsilon = 0.00001; // Define a small threshold for comparison
                     $providerBudgetTotal = $providerBudget->balance + $providerBudget->pending + $providerBudget->spent;
                 
-                    if($providerBudget->amount !=  $providerBudgetTotal)
+                    if(abs($providerBudget->amount - $providerBudgetTotal) > $epsilon)
                     {
                         $userProvider = User::where('id',$providerBudget->provider_id)->first();
                         return  $this->respondError("Allocated Budget for provider $userProvider->name is incorrect $$providerBudget->amount != $$providerBudgetTotal");
-
                     }
                     
                     $usedAmount = $providerBudget->pending + $providerBudget->spent;   
