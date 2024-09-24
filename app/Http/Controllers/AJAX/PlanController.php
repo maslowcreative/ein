@@ -492,7 +492,7 @@ class PlanController extends Controller
                     if($providerBudget->amount !=  $providerBudgetTotal)
                     {
                         $userProvider = User::where('id',$providerBudget->provider_id)->first();
-                        return  $this->respondError("Allocated Budget for provider $userProvider->name is incorrect.");
+                        return  $this->respondError("Allocated Budget for provider $userProvider->name is incorrect $$providerBudget->amount != $$providerBudgetTotal");
 
                     }
                     
