@@ -227,8 +227,6 @@
                                         <select class="form-control" v-model="approvalForm.auto_approval_days">
                                             <option value="1">1 Day</option>
                                             <option value="2">2 Days</option>
-                                            <option value="3">3 Days</option>
-                                            <option value="4">4 Days</option>
                                         </select>
                                     </div>
                                 </div>

@@ -454,7 +454,7 @@ class UserController extends Controller
     public function updateAutoApproval(Request $request, $userId)
     {
         $request->validate([
-            'auto_approval_days' => 'required|in:1,2,3,4',
+            'auto_approval_days' => 'required|in:1,2',
         ]);
 
         $rep = Representative::findOrFail($userId);
