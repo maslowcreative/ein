@@ -1074,7 +1074,7 @@
                 >
                   <ion-icon name="checkmark-circle-outline" class="final-icon"></ion-icon>
                   <h4>New User Created!</h4>
-                  <button class="btn btn-primary btn-lg w-100 py-3">Back to Dashboard</button>
+                  <button class="btn btn-primary btn-lg w-100 py-3" type="button"  v-on:click="closePopup()">Back to Dashboard</button>
                 </div>
               </div>
             </div>
