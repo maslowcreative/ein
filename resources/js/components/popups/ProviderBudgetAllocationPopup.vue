@@ -27,7 +27,7 @@
                             <multiselect
                                 v-model="provider.providerItemsResultSelected"
                                 placeholder="Search or add item"
-                                label="name"
+                                label="other_name"
                                 track-by="id"
                                 :options="provider.providerItemsResult"
                                 :multiple="false"
