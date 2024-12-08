@@ -173,13 +173,24 @@ class ClaimController extends Controller
 
         }
         DB::commit();
-
+        // Sending Email for provider case    
         if(!$isRepresentative && $participant){
             $toEmail = optional($participant->representative)->email;
             if($toEmail) {
                 Mail::to($toEmail)
                     ->send(new InvoiceCreated($provider));
             }
+        }
+        //Sending Email for Rep
+        elseif($isRepresentative && $participant){
+
+            $toEmail = env('CLAIM_BCC_EMAIL','serviceprovider@ein.net.au');
+            $repName = \auth()->user()->name;
+            if($toEmail) {
+                Mail::to($toEmail)
+                    ->send(new InvoiceCreated($provider,'representative',$repName));
+            }
+
         }
 
         return $this->respondCreated();
@@ -288,7 +299,7 @@ class ClaimController extends Controller
             $toEmail = optional($participant->representative)->email;
             if($toEmail) {
                 Mail::to($toEmail)
-                    ->send(new InvoiceCreated($provider));
+                    ->send(new InvoiceCreated($provider,'admin'));
             }
         }
 
