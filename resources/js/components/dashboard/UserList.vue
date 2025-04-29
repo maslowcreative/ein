@@ -297,6 +297,9 @@ export default {
       }
     },
     userDelete(user) {
+      if (!confirm('Are you sure you want to delete this user?')) {
+        return;
+      }
       let route = this.laroute.route("ajax.users.destroy", { user: user.id })
       let form = new Form()
       form
