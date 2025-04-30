@@ -3,7 +3,7 @@
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content invoicePopup">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="invoicePopupTitle">Submit New Invoice</h4>
+                    <h4 class="modal-title" id="invoicePopupTitle">Submit New Invoice --</h4>
                     <button type="button" class="btn-close" v-on:click="closePopup()"></button>
                 </div>
                 <div class="modal-body invoicePopupBody">
@@ -506,91 +506,65 @@ export default {
       prev() {
           this.step--;
       },
-	      next() {
-	          if (this.step < 3) {
-	              if(this.step == 1 || this.step == 2){
+      next() {
+          if (this.step < 3) {
+              // Only validate and submit on explicit form submission, not during navigation
+              if (this.step === 1) {
+                  // Validate step 1 fields
+                  const missingFields = [];
+                  if (!this.form.start_date) missingFields.push('Start Date');
+                  if (!this.form.end_date) missingFields.push('End Date');
+                  if (!this.form.invoice_number) missingFields.push('Invoice Number');
+                  if (!this.form.participant_id) missingFields.push('Participant');
+                  if (!this.form.provider_id) missingFields.push('Provider');
 
-	                  this.loader = true;
-	                  let route = this.laroute.route("ajax.claims.store.admin");
-	                  this.form.is_admin = true;
-	                  this.form.action_role = 'provider';
-	                  this.form
-	                      .post(route)
-	                      .then(res => {
-	                          if ((res.status = 201)) {
+                  if (missingFields.length === 0) {
+                      this.step++;
+                  } else {
+                      // Show toaster with missing fields
+                      this.$toastr.e("Required Fields Missing", `Please fill in: ${missingFields.join(', ')}`);
+                      // Clear any existing errors from other steps
+                      Object.keys(this.form.errors.errors).forEach(item => {
+                          if (!(
+                              item === 'start_date' ||
+                              item === 'end_date' ||
+                              item === 'invoice_number' ||
+                              item === 'participant_id' ||
+                              item === 'provider_id'
+                          )) {
+                              this.form.errors.clear(item);
+                          }
+                      });
+                  }
+              } else if (this.step === 2) {
+                  // Validate step 2 (service details)
+                  let hasServiceError = false;
+                  let serviceErrors = [];
 
-	                          }
-	                      })
-	                      .catch(error => {
+                  if (!this.form.service || this.form.service.length === 0) {
+                      hasServiceError = true;
+                      serviceErrors.push('At least one service is required');
+                  } else {
+                      this.form.service.forEach((service, index) => {
+                          if (!service.item_number || !service.claim_type) {
+                              hasServiceError = true;
+                              const missingInService = [];
+                              if (!service.item_number) missingInService.push('Item Number');
+                              if (!service.claim_type) missingInService.push('Claim Type');
+                              serviceErrors.push(`Service ${index + 1}: ${missingInService.join(', ')}`);
+                          }
+                      });
+                  }
 
-	                      })
-	                      .finally(() => {
-
-	                          let servcieError = false;
-	                          Object.keys(this.form.errors.errors).filter(item =>  {
-	                              if(item.split('.') [0] == 'service'){
-	                                  servcieError = true;
-	                              }
-	                          });
-
-	                          if(this.step == 1 && (this.form.errors.has('start_date') || this.form.errors.has('end_date') || this.form.errors.has('invoice_number') ||   this.form.errors.has('participant_id') || this.form.errors.has('provider_id')))
-	                          {
-	                              Object.keys(this.form.errors.errors).filter(item =>  {
-	                                  if( !(
-	                                      item == 'start_date' ||
-	                                      item == 'end_date' ||
-	                                      item == 'invoice_number' ||
-	                                      item == 'participant_id' ||
-	                                      item == 'provider_id'
-	                                      )
-	                                  ){
-	                                     this.form.errors.clear(item);
-	                                  }
-	                              });
-
-	                             this.step = 1;
-
-	                          }
-	                          else if(this.step == 2 && (this.form.errors.has('start_date') || this.form.errors.has('end_date') || this.form.errors.has('invoice_number') ||   this.form.errors.has('participant_id') || this.form.errors.has('provider_id')))
-	                          {
-	                              console.log('Case2');
-
-	                              Object.keys(this.form.errors.errors).filter(item =>  {
-	                                  if( !(
-	                                      item == 'start_date' ||
-	                                      item == 'end_date' ||
-	                                      item == 'invoice_number' ||
-	                                      item == 'participant_id' ||
-	                                      item == 'provider_id'
-	                                  )
-	                                  ){
-	                                      this.form.errors.clear(item);
-	                                  }
-	                              });
-
-	                             this.step = 1;
-
-	                          }else if(this.step == 2 && servcieError)
-	                          {
-	                              console.log('Case22',console.log(this.step,servcieError));
-	                              this.form.errors.clear('file');
-	                              this.step = 2;
-	                          }
-	                          else {
-	                              console.log('Case3');
-                                  Object.keys(this.form.errors.errors).filter(item =>  {
-                                      this.form.errors.clear(item);
-                                  });
-	                              this.step ++;
-	                          }
-
-	                          this.loader = false;
-	                      });
-	              }
-
-
-	          }
-	      },
+                  if (!hasServiceError) {
+                      this.step++;
+                  } else {
+                      this.$toastr.e("Service Details Required", serviceErrors.join('\n'));
+                      this.form.errors.clear('file');
+                  }
+              }
+          }
+      },
       selectItem(id, $role) {
           if ($role === "participant") {
               let participant = this.participantSerachResult.filter(participant => participant.id == id);

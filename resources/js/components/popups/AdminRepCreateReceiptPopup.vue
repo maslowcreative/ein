@@ -508,86 +508,56 @@ export default {
       },
       next() {
           if (this.step < 3) {
-              if(this.step == 1 || this.step == 2){
+              if (this.step === 1) {
+                  const missingFields = [];
+                  if (!this.form.start_date) missingFields.push('Start Date');
+                  if (!this.form.end_date) missingFields.push('End Date');
+                  if (!this.form.invoice_number) missingFields.push('Invoice Number');
+                  if (!this.form.participant_id) missingFields.push('Participant');
+                  if (!this.form.provider_id) missingFields.push('Provider');
 
-                  this.loader = true;
-                  let route = this.laroute.route("ajax.claims.store.admin");
-                  this.form.is_admin = true;
-                  this.form.action_role = 'representative';
-                  this.form
-                      .post(route)
-                      .then(res => {
-                          if ((res.status = 201)) {
-
+                  if (missingFields.length === 0) {
+                      this.step++;
+                  } else {
+                      this.$toastr.e("Required Fields Missing", `Please fill in: ${missingFields.join(', ')}`);
+                      Object.keys(this.form.errors.errors).forEach(item => {
+                          if (!(
+                              item === 'start_date' ||
+                              item === 'end_date' ||
+                              item === 'invoice_number' ||
+                              item === 'participant_id' ||
+                              item === 'provider_id'
+                          )) {
+                              this.form.errors.clear(item);
                           }
-                      })
-                      .catch(error => {
-
-                      })
-                      .finally(() => {
-
-                          let servcieError = false;
-                          Object.keys(this.form.errors.errors).filter(item =>  {
-                              if(item.split('.') [0] == 'service'){
-                                  servcieError = true;
-                              }
-                          });
-
-                          if(this.step == 1 && (this.form.errors.has('start_date') || this.form.errors.has('end_date') || this.form.errors.has('invoice_number') ||   this.form.errors.has('participant_id') || this.form.errors.has('provider_id')))
-                          {
-                              Object.keys(this.form.errors.errors).filter(item =>  {
-                                  if( !(
-                                      item == 'start_date' ||
-                                      item == 'end_date' ||
-                                      item == 'invoice_number' ||
-                                      item == 'participant_id' ||
-                                      item == 'provider_id'
-                                  )
-                                  ){
-                                      this.form.errors.clear(item);
-                                  }
-                              });
-
-                              this.step = 1;
-
-                          }
-                          else if(this.step == 2 && (this.form.errors.has('start_date') || this.form.errors.has('end_date') || this.form.errors.has('invoice_number') ||   this.form.errors.has('participant_id') || this.form.errors.has('provider_id')))
-                          {
-                              console.log('Case2');
-
-                              Object.keys(this.form.errors.errors).filter(item =>  {
-                                  if( !(
-                                      item == 'start_date' ||
-                                      item == 'end_date' ||
-                                      item == 'invoice_number' ||
-                                      item == 'participant_id' ||
-                                      item == 'provider_id'
-                                  )
-                                  ){
-                                      this.form.errors.clear(item);
-                                  }
-                              });
-
-                              this.step = 1;
-
-                          }else if(this.step == 2 && servcieError)
-                          {
-                              this.form.errors.clear('file');
-                              this.step = 2;
-                          }
-                          else {
-                              console.log('Case3');
-                              Object.keys(this.form.errors.errors).filter(item =>  {
-                                   this.form.errors.clear(item);
-                              });
-                              this.step ++;
-                          }
-
-                          this.loader = false;
                       });
+                  }
+              } else if (this.step === 2) {
+                  let hasServiceError = false;
+                  let serviceErrors = [];
+
+                  if (!this.form.service || this.form.service.length === 0) {
+                      hasServiceError = true;
+                      serviceErrors.push('At least one service is required');
+                  } else {
+                      this.form.service.forEach((service, index) => {
+                          if (!service.item_number || !service.claim_type) {
+                              hasServiceError = true;
+                              const missingInService = [];
+                              if (!service.item_number) missingInService.push('Item Number');
+                              if (!service.claim_type) missingInService.push('Claim Type');
+                              serviceErrors.push(`Service ${index + 1}: ${missingInService.join(', ')}`);
+                          }
+                      });
+                  }
+
+                  if (!hasServiceError) {
+                      this.step++;
+                  } else {
+                      this.$toastr.e("Service Details Required", serviceErrors.join('\n'));
+                      this.form.errors.clear('file');
+                  }
               }
-
-
           }
       },
       selectItem(id, $role) {
