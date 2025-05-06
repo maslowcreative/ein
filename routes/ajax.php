@@ -32,6 +32,7 @@ Route::get('claims/store','ClaimController@store');
 Route::post('claims/admin-store','ClaimController@storeAdmin')->name('claims.store.admin');
 Route::post('claims/{claim}/representative-action','ClaimController@approvedByRepresentative')->name('claims.representative.action');
 Route::match(['get', 'post'],'claims/bulk-upload-file','ClaimController@bulkUploadFile')->name('claims.bulk.upload.file');
+Route::match(['get', 'post'],'claims/quick-reconciliation','ClaimController@quickReconciliation')->name('claims.quick.reconciliation');
 Route::get('claims/reconciled-results-file','ClaimController@reconciledResultsFile')->name('claims.reconciled.results.file');
 Route::post('claims/upload-reconciled-file','ClaimController@uploadReconciledFile')->name('claims.upload.reconciled.file');
 Route::get('claims/list','ClaimController@index2')->name('claims.list');

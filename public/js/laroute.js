@@ -164,6 +164,10 @@
         "name": "ajax.claims.bulk.upload.file"
     },
     {
+        "uri": "ajax\/claims\/quick-reconciliation",
+        "name": "ajax.claims.quick.reconciliation"
+    },
+    {
         "uri": "ajax\/claims\/reconciled-results-file",
         "name": "ajax.claims.reconciled.results.file"
     },

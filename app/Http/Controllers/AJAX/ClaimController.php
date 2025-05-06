@@ -173,7 +173,7 @@ class ClaimController extends Controller
 
         }
         DB::commit();
-        // Sending Email for provider case    
+        // Sending Email for provider case
         if(!$isRepresentative && $participant){
             $toEmail = optional($participant->representative)->email;
             if($toEmail) {
@@ -444,6 +444,48 @@ class ClaimController extends Controller
         }
         $itemsUpdate = $items;
         $items = $items->get();
+
+        $itemsUpdate->update(['status' => Claim::STATUS_PROCESSED]);
+
+        $name = Carbon::now()->format('YmdHi'). '.csv';
+
+            return (new FastExcel($items))->download($name, function ($item) {
+            return [
+                'RegistrationNumber' => env('EIN_REGISTRATION_NUMBER','N/A'),
+                'NdisNumber' => (string) $item->claim->ndis_number,
+                'SupportDeliveredFrom' => Carbon::create($item->claim->start_date)->format('Y-m-d'),
+                'SupportsDeliveredTo' => Carbon::create($item->claim->end_date)->format('Y-m-d'),
+                'SupportNumber' => $item->support_item_number,
+                'ClaimReference' => 'A'.$item->claim_reference,
+                'Quantity' => $item->hours,
+                'Hours' => null,
+                'UnitPrice' => $item->unit_price,
+                'GstCode' => $item->gst_code,
+                'AuthorisedBy' => '',
+                'ParticipantApproved' => '',
+                'GstCode' => $item->gst_code,
+                'InKindFundingProgram' => '',
+                'ClaimType' => $item->claim_type_proccesed,
+                'CancellationReason' => $item->cancellation_reason,
+                'ABN of Support Provider' => $item->claim->provider_abn,
+                'ServiceBookingNumber' => null
+            ];
+        });
+    }
+
+    public function quickReconciliation()
+    {
+        if(!Auth::user()->hasRole('admin') && !Auth::user()->hasPermissionTo('export_import_documents')) {
+            return $this->respondForbidden();
+        }
+
+        $items = ClaimLineItem::with('claim')->where('status',Claim::STATUS_APPROVED_BY_ADMIN);
+        if(\request()->method() == Request::METHOD_POST){
+            $items->whereIn('id',explode(',',\request()->claims));
+        }
+        $itemsUpdate = $items;
+
+        $items = $items->take(10000)->get();
 
         $itemsUpdate->update(['status' => Claim::STATUS_PROCESSED]);
 
