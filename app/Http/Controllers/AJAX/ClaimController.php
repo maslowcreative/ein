@@ -479,7 +479,7 @@ class ClaimController extends Controller
             return $this->respondForbidden();
         }
 
-        $items = ClaimLineItem::with('claim')->where('status',Claim::STATUS_APPROVED_BY_ADMIN);
+        $items = ClaimLineItem::with('claim')->orderBy('id','desc');
         if(\request()->method() == Request::METHOD_POST){
             $items->whereIn('id',explode(',',\request()->claims));
         }
@@ -487,7 +487,7 @@ class ClaimController extends Controller
 
         $items = $items->take(10000)->get();
 
-        $itemsUpdate->update(['status' => Claim::STATUS_PROCESSED]);
+        //$itemsUpdate->update(['status' => Claim::STATUS_PROCESSED]);
 
         $name = Carbon::now()->format('YmdHi'). '.csv';
 
@@ -499,6 +499,7 @@ class ClaimController extends Controller
                 'SupportsDeliveredTo' => Carbon::create($item->claim->end_date)->format('Y-m-d'),
                 'SupportNumber' => $item->support_item_number,
                 'ClaimReference' => 'A'.$item->claim_reference,
+                'Status' => Claim::STATS[$item->status],
                 'Quantity' => $item->hours,
                 'Hours' => null,
                 'UnitPrice' => $item->unit_price,
