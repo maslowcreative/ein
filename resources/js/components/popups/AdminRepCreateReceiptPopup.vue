@@ -247,7 +247,7 @@
                                         <div class="mb-4">
                                             <label class="form-label">Claim Type</label>
                                             <select class="form-select" v-model="service.claim_type"  v-on:change="processCANC(service)">
-                                                <option value="">N/A</option>
+                                                <option value=" ">N/A</option>
                                                 <option value="F2F">Face-To-Face</option>
                                                 <option value="CANC">Cancellation Charges</option>
                                                 <option value="REPW">Report Writing Charges</option>
@@ -604,7 +604,7 @@ export default {
               'service': [
                   {
                       'item_number': null,
-                      'claim_type': "",
+                      'claim_type': " ",
                       'hours' : null,
                       'unit_price': null,
                       'gst_code': 'P2',
@@ -725,7 +725,7 @@ export default {
           this.form.service.push(
               {
                   'item_number': null,
-                  'claim_type': "",
+                  'claim_type': " ",
                   'hours' : null,
                   'unit_price': null,
                   'gst_code': null,
