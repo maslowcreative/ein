@@ -8,7 +8,7 @@
         </div>
         <div class="card-right-btns">
           <button
-            v-if="getPermission('is_supper_admin')"
+            v-if="getPermission('is_supper_admin') || getPermission('create_user_profiles')"
             class="btn btn-primary btn-icon"
             data-bs-toggle="modal"
             data-bs-target="#userModal"

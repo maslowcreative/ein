@@ -70,7 +70,11 @@ class CreatePermissions extends Seeder
                 'name' => 'add_invoices_receipts',
                 'guard_name' => 'web'
             ],
-
+            [
+                'id' => 12,
+                'name' => 'create_user_profiles',
+                'guard_name' => 'web'
+            ]
         ];
         Permission::upsert($data,['id'],['name','guard_name']);
     }

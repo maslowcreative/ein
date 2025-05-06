@@ -98,11 +98,20 @@
               </div>
               <div class="col-md-12">
                 <div class="d-flex justify-content-between align-items-center mb-4">
-                    <label class="fw-bold">Add Invoices/Receipts</label>
-                    <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" v-model="form.permissions.add_invoices_receipts"  checked />
-                        <label class="form-check-label" ></label>
-                    </div>
+                  <label class="fw-bold">Add Invoices/Receipts</label>
+                  <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" v-model="form.permissions.add_invoices_receipts"  checked />
+                    <label class="form-check-label" ></label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                  <label class="fw-bold">Add User Profiles</label>
+                  <div class="form-check form-switch">
+                    <input class="form-check-input" v-model="form.permissions.create_user_profiles" type="checkbox" checked />
+                    <label class="form-check-label"></label>
+                  </div>
                 </div>
               </div>
 
@@ -150,7 +159,8 @@ export default {
             approving_claims: true,
             export_import_documents: true,
             add_edit_plans: true,
-            add_invoices_receipts: true
+            add_invoices_receipts: true,
+            create_user_profiles: true,
         },
       }),
     }
@@ -172,7 +182,7 @@ export default {
                   export_import_documents: false,
                   add_edit_plans: false,
                   add_invoices_receipts: false,
-
+                  create_user_profiles: false,
           };
 
           admin.permissions.forEach((item, index) => {
@@ -218,6 +228,7 @@ export default {
               export_import_documents: true,
               add_edit_plans: true,
               add_invoices_receipts: false,
+              create_user_profiles: false,
           },
       })
     },
