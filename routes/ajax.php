@@ -34,6 +34,7 @@ Route::post('claims/{claim}/representative-action','ClaimController@approvedByRe
 Route::match(['get', 'post'],'claims/bulk-upload-file','ClaimController@bulkUploadFile')->name('claims.bulk.upload.file');
 Route::match(['get', 'post'],'claims/quick-reconciliation','ClaimController@quickReconciliation')->name('claims.quick.reconciliation');
 Route::get('claims/reconciled-results-file','ClaimController@reconciledResultsFile')->name('claims.reconciled.results.file');
+Route::get('claims/recent-reconciliation-results-file','ClaimController@recentReconciliationResultsFile')->name('claims.recent.reconciliation.results.file');
 Route::post('claims/upload-reconciled-file','ClaimController@uploadReconciledFile')->name('claims.upload.reconciled.file');
 Route::get('claims/list','ClaimController@index2')->name('claims.list');
 Route::post('claims/admin/approved','ClaimController@approveClaimsByAdmin')->name('claims.admin.approved');

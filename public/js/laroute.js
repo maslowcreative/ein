@@ -172,6 +172,10 @@
         "name": "ajax.claims.reconciled.results.file"
     },
     {
+        "uri": "ajax\/claims\/recent-reconciliation-results-file",
+        "name": "ajax.claims.recent.reconciliation.results.file"
+    },
+    {
         "uri": "ajax\/claims\/upload-reconciled-file",
         "name": "ajax.claims.upload.reconciled.file"
     },

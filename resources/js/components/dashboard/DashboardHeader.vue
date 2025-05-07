@@ -91,7 +91,7 @@
 
             <div class="mw290 mx-auto px-4 mt-5 mb-4">
                 <a  :href="laroute.route('ajax.claims.bulk.upload.file')" class="btn btn-primary btn-lg w-100 py-3">Bulk Upload File</a>
-                <a  :href="laroute.route('ajax.claims.quick.reconciliation')" class="btn btn-primary btn-lg w-100 py-3 mt-3">Recent Reconciliation</a>
+                <a  :href="laroute.route('ajax.claims.recent.reconciliation.results.file')" class="btn btn-primary btn-lg w-100 py-3 mt-3">Recent Reconciliation</a>
                 <a  :href="laroute.route('ajax.claims.reconciled.results.file')" class="btn btn-primary btn-lg w-100 py-3 mt-3">Complete Reconciliation</a>
             </div>
 

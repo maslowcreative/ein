@@ -617,6 +617,65 @@ class ClaimController extends Controller
         return $response;
     }
 
+    public function recentReconciliationResultsFile()
+    {
+        if(!Auth::user()->hasRole('admin') && !Auth::user()->hasPermissionTo('export_import_documents')) {
+            return $this->respondForbidden();
+        }
+
+        $itemsQuery = ClaimLineItem::with('claim', 'claim.provider.user', 'claim.participant.user')
+            ->where('status', Claim::STATUS_RECONCILATION_DONE)
+            ->limit(10000);
+
+        if (\request()->method() == Request::METHOD_POST) {
+            $itemsQuery->whereIn('id', explode(',', \request()->claims));
+        }
+
+        $name = 'Recent Reconciliation Result ' . Carbon::now()->toDateString() . '.csv';
+
+        $response = new StreamedResponse(function() use ($itemsQuery) {
+            $handle = fopen('php://output', 'w');
+
+            // Add the CSV headers
+            fputcsv($handle, [
+                'InvoiceNumber', 'ProvClaimRef', 'ItemID', 'ItemQty', 'UnitPrice', 'AmountClaimed', 'AmountPaid',
+                'ParticipantNDIS', 'ParticipantFirstName', 'ParticipantLastName', 'ProvName', 'ProviderInvoiceRefNo',
+                'SupportStartDate', 'SupportEndDate', 'FullyPaid', 'ClaimType', 'CancelRsn'
+            ]);
+
+            // Get the limited data and process it directly
+            $items = $itemsQuery->get();
+            foreach ($items as $item) {
+                fputcsv($handle, [
+                    'InvoiceNumber' => 'A' . $item->claim->id,
+                    'ProvClaimRef' => 'A' . $item->claim_reference,
+                    'ItemID' => $item->support_item_number,
+                    'ItemQty' => $item->hours,
+                    'UnitPrice' => $item->unit_price,
+                    'AmountClaimed' => $item->amount_claimed,
+                    'AmountPaid' => $item->amount_paid,
+                    'ParticipantNDIS' => optional($item->claim->participant)->ndis_number,
+                    'ParticipantFirstName' => optional(optional($item->claim->participant)->user)->first_name,
+                    'ParticipantLastName' => optional(optional($item->claim->participant)->user)->last_name,
+                    'ProvName' => optional(optional($item->claim->provider)->user)->other_name,
+                    'ProviderInvoiceRefNo' => $item->claim->claim_reference,
+                    'SupportStartDate' => $item->claim->start_date,
+                    'SupportEndDate' => $item->claim->end_date,
+                    'FullyPaid' => $item->rec_is_full_paid,
+                    'ClaimType' => $item->claim_type_proccesed,
+                    'CancelRsn' => $item->cancellation_reason,
+                ]);
+            }
+
+            fclose($handle);
+        });
+
+        $response->headers->set('Content-Type', 'text/csv');
+        $response->headers->set('Content-Disposition', 'attachment; filename="' . $name . '"');
+
+        return $response;
+    }
+
 
     /**
      * @param Request $request
