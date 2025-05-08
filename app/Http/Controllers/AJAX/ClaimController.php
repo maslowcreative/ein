@@ -625,6 +625,7 @@ class ClaimController extends Controller
 
         $itemsQuery = ClaimLineItem::with('claim', 'claim.provider.user', 'claim.participant.user')
             ->where('status', Claim::STATUS_RECONCILATION_DONE)
+            ->orderBy('id', 'desc')
             ->limit(10000);
 
         if (\request()->method() == Request::METHOD_POST) {
