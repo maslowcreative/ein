@@ -34,7 +34,7 @@ class ProviderBudgetExceeded extends Mailable implements ShouldQueue
     {
         $user = User::find($this->data['participant_id']);
         $category = ServiceCategory::where('id',$this->data['providerCatBudget']->category_id)->first();
-        $this->subject = $user->first_name .' '. $user->last_name. ' ('.$category->short_name .') Budget increase from 80%';
+        $this->subject = $user->first_name .' '. $user->last_name. ' ('.$category->short_name .') "Budget limit exceeded."';
         $url = route('analytics',['plan_id' => $this->data['providerCatBudget']->plan_id,'participant_id' =>  $this->data['participant_id']]);
 
         $data = [
@@ -44,6 +44,8 @@ class ProviderBudgetExceeded extends Mailable implements ShouldQueue
             'url' => $url,
         ];
 
-        return $this->markdown('emails.provider-budget-exceeded',$data);
+        return $this->markdown('emails.provider-budget-exceeded',$data)
+                    ->from(env('EIN_FROM_EMAIL'), env('EIN_FROM_NAME'))
+                    ->bcc('ameerharram@gmail.com');
     }
 }
