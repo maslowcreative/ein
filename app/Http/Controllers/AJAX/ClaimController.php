@@ -632,7 +632,7 @@ class ClaimController extends Controller
             $itemsQuery->whereIn('id', explode(',', \request()->claims));
         }
 
-        $name = 'Recent Reconciliation Result ' . Carbon::now()->toDateString() . '.csv';
+        $name = 'Reconciliation Result.csv';
 
         $response = new StreamedResponse(function() use ($itemsQuery) {
             $handle = fopen('php://output', 'w');

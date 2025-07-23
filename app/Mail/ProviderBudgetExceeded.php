@@ -45,7 +45,6 @@ class ProviderBudgetExceeded extends Mailable implements ShouldQueue
         ];
 
         return $this->markdown('emails.provider-budget-exceeded',$data)
-                    ->from(env('EIN_FROM_EMAIL'), env('EIN_FROM_NAME'))
-                    ->bcc('ameerharram@gmail.com');
+                    ->from(env('EIN_FROM_EMAIL'), env('EIN_FROM_NAME'));
     }
 }
