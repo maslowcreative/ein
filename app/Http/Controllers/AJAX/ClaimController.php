@@ -75,7 +75,7 @@ class ClaimController extends Controller
 
         if(Auth::user()->hasRole('representative')) {
             $claims->whereIn('participant_id',Auth::user()->representative->participants()->pluck('user_id'))
-                ->where('status','<>', Claim::STATUS_CANCEL);
+                ->whereNotIn('status', [Claim::STATUS_CANCEL, Claim::STATUS_APPROVAL_PENDING]);
         }
 
         return  $claims->orderBy('created_at','DESC')->paginate(5);
