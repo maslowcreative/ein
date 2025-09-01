@@ -25,24 +25,27 @@ class InvoiceCreated extends Mailable
     {
         $this->provider = $provider;
         $providerName = $this->provider->user->other_name;
-        
+
         $this->currentRole = $currentRole;
-        
+
         if($this->currentRole == 'admin'){
             $this->subject = "EIN admin has uploaded an invoice from {$providerName}";
             $this->heading = "EIN admin has uploaded an invoice from {$providerName} for you to accept or reject.";
         }elseif($this->currentRole == 'representative'){
             $this->subject = "{$repName} has uploaded a receipt for approval.";
             $this->heading = "{$repName} has uploaded a receipt for approval.";
+        }elseif($this->currentRole == 'provider'){
+            $this->subject = "{$providerName} has uploaded an invoice";
+            $this->heading = "{$providerName} has uploaded an invoice for you to approve or cancel.";
         }else{
             $this->subject = "{$providerName} has uploaded an invoice";
             $this->heading = "{$providerName} has uploaded an invoice for you to accept or reject.";
         }
-        
-        if($this->currentRole != 'representative'){
+
+        if($this->currentRole != 'representative' && $this->currentRole != 'provider'){
             $this->ccEmail = env('CLAIM_BCC_EMAIL','serviceprovider@ein.net.au');
         }
-        
+
     }
 
     /**
@@ -53,7 +56,7 @@ class InvoiceCreated extends Mailable
     public function build()
     {
 
-        
+
 
         return $this->markdown('emails.invoices.created',[
             'providerName' => $this->provider->user->other_name,

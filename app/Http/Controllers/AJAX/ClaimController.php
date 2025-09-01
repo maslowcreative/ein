@@ -87,7 +87,7 @@ class ClaimController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ClaimPostRequest $request)
+    public function store(Request $request)
     {
         $user = \auth();
         $provider = optional(\auth()->user())->provider;
@@ -175,10 +175,12 @@ class ClaimController extends Controller
         DB::commit();
         // Sending Email for provider case
         if(!$isRepresentative && $participant){
-            $toEmail = optional($participant->representative)->email;
+            //$toEmail = optional($participant->representative)->email;
+            //Now notifcation for invoice created by Provider, will be notified to Admin.
+            $toEmail = env('CLAIM_BCC_EMAIL','serviceprovider@ein.net.au');
             if($toEmail) {
                 Mail::to($toEmail)
-                    ->send(new InvoiceCreated($provider));
+                    ->send(new InvoiceCreated($provider,'provider'));
             }
         }
         //Sending Email for Rep
