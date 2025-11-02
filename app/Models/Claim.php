@@ -88,18 +88,18 @@ class Claim extends Model
 
     //Claim Status
     const STATUS_APPROVAL_PENDING = 0;
-    const STATUS_APPROVED_BY_REPRESENTATIVE = 1;
-    const STATUS_DENIED_BY_REPRESENTATIVE = 2;
-    const STATUS_APPROVED_BY_ADMIN = 3;
+    const STATUS_APPROVED_BY_ADMIN = 3; // Approved by admin will be second in sequence now
+    const STATUS_APPROVED_BY_REPRESENTATIVE = 1; // Accepted by representative
+    const STATUS_DENIED_BY_REPRESENTATIVE = 2; // Rejected by representative
     const STATUS_PROCESSED = 4;
     const STATUS_RECONCILATION_DONE = 5;
     const STATUS_CANCEL = 6;
 
     const STATS = [
         self::STATUS_APPROVAL_PENDING => 'Pending',
+        self::STATUS_APPROVED_BY_ADMIN => 'Approved',
         self::STATUS_APPROVED_BY_REPRESENTATIVE => 'Accepted',
         self::STATUS_DENIED_BY_REPRESENTATIVE => 'Rejected',
-        self::STATUS_APPROVED_BY_ADMIN => 'Approved',
         self::STATUS_PROCESSED => 'Processing',
         self::STATUS_RECONCILATION_DONE => 'Reconciled',
         self::STATUS_CANCEL => 'Canceled',
