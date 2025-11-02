@@ -249,7 +249,7 @@ class ClaimController extends Controller
             array_merge($request->all(),[
                 'ndis_number' => $participant->ndis_number,
                 'provider_abn' => $isRepresentative ? 'REIMB' : $provider->abn ,
-                'status' =>  $isRepresentative ? Claim::STATUS_APPROVED_BY_REPRESENTATIVE : Claim::STATUS_APPROVAL_PENDING,
+                'status' =>  $isRepresentative ? Claim::STATUS_APPROVED_BY_REPRESENTATIVE : Claim::STATUS_APPROVED_BY_ADMIN,
                 'invoice_path' => $path,
                 'admin_id' => \auth()->user()->id
             ])
@@ -258,7 +258,7 @@ class ClaimController extends Controller
         foreach ($request->service as $index => $item) {
             $key = $index + 1;
             $item = array_merge($item,[
-                'status' =>  $isRepresentative ? Claim::STATUS_APPROVED_BY_REPRESENTATIVE : Claim::STATUS_APPROVAL_PENDING,
+                'status' =>  $isRepresentative ? Claim::STATUS_APPROVED_BY_REPRESENTATIVE : Claim::STATUS_APPROVED_BY_ADMIN,
                 'claim_reference' => "{$claim->id}_{$key}",
                 'provider_id' => $provider->user_id,
                 'participant_id' => $participant->user_id,
