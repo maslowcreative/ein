@@ -55,10 +55,9 @@
                                     <label class="form-label">Claim Status</label>
                                     <select class="form-select form-select-sm" v-model="filters.claim_status">
                                         <option  value="all">All</option>
-                                        <option value="0">Pending</option>
+                                        <option value="3">Approved</option>
                                         <option value="1">Accepted</option>
                                         <option value="2">Rejected</option>
-                                        <option value="3">Approved</option>
                                         <option value="4">Processing</option>
                                         <option value="5">Reconciled</option>
                                     </select>
@@ -177,7 +176,7 @@ export default {
             items: [],
         },
         filters: {
-            claim_status: "0",
+            claim_status: "3",
             claim_number: null,
             invoice_number: null,
             claim_type: "all",
