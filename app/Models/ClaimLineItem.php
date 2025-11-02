@@ -110,7 +110,7 @@ class ClaimLineItem extends Model
     }
 
     public function getCanChangedAttribute() {
-        if(in_array($this->status, [Claim::STATUS_APPROVAL_PENDING,Claim::STATUS_APPROVED_BY_REPRESENTATIVE, Claim::STATUS_DENIED_BY_REPRESENTATIVE])){
+        if(in_array($this->status, [Claim::STATUS_APPROVED_BY_ADMIN,Claim::STATUS_APPROVED_BY_REPRESENTATIVE, Claim::STATUS_DENIED_BY_REPRESENTATIVE])){
             return true;
         }
         return false;

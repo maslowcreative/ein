@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ClaimPostRequest;
 use App\Mail\InvoiceCreated;
 use App\Mail\ProviderBudgetExceeded;
+use App\Mail\ReceiptApproved;
+use App\Jobs\SendReceiptApprovedEmail;
 use App\Models\Claim;
 use App\Models\ClaimLineItem;
 use App\Models\Participant;
@@ -315,7 +317,7 @@ class ClaimController extends Controller
             return $this->respondForbidden();
         }
 
-        if(!in_array($claim->status, [Claim::STATUS_APPROVAL_PENDING,Claim::STATUS_APPROVED_BY_REPRESENTATIVE, Claim::STATUS_DENIED_BY_REPRESENTATIVE])){
+        if(!in_array($claim->status, [Claim::STATUS_APPROVED_BY_ADMIN,Claim::STATUS_APPROVED_BY_REPRESENTATIVE, Claim::STATUS_DENIED_BY_REPRESENTATIVE])){
             return $this->respondForbidden();
         }
 
@@ -423,7 +425,35 @@ class ClaimController extends Controller
             return $this->respondForbidden();
         }
 
-        ClaimLineItem::whereIn('id',$request->claims)->update(['status'=> Claim::STATUS_APPROVAL_PENDING]);
+        // Get the claim line items with their relationships
+        $claimLineItems = ClaimLineItem::with(['claim.participant.representative', 'claim.provider.user'])
+            ->whereIn('id', $request->claims)
+            ->get();
+
+        // Update the status
+        ClaimLineItem::whereIn('id', $request->claims)->update(['status'=> Claim::STATUS_APPROVED_BY_ADMIN]);
+
+        // Data for Sending Emails
+        $emailData = [];
+        foreach ($claimLineItems as $lineItem) {
+            $claim = $lineItem->claim;
+            if ($claim && $claim->participant && $claim->participant->representative && $claim->provider) {
+                $repEmail = $claim->participant->representative->email;
+                if ($repEmail) {
+                    $emailData[] = [
+                        'email' => $repEmail,
+                        'provider' => $claim->provider,
+                        'claim_reference' => $lineItem->claim_reference,
+                    ];
+                }
+            }
+        }
+        //dd($claimLineItems->toArray());
+        // Send emails to representatives
+        foreach ($emailData as $data) {
+            SendReceiptApprovedEmail::dispatch($data['email'], $data['provider'], $data['claim_reference']);
+        }
+
         return $this->respondWithSuccess();
     }
 
@@ -861,9 +891,9 @@ class ClaimController extends Controller
             'gst_code' => ['required',Rule::in(collect(Claim::TAX_TYPES)->keys()->toArray())],
             'status' => ['required',Rule::in([
                                                 Claim::STATUS_APPROVAL_PENDING,
+                                                Claim::STATUS_APPROVED_BY_ADMIN,
                                                 Claim::STATUS_APPROVED_BY_REPRESENTATIVE,
                                                 Claim::STATUS_DENIED_BY_REPRESENTATIVE,
-                                                Claim::STATUS_APPROVED_BY_ADMIN,
                                                 Claim::STATUS_PROCESSED,
                                                 Claim::STATUS_RECONCILATION_DONE,
                                                 Claim::STATUS_CANCEL
