@@ -423,7 +423,7 @@ class ClaimController extends Controller
             return $this->respondForbidden();
         }
 
-        ClaimLineItem::whereIn('id',$request->claims)->update(['status'=> Claim::STATUS_APPROVED_BY_ADMIN]);
+        ClaimLineItem::whereIn('id',$request->claims)->update(['status'=> Claim::STATUS_APPROVAL_PENDING]);
         return $this->respondWithSuccess();
     }
 
@@ -440,7 +440,7 @@ class ClaimController extends Controller
             return $this->respondForbidden();
         }
 
-        $items = ClaimLineItem::with('claim')->where('status',Claim::STATUS_APPROVED_BY_ADMIN);
+        $items = ClaimLineItem::with('claim')->where('status',Claim::STATUS_APPROVED_BY_REPRESENTATIVE);
         if(\request()->method() == Request::METHOD_POST){
             $items->whereIn('id',explode(',',\request()->claims));
         }
