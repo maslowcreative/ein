@@ -97,9 +97,9 @@
                     <select class="form-select form-select-sm" v-model="filters.claim_status">
                         <option  value="all">All</option>
                         <option value="0">Pending</option>
+                        <option value="3">Approved</option>
                         <option value="1">Accepted</option>
                         <option value="2">Rejected</option>
-                        <option value="3">Approved</option>
                         <option value="4">Processing</option>
                         <option value="5">Reconciled</option>
                         <option value="6">Canceled</option>
@@ -136,7 +136,7 @@
           <tbody>
             <tr v-for="item in items.data">
               <td>
-                <input v-if="item.status == 1" :disabled="item.status != 1" :checked="isChecked(item.id)" v-on:click="checkboxChanged($event,item.id)" class="form-check-input" type="checkbox"  aria-label="..." />
+                <input v-if="item.status == 0" :disabled="item.status != 0" :checked="isChecked(item.id)" v-on:click="checkboxChanged($event,item.id)" class="form-check-input" type="checkbox"  aria-label="..." />
               </td>
               <td class="not-center">
                 <div class="fw-bold">
@@ -239,7 +239,7 @@ export default {
             items: [],
         },
         filters: {
-            claim_status: "1",
+            claim_status: "0",
             claim_type: "all",
             claim_number: null,
             old_claim_ref: null,

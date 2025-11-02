@@ -160,9 +160,9 @@
                                         <label class="form-label">Status</label>
                                         <select   class="form-select" v-model="form.status">
                                             <option value="0">Pending</option>
+                                            <option value="3">Approved</option>
                                             <option value="1">Accepted</option>
                                             <option value="2">Rejected</option>
-                                            <option value="3">Approved</option>
                                             <option value="4">Processed</option>
                                             <option value="5">Reconciled</option>
                                             <option value="6">Cancel</option>
